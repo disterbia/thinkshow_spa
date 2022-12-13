@@ -1,0 +1,11 @@
+wholesaler-user/ios/Podfile
+.history
+.idea/
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+wholesaler-partner/ios/fastlane/README.md
+wholesaler-user/ios/fastlane/report.xml
+wholesaler-partner/android/fastlane/report.xml
+wholesaler-user/android/fastlane/report.xml
