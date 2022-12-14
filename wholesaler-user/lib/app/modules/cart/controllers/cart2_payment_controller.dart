@@ -72,7 +72,7 @@ class Cart2PaymentController extends GetxController {
     // Text Edit Controllers
     updateTextEditControllers(cart2checkoutModel);
 
-    print('sajad cart2checkoutModel.deliveryCost! = ${cart2checkoutModel.deliveryCost}');
+    print('cart2checkoutModel.deliveryCost! = ${cart2checkoutModel.deliveryCost}');
   }
 
   // 포인트 상요 button
@@ -140,7 +140,7 @@ class Cart2PaymentController extends GetxController {
     address2Controller.text = result.address;
     // Update delivery fee. For 제주도 4,000원, for the rest of the country: free
     cart2checkoutModel.value.deliveryCost.value = await _apiProvider.getDeliveryFee(checkout_id: cart2checkoutModel.value.checkoutId!, postCode: result.postCode, address: result.address);
-    print('sajad cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
+    print('cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
 
     // update totalPrice with new delivery fee
     cart2checkoutModel.value.totalProductAmount.value = cart2checkoutModel.value.onlyProductPrice.value + cart2checkoutModel.value.deliveryCost.value - cart2checkoutModel.value.discountPrice.value;
@@ -182,7 +182,7 @@ class Cart2PaymentController extends GetxController {
 
   Future<void> paymentSuccessful(Map<String, dynamic> result) async {
     print(
-        'sajad inside paymentSuccessful.  orderer_name ${nameController.text} zipcode ${address1ZipCodeController.text} address ${address2Controller.text} address_detail ${address3Controller.text} phone ${phoneFirstPartController.text}${phoneSecondPartController.text}${phoneThirdPartController.text} request_message ${requestController.text} checkout_id ${cart2checkoutModel.value.checkoutId!}');
+        'inside paymentSuccessful.  orderer_name ${nameController.text} zipcode ${address1ZipCodeController.text} address ${address2Controller.text} address_detail ${address3Controller.text} phone ${phoneFirstPartController.text}${phoneSecondPartController.text}${phoneThirdPartController.text} request_message ${requestController.text} checkout_id ${cart2checkoutModel.value.checkoutId!}');
     // call [주문페이지] 주문 > complete API ( 결제완료 요청 ) API
     bool isSuccess = await _apiProvider.postPaymentSucessfullyFinished(
       imp_uid: result['imp_uid']!,

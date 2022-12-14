@@ -59,9 +59,9 @@ class PaymentController extends GetxController {
           date: orderHistoryJson[i]['date'],
           sale_amount: orderHistoryJson[i]['sale_amount'],
         );
-        print("sajad orderHistoryJson[i]['sale_amount'] ${orderHistoryJson[i]['sale_amount']}");
+        print("orderHistoryJson[i]['sale_amount'] ${orderHistoryJson[i]['sale_amount']}");
         tab2_orderHistoryCtr.orderHistoriesCollapsed.add(orderHistory);
-        print('sajad length order: ${tab2_orderHistoryCtr.orderHistoriesCollapsed.length}');
+        print('length order: ${tab2_orderHistoryCtr.orderHistoriesCollapsed.length}');
       }
 
       // initialize

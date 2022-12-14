@@ -17,7 +17,7 @@ Future<void> main() async {
   await GetStorage.init();
   MyVars.initializeVariables();
   bool isLogin = CacheProvider().getToken().isNotEmpty;
-  print('sajad CacheProvider().getToken() ${CacheProvider().getToken()}');
+  print('CacheProvider().getToken() ${CacheProvider().getToken()}');
 
   NotificationService().init();
 

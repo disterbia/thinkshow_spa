@@ -138,7 +138,7 @@ class uApiProvider extends GetConnect {
 
   /// User sign up page
   Future<bool> postUserSignUp() async {
-    log('sajad inside postUserSignUp');
+    log('inside postUserSignUp');
     SignupOrEditController signUpCtr = Get.put(SignupOrEditController());
     PhoneNumberPhoneVerifyController phoneCtr =
         Get.put(PhoneNumberPhoneVerifyController());
@@ -163,14 +163,14 @@ class uApiProvider extends GetConnect {
       // 'birth_month': int.parse(signUpCtr.birthdayMonth.text),
       // 'birth_day': int.parse(signUpCtr.birthdayDay.text),
     };
-    log('sajad before response');
+    log('before response');
     final response =
         await post(mConst.API_BASE_URL + mConst.API_USER_PATH + '/user', body);
-    log('sajad postUserSignUp response ${response.body}');
+    log('postUserSignUp response ${response.body}');
 
     if (response.statusCode == 200) {
       final raw = jsonDecode(response.bodyString!);
-      log('sajad postUserSignUp raw ' + raw.toString());
+      log('postUserSignUp raw ' + raw.toString());
       log(response.bodyString!);
       return true;
     } else {
@@ -193,18 +193,18 @@ class uApiProvider extends GetConnect {
       'email': signUpCtr.emailController.text,
     };
 
-    print('sajad putUserInfoEdit body ' + body.toString());
+    print('putUserInfoEdit body ' + body.toString());
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/me';
     final response = await put(url, body, headers: headers);
-    log('sajad putAddStoreFavorite $response');
+    log('putAddStoreFavorite $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error:' + jsonList.toString());
+      log('error:' + jsonList.toString());
       mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
       return false;
     }
@@ -228,8 +228,8 @@ class uApiProvider extends GetConnect {
       case 200:
         String token = json['access_token'];
         CacheProvider().setToken(token);
-        log('sajad setToken finished;');
-        log('sajad nrew token: ' + CacheProvider().getToken());
+        log('setToken finished;');
+        log('nrew token: ' + CacheProvider().getToken());
         // update value of headers with new token
         headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
         message = '완료!';
@@ -305,7 +305,7 @@ class uApiProvider extends GetConnect {
   }) async {
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
-    print('sajad getAllProducts sort $sort sortStr $sortStr');
+    print(' etAllProducts sort $sort sortStr $sortStr');
 
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
@@ -313,10 +313,10 @@ class uApiProvider extends GetConnect {
         storeIdStr +
         sortStr;
 
-    print('sajad getAllProducts url $url');
+    print('getAllProducts url $url');
 
     final response = await get(url, headers: headers);
-    // log('sajad getAllProducts response ${response.body}');
+    // log('getAllProducts response ${response.body}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -341,7 +341,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('sajad error getProducts : ${response.bodyString}');
+      log('error getProducts : ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -352,10 +352,10 @@ class uApiProvider extends GetConnect {
       required int limit,
       int? storeId,
       String? sort}) async {
-    print('sajad getProductsWithCat> cat id: $categoryId');
-    print('sajad getProductsWithCat> offset: $offset');
-    print('sajad getProductsWithCat> limit: $limit');
-    print('sajad getProductsWithCat> sort: $sort');
+    print('getProductsWithCat> cat id: $categoryId');
+    print('getProductsWithCat> offset: $offset');
+    print('getProductsWithCat> limit: $limit');
+    print('getProductsWithCat> sort: $sort');
 
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
@@ -365,7 +365,7 @@ class uApiProvider extends GetConnect {
         '/category/$categoryId/products?offset=$offset&limit=$limit' +
         storeIdStr +
         sortStr;
-    print('sajad getProductsWithCat> url: $url');
+    print('getProductsWithCat> url: $url');
 
     final response = await get(url, headers: headers);
 
@@ -392,7 +392,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('sajad error getProducts : ${response.bodyString}');
+      log('error getProducts : ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -428,7 +428,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('sajad error getNewProducts ${response.bodyString}');
+      log('error getNewProducts ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -466,7 +466,7 @@ class uApiProvider extends GetConnect {
       return products;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getBestProducts ${response.bodyString}');
+      log('error getBestProducts ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -505,7 +505,7 @@ class uApiProvider extends GetConnect {
       return products;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getBestProducts ${response.bodyString}');
+      log('error getBestProducts ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -544,7 +544,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('sajad error getDingdongProductPopular ${response.bodyString}');
+      log('error getDingdongProductPopular ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -553,7 +553,7 @@ class uApiProvider extends GetConnect {
       {required int categoryId,
       required int offset,
       required int limit}) async {
-    log('sajad cat id: $categoryId');
+    log('cat id: $categoryId');
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/category/$categoryId/products/privilege?offset=$offset&limit=$limit';
@@ -585,7 +585,7 @@ class uApiProvider extends GetConnect {
     } else {
       var jsonList = jsonDecode(response.bodyString!);
 
-      log('sajad error:' + jsonList.toString());
+      log('error:' + jsonList.toString());
       return Future.error(response.statusText!);
     }
   }
@@ -641,7 +641,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('sajad error getDingsPick ${response.bodyString}');
+      log('error getDingsPick ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -701,12 +701,12 @@ class uApiProvider extends GetConnect {
         );
         stores.add(tempStore);
       }
-      log('sajad getStorebookmarked ${stores.length}');
+      log('getStorebookmarked ${stores.length}');
       return stores;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
 
-      log('sajad error:' + jsonList.toString());
+      log('error:' + jsonList.toString());
       return Future.error(response.statusText!);
     }
   }
@@ -716,14 +716,14 @@ class uApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/store/$storeId/favorite';
     final response = await put(url, 'empty_body', headers: headers);
-    log('sajad putAddStoreFavorite $response');
+    log('putAddStoreFavorite $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error:' + jsonList.toString());
+      log('error:' + jsonList.toString());
       return Future.error(response.statusText!);
     }
   }
@@ -759,7 +759,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('sajad error getFavoriteProducts: ${response.bodyString}');
+      log('error getFavoriteProducts: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -791,7 +791,7 @@ class uApiProvider extends GetConnect {
       return user;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -802,14 +802,14 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/product/$productId/favorite';
     final response = await put(url, 'empty_body', headers: headers);
-    log('sajad putAddStoreFavorite $response');
+    log('putAddStoreFavorite $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error:' + jsonList.toString());
+      log('error:' + jsonList.toString());
       return Future.error(response.statusText!);
     }
   }
@@ -819,7 +819,7 @@ class uApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/waiting-reviews';
     final response = await get(url, headers: headers);
-    log('sajad getUserReviews response: ${response.bodyString}');
+    log('getUserReviews response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -858,7 +858,7 @@ class uApiProvider extends GetConnect {
           products.add(tempProduct);
         }
 
-        print('sajad json["order_id"] ${json['order_id']}');
+        print('json["order_id"] ${json['order_id']}');
 
         OrderOrReview order = OrderOrReview(
           id: json['order_id'],
@@ -873,11 +873,11 @@ class uApiProvider extends GetConnect {
         );
         orders.add(order);
       }
-      print('sajad getUserReviews orders ${orders.length}');
+      print('getUserReviews orders ${orders.length}');
       return orders;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -886,7 +886,7 @@ class uApiProvider extends GetConnect {
   Future<List<OrderOrReview>> getOrderInquiry(
       {required int offset, required int limit, required String period}) async {
     print(
-        'sajad getOrderInquiry offset: $offset, limit: $limit, period: $period');
+        ' getOrderInquiry offset: $offset, limit: $limit, period: $period');
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/orders?offset=$offset&limit=$limit&periodType=$period';
@@ -894,7 +894,7 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
-      print('sajad getOrderInquiry jsonList: ${jsonList.toString()}');
+      print('getOrderInquiry jsonList: ${jsonList.toString()}');
 
       List<OrderOrReview> orders = [];
 
@@ -946,7 +946,7 @@ class uApiProvider extends GetConnect {
       return orders;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -955,7 +955,7 @@ class uApiProvider extends GetConnect {
   Future<OrderOrReview> getOrderDetail({required int orderId}) async {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/$orderId';
     final response = await get(url, headers: headers);
-    log('sajad getOrderDetail response: ${response.bodyString}');
+    log('getOrderDetail response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
@@ -1023,7 +1023,7 @@ class uApiProvider extends GetConnect {
       return order;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1110,7 +1110,7 @@ class uApiProvider extends GetConnect {
 
       return tempProduct;
     } else {
-      log('sajad error getProductDetail: ${response.bodyString}');
+      log('error getProductDetail: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1122,14 +1122,14 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/product/$productId/reviews?offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
-    log('sajad getProductReviews response: ${response.bodyString}');
+    log('getProductReviews response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
       WritableReviewInfoModel writableReviewInfoModel =
           WritableReviewInfoModel.fromJson(json['writable_review_info']);
       print(
-          'sajad writableReviewInfoModel ${writableReviewInfoModel.order_detail_id}');
+          'writableReviewInfoModel ${writableReviewInfoModel.order_detail_id}');
 
       // Review list
       List<Review> tempReviews = [];
@@ -1171,7 +1171,7 @@ class uApiProvider extends GetConnect {
       }
       return tempReviews;
     } else {
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1221,7 +1221,7 @@ class uApiProvider extends GetConnect {
       mSnackbar(message: '문의 등록이 완료되였습니다.');
       return true;
     } else {
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       mSnackbar(message: '오류: ' + response.statusText!);
       return false;
     }
@@ -1244,7 +1244,7 @@ class uApiProvider extends GetConnect {
       }
       return tempInquiries;
     } else {
-      log('sajad error getUserInfo: ${response.bodyString}');
+      log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1293,7 +1293,7 @@ class uApiProvider extends GetConnect {
       }
       return cartItems;
     } else {
-      log('sajad error getCart1ShoppintBasket: ${response.bodyString}');
+      log('error getCart1ShoppintBasket: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1312,7 +1312,7 @@ class uApiProvider extends GetConnect {
 
     final response = await post(url, formData, headers: headers);
 
-    print('sajad uploadProductImage response ${response.bodyString}');
+    print('uploadProductImage response ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return ProductImageModel(
@@ -1346,7 +1346,7 @@ class uApiProvider extends GetConnect {
     };
     final response = await post(url, data, headers: headers);
 
-    print('sajad uploadProductImage response ${response.bodyString}');
+    print('uploadProductImage response ${response.bodyString}');
     mSnackbar(message: response.bodyString!);
   }
 
@@ -1357,7 +1357,7 @@ class uApiProvider extends GetConnect {
       String? image_path,
       required double star}) async {
     print(
-        'sajad postReviewAdd: orderDetailId $orderDetailId content $content image_path $image_path star $star');
+        'postReviewAdd: orderDetailId $orderDetailId content $content image_path $image_path star $star');
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/order/detail/$orderDetailId/review';
@@ -1370,7 +1370,7 @@ class uApiProvider extends GetConnect {
 
     final response = await post(url, data, headers: headers);
 
-    print('sajad postReviewAdd response ${response.bodyString}');
+    print('postReviewAdd response ${response.bodyString}');
     if (response.statusCode == 200) {
       mSnackbar(message: '정상적으로 등록 되었습니다.');
       return true;
@@ -1388,7 +1388,7 @@ class uApiProvider extends GetConnect {
         '/search/stores?searchContent=$searchContent';
 
     final response = await get(url, headers: headers);
-    print('sajad getSearchStoreAutoComplete response: ${response.bodyString}');
+    print('getSearchStoreAutoComplete response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       List<SearchStoreAutoModel> stores = [];
@@ -1403,7 +1403,7 @@ class uApiProvider extends GetConnect {
       }
       return stores;
     } else {
-      log('sajad error getCart1ShoppintBasket: ${response.bodyString}');
+      log('error getCart1ShoppintBasket: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1417,7 +1417,7 @@ class uApiProvider extends GetConnect {
 
     final response = await get(url, headers: headers);
     print(
-        'sajad getSearchProductAutoComplete response: ${response.bodyString}');
+        'getSearchProductAutoComplete response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       List<SearchProductAutoModel> keywords = [];
@@ -1430,7 +1430,7 @@ class uApiProvider extends GetConnect {
       }
       return keywords;
     } else {
-      log('sajad error getCart1ShoppintBasket: ${response.bodyString}');
+      log('error getCart1ShoppintBasket: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1446,7 +1446,7 @@ class uApiProvider extends GetConnect {
 
     final response = await put(url, data, headers: headers);
     print(
-        'sajad deleteProductsFromCart response.bodyString! ${response.bodyString!}');
+        'deleteProductsFromCart response.bodyString! ${response.bodyString!}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1469,10 +1469,10 @@ class uApiProvider extends GetConnect {
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/cart';
 
-    print('sajad dataHolder $dataHolder');
+    print('dataHolder $dataHolder');
 
     final response = await post(url, dataHolder, headers: headers);
-    print('sajad postAddToShoppingBasket ${response.bodyString}');
+    print('postAddToShoppingBasket ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1492,7 +1492,7 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await put(url, data, headers: headers);
-    print('sajad getRecentlySeenProducts ${response.bodyString}');
+    print('getRecentlySeenProducts ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1517,7 +1517,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('sajad error getRecentlySeenProducts: ${response.bodyString}');
+      log('error getRecentlySeenProducts: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1529,7 +1529,7 @@ class uApiProvider extends GetConnect {
       required String image_path,
       required double star}) async {
     print(
-        'sajad putReviewEdit reviewId $reviewId content $content image_path $image_path star $star');
+        'putReviewEdit reviewId $reviewId content $content image_path $image_path star $star');
 
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
@@ -1542,14 +1542,14 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await put(url, data, headers: headers);
-    log('sajad putReviewEdit $response');
+    log('putReviewEdit $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('sajad putReviewEdit error:' + jsonList.toString());
+      log('putReviewEdit error:' + jsonList.toString());
       mSnackbar(message: '오류: ${response.bodyString!}');
       return Future.error(response.statusText!);
     }
@@ -1561,13 +1561,13 @@ class uApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/store/$storeId/main';
 
     final response = await get(url, headers: headers);
-    print('sajad getStoreDetailMainInfo ${response.bodyString}');
+    print('getStoreDetailMainInfo ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return MainStoreModel.fromJson(json);
     } else {
-      log('sajad error getStoreDetailMainInfo: ${response.bodyString}');
+      log('error getStoreDetailMainInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1579,7 +1579,7 @@ class uApiProvider extends GetConnect {
         '/store/$storeId/best-products';
 
     final response = await get(url, headers: headers);
-    print('sajad getBestProducts ${response.bodyString}');
+    print('getBestProducts ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1616,7 +1616,7 @@ class uApiProvider extends GetConnect {
         '/product/inquiries/mine?limit=$limit';
 
     final response = await get(url, headers: headers);
-    print('sajad getInquiryList ${response.bodyString}');
+    print('getInquiryList ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1636,7 +1636,7 @@ class uApiProvider extends GetConnect {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/faq';
 
     final response = await get(url, headers: headers);
-    log('sajad getFaq ${response.bodyString}');
+    log('getFaq ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1657,7 +1657,7 @@ class uApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/point-histories';
 
     final response = await get(url, headers: headers);
-    print('sajad getPointMgmtList ${response.bodyString}');
+    print('getPointMgmtList ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1675,7 +1675,7 @@ class uApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/notice-boards',
         headers: headers);
-    print('sajad getUserBulletins ${response.bodyString}');
+    print('getUserBulletins ${response.bodyString}');
     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
       List<BulletinModel> bulletins =
@@ -1694,13 +1694,13 @@ class uApiProvider extends GetConnect {
 
     final response =
         await post(url, cart1ordersModel.toJson(), headers: headers);
-    print('sajad postOrderCheckout ${response.bodyString}');
+    print('postOrderCheckout ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return Cart2CheckoutModel.fromJson(json);
     } else {
-      log('sajad error postOrderCheckout: ${response.bodyString}');
+      log('error postOrderCheckout: ${response.bodyString}');
       mSnackbar(message: '오류: ${response.bodyString!}');
       return Future.error(response.statusText!);
     }
@@ -1732,15 +1732,15 @@ class uApiProvider extends GetConnect {
     data['phone'] = phone;
     data['request_message'] = request_message;
 
-    print('sajad postPaymentSucessfullyFinished: $data');
+    print('postPaymentSucessfullyFinished: $data');
 
     final response = await post(url, data, headers: headers);
-    print('sajad postPaymentSucessfullyFinished data: ${response.bodyString}');
+    print('postPaymentSucessfullyFinished data: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return true;
     } else {
-      log('sajad error postPaymentSucessfullyFinished.');
+      log('error postPaymentSucessfullyFinished.');
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
     }
@@ -1755,7 +1755,7 @@ class uApiProvider extends GetConnect {
         '/search/products?searchContent=$searchContent&offset=$offset&limit=$limit';
 
     final response = await get(url, headers: headers);
-    print('sajad getSearchProducts response: ${response.bodyString}');
+    print('getSearchProducts response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
       List<Product> products = [];
@@ -1798,14 +1798,14 @@ class uApiProvider extends GetConnect {
     data['address'] = address;
 
     final response = await put(url, data, headers: headers);
-    log('sajad getDeliveryFee $response');
+    log('getDeliveryFee $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       var json = jsonDecode(response.bodyString!);
       return json['delivery_cost'];
     } else {
-      log('sajad error:' + response.bodyString!);
+      log('error:' + response.bodyString!);
       mSnackbar(message: '오류: ${response.bodyString!}');
       return Future.error(response.statusText!);
     }
@@ -1825,10 +1825,10 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, data, headers: headers);
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
-      log('sajad error:' + response.bodyString!);
+      log('error:' + response.bodyString!);
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
@@ -1840,13 +1840,13 @@ class uApiProvider extends GetConnect {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/me';
 
     var response = await delete(url, headers: headers);
-    log('sajad deleteUserAccount $response');
+    log('deleteUserAccount $response');
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
-      log('sajad error:' + response.bodyString!);
+      log('error:' + response.bodyString!);
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
@@ -1854,7 +1854,7 @@ class uApiProvider extends GetConnect {
   }
 
   orderSettled(int orderDetailId) async {
-    print('sajad orderSettled: orderDetailId $orderDetailId');
+    print('orderSettled: orderDetailId $orderDetailId');
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/order/detail/$orderDetailId/purchase-confirm';
@@ -1862,10 +1862,10 @@ class uApiProvider extends GetConnect {
     final response = await put(url, 'empty_body', headers: headers);
 
     if (response.statusCode == 200) {
-      log('sajad response ${response.bodyString}');
+      log('response ${response.bodyString}');
       return true;
     } else {
-      log('sajad error:' + response.bodyString!);
+      log('error:' + response.bodyString!);
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
@@ -1905,9 +1905,9 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, {'token': fcmToken}, headers: headers);
 
     if (response.statusCode == 200) {
-      log('sajad sendTCMToken response ${response.bodyString}');
+      log('sendTCMToken response ${response.bodyString}');
     } else {
-      log('sajad sendTCMToken error:' + response.bodyString!);
+      log('sendTCMToken error:' + response.bodyString!);
       mSnackbar(message: '오류: ${response.bodyString!}');
     }
   }
@@ -1918,17 +1918,17 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, 'empty_body', headers: headers);
 
     if (response.statusCode == 200) {
-      log('sajad updateNotification response ${response.bodyString}');
+      log('updateNotification response ${response.bodyString}');
       return true;
     } else {
-      log('sajad updateNotification error:' + response.bodyString!);
+      log('updateNotification error:' + response.bodyString!);
       mSnackbar(message: '${response.bodyString!['description']}');
       return false;
     }
   }
 
   changeQuantityInBasket({required int cartId, required int qty}) async {
-    print('sajad changeQuantityInBasket: cartId $cartId, qty $qty');
+    print('changeQuantityInBasket: cartId $cartId, qty $qty');
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/cart/$cartId/qty';
 
@@ -1939,10 +1939,10 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, body, headers: headers);
 
     if (response.statusCode == 200) {
-      log('sajad changeQuantityInBasket response ${response.bodyString}');
+      log('changeQuantityInBasket response ${response.bodyString}');
       return true;
     } else {
-      log('sajad changeQuantityInBasket error:' + response.bodyString!);
+      log('changeQuantityInBasket error:' + response.bodyString!);
       mSnackbar(message: response.bodyString!['description']);
       return false;
     }

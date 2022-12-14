@@ -17,22 +17,22 @@ class FirebaseService {
     final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
     final fcmToken = await firebaseMessaging.getToken();
-    print('sajad fcmToken ${fcmToken}');
+    print('fcmToken ${fcmToken}');
     if (fcmToken != null) {
       CacheProvider().setFCMToken(fcmToken);
       sendFCMTokenToServer(fcmToken);
     } else {
-      log('sajad fcmToken is null');
+      log('fcmToken is null');
     }
 
     // token listener
     firebaseMessaging.onTokenRefresh.listen((fcmToken) {
-      print('sajad onTokenRefresh updated $fcmToken');
+      print('onTokenRefresh updated $fcmToken');
       CacheProvider().setFCMToken(fcmToken);
       // send fcmToken to server
       sendFCMTokenToServer(fcmToken);
     }).onError((err) {
-      print('sajad onTokenRefresh error $err');
+      print('onTokenRefresh error $err');
     });
 
     iOSRequestPermission(Get.context, firebaseMessaging);

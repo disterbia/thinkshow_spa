@@ -233,7 +233,7 @@ class ClothCategory {
   ///
   /// example: Mini Skirt category id is: 33
   static int getCategoryIdAt(int index) {
-    // log('sajad selected item: ' + getAllItems().elementAt(index).id.toString() + ' name ' + getAllItems().elementAt(index).name);
+    // log('selected item: ' + getAllItems().elementAt(index).id.toString() + ' name ' + getAllItems().elementAt(index).name);
     return getAllItems().elementAt(index).id;
   }
 }

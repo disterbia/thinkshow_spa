@@ -25,12 +25,12 @@ class SalesMgmtController extends GetxController with GetSingleTickerProviderSta
 
   @override
   void onInit() async {
-    print('sajad inside SalesMgmtController onInit');
+    print('inside SalesMgmtController onInit');
     await getProduct(type: 'exposure');
     productTabController.addListener(handleSelected);
 
     // scrollController.value.addListener(() {
-    //   // print('sajad scrollController.value.addListener ${scrollController.value.offset}');
+    //   // print('scrollController.value.addListener ${scrollController.value.offset}');
     //   if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
     //     if (productTabController.index == 3) {
     //       offset += mConst.limit;
@@ -41,7 +41,7 @@ class SalesMgmtController extends GetxController with GetSingleTickerProviderSta
   }
 
   void handleSelected() async {
-    print('sajad inside SalesMgmtController handleSelected');
+    print('inside SalesMgmtController handleSelected');
     if (productTabController.index == 0) {
       products.clear();
       // allowCallAPI.value = false;

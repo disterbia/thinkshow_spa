@@ -67,14 +67,14 @@ class StoreDetailController extends GetxController {
       products.clear();
     }
 
-    print('sajad inside updateProducts: selectedIndex ${categoryTagCtr.selectedMainCatIndex.value}');
+    print('inside updateProducts: selectedIndex ${categoryTagCtr.selectedMainCatIndex.value}');
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print('sajad index 0, show ALL');
+      print('index 0, show ALL');
       tempProducts = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit, storeId: storeId.value, sort: apiSoftItems[selectedDropdownIndex.value]);
     } else {
-      print('sajad index > 0 , show categories');
+      print('index > 0 , show categories');
       tempProducts = await _apiProvider.getProductsWithCat(
           categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit, storeId: storeId.value, sort: apiSoftItems[selectedDropdownIndex.value]);
     }

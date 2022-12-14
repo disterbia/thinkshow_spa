@@ -23,7 +23,7 @@ class Tab3NewProductsView extends GetView<Tab3NewProductsController> {
   @override
   Widget build(BuildContext context) {
     init();
-    print('sajad tab3 new products');
+    print('tab3 new products');
     return SingleChildScrollView(
       controller: ctr.scrollController.value,
       child: Column(

@@ -29,7 +29,7 @@ class SearchPageController extends GetxController {
 
     // Recently Seen Products
     List productIds = CacheProvider().getAllRecentlyViewedProducts();
-    print('sajad productIds ${productIds}');
+    print('productIds ${productIds}');
     if (productIds.isNotEmpty) {
       recentlyVisitedProducts.value = await _apiProvider.getRecentlySeenProducts(productIds);
       if (recentlyVisitedProducts.length < mConst.limit) {

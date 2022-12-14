@@ -31,15 +31,15 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             _sizeTable(),
             // 옵션 단가등록
             // _unitPriceCheckbox(),
-            Obx(
-              () => Column(
-                children: [
-                  ctr.unitPriceCheckbox.isTrue && ctr.isOptionCheckbox.isTrue
-                      ? _optionUnitPriceChildrenNewMode()
-                      : Container(),
-                ],
-              ),
-            ),
+            // Obx(
+            //   () => Column(
+            //     children: [
+            //       // ctr.unitPriceCheckbox.isTrue && ctr.isOptionCheckbox.isTrue
+            //       //     ? _optionUnitPriceChildrenNewMode()
+            //       //     : Container(),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: 10),
           ],
         ),
@@ -247,8 +247,6 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     for (var colorIndex = 0;
         colorIndex < addProductCtr.colorsList.length;
         colorIndex++) {
-      print(
-          'sajad inside _optionUnitPriceChildrenNewMode colorIndex: $colorIndex');
       // FREE, XS, S, M, L
       if (ctr.productBodySizeList
           .firstWhere((element) => element.size == 'FREE')

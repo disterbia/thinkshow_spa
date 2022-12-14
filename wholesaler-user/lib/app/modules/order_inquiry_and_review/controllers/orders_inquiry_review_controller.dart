@@ -22,13 +22,13 @@ class OrderInquiryAndReviewController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     isReviewPage = Get.arguments;
-    print('sajad OrderInquiryAndReviewController onInit isReviewPage ${isReviewPage}');
+    print('OrderInquiryAndReviewController onInit isReviewPage ${isReviewPage}');
     if (isReviewPage!) {
-      print('sajad REVIEW PAGE');
+      print('REVIEW PAGE');
       items.value = await _apiProvider.getUserReviews();
       allowCallAPI.value = false;
     } else {
-      print('sajad ORDER INQUIRY PAGE');
+      print('ORDER INQUIRY PAGE');
       getInquiryData();
 
       scrollController.value.addListener(() {
@@ -84,7 +84,7 @@ class OrderInquiryAndReviewController extends GetxController {
 
   // 구매확정 button pressed
   orderSettledBtnPressed(int orderDetailId) async {
-    print('sajad orderSettledBtnPressed orderDetailId: $orderDetailId');
+    print('orderSettledBtnPressed orderDetailId: $orderDetailId');
     bool isSuccess = await _apiProvider.orderSettled(orderDetailId);
 
     if (isSuccess) {

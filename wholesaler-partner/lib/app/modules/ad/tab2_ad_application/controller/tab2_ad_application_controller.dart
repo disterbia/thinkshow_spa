@@ -64,7 +64,6 @@ class Tab2AdApplicationController extends GetxController {
         applicationDates: selectedDates.value);
 
     // if (isSuccess) {
-    //   print('sajad applyBtnPressed mvoe to Tab3AdApplicationHistory');
     //   Get.to(AdView(), arguments: AdTabs.Tab3AdApplicationHistory.index);
     // }
   }

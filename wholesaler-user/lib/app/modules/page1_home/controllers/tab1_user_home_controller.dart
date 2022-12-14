@@ -37,10 +37,10 @@ class Tab1UserHomeController extends GetxController {
 
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print('sajad index 0, show ALL');
+      print('index 0, show ALL');
       products.value = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
     } else {
-      print('sajad index > 0 , show categories');
+      print('index > 0 , show categories');
       products.value = await _apiProvider.getProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
     if (products.length < mConst.limit) {
@@ -51,10 +51,10 @@ class Tab1UserHomeController extends GetxController {
   addDataToList() async {
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print('sajad index 0, show ALL');
+      print('index 0, show ALL');
       tempProducts = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
     } else {
-      print('sajad index > 0 , show categories');
+      print('index > 0 , show categories');
       tempProducts = await _apiProvider.getProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
     products.addAll(tempProducts);

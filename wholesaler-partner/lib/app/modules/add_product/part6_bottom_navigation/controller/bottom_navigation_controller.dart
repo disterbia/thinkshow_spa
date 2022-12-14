@@ -52,7 +52,7 @@ class AP_Part6Controller extends GetxController {
         : part5controller.selectedCountry.value;
 
     // option
-    // print('sajad optionsControllers.length ${addProductController.optionsControllers.length}');
+    // print('optionsControllers.length ${addProductController.optionsControllers.length}');
     // for (int i = 0; i < addProductController.optionsControllers.length; i++) {
     //   String addPrice = addProductController.optionsControllers[i].text;
     //   if (addPrice.isEmpty) {
@@ -63,8 +63,6 @@ class AP_Part6Controller extends GetxController {
     //   addProductController.options[i].addPrice = addPrice;
     // }
 
-    print(
-        'sajad part2controller.isOptionCheckbox.value ${part2controller.isOptionCheckbox.value}');
     if (part2controller.isOptionCheckbox.value) {
       // for (int i = 0; i < addProductController.options.length; i++) {
       for (int i = 0; i < addProductController.optionsControllers.length; i++) {
@@ -141,15 +139,11 @@ class AP_Part6Controller extends GetxController {
     isLoading.value = true;
 
     // size_info_list
-    print(
-        'sajad part2controller.productBodySizeList : ${part2controller.productBodySizeList}');
     List<Map<String, dynamic>> sizeInfoList = [];
     for (int i = 0; i < part2controller.productBodySizeList.length; i++) {
       ProductBodySizeModel productBodySizeModel =
           part2controller.productBodySizeList[i];
       if (productBodySizeModel.isSelected.value) {
-        print(
-            'inside productBodySizeModel.isSelected.value: ${productBodySizeModel.size}');
         Map<String, dynamic> sizeInfo = {"size": productBodySizeModel.size};
         for (int j = 0;
             j < productBodySizeModel.sizeCategory.children.length;
@@ -158,13 +152,11 @@ class AP_Part6Controller extends GetxController {
           sizeInfo[sizeChild.english] = part2controller
               .textEditingControllers[i.toString() + j.toString()]!.text;
         }
-        print('sajad size_info_list > sizeInfo : ${sizeInfo}');
+
         sizeInfoList.add(sizeInfo);
       }
     }
 
-    print(
-        'sajad addProductController.options.toString() : ${addProductController.options.toString()}');
     if (sizeInfoList.isEmpty) {
       Get.back();
       mSnackbar(message: '사이즈 선택해주세요.');
@@ -207,6 +199,7 @@ class AP_Part6Controller extends GetxController {
 
     bool isSuccess = false;
     if (addProductController.isEditing.isTrue) {
+
       isSuccess = await _apiProvider.editProduct(
           productId: addProductController.productIdforEdit, data: data);
     } else {

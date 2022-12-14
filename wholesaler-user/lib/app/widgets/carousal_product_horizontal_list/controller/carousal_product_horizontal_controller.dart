@@ -13,7 +13,7 @@ class CarousalProductHorizontalController extends GetxController {
   RxList<Product> products = <Product>[].obs;
 
   init(currentTab) async {
-    print('sajad CarousalProductHorizontalController init currentTab $currentTab');
+    print('CarousalProductHorizontalController init currentTab $currentTab');
     // products.clear();
     products.value = await _apiProvider.getAdProducts(currentTab);
   }

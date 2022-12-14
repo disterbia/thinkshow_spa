@@ -34,7 +34,7 @@ class DingdongDeliveryController extends GetxController {
   Future<void> callGetProductsAPI({String? sort, required bool isScrolling}) async {
     dynamic raw = await _apiProvider.getProducts(isDingDong: true, sort: sort, offset: offset, limit: mConst.limit);
 
-    log('sajad getProducts raw $raw length ${raw.length}');
+    log('getProducts raw $raw length ${raw.length}');
 
     if (!isScrolling) {
       offset = 0;
@@ -54,7 +54,7 @@ class DingdongDeliveryController extends GetxController {
       products.add(tempProduct);
     }
 
-    print('sajad raw length ${raw.length}');
+    print('raw length ${raw.length}');
 
     if (raw.length < mConst.limit) {
       allowCallAPI.value = false;
@@ -62,7 +62,7 @@ class DingdongDeliveryController extends GetxController {
   }
 
   sortDropDownChanged(String selectedItem) {
-    print('sajad selected $selectedItem');
+    print('selected $selectedItem');
     selectedSortProductDropDownItem.value = selectedItem;
     callGetProductsAPI(sort: selectedItem, isScrolling: false);
   }

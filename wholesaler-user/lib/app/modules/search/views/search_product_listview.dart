@@ -9,7 +9,7 @@ class SearchProductListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('sajad searchProducts length: ${ctr.searchProducts.length}');
+    print('searchProducts length: ${ctr.searchProducts.length}');
     return SingleChildScrollView(
       // controller: ctr.scrollController.value,
       child: ProductGridViewBuilder(

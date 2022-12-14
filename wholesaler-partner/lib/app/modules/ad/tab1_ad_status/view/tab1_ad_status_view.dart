@@ -130,7 +130,7 @@ class Tab1AdStatusView extends GetView {
         itemCount: ctr.exposureAds.length,
         separatorBuilder: (BuildContext context, int adIndex) => SizedBox(height: 10),
         itemBuilder: (BuildContext context, int exposureAdIndex) {
-          print('sajad rrr ctr.exposureAds.length ${ctr.exposureAds.length}');
+          print('rrr ctr.exposureAds.length ${ctr.exposureAds.length}');
           if (ctr.exposureAds[exposureAdIndex].adProducts.isEmpty) {
             // add border to Container
             return Container(

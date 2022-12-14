@@ -59,7 +59,7 @@ class ProductItemHorizontal extends StatelessWidget {
         }
 
         if (review != null) {
-          log('sajad review != null great');
+          log('review != null great');
           Get.to(() => ReviewDetailView(
                 selectedReviw: review!,
                 isComingFromReviewPage: true,

@@ -39,7 +39,7 @@ class ReviewDetailView extends GetView {
   }
 
   Widget _body() {
-    print('sajad ctr.selectedReviw!.value');
+    print('ctr.selectedReviw!.value');
     inspect(ctr.selectedReviw!.value);
     return SingleChildScrollView(
       child: Padding(
@@ -128,9 +128,9 @@ class ReviewDetailView extends GetView {
           color: Colors.amber,
         ),
         onRatingUpdate: (rating) {
-          print('sajad rating $rating');
+          print('rating $rating');
           ctr.selectedReviw!.value.rating = rating;
-          print('sajad ctr.selectedReviw!.value.rating ${ctr.selectedReviw!.value.rating}');
+          print('ctr.selectedReviw!.value.rating ${ctr.selectedReviw!.value.rating}');
         },
       ),
     );

@@ -72,8 +72,6 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
   }
 
   Widget _selectCategories() {
-    print('sajad _selectCategories addProductController.category!.value.selectedSubcatIndex! ${addProductController.category.value.selectedSubcatIndex}');
-    print('sajad _selectCategories addProductController.category.value.id ${addProductController.category.value.id}');
 
     return Obx(
       () => addProductController.category.value.id == -1

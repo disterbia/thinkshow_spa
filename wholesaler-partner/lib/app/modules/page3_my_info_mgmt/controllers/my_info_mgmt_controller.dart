@@ -34,7 +34,6 @@ class MyInfoMgmtController extends GetxController {
   RxString imagePath = ''.obs;
 
   Future<void> uploadImageBtnPressed() async {
-    print('sajad uploadImageBtnPressed');
     _pickedImage = await pickImage();
     uploadImage();
   }
@@ -107,9 +106,9 @@ class MyInfoMgmtController extends GetxController {
   //   } else {
   //     await _apiProvider.editUserInformation(
   //         data: {'phone': phoneNumberController.text, 'certifi_id': certificationId, 'password': passwordController.text, 're_password': passwordVerifyController.text}).then((response) {
-  //       log('sajad edit. ${response}');
+  //       log('edit. ${response}');
   //       CacheProvider().setToken(response['access_token']);
-  //       log('sajad update state product mgmt');
+  //       log('update state product mgmt');
   //       Get.back();
   //       mSnackbar(message: '비밀번호가 변경되었습니다');
   //       Get.back();

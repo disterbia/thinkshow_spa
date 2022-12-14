@@ -35,7 +35,7 @@ class mOptionDropDownButton extends StatelessWidget {
 
   List<DropdownMenuItem<ProductOptionModel>> itemsBuilder() {
     return options.map<DropdownMenuItem<ProductOptionModel>>((ProductOptionModel option) {
-      print('sajad option.is_sold_out! ${option.is_sold_out}');
+      print('option.is_sold_out! ${option.is_sold_out}');
       String frontText = '';
       if (option.add_price! == 0) {
         frontText = '';

@@ -35,7 +35,7 @@ class PartnerHomeController extends GetxController {
   RxBool isShowSplashScreen = true.obs;
 
   void init() {
-    print('sajad PartnerHomeController init');
+    print('PartnerHomeController init');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isShowSplashScreen.value = false;
       getMainStore();
@@ -49,10 +49,10 @@ class PartnerHomeController extends GetxController {
   void onInit() {
     super.onInit();
     print(
-        'sajad inside PartnerHomeController onInit isScrollCtrAlreadySet $isScrollCtrAlreadySet');
+        'inside PartnerHomeController onInit isScrollCtrAlreadySet $isScrollCtrAlreadySet');
     if (isScrollCtrAlreadySet == false) {
       scrollController.value.addListener(() {
-        // print('sajad scrollController.value.addListener ${scrollController.value.offset}');
+        // print('scrollController.value.addListener ${scrollController.value.offset}');
         if (scrollController.value.position.pixels ==
                 scrollController.value.position.maxScrollExtent &&
             allowCallAPI.isTrue) {
@@ -69,18 +69,18 @@ class PartnerHomeController extends GetxController {
   }
 
   Future<void> uploadImageBtnPressed() async {
-    print('sajad inside uploadMainTopImage1234');
+    print('inside uploadMainTopImage1234');
     _pickedImage = await ImagePicker()
         .pickImage(source: ImageSource.gallery, imageQuality: 50);
-    print('sajad _pickedImage $_pickedImage');
+    print('_pickedImage $_pickedImage');
     if (_pickedImage != null) {
       isLoadingImage.value = true;
       ProductImageModel? imageModel =
           await _apiProvider.uploadStoreImage(pickedImage: _pickedImage!);
-      print('sajad imageModel $imageModel');
+      print('imageModel $imageModel');
       if (imageModel != null) {
         mainStoreInfo.value.mainTopImageUrl = imageModel.url.obs;
-        print('sajad uploadMainTopImage imageModel.path  ${imageModel.path}');
+        print('uploadMainTopImage imageModel.path  ${imageModel.path}');
         await _apiProvider
             .uploadMainTopImage(data: {'image_path': imageModel.path});
         isLoadingImage.value = false;
@@ -183,7 +183,7 @@ class PartnerHomeController extends GetxController {
   }
 
   sortDropDownChanged(String selectedItem) {
-    print('sajad selected $selectedItem');
+    print('selected $selectedItem');
     selectedSortProductDropDownItem.value = selectedItem;
     callGetProductsAPI(sort: selectedItem);
   }

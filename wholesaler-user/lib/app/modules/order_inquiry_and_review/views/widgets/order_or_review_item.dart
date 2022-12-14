@@ -87,8 +87,8 @@ class OrderOrReviewItem extends StatelessWidget {
   }
 
   Widget WriteReviewElevatedButtion() {
-    print('sajad WriteReviewElevatedButtion orderDetailId = ${item.products[productId].orderDetailId}');
-    print('sajad WriteReviewElevatedButtion price = ${item.products[productId].price}');
+    print('WriteReviewElevatedButtion orderDetailId = ${item.products[productId].orderDetailId}');
+    print('WriteReviewElevatedButtion price = ${item.products[productId].price}');
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(

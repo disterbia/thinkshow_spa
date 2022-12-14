@@ -68,10 +68,10 @@ class AP_Part2Controller extends GetxController {
     if (value.isEmpty) {
       return;
     }
-    // print('sajad sizetableFieldChanged: sizeCategoryIndex: $sizeCategoryIndex productBodySizeListIndex: $productBodySizeListIndex value: $value');
+    // print('sizetableFieldChanged: sizeCategoryIndex: $sizeCategoryIndex productBodySizeListIndex: $productBodySizeListIndex value: $value');
 
     // if (productBodySizeList[productBodySizeListIndex].isSelected.value) {
-    //   productBodySizeList[productBodySizeListIndex].sizeCategory.sajadTestValue = int.parse(value);
+    //   productBodySizeList[productBodySizeListIndex].sizeCategory.seunghanTestValue = int.parse(value);
     // }
   }
 
@@ -84,10 +84,10 @@ class AP_Part2Controller extends GetxController {
       for (int i = 0; i < addProductCtr.productModifyModel.value.sizeInfoList!.length; i++) {
         // filter 1: sizes example Free, S, M, L
         if (currentSizeStr == addProductCtr.productModifyModel.value.sizeInfoList![i].size) {
-          // print('sajad currentSizeStr   : $currentSizeStr');
+          // print('currentSizeStr   : $currentSizeStr');
           // filter 2: sizeCategoryIndex example 0, 1, 2, 3, 4
           String currentSizeCategoryEnglishStr = productBodySizeList[productBodySizeListIndex].sizeCategory.children[sizeCategoryIndex].english;
-          // print('sajad currentSizeCategoryEnglishStr $currentSizeCategoryEnglishStr');
+          // print('currentSizeCategoryEnglishStr $currentSizeCategoryEnglishStr');
           SizeInfoModel sizeList = addProductCtr.productModifyModel.value.sizeInfoList![i];
 
           if (currentSizeCategoryEnglishStr == SizeChild.arm_cross_length.english && sizeList.armCrossLength != null) {

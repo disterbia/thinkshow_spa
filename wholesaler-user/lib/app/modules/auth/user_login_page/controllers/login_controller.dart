@@ -35,8 +35,8 @@ class User_LoginPageController extends GetxController {
 
     if (kDebugMode) {
       if (MyVars.isUserProject()) {
-        // usernameController.text = "sajad6666";
-        // passwordController.text = "sajad6666";
+        // usernameController.text = "6666";
+        // passwordController.text = "6666";
         // usernameController.text = "chlrkdxkr";
         // passwordController.text = "12341234";
       } else {
@@ -44,8 +44,8 @@ class User_LoginPageController extends GetxController {
         // passwordController.text = "12345678";
         // usernameController.text = "ow3";
         // passwordController.text = "12341234";
-        // usernameController.text = "sajad1111";
-        // passwordController.text = "sajad2222";
+        // usernameController.text = "1111";
+        // passwordController.text = "2222";
         // usernameController.text = "chlove328";
         // passwordController.text = "dowkwmf1";
       }
@@ -82,7 +82,7 @@ class User_LoginPageController extends GetxController {
 
     // initialize firebase
     if (isSuccess) {
-      print('sajad before initialize firebase');
+      print('before initialize firebase');
       FirebaseService.init();
     }
   }
@@ -95,7 +95,7 @@ class User_LoginPageController extends GetxController {
 
   // USER Login Process
   Future<bool> userLoginProcess() async {
-    log('sajad inside userLoginProcess');
+    log('inside userLoginProcess');
     var response = await User_apiProvider.postLogin_User({
       "account_id": usernameController.text,
       "password": passwordController.text,
@@ -114,7 +114,7 @@ class User_LoginPageController extends GetxController {
 
   // PARTNER Login Process
   Future<bool> partnerLoginProcess() async {
-    log('sajad inside partnerLoginProcess');
+    log('inside partnerLoginProcess');
     dynamic response = await Partner_apiProvider.Partner_login({
       "account_id": usernameController.text,
       "password": passwordController.text,

@@ -32,7 +32,7 @@ class Page2StoreListController extends GetxController {
       Get.to(() => User_LoginPageView());
       return;
     }
-    log('sajad store id ${store.id}');
+    log('store id ${store.id}');
     bool isSuccess = await _apiProvider.putAddStoreFavorite(storeId: store.id);
     if (isSuccess) {
       mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');

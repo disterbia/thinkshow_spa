@@ -36,20 +36,20 @@ class ProductMgmtFilterController extends GetxController {
     // get updated dates from RangeDate Controller
     DateTime tempStartDate = rangeDatePickerCtr.tempStartDate;
     DateTime tempEndDate = rangeDatePickerCtr.tempEndDate;
-    print('sajad tempStartDate $tempStartDate');
-    print('sajad tempEndDate $tempEndDate');
+    print('tempStartDate $tempStartDate');
+    print('tempEndDate $tempEndDate');
     startDateController.text = DateFormat('yyyy-MM-dd').format(tempStartDate);
     endDateController.text = DateFormat('yyyy-MM-dd').format(tempEndDate);
-    print('sajad ctr.endDateController.value.text ${endDateController.value.text}');
+    print('ctr.endDateController.value.text ${endDateController.value.text}');
     isLoading.value = false;
   }
 
   void applyFilterPressed() {
-    print('sajad selected dates: ${startDateController.text} ~ ${endDateController.text}');
+    print('selected dates: ${startDateController.text} ~ ${endDateController.text}');
     for (int i = 0; i < clothCategories.length; i++) {
       if (clothCategories[i].isSelected!.value == true) {
         selectedClothCatIds.add(clothCategories[i].id);
-        print('sajad title: ${clothCategories[i].title} id: ${clothCategories[i].id}');
+        print('title: ${clothCategories[i].title} id: ${clothCategories[i].id}');
       }
     }
     // check if 당일, 1개월, 3개월 is selected

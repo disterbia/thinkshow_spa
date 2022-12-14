@@ -14,7 +14,7 @@ class Tab2ReviewProductDetailController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     int productId = Get.arguments;
-    print('sajad productId in Tab2ReviewProductDetailController $productId');
+    print('productId in Tab2ReviewProductDetailController $productId');
     reviews.value = await _apiProvider.getProductReviews(productId: productId, offset: 0, limit: 20);
   }
 

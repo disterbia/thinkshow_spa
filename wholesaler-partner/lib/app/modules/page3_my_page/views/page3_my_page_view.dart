@@ -3,12 +3,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/data/api_provider.dart';
 import 'package:wholesaler_partner/app/modules/ad/controllers/ad_controller.dart';
 import 'package:wholesaler_partner/app/modules/ad/views/ad_view.dart';
 import 'package:wholesaler_partner/app/modules/ad_impression/views/ad_impression_view.dart';
 import 'package:wholesaler_partner/app/modules/business_license/view/business_view.dart';
+import 'package:wholesaler_partner/app/modules/business_name/controller/business_name_controller.dart';
+import 'package:wholesaler_partner/app/modules/business_name/view/business_name_view.dart';
 import 'package:wholesaler_partner/app/modules/customer_center/view/customer_center_view.dart';
 import 'package:wholesaler_partner/app/modules/employee_mgmt/views/employee_mgmt_view.dart';
 import 'package:wholesaler_partner/app/modules/main/controller/partner_main_controller.dart';
@@ -139,7 +142,7 @@ class Page3MyPageView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ctr.store.name!,
+                  ctr.storeName.value!,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 6),
@@ -243,7 +246,7 @@ class Page3MyPageView extends StatelessWidget {
                   MyPageItem(
                     title: '상호수정',
                     onPressed: () {
-
+                      Get.to(()=>BusinessInfo());
                     },
                   ),
                   Divider(),

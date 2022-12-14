@@ -15,7 +15,7 @@ class Page3MoabogiController extends GetxController {
   }
 
   void chipPressed(int index) {
-    print('sajad tapped main category index $index');
+    print('tapped main category index $index');
     Get.to(() => ProductCategoryPageView(index));
   }
 }

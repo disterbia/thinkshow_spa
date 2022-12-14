@@ -35,7 +35,6 @@ class Tab3AdApplicationHistoryController extends GetxController {
   }
 
   addAdProductsBtnPressed(ApplicationDetailList tempApplicationDetail) {
-    print('sajad tempApplicationDetail : ${tempApplicationDetail.id}');
     Get.put(ProductMgmtController()).isBottomNavbar.value = true;
     Get.put(ProductMgmtController()).applicationId = tempApplicationDetail.id!;
     Get.to(() => ProductMgmtView(isRegisterAdProductPage: true), arguments: tempApplicationDetail.id!);

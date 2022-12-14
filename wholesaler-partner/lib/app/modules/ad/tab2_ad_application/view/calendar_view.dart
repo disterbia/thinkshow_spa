@@ -18,7 +18,6 @@ class mCalendarView extends GetView {
   Widget build(BuildContext context) {
     target_month_start_date = Utils.toDateDash(
         date: ctr.tab2AdApplyModel.value.target_month_start_date!);
-    print('sajad target_month_start_date $target_month_start_date');
 
     return SfCalendar(
       onTap: (calendarTapDetails) => ctr.calendarCellTapped(calendarTapDetails),
@@ -33,7 +32,6 @@ class mCalendarView extends GetView {
       onViewChanged: (viewChangedDetails) {
         var a = viewChangedDetails.visibleDates.toList();
         ctr.Month.value = "${a[10].month.toString()} 월";
-        print(ctr.Month.value );
       },
       showCurrentTimeIndicator: false,
       headerStyle: CalendarHeaderStyle(

@@ -23,7 +23,7 @@ class OrderDetailsController extends GetxController {
       .obs;
 
   Future<void> getData(int orderId) async {
-    print('sajad orderid $orderId');
+    print('orderid $orderId');
     order.value = await _apiProvider.getOrderDetail(orderId: orderId);
   }
 }

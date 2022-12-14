@@ -60,7 +60,7 @@ class SignupOrEditController extends GetxController {
   }
 
   Future<void> checkIdAvailableBtnPressed() async {
-    log('sajad entered id is: ' + idController.text);
+    log('entered id is: ' + idController.text);
     if (idController.text == '') {
       mSnackbar(message: 'ID를 입력하세요.');
       return;
@@ -74,7 +74,7 @@ class SignupOrEditController extends GetxController {
   }
 
   Future<void> searchAddressBtnPressed() async {
-    log('sajad inside searchAddressBtnPressed');
+    log('inside searchAddressBtnPressed');
     Kpostal? result = await Navigator.push(
         Get.context!, MaterialPageRoute(builder: (_) => KpostalView()));
     print(result?.address);
@@ -85,7 +85,7 @@ class SignupOrEditController extends GetxController {
   }
 
   Future<void> saveOrEditBtnPressed() async {
-    log('sajad saveOrEditBtnPressed');
+    log('saveOrEditBtnPressed');
     if (idController.text == '' && isEditing.isFalse) {
       mSnackbar(message: '아이디를 입력하세요.');
       return;

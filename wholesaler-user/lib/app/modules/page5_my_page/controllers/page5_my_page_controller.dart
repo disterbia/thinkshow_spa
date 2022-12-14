@@ -13,7 +13,7 @@ class Page5MyPageController extends GetxController {
 
   init() async {
     if (CacheProvider().getToken().isNotEmpty) {
-      print('sajad CacheProvider().getToken() : ${CacheProvider().getToken()}');
+      print('CacheProvider().getToken() : ${CacheProvider().getToken()}');
       user.value = await _apiProvider.getUserInfo();
     } else {
       mFuctions.userLogout();

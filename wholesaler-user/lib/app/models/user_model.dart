@@ -27,8 +27,8 @@ class User {
   /// Order
   static User dummy1() {
     return User(
-      userID: 'sajadmaster',
-      userName: 'Sajad Rahmdel',
+      userID: 'seunghan',
+      userName: 'seunghan',
       phoneNumber: '01025081486',
       address: Address.dummy(),
       birthday: DateTime.now(),
@@ -39,8 +39,8 @@ class User {
   /// Product Detail
   static User dummy2() {
     return User(
-      userID: 'sajadmaster',
-      userName: 'Sajad Rahmdel',
+      userID: 'seunghan',
+      userName: 'seunghan',
     );
   }
 }

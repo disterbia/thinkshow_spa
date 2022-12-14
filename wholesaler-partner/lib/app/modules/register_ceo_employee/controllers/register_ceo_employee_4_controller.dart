@@ -35,7 +35,7 @@ class RegisterCeoEmployee4Controller extends GetxController {
   }
 
   Future<void> verifyPhonePressed() async {
-    log('sajad verifyPhonePressed');
+    log('verifyPhonePressed');
     isPhoneVerifyFinished = await apiProvider.putPhoneNumVerify(
         phoneNumber: phoneNumCtr.text,
         phoneNumVerify: phoneNumVerifyCtr.text,

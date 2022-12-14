@@ -74,7 +74,7 @@ class AddProductController extends GetxController {
     String catTitle = ClothCategory.getAllItems().firstWhere((clothCat) => clothCat.id == productModifyModel.value.mainCategoryId).name;
     // initialize category
     category.value = ClothCategory(icon: '', id: productModifyModel.value.mainCategoryId!, image: '', subCategories: [], title: catTitle, selectedSubcatIndex: productModifyModel.value.subCategoryId!);
-    selectedSubCat.value = ClothCategoryModel(depth: 0, id: productModifyModel.value.subCategoryId!, isUse: true, name: 'selectedSubCat sajad', parentId: productModifyModel.value.mainCategoryId);
+    selectedSubCat.value = ClothCategoryModel(depth: 0, id: productModifyModel.value.subCategoryId!, isUse: true, name: 'selectedSubCat', parentId: productModifyModel.value.mainCategoryId);
 
     // product name
     productNameController.text = productModifyModel.value.productName!;

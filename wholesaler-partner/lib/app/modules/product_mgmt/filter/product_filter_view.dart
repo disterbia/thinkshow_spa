@@ -110,7 +110,7 @@ class ProductMgmtFilterView extends GetView {
         ),
       );
     }
-    print('sajad categoryChips length ${categoryChips.length}');
+    print('categoryChips length ${categoryChips.length}');
 
     return categoryChips;
   }

@@ -66,7 +66,7 @@ class ProductMgmtController extends GetxController {
       }
     }
     print(
-        'sajad selectAllCheckbox ${productsId.length} productsId ${productsId}');
+        'selectAllCheckbox ${productsId.length} productsId ${productsId}');
   }
 
   Future<void> getProducts(
@@ -109,10 +109,10 @@ class ProductMgmtController extends GetxController {
 
   Future<void> deleteSelectedProducts() async {
     StatusModel statusModel = await _apiProvider.deleteProduct();
-    log('sajad deleteSelectedProducts finished. ${statusModel.message}');
+    log('deleteSelectedProducts finished. ${statusModel.message}');
 
     if (statusModel.statusCode == 200) {
-      log('sajad update state product mgmt');
+      log('update state product mgmt');
       List<int> selectedProductIndexs = [];
       for (int i = 0; i < products.length; i++) {
         if (products[i].isChecked!.value) {
@@ -144,10 +144,10 @@ class ProductMgmtController extends GetxController {
       statusModel =
           await _apiProvider.addToTop10(data: {"productIdList": productsId});
     }
-    log('sajad top 10 . ${statusModel.message}');
+    log('top 10 . ${statusModel.message}');
 
     if (statusModel.statusCode == 200) {
-      log('sajad update state product mgmt');
+      log('update state product mgmt');
       for (int i = 0; i < productsId.length; i++) {
         Product product =
             products.firstWhere((element) => productsId[i] == element.id);
@@ -170,10 +170,10 @@ class ProductMgmtController extends GetxController {
 
     StatusModel statusModel = await _apiProvider
         .soldOut(data: {"productIdList": productsId, "is_release": isSoldout});
-    log('sajad sold out . ${statusModel.message}');
+    log('sold out . ${statusModel.message}');
 
     if (statusModel.statusCode == 200) {
-      log('sajad update state product mgmt');
+      log('update state product mgmt');
       // change products soldout
       for (int i = 0; i < productsId.length; i++) {
         Product product =
@@ -189,7 +189,7 @@ class ProductMgmtController extends GetxController {
   }
 
   Future<void> addToDingDong() async {
-    print('sajad addToDingDong productsId ${productsId}');
+    print('addToDingDong productsId ${productsId}');
     Product product =
         products.firstWhere((element) => productsId.first == element.id);
     bool isFirstProductHasBellIconAndBorder =
@@ -198,7 +198,7 @@ class ProductMgmtController extends GetxController {
       "productIdList": productsId,
       "is_release": product.hasBellIconAndBorder!.value
     });
-    log('sajad ding dong  . ${statusModel.message}');
+    log('ding dong  . ${statusModel.message}');
 
     if (statusModel.statusCode == 200) {
       for (int i = 0; i < productsId.length; i++) {
@@ -237,7 +237,7 @@ class ProductMgmtController extends GetxController {
       isSelectAll.value = false;
 
       mSnackbar(message: statusModel.message);
-      log('sajad update state product mgmt');
+      log('update state product mgmt');
     } else {
       if (statusModel.message == '') {
         mSnackbar(message: '오류: 관리자에게 문의하세요.');

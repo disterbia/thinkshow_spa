@@ -25,7 +25,7 @@ class FaqView extends GetView<FaqController> {
   }
 
   _Listview1Builder() {
-    print('sajad inside _Listview1Builder ctr.faqList.length ${ctr.faqList.length}');
+    print('inside _Listview1Builder ctr.faqList.length ${ctr.faqList.length}');
     return SingleChildScrollView(
       child: Obx(
         () => Padding(

@@ -157,7 +157,7 @@ class Cart1ShoppingBasketController extends GetxController {
       // for (Cart cart in cartItems) {
       //   for (Product product in cart.products) {
       //     if (product.cartId == cartId) {
-      //       print('sajad found product with cartId: $cartId');
+      //       print('found product with cartId: $cartId');
       //       product.quantity!.value = newQty;
       //     }
       //   }

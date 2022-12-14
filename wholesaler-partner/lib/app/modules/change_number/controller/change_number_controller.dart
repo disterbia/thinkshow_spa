@@ -37,7 +37,7 @@ class ChangeNumberController extends GetxController {
     };
     dynamic response;
     if (MyVars.isUserProject()) {
-      print('sajad data : ${data.toString()}');
+      print('data : ${data.toString()}');
       response = await userApiProvider.changePhoneNumber(data: data);
       Get.back();
     } else {

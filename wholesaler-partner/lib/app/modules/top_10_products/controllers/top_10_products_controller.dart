@@ -79,7 +79,7 @@ class Top10ProductsController extends GetxController {
 
       bestProducts.addAll(response);
       for (var element in bestProducts) {
-        log('sajad best id: ${element.id}');
+        log('best id: ${element.id}');
         products.add(
           Product(
             id: element.id!,

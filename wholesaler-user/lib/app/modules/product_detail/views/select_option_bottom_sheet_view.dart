@@ -50,7 +50,7 @@ Future<dynamic> SelectOptionBottomSheet() {
                   () => QuantityPlusMinusWidget(
                     quantity: ctr.product.value.quantity!.value,
                     onTap: (isRightTapped) {
-                      print('sajad isRightTapped $isRightTapped');
+                      print('isRightTapped $isRightTapped');
                       if (isRightTapped) {
                         ctr.product.value.quantity!.value = ctr.product.value.quantity!.value + 1;
                         ctr.UpdateTotalPrice();

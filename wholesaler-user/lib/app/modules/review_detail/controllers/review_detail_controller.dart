@@ -76,7 +76,7 @@ class ReviewDetailController extends GetxController {
 
       if (productImageModel!.statusCode == 200) {
         print(
-            'sajad image uploaded productImageModel.url ${productImageModel!.url}');
+            'image uploaded productImageModel.url ${productImageModel!.url}');
         selectedReviw!.value.reviewImageUrl = productImageModel!.url;
         reviewImageUrl.value = productImageModel!.url;
       }
@@ -90,7 +90,7 @@ class ReviewDetailController extends GetxController {
         image_path: productImageModel!.path,
         reviewId: selectedReviw!.value.id,
         star: selectedReviw!.value.rating);
-    print('sajad edit');
+    print('edit');
     if (isSuccess) {
       mSnackbar(message: '수정이 완료되었습니다.');
       Get.back();

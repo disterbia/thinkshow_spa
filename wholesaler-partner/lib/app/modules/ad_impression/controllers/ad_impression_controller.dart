@@ -42,7 +42,6 @@ class AdImpressionController extends GetxController {
     isLoading.value = true;
 
     dynamic response = await _apiProvider.getImpressionsInformation(startDate, endDate, tag);
-    print('sajad getImpressionsInformation response ${response}');
     impressionItems.clear();
     List<ImpressionProductModel> productItems = [];
     _getImpressionData(response);
@@ -63,7 +62,6 @@ class AdImpressionController extends GetxController {
   }
 
   void _getItemData(dynamicList, List<ImpressionProductModel> productItems) {
-    print('sajad dynamicList ${dynamicList}');
     for (var i = 0; i < dynamicList.length; i++) {
       var productList = dynamicList[i]['product_detail_statistic_list'];
       for (var j = 0; j < productList.length; j++) {
@@ -86,7 +84,6 @@ class AdImpressionController extends GetxController {
           ),
         );
       }
-      print('sajad productItems ${productItems.length}');
       impressionItems.add(ImpressionItemModel(date: dynamicList[i]['date'], cost: dynamicList[i]['cost_info_text'], products: productItems));
     }
   }

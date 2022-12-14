@@ -19,7 +19,7 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 class StoreDetailView extends GetView {
   StoreDetailController ctr = Get.put(StoreDetailController());
   StoreDetailView({required int storeId}) {
-    print('sajad storeId $storeId');
+    print('storeId $storeId');
     ctr.storeId.value = storeId;
     ctr.init();
   }
@@ -256,7 +256,7 @@ class StoreDetailView extends GetView {
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {
-                print('sajad DropdownButton newValue $newValue');
+                print('DropdownButton newValue $newValue');
                 ctr.selectedDropdownIndex.value =
                     ctr.dropdownItems.indexOf(newValue!);
                 ctr.updateProducts(isScrolling: false);

@@ -17,7 +17,7 @@ class UploadImageContainer_empty extends StatelessWidget {
       strokeWidth: 1,
       child: InkWell(
         onTap: () {
-          print('sajad tapped on business regi');
+          print(' tapped on business regi');
           // Get.delete<BusinessRegistrationSubmitController>();
           Get.to(() => BusinessRegistrationSubmitView(isNewSubmit: true));
         },

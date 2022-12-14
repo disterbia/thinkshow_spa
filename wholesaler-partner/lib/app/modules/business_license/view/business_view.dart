@@ -6,6 +6,7 @@ import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/custom_button.dart';
+import 'package:wholesaler_partner/app/modules/business_license/view/business_edit_view.dart';
 
 class BusinessView extends GetView {
   BusinessView({Key? key}) : super(key: key);
@@ -32,6 +33,15 @@ class BusinessView extends GetView {
                   _description(),
                   _licenseNumber(),
                   _image(),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomButton(
+                      width: Get.width,
+                      onPressed: ()=>Get.to(()=>BusinessEditView()),
+                      text: 'edit'.tr,
+                    ),
+                  ),
                   // _imageButton(),
                   SizedBox(
                     height: 50,
@@ -79,7 +89,7 @@ class BusinessView extends GetView {
   // }
 
   Widget _image() {
-    print('sajad controller.uploadedImageURL = ' + ctr.uploadedImageURL.value.toString());
+    print('controller.uploadedImageURL = ' + ctr.uploadedImageURL.value.toString());
     return ctr.uploadedImageURL.isEmpty
         ? Center(
             child: Text(
@@ -91,6 +101,18 @@ class BusinessView extends GetView {
             child: CachedNetworkImage(
               imageUrl: ctr.uploadedImageURL.value,
               width: Get.width,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Container(
+                      margin: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            ),
+                      )),
+
               // placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),

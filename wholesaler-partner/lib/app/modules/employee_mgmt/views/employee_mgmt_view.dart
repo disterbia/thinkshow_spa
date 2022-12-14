@@ -53,7 +53,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                   SizedBox(width: spaceBetweenNumberText),
                   Text(
                     '직원이 띵쇼마켓 앱을 설치합니다.',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 15),
                   ),
                 ],
               ),
@@ -79,7 +79,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                     children: [
                       Text(
                         '우리 매장을 검색하고 선택, 가입합니다.',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 15),
                       ),
                       SizedBox(height: 3),
                       Text(
@@ -101,7 +101,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                     children: [
                       Text(
                         '직원관리 화면 하단에 직원신청을 승인해주세요',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 15),
                       ),
                       SizedBox(height: 3),
                       Text(

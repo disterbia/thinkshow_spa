@@ -23,7 +23,7 @@ class ProductCategoryPageController extends GetxController {
   RxBool allowCallAPI = true.obs;
 
   init() async {
-    // print('sajad inside ProductCategoryPageView > init > selectedMainCatIndex $selectedMainCatIndex');
+    // print('inside ProductCategoryPageView > init > selectedMainCatIndex $selectedMainCatIndex');
     title = ClothCategory.getTitleAt(selectedMainCatIndex);
     selectedCatIndex.value = selectedMainCatIndex + 1;
 
@@ -34,7 +34,7 @@ class ProductCategoryPageController extends GetxController {
     }
 
     scrollController.value.addListener(() {
-      // print('sajad inside ProductCategoryPageView > init > scrollController.value.position.pixels ${scrollController.value.position.pixels}');
+      // print('inside ProductCategoryPageView > init > scrollController.value.position.pixels ${scrollController.value.position.pixels}');
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
         offset += mConst.limit;
         updateProducts(isScrolling: true);
@@ -43,8 +43,8 @@ class ProductCategoryPageController extends GetxController {
   }
 
   subCatChipPressed(ClothCategoryModel selectedSubcat) async {
-    print('sajad selectedSubcat id: ${selectedSubcat.id}');
-    print('sajad selectedSubcat parentId: ${selectedSubcat.parentId}');
+    print('selectedSubcat id: ${selectedSubcat.id}');
+    print('selectedSubcat parentId: ${selectedSubcat.parentId}');
     selectedCatIndex.value = selectedSubcat.id;
     // reset variables
     products.clear();

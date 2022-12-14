@@ -24,7 +24,6 @@ class AddProductView extends GetView<AddProductController> {
     if (Get.arguments != null) {
       ctr.isEditing.value = true;
       ctr.productIdforEdit = Get.arguments;
-      print('sajad AddProductView > editing > productId: ${Get.arguments}');
       ctr.getProductEditInfo(productId: Get.arguments);
     }
   }
@@ -40,7 +39,6 @@ class AddProductView extends GetView<AddProductController> {
       // GestureDetector: when click on anywhere on the screen close keyboard
       body: GestureDetector(
         onTap: () {
-          print('sajad tapped outside keyboard detected');
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: body(),

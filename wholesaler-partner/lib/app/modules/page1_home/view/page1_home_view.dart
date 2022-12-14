@@ -395,7 +395,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
           SizedBox(height: 10),
           ProductGridViewBuilder(
             crossAxisCount: 3,
-            productHeight: 270,
+            productHeight: 280,
             products: ctr.products,
             isShowLoadingCircle: ctr.allowCallAPI,
           ),

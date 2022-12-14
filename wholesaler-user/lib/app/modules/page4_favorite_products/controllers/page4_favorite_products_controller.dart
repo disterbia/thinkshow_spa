@@ -21,7 +21,7 @@ class Page4Favorite_RecentlyViewedController extends GetxController {
     if (isRecentSeenProduct) {
       // Recently Seen Products
       List productIds = _cacheProvider.getAllRecentlyViewedProducts();
-      print('sajad productIds ${productIds}');
+      print('productIds ${productIds}');
       if (productIds.isNotEmpty) {
         products.value = await _apiProvider.getRecentlySeenProducts(productIds);
       }

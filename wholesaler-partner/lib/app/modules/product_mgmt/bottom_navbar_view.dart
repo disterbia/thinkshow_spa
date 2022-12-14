@@ -105,7 +105,7 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
                 rightBtnText: 'ok'.tr,
                 leftBtnText: 'cancel'.tr,
                 rBtnOnPressed: () {
-                  log('sajad selected: $text');
+                  log('selected: $text');
                   if (text == ProductMgmtButtons.delete) {
                     ctr.deleteSelectedProducts();
                   } else if (text == ProductMgmtButtons.top10) {

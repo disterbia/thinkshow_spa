@@ -80,7 +80,6 @@ class Tab1AdStatusController extends GetxController {
 
   // 상품을 등록해주세요 button pressed
   addOrEditAdProductsBtnPressed(int exposureAdIndex) {
-    print('sajad addOrEditAdProductsBtnPressed ads_application_id: ${exposureAds[exposureAdIndex].ads_application_id}');
     Get.put(ProductMgmtController()).isBottomNavbar.value = true;
     Get.put(ProductMgmtController()).applicationId = exposureAds[exposureAdIndex].ads_application_id;
     Get.to(() => ProductMgmtView(isRegisterAdProductPage: true), arguments: exposureAds[exposureAdIndex].ads_application_id);
@@ -88,12 +87,12 @@ class Tab1AdStatusController extends GetxController {
 
   // After the user selects products from Products Mgmt page
   Future<void> addToAdProduct({required List<int> productsId, required int ads_application_id}) async {
-    print('sajad addToAdProduct productsId $productsId ads_application_id $ads_application_id');
+    print('addToAdProduct productsId $productsId ads_application_id $ads_application_id');
     bool isSuccess = await _apiProvider.addToAd(data: {"product_ids": productsId}, adApplicationId: ads_application_id);
 
     if (isSuccess) {
       mSnackbar(message: '추가 완료되었습니다.');
-      print('sajad selectedAdTagIndex ${selectedAdTagIndex.value}');
+      print('selectedAdTagIndex ${selectedAdTagIndex.value}');
       await callGetAdExposureProducts(adTagIndex: selectedAdTagIndex.value);
       Get.back();
     }

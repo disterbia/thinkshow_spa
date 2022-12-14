@@ -84,7 +84,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
   Widget _dingdongBanner() {
     return GestureDetector(
       onTap: () {
-        print('sajad dingdong_delivery_banner tap detected. ');
+        print('dingdong_delivery_banner tap detected. ');
         page1HomeCtr.tabBarIndex.value = UserHomeTabs.dingdong.index;
         print('page1HomeCtr.tabBarIndex.value ${page1HomeCtr.tabBarIndex.value}');
       },

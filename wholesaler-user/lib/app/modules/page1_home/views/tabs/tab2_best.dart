@@ -56,7 +56,7 @@ class Tab2BestView extends GetView<Tab2BestController> {
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {
-                log('sajad $newValue');
+                log('$newValue');
                 ctr.selectedDropdownIndex.value =
                     ctr.dropdownItems.indexOf(newValue!);
                 ctr.updateProducts();

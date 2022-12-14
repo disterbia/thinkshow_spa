@@ -31,7 +31,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
 
   @override
   Widget build(BuildContext context) {
-    print('sajad inside Page5MyPageView build');
+    print('inside Page5MyPageView build');
     init();
     return Scaffold(
       appBar: CustomAppbar(isBackEnable: false, title: '마이페이지'),

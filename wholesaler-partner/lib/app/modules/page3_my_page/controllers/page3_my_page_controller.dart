@@ -12,6 +12,7 @@ class Page3MyPageController extends GetxController {
   Store store = Store(id: -1);
   bool isOwner = false;
   String accountId = '';
+  RxString storeName = "".obs;
 
   @override
   void onInit() {
@@ -30,6 +31,7 @@ class Page3MyPageController extends GetxController {
     bool isRegistBankInfo = json['is_regist_bank_info'] ?? false;
     accountId = json['account_id'];
     String storeName = json['store_name'];
+    this.storeName.value=json['store_name'];
     String storeThumbnailImageUrl = json['store_thumbnail_image_url'] ?? '';
     print(" 이름 : ${storeName}");
     String storeThumbnailImagePath = json['store_thumbnail_image_path'] ?? '';

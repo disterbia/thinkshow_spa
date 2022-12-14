@@ -98,7 +98,7 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {
-                print('sajad $newValue');
+                print('$newValue');
                 ctr.selectedDropdownIndex.value = ctr.dropdownItems.indexOf(newValue!);
                 ctr.updateProducts(isScrolling: false);
               },

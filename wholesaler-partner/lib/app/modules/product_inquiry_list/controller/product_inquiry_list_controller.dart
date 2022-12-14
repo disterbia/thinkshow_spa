@@ -31,7 +31,7 @@ class ProductInquiryListController extends GetxController {
 
       inquiriesResponse.addAll(response);
       for (var element in inquiriesResponse) {
-        print('sajad element.createdAt.toString() ${element.createdAt.toString()}');
+        print('element.createdAt.toString() ${element.createdAt.toString()}');
         inquiries.add(
           ProductInquiry(
             product: Product(

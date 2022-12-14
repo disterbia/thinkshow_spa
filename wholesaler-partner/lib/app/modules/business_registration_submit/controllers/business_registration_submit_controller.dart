@@ -10,6 +10,7 @@ import 'package:wholesaler_user/app/widgets/snackbar.dart';
 class BusinessRegistrationSubmitController extends GetxController {
   pApiProvider _apiProvider = pApiProvider();
   XFile? _pickedImage;
+  XFile? pickedImageToEdit;
   RxString uploadedImageURL = ''.obs;
   RxString uploadedImagePath = ''.obs;
   RxBool isLoading = false.obs;
@@ -31,6 +32,7 @@ class BusinessRegistrationSubmitController extends GetxController {
   uploadImage() async {
     if (_pickedImage != null) {
       isLoading.value = true;
+      pickedImageToEdit=_pickedImage;
       ProductImageModel response = await _apiProvider.postUploadBusinessRegisterImage(pickedImage: _pickedImage!);
       if (response.statusCode == 200) {
         isLoading.value = false;
@@ -40,7 +42,7 @@ class BusinessRegistrationSubmitController extends GetxController {
       }
       isLoading.value = false;
 
-      log('sajad uploadedImageURL $uploadedImageURL');
+      log('uploadedImageURL $uploadedImageURL');
     }
   }
 }

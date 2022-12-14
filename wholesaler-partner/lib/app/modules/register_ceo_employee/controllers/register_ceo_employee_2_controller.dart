@@ -48,13 +48,13 @@ class RegisterCeoEmployee2Controller extends GetxController {
     floors.value = await apiProvider.getStoreLocations(
         buildingType: BuildingType.floor, parent_id: buildingId);
     // floors.addAll(response!);
-    print('sajad floors added');
+    print(' floors added');
   }
 
   getUnits(int floorId) async {
     units.value = await apiProvider.getStoreLocations(
         buildingType: BuildingType.unit, parent_id: floorId);
-    print('sajad unit: ${units.value}');
+    print(' unit: ${units.value}');
   }
 
   void nextBtnPressed() {
@@ -83,7 +83,7 @@ class RegisterCeoEmployee2Controller extends GetxController {
   }
 
   Future<void> storeLocationSelectPressed(int index) async {
-    print('sajad index $index');
+    print(' index $index');
     inspect(storeLocations[index]);
     // building
     Address building = Address(
@@ -98,7 +98,7 @@ class RegisterCeoEmployee2Controller extends GetxController {
         type: BuildingType.floor,
         name: storeLocations[index].floorInfo!.name!.obs,
         parent_id: building.id);
-    print('sajad after Address floor ${floor.name}');
+    print(' after Address floor ${floor.name}');
     selectedFloor.value = floor;
     floorController.text = floor.name!.value;
     // unit

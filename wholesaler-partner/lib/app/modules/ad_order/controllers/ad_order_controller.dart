@@ -10,7 +10,6 @@ class AdOrderController extends GetxController {
     super.onInit();
 
     // print value of Get.arguments
-    print('sajad Get.arguments: ${Get.arguments}');
 
     adOrderModel.value = await _apiProvider.getAdOrder(advertisementId: Get.arguments);
   }

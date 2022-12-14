@@ -10,7 +10,7 @@ class Tab2BookmarksView extends StatelessWidget {
   Tab2BookmarksView();
   init() async {
     await ctr.getBookmarkedStoreData();
-    log('sajad Tab2BookmarksView init');
+    log('Tab2BookmarksView init');
   }
 
   @override

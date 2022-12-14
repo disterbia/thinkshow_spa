@@ -52,7 +52,7 @@ class pApiProvider extends GetConnect {
   // ###### COMMON APIs ######
   /// Common 휴대폰 인증 요청 API
   Future<int> postRequestVerifyPhoneNum({required String phoneNumber}) async {
-    log('sajad getVerifyPhone -> phoneNumber $phoneNumber');
+    log(' getVerifyPhone -> phoneNumber $phoneNumber');
 
     String url = mConst.API_BASE_URL +
         mConst.API_COMMON_PATH +
@@ -179,7 +179,7 @@ class pApiProvider extends GetConnect {
     });
     final response = await dio.post(url, data: formData);
     print(
-        'sajad postUploadBusinessRegisterImage -> response ${response.statusCode}');
+        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -221,7 +221,7 @@ class pApiProvider extends GetConnect {
       'store_id': p2Ctr.selectedUnit.value.store_id,
     };
     final response = await post(url, body);
-    log('sajad postStaffRegister res');
+    log(' postStaffRegister res');
     var json = jsonDecode(response.bodyString!);
     log("response : " + json.toString());
     if (response.statusCode == 200) {
@@ -247,10 +247,10 @@ class pApiProvider extends GetConnect {
         Get.put(BusinessRegistrationSubmitController());
 
     print(
-        'sajad businessRegistrationSubmitCtr.uploadedImageURL.value ${businessRegistrationSubmitCtr.uploadedImageURL.value}');
+        ' businessRegistrationSubmitCtr.uploadedImageURL.value ${businessRegistrationSubmitCtr.uploadedImageURL.value}');
 
     // String imagePath = businessRegistrationSubmitCtr.uploadedImageURL.value.split("/").last;
-    // print('sajad imagePath $imagePath');
+    // print('imagePath $imagePath');
 
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.CEO_REGISTER;
@@ -269,7 +269,7 @@ class pApiProvider extends GetConnect {
       'certifi_id': p4Ctr.certifi_id,
     };
     final response = await post(url, body);
-    log('sajad postCeoRegister res');
+    log(' postCeoRegister res');
     var json = jsonDecode(response.bodyString!);
     log("response : " + json.toString());
     if (response.statusCode == 200) {
@@ -361,7 +361,7 @@ class pApiProvider extends GetConnect {
         mConst.CHECK;
 
     final response = await post(url, data);
-    print('sajad findPassword response ${response.bodyString}');
+    print(' findPassword response ${response.bodyString}');
 
     String message = '';
     int statusCode = response.statusCode ?? 0;
@@ -407,7 +407,7 @@ class pApiProvider extends GetConnect {
   Future<dynamic> Partner_login(Map<String, dynamic> data) async {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.LOGIN;
     final response = await post(url, data);
-    print('sajad Partner_login response ${response.bodyString}');
+    print(' Partner_login response ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return json;
@@ -445,9 +445,66 @@ class pApiProvider extends GetConnect {
         statusCode: statusCode, message: message, data: response.bodyString);
   }
 
+  Future<StatusModel> getOwnerInfo() async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
+    final response = await get(url, headers: headers);
+    String message = '';
+    int statusCode = response.statusCode ?? 0;
+    switch (statusCode) {
+      case 0:
+        message = 'error';
+        break;
+      case 200:
+        message = '완료되었습니다.';
+        break;
+      default:
+        var json = jsonDecode(response.bodyString!);
+        message = json['description'] ?? '';
+        break;
+    }
+    return StatusModel(
+        statusCode: statusCode, message: message, data: response.bodyString);
+  }
+
   Future<StatusModel> saveAccountInfo(Map<String, dynamic> data) async {
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/me/account-info';
+    final response = await put(url, data, headers: headers);
+    int statusCode = response.statusCode ?? 0;
+    String message = '';
+    switch (statusCode) {
+      case 200:
+        message = '완료되었습니다';
+        break;
+      default:
+        var json = jsonDecode(response.bodyString ?? '');
+        message = json['description'] ?? 'error';
+        break;
+    }
+    return StatusModel(statusCode: statusCode, message: message);
+  }
+
+  Future<StatusModel> saveCompanyName(Map<String, dynamic> data) async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
+    final response = await put(url, data, headers: headers);
+    int statusCode = response.statusCode ?? 0;
+    String message = '';
+    switch (statusCode) {
+      case 200:
+        message = '완료되었습니다';
+        break;
+      default:
+        var json = jsonDecode(response.bodyString ?? '');
+        message = json['description'] ?? 'error';
+        break;
+    }
+    return StatusModel(statusCode: statusCode, message: message);
+  }
+  Future<StatusModel> saveLicense(Map<String, dynamic> data) async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-license-info';
     final response = await put(url, data, headers: headers);
     int statusCode = response.statusCode ?? 0;
     String message = '';
@@ -485,7 +542,7 @@ class pApiProvider extends GetConnect {
       data: formData,
     );
     print(
-        'sajad postUploadBusinessRegisterImage -> response ${response.statusCode}');
+        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -512,7 +569,7 @@ class pApiProvider extends GetConnect {
     log('top image' + response.body.toString());
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print('sajad json : ' + json.toString());
+      print(' json : ' + json.toString());
       return "https://image.thinksmk.com/images/advertisement/2022/07/22/PqTv8rNpBwHHTHd42V6qRIJl4BIJN4cXqjZZPhMt.png";
     }
     if (response.statusCode == 400) {
@@ -544,7 +601,7 @@ class pApiProvider extends GetConnect {
       data: formData,
     );
     print(
-        'sajad postUploadBusinessRegisterImage -> response ${response.statusCode}');
+        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -626,7 +683,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/reviews',
         headers: headers);
     if (response.statusCode == 200) {
-      print('sajad getStoreReviews response.bodyString : ' +
+      print(' getStoreReviews response.bodyString : ' +
           response.bodyString!);
       return jsonDecode(response.bodyString!);
     }
@@ -736,7 +793,7 @@ class pApiProvider extends GetConnect {
         selectedProductIds.add(product.id);
       }
     }
-    log('sajad productIdList $selectedProductIds');
+    log(' productIdList $selectedProductIds');
 
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/products';
     Map<String, dynamic> query = {"productIdList": selectedProductIds};
@@ -747,12 +804,12 @@ class pApiProvider extends GetConnect {
 
     try {
       final response = await dio.delete(url, data: query);
-      log('sajad delete resp ${response.data}');
-      log('sajad no error.statusCode ${response.statusCode!} ');
+      log(' delete resp ${response.data}');
+      log(' no error.statusCode ${response.statusCode!} ');
       return StatusModel(
           statusCode: response.statusCode!, message: 'successfully deleted');
     } catch (e) {
-      log('sajad delete error. e $e');
+      log(' delete error. e $e');
       return StatusModel(statusCode: 0, message: 'Error $e');
     }
   }
@@ -761,7 +818,7 @@ class pApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/inquiries',
         headers: headers);
-    print('sajad response ${response.bodyString}');
+    print(' response ${response.bodyString}');
 
     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
@@ -929,7 +986,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/product/$productId',
         data,
         headers: headers);
-    print('sajad editProduct response ${response.body}');
+    print(' editProduct response ${response.body}');
 
     if (response.statusCode == 200) {
       return true;
@@ -999,7 +1056,7 @@ class pApiProvider extends GetConnect {
   Future<StatusModel> addToTop10({
     required Map<String, dynamic> data,
   }) async {
-    print('sajad addToTop10 data ${data}');
+    print(' addToTop10 data ${data}');
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/product/bests';
 
@@ -1025,7 +1082,7 @@ class pApiProvider extends GetConnect {
 
   Future<StatusModel> removeTop10(
       {required Map<String, List<int>> data}) async {
-    print('sajad removeTop10 data ${data}');
+    print(' removeTop10 data ${data}');
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/product/bests';
 
@@ -1052,12 +1109,12 @@ class pApiProvider extends GetConnect {
   Future<bool> addToAd(
       {required Map<String, dynamic> data,
       required int adApplicationId}) async {
-    print('sajad addToAd data ${data} adApplicationId ${adApplicationId}');
+    print(' addToAd data ${data} adApplicationId ${adApplicationId}');
     String url = mConst.API_BASE_URL +
         mConst.API_STORE_PATH +
         '/advertisement/application/$adApplicationId/products';
     final response = await post(url, data, headers: headers);
-    print('sajad addToAd response ${response.body}');
+    print(' addToAd response ${response.body}');
 
     var json = jsonDecode(response.bodyString!);
 
@@ -1093,10 +1150,10 @@ class pApiProvider extends GetConnect {
     required Map<String, dynamic> data,
   }) async {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/staff/me';
-    print('sajad editUserInformation data ${data}');
+    print(' editUserInformation data ${data}');
 
     final response = await put(url, data, headers: headers);
-    print('sajad editUserInformation response ${response.body}');
+    print(' editUserInformation response ${response.body}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.bodyString!);
@@ -1245,7 +1302,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('sajad getAdExposureProducts  error: response.statusText!');
+      print('getAdExposureProducts  error: response.statusText!');
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1254,7 +1311,7 @@ class pApiProvider extends GetConnect {
   Future<dynamic> getImpressionsInformation(
       String startDate, String endDate, String tag) async {
     print(
-        'sajad getImpressionsInformation startDate: $startDate endDate: $endDate');
+        'getImpressionsInformation startDate: $startDate endDate: $endDate');
     // '광고R', '광고S', '광고1ST', '광고2ST', '광고3ST'
     int addNumber = -1;
     if (tag == '광고R') {
@@ -1293,7 +1350,7 @@ class pApiProvider extends GetConnect {
             mConst.API_STORE_PATH +
             '/advertisement/application-history',
         headers: headers);
-    print('sajad getApplicationHistory response: ${response.bodyString}');
+    print('getApplicationHistory response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return HistoryAdModel.fromJson(response.bodyString!);
@@ -1317,7 +1374,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('sajad getProductDetails error');
+      print('getProductDetails error');
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1369,7 +1426,7 @@ class pApiProvider extends GetConnect {
         '/search/store-location?store_name=$searchValue');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print('sajad getSearchStoreName :' +
+      print('getSearchStoreName :' +
           jsonDecode(response.bodyString!).toString());
       List<StoreLocation> storeLocations = [];
       for (var storeLocation in json) {
@@ -1382,7 +1439,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('sajad getProductDetails error');
+      print('getProductDetails error');
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1397,7 +1454,7 @@ class pApiProvider extends GetConnect {
         headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print('sajad getPaymentTab2_OrderHistory :' +
+      print('getPaymentTab2_OrderHistory :' +
           jsonDecode(response.bodyString!).toString());
       List<OrderHistoryExpandedModel> orderHistories = [];
       for (var historyJson in json) {
@@ -1411,7 +1468,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('sajad getProductDetails error');
+      print('getProductDetails error');
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1425,7 +1482,7 @@ class pApiProvider extends GetConnect {
             '/advertisement/application-info',
         headers: headers);
 
-    print('sajad getAdTab2AdApplyInquiry :' + response.bodyString!);
+    print('getAdTab2AdApplyInquiry :' + response.bodyString!);
 
     if (response.statusCode == 200) {
       return AdTab2ApplyModel.fromJson(response.bodyString!);
@@ -1434,7 +1491,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('sajad getAdTab2AdApplyInquiry error: ${response.statusText}');
+      print('getAdTab2AdApplyInquiry error: ${response.statusText}');
       // mSnackbar(message: response.statusText!);
       return null;
     }
@@ -1444,7 +1501,7 @@ class pApiProvider extends GetConnect {
   Future<bool> postAdTab2AdApplication(
       {required int adApplicationId,
       required List<DateTime> applicationDates}) async {
-    log('sajad postAdTab2AdApplication -> applicationDates $applicationDates');
+    log('postAdTab2AdApplication -> applicationDates $applicationDates');
 
     List<String> datesStr = [];
     for (var date in applicationDates) {
@@ -1463,7 +1520,7 @@ class pApiProvider extends GetConnect {
     final response = await post(url, body, headers: headers);
 
     if (response.statusCode == 200) {
-      print('sajad postAdTab2AdApplication : ${response.bodyString!}');
+      print('postAdTab2AdApplication : ${response.bodyString!}');
       mSnackbar(message: '신청이 완료 되었습니다.');
       return true;
     }
@@ -1482,7 +1539,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/point-history';
 
     final response = await get(url, headers: headers);
-    print('sajad getPointMgmtListForPartner ${response.bodyString}');
+    print('getPointMgmtListForPartner ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1510,7 +1567,7 @@ class pApiProvider extends GetConnect {
       'depositor_name': name,
     };
     dynamic response = await post(url, body, headers: headers);
-    print('sajad chargePoint ${response.bodyString}');
+    print('chargePoint ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1547,7 +1604,7 @@ class pApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/notice-boards',
         headers: headers);
-    print('sajad getPartnerBulletins ${response.bodyString}');
+    print('getPartnerBulletins ${response.bodyString}');
     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
       List<BulletinModel> bulletins =
@@ -1569,7 +1626,7 @@ class pApiProvider extends GetConnect {
         '/product/$productId/for-modify';
 
     var response = await get(url, headers: headers);
-    print('sajad getProductEditInfo ${response.bodyString}');
+    print('getProductEditInfo ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
@@ -1589,7 +1646,7 @@ class pApiProvider extends GetConnect {
         mConst.API_STORE_PATH +
         '/advertisement/$adId/product/$productId';
     dynamic response = await delete(url, headers: headers);
-    print('sajad deleteAdProduct ${response.bodyString}');
+    print('deleteAdProduct ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1612,7 +1669,7 @@ class pApiProvider extends GetConnect {
 
     final response = await put(url, body, headers: headers);
 
-    print('sajad adPayment ${response.bodyString}');
+    print('adPayment ${response.bodyString}');
 
     if (response.statusCode == 200) {
       mSnackbar(message: '결제가 완료 되었습니다.');
@@ -1631,7 +1688,7 @@ class pApiProvider extends GetConnect {
   Future<bool> putAdBudget(
       int advertisement_application_id, int amountInt) async {
     print(
-        'sajad putAdBudget advertisement_application_id $advertisement_application_id amountInt $amountInt');
+        'putAdBudget advertisement_application_id $advertisement_application_id amountInt $amountInt');
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/advertisement/budget';
 
@@ -1642,7 +1699,7 @@ class pApiProvider extends GetConnect {
 
     final response = await put(url, body, headers: headers);
 
-    print('sajad putAdBudget ${response.bodyString}');
+    print('putAdBudget ${response.bodyString}');
 
     if (response.statusCode == 200) {
       mSnackbar(message: '예산설정 완료되었습니다.');
@@ -1660,7 +1717,7 @@ class pApiProvider extends GetConnect {
   void withdrawAccount() {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/me';
     delete(url, headers: headers).then((response) {
-      print('sajad withdrawAccount ${response.bodyString}');
+      print('withdrawAccount ${response.bodyString}');
       if (response.statusCode == 200) {
         mSnackbar(message: '탈퇴 요청 완료되었습니다.');
         mFuctions.userLogout();

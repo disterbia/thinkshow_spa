@@ -15,7 +15,7 @@ class User_RegisterPrivacyTermsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    print('sajad Get.arguments ${Get.arguments}');
+    print('Get.arguments ${Get.arguments}');
 
     return Scaffold(
       backgroundColor: Colors.white,

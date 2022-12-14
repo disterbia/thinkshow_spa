@@ -221,7 +221,6 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
             return ClothWashToggle(
               clothWash: ctr.clothWashToggles[index],
               onPressed: () {
-                print('sajad cloth wash clicked');
                 ctr.clothWashToggles[index].isActive.toggle();
               },
             );

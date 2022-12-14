@@ -17,7 +17,7 @@ class Tab3NewProductsController extends GetxController {
   RxBool allowCallAPI = true.obs;
 
   init() async {
-    print('sajad inside Tab3NewProductsController onInit');
+    print('inside Tab3NewProductsController onInit');
     // delete old controllers
     Get.delete<CarousalProductHorizontalController>();
 
@@ -26,7 +26,7 @@ class Tab3NewProductsController extends GetxController {
     scrollController.value.addListener(() {
       print('scrollController.value.addListener');
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-        print('sajad scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
+        print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
         offset += mConst.limit;
         print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
         addDataToList();
@@ -36,7 +36,7 @@ class Tab3NewProductsController extends GetxController {
   }
 
   addDataToList() async {
-    print('sajad inside addDataToList: offset $offset');
+    print('inside addDataToList: offset $offset');
     List<Product> tempProducts = await _apiProvider.getNewProducts(offset: offset, limit: mConst.limit);
     products.addAll(tempProducts);
     // check if last product from server.

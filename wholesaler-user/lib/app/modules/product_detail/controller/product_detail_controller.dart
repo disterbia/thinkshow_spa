@@ -28,11 +28,11 @@ class ProductDetailController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    print('sajad productId $productId');
+    print('productId $productId');
     productId = Get.arguments;
 
     if (productId == -1) {
-      print('SAJAD ERROR: ProductDetailController > productID is -1');
+      print('ERROR: ProductDetailController > productID is -1');
       return;
     }
     product.value = await _apiProvider.getProductDetail(productId: productId);
@@ -44,7 +44,7 @@ class ProductDetailController extends GetxController {
   }
 
   void UpdateTotalPrice() {
-    print('sajad UpdateTotalPrice');
+    print('UpdateTotalPrice');
     int addPrice = selectedOptionIndex.value != -1 ? product.value.options![selectedOptionIndex.value].add_price! : 0;
     totalPrice.value = (product.value.price! + addPrice) * product.value.quantity!.value;
   }

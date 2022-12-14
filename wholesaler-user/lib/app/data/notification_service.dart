@@ -74,9 +74,9 @@ class NotificationService {
       iOS: initializationSettingsIOS,
     );
     await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
-      print('sajad flutterLocalNotificationsPlugin.initialize');
+      print('flutterLocalNotificationsPlugin.initialize');
       if (payload != null) {
-        print('sajad notification payload: $payload');
+        print('notification payload: $payload');
       }
       selectedNotificationPayload = payload;
       selectNotificationSubject.add(payload);
@@ -85,8 +85,8 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification!;
       AndroidNotification android = message.notification!.android!;
-      print('sajad FirebaseMessaging.onMessage notification.title: ${notification.title}');
-      print('sajad FirebaseMessaging.onMessage notification.body: ${notification.body}');
+      print('FirebaseMessaging.onMessage notification.title: ${notification.title}');
+      print('FirebaseMessaging.onMessage notification.body: ${notification.body}');
 
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
