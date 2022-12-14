@@ -76,6 +76,8 @@ class BusinessInfoController extends GetxController {
         hosooController.text = json['store_unit_location_id'].toString();
         createDateController.text = json['created_at'];
         companyName.value=json['business_name'];
+
+        json['is_privilege']=="Y"? typeController.text="띵동":"일반";
         getBuildings();
       } else {
         mSnackbar(message: response.message);
