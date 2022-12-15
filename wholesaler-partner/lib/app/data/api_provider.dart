@@ -66,7 +66,7 @@ class pApiProvider extends GetConnect {
       return json['certifi_id'];
     }
     if (response.statusCode == 400) {
-      mSnackbar(message: jsonDecode(response.bodyString!)['description']);
+      //mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
       return Future.error(response.statusText!);
@@ -96,7 +96,7 @@ class pApiProvider extends GetConnect {
       // return json['certifi_id'];
     }
     if (response.statusCode == 400) {
-      mSnackbar(message: jsonDecode(response.bodyString!)['description']);
+     // mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
       mSnackbar(message: 'phone_verification_failed'.tr);

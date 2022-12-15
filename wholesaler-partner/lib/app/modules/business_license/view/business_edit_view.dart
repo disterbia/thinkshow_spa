@@ -19,42 +19,41 @@ class BusinessEditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(
         isBackEnable: true,
         title: '사업자정보 수정',
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(children: [
-            CustomField(
-              fieldLabel: 'business_register_number'.tr,
-              fieldText: 'EX) NNN - NN - NNNNN',
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(10),
-                FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-              ],
-              fieldController: ctr.BusinessRegisterNumCtr,
-              isTextKeyboard: true,
-            ),
-            SizedBox(height: 16),
-            Obx(() => registerImageSubmitCtr.uploadedImageURL.isEmpty
-                ? UploadImageContainer_empty()
-                : UploadImageContainer_uploaded()),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomButton(
-                width: Get.width,
-                onPressed: ()=>
-                  ctr.validateLicense(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(children: [
+          CustomField(
+            fieldLabel: 'business_register_number'.tr,
+            fieldText: 'EX) NNN - NN - NNNNN',
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(10),
+              FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+            ],
+            fieldController: ctr.BusinessRegisterNumCtr,
+            isTextKeyboard: true,
+          ),
+          SizedBox(height: 16),
+          Obx(() => registerImageSubmitCtr.uploadedImageURL.isEmpty
+              ? UploadImageContainer_empty()
+              : UploadImageContainer_uploaded()),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomButton(
+              width: Get.width,
+              onPressed: ()=>
+                ctr.validateLicense(),
 
-                text: 'edit'.tr,
-              ),
-            )
-          ]),
-        ),
+              text: 'edit'.tr,
+            ),
+          )
+        ]),
       ),
     );
   }

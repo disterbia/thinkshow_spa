@@ -45,7 +45,7 @@ class EmployeeMgmtController extends GetxController {
     }
 
     Get.back();
-    mSnackbar(message: statusModel.message);
+   // mSnackbar(message: statusModel.message);
     print(statusModel.statusCode);
 
     if (statusModel.statusCode == 200) {

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/data/api_provider.dart';
 import 'package:wholesaler_partner/app/models/add_product/flexibility_model.dart';
@@ -50,10 +51,12 @@ class AddProductController extends GetxController {
 
   @override
   void onInit() {
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!init!!!!!!!!!!!!!!!!!!!!!!!!");
     super.onInit();
     productNameController = TextEditingController();
     priceController = TextEditingController();
   }
+
 
   toSubCategoryListView(ClothCategory category) {
     Get.to(() => ClothCategoryItemsView(category));
@@ -80,7 +83,9 @@ class AddProductController extends GetxController {
     productNameController.text = productModifyModel.value.productName!;
 
     // price
-    priceController.text = productModifyModel.value.price.toString();
+    var f=NumberFormat('###,###,###,###');
+
+    priceController.text = f.format(productModifyModel.value.price).toString();
 
     // images
     part1controller.imagePath1.value = productModifyModel.value.thumbnailImagePath!;
@@ -96,7 +101,7 @@ class AddProductController extends GetxController {
     // country
     part5controller.selectedCountry.value = productModifyModel.value.manufactureCountry!;
 
-    // options
+    // optionss
     for (Option option in productModifyModel.value.options!) {
       bool listAlreadyContainsColor = colorsList.contains(option.color!);
       colorsList.addIf(!listAlreadyContainsColor, option.color!);
@@ -109,6 +114,7 @@ class AddProductController extends GetxController {
     }
 
     // keyword list
+    keywordList.clear();
     for (int i = 0; i < productModifyModel.value.keywordList!.length; i++) {
       keywordList.add(productModifyModel.value.keywordList![i].toString());
     }

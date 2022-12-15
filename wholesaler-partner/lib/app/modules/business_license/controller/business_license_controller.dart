@@ -75,10 +75,10 @@ class BusinessLicenseController extends GetxController {
     }).then((StatusModel response) {
       print(response.statusCode);
       if (response.statusCode == 200) {
-        mSnackbar(message: response.message);
+      //  mSnackbar(message: response.message);
         getLicenseImage().then((value) => Get.back());
       } else {
-        mSnackbar(message: response.message);
+       // mSnackbar(message: response.message);
       }
 
       isLoading.value = false;

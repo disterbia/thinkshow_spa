@@ -115,7 +115,7 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
                   } else if (text == ProductMgmtButtons.dingdong) {
                     ctr.addToDingDong();
                   }
-
+                  ctr.isBottomNavbar.value=false;
                   Get.back();
                 },
                 lBtnOnPressed: () {

@@ -52,6 +52,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool? temp ;
+    temp=readOnly??false;
     return TextFormField(
       initialValue: initialValue,
       focusNode: focusNode,
@@ -83,7 +85,7 @@ class CustomTextField extends StatelessWidget {
             borderSide: const BorderSide(color: MyColors.black1, width: 1),
           ),
           filled: true,
-          fillColor: Colors.transparent,
+          fillColor: temp?Colors.black12:Colors.transparent,
           hintStyle: const TextStyle(color: MyColors.desc),
           alignLabelWithHint: true,
           hintText: hintText,

@@ -10,7 +10,7 @@ import 'dart:convert';
 
 class BusinessInfoController extends GetxController {
   pApiProvider _apiProvider = pApiProvider();
-  Page3MyPageController page3MyPageController = Get.find<Page3MyPageController>();
+  Page3MyPageController page3MyPageController = Get.put(Page3MyPageController());
   late TextEditingController companyNameController;
   late TextEditingController typeController;
   late TextEditingController ownerNameController;
@@ -80,7 +80,7 @@ class BusinessInfoController extends GetxController {
         json['is_privilege']=="Y"? typeController.text="띵동":"일반";
         getBuildings();
       } else {
-        mSnackbar(message: response.message);
+        //mSnackbar(message: response.message);
       }
 
       //isLoading.value = false;
@@ -127,11 +127,11 @@ saveCompanyName() {
         companyNameController.text.isEmpty ? companyName.value : companyNameController.text,
   }).then((StatusModel response) {
     if (response.statusCode == 200) {
-      mSnackbar(message: response.message);
+      //mSnackbar(message: response.message);
       page3MyPageController.getUserInfo();
       Get.back();
     } else {
-      mSnackbar(message: response.message);
+      //mSnackbar(message: response.message);
     }
 
     isLoading.value = false;

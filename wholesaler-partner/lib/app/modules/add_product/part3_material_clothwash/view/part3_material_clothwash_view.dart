@@ -48,6 +48,7 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
         hintText: 'Material_selection'.tr,
         tagList: ctr.materialTypeList,
         fieldController: ctr.materialTypeController,
+        percentList: ctr.materialTypePercentControllers,
         onAddTag: () {
           ctr.materialTypePercentControllers.add(TextEditingController());
         },
@@ -61,7 +62,7 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
   Widget _materialPercent(int i) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: CustomInput(
+      child: CustomInput(keyboardType: TextInputType.number,
         label: ctr.materialTypeList[i],
         fieldController: ctr.materialTypePercentControllers[i],
         prefix: '%',

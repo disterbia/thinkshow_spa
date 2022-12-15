@@ -99,7 +99,7 @@ Widget bottomSheet() {
             },
             rBtnOnPressed: () {
               part2controller.isOptionCheckbox.value = false;
-              
+
 
               showDialog(
                   context: Get.context!,
@@ -123,6 +123,7 @@ Dialog _saveDialog(
     String? subtitle,
     required bool isCloseBtnPressed}) {
   AP_Part6Controller ctr = Get.put(AP_Part6Controller());
+  AddProductController addProductCtr = Get.find<AddProductController>();
 
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -166,6 +167,7 @@ Dialog _saveDialog(
                           leftBtnText: 'cancel'.tr,
                           rightBtnText: 'ok'.tr,
                           lBtnOnPressed: () {
+                            print(addProductCtr.isEditing.isTrue);
                             Get.back();
                           },
                           rBtnOnPressed: () {
@@ -173,7 +175,10 @@ Dialog _saveDialog(
                               Get.back();
                               Get.back();
                             } else {
-                              ctr.addProduct();
+                              print("dddddddddddddddddddd${addProductCtr.productIdforEdit}");
+                              print("dddddddddddddddddddd${addProductCtr.productNameController}");
+                              addProductCtr.isEditing.isTrue?
+                              ctr.editProduct():ctr.addProduct();
                             }
                           },
                         ),

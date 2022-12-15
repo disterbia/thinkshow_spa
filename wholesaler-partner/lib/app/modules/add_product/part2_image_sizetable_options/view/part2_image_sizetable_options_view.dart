@@ -30,16 +30,16 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             _clothPicture(),
             _sizeTable(),
             // 옵션 단가등록
-            // _unitPriceCheckbox(),
-            // Obx(
-            //   () => Column(
-            //     children: [
-            //       // ctr.unitPriceCheckbox.isTrue && ctr.isOptionCheckbox.isTrue
-            //       //     ? _optionUnitPriceChildrenNewMode()
-            //       //     : Container(),
-            //     ],
-            //   ),
-            // ),
+            _unitPriceCheckbox(),
+            Obx(
+              () => Column(
+                children: [
+                  ctr.unitPriceCheckbox.isTrue && ctr.isOptionCheckbox.isTrue
+                      ? _optionUnitPriceChildrenNewMode()
+                      : Container(),
+                ],
+              ),
+            ),
             SizedBox(height: 10),
           ],
         ),

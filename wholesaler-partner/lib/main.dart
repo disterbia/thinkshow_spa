@@ -3,17 +3,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/Constant/languages.dart';
-import 'package:wholesaler_partner/app/modules/customer_center/view/customer_center_view.dart';
 import 'package:wholesaler_user/app/data/notification_service.dart';
 import 'package:wholesaler_partner/app/modules/ad/views/ad_view.dart';
-import 'package:wholesaler_partner/app/modules/main/view/partner_main_view.dart';
 import 'package:wholesaler_user/app/constants/theme.dart';
 import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
+import 'package:wholesaler_user/app/modules/splash_screen/view/splash_screen_view.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding =WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
   MyVars.initializeVariables();
   bool isLogin = CacheProvider().getToken().isNotEmpty;
@@ -37,7 +37,7 @@ Future<void> main() async {
         theme: appThemeDataLight,
         debugShowCheckedModeBanner: false,
         title: "Wholesale Partner App",
-        home: isLogin ? PartnerMainView() : User_LoginPageView(),
+        home: SplashScreenPageView(),
         getPages: [
           GetPage(name: '/login', page: () => User_LoginPageView()),
         ]),

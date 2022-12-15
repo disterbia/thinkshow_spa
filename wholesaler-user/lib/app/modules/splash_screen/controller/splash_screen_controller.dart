@@ -14,8 +14,8 @@ class SplashScreenController extends GetxController {
     isLogin
         ? MyVars.isUserProject()
             ? Future.delayed(Duration(seconds: 1),() => Get.offAll(() => UserMainView()),)
-            : Get.offAll(() => PartnerMainView())
-        : Get.offAll(() => User_LoginPageView());
+            : Future.delayed(Duration(seconds: 1),() =>Get.offAll(() => PartnerMainView()))
+        : Future.delayed(Duration(seconds: 1),() => Get.offAll(() => User_LoginPageView()));
 
     super.onInit();
   }

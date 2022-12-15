@@ -7,13 +7,15 @@ class AddTagField extends StatelessWidget {
   final TextEditingController fieldController;
   final Function()? onAddTag;
   final Function(int index)? onDeleteTag;
+  final List<TextEditingController>? percentList;
 
   const AddTagField(
       {this.hintText,
       required this.tagList,
       required this.fieldController,
       this.onDeleteTag,
-      this.onAddTag});
+      this.onAddTag,
+      this.percentList});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class AddTagField extends StatelessWidget {
                 controller: fieldController,
                 onSubmitted: (value) {
                   tagList.add(value);
+                  percentList==null?null:percentList!.add(TextEditingController());
                   fieldController.clear();
                 },
               ),
@@ -51,9 +54,7 @@ class AddTagField extends StatelessWidget {
                       label: Text(tagList[i]),
                       onDeleted: () {
                         tagList.removeAt(i);
-                        if (onDeleteTag != null) {
-                          onDeleteTag!(i);
-                        }
+                        percentList==null?null:percentList!.removeAt(i);
                       },
                       deleteIconColor: Colors.grey,
                       backgroundColor: Colors.grey.withOpacity(0.3),
