@@ -38,9 +38,10 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         title: "Wholesale Partner App",
         home: SplashScreenPageView(),
-        getPages: [
-          GetPage(name: '/login', page: () => User_LoginPageView()),
-        ]),
+        // getPages: [
+        //   GetPage(name: '/login', page: () => User_LoginPageView()),
+        // ]
+    ),
   );
 }
 
