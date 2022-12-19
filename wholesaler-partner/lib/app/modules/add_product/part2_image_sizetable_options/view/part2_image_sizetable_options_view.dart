@@ -10,6 +10,7 @@ import 'package:wholesaler_partner/app/modules/add_product/part2_image_sizetable
 import 'package:wholesaler_user/app/Constants/styles.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class AP_Part2View extends GetView<AP_Part2Controller> {
   AP_Part2Controller ctr = Get.put(AP_Part2Controller());
@@ -241,6 +242,10 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   _optionUnitPriceChildrenNewMode() {
+    if(addProductCtr.colorsList.isEmpty) return Center(child: Text("색상추가하세요."),);
+    if (ctr.productBodySizeList.isEmpty) {
+      return Center(child: Text('사이즈 추가하세요.'));
+    }
     final unitPriceChildren = <Widget>[];
     addProductCtr.optionsControllers.clear();
     addProductCtr.options.clear();

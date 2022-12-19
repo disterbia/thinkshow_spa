@@ -14,7 +14,6 @@ class EditorController extends GetxController {
 
   Future<ProductImageModel> uploadImageToServer(PlatformFile file) async {
     ProductImageModel tempImgModel = await _apiProvider.uploadProductImage(pickedImage: File(file.path!));
-
     return tempImgModel;
   }
 }

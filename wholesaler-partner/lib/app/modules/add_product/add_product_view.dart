@@ -176,7 +176,7 @@ Dialog _saveDialog(
                               Get.back();
                             } else {
                               print("dddddddddddddddddddd${addProductCtr.productIdforEdit}");
-                              print("dddddddddddddddddddd${addProductCtr.productNameController}");
+                              print("dddddddddddddddddddd${addProductCtr.productNameController.text}");
                               addProductCtr.isEditing.isTrue?
                               ctr.editProduct():ctr.addProduct();
                             }

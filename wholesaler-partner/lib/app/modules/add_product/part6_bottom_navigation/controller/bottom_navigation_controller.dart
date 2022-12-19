@@ -23,19 +23,18 @@ import '../../part5_country/controller/part5_country_controller.dart';
 
 class AP_Part6Controller extends GetxController {
   final pApiProvider _apiProvider = pApiProvider();
-  AddProductController addProductController = Get.put(AddProductController());
+
   ProductMgmtController c = Get.put(ProductMgmtController());
-  AP_Part1Controller part1controller = Get.find<AP_Part1Controller>();
-  AP_Part2Controller part2controller = Get.find<AP_Part2Controller>();
-  AP_Part3Controller part3controller = Get.find<AP_Part3Controller>();
-  AP_Part4Controller part4controller = Get.find<AP_Part4Controller>();
-  AP_Part5Controller part5controller = Get.find<AP_Part5Controller>();
-
-  EditorController editorCtr = Get.put(EditorController());
-
   RxBool isLoading = false.obs;
 
   Future<void> addProduct() async {
+    AddProductController addProductController = Get.find<AddProductController>();
+    AP_Part1Controller part1controller = Get.find<AP_Part1Controller>();
+    AP_Part2Controller part2controller = Get.find<AP_Part2Controller>();
+    AP_Part3Controller part3controller = Get.find<AP_Part3Controller>();
+    AP_Part4Controller part4controller = Get.find<AP_Part4Controller>();
+    AP_Part5Controller part5controller = Get.find<AP_Part5Controller>();
+    EditorController editorCtr = Get.find<EditorController>();
     int mainCategoryId = (addProductController.selectedSubCat != null)
         ? addProductController.selectedSubCat.value.parentId!
         : 0;
@@ -89,6 +88,10 @@ class AP_Part6Controller extends GetxController {
       materialList.add(MaterialModel(
           name: part3controller.materialTypeList[i],
           percent: part3controller.materialTypePercentControllers[i].text));
+    }
+
+    for (int i = 0; i < part3controller.materialTypeList.length; i++) {
+      if(part3controller.materialTypePercentControllers[i].text.isEmpty) return mSnackbar(message: "혼용률 입력하세요.");
     }
 
     if (mainCategoryId == 0) {
@@ -161,6 +164,7 @@ class AP_Part6Controller extends GetxController {
     }
 
     if (sizeInfoList.isEmpty) {
+      isLoading.value=false;
       Get.back();
       mSnackbar(message: '사이즈 선택해주세요.');
       return;
@@ -206,23 +210,42 @@ class AP_Part6Controller extends GetxController {
 
     if (isSuccess) {
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
+      editorCtr.editorController.clearFocus();
       Get.delete<PartnerHomeController>();
       Get.delete<DingdongDeliveryController>();
       Get.delete<EditorController>();
-      //Get.delete<AddProductController>();
+      Get.delete<AddProductController>();
       Get.delete<AP_Part1Controller>();
       Get.delete<AP_Part2Controller>();
       Get.delete<AP_Part3Controller>();
       Get.delete<AP_Part4Controller>();
       Get.delete<AP_Part5Controller>();
-      c.getProducts(isScrolling: false);
-      Get.to(ProductMgmtView(), arguments: false);
       Get.delete<BottomNavbarController>();
+      Get.delete<ProductMgmtController>();
+      c.getProducts(isScrolling: false);
+
+      Get.to(ProductMgmtView());
+
+
     }
     isLoading.value = false;
   }
-
+  void fuckingTest(){
+    AddProductController addProductController = Get.find<AddProductController>();
+    String productName = addProductController.productNameController.text;
+    print("productName22222222====@======${addProductController.productIdforEdit}");
+    print("productName====@======$productName");
+    print("productName3333====@======${addProductController.productIdforEdit}");
+  }
   Future<void> editProduct() async {
+    AddProductController addProductController = Get.find<AddProductController>();
+    AP_Part1Controller part1controller = Get.find<AP_Part1Controller>();
+    AP_Part2Controller part2controller = Get.find<AP_Part2Controller>();
+    AP_Part3Controller part3controller = Get.find<AP_Part3Controller>();
+    AP_Part4Controller part4controller = Get.find<AP_Part4Controller>();
+    AP_Part5Controller part5controller = Get.find<AP_Part5Controller>();
+    EditorController editorCtr = Get.find<EditorController>();
+
     print("productName22222222==========${addProductController.productIdforEdit}");
     int mainCategoryId = (addProductController.selectedSubCat != null)
         ? addProductController.selectedSubCat.value.parentId!
@@ -280,6 +303,18 @@ class AP_Part6Controller extends GetxController {
       materialList.add(MaterialModel(
           name: part3controller.materialTypeList[i],
           percent: part3controller.materialTypePercentControllers[i].text));
+    }
+    bool temp = false;
+    for (int i = 0; i < part3controller.materialTypeList.length; i++) {
+      if (part3controller.materialTypePercentControllers[i].text.isEmpty){
+        temp = true;
+      }
+    }
+
+    if(temp){
+      Get.back();
+      mSnackbar(message: '혼용률 입력하세요.');
+      return;
     }
 
     if (mainCategoryId == 0) {
@@ -396,11 +431,13 @@ class AP_Part6Controller extends GetxController {
           productId: addProductController.productIdforEdit, data: data);
 
     if (isSuccess) {
+      editorCtr.editorController.clearFocus();
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
+      editorCtr.editorController.clearFocus();
       Get.delete<PartnerHomeController>();
       Get.delete<DingdongDeliveryController>();
       Get.delete<EditorController>();
-     // Get.delete<AddProductController>();
+      Get.delete<AddProductController>();
       Get.delete<AP_Part1Controller>();
       Get.delete<AP_Part2Controller>();
       Get.delete<AP_Part3Controller>();
@@ -409,7 +446,7 @@ class AP_Part6Controller extends GetxController {
       Get.delete<ProductMgmtController>();
       Get.delete<BottomNavbarController>();
       c.getProducts(isScrolling: false);
-      Get.to(ProductMgmtView(), arguments: false);
+      Get.to(ProductMgmtView());
 
     }
     isLoading.value = false;
