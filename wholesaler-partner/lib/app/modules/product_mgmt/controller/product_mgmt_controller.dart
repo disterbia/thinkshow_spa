@@ -37,6 +37,7 @@ class ProductMgmtController extends GetxController {
     if (Get.arguments != null) {
       applicationId = Get.arguments;
     }
+    products.clear();
     getProducts(isScrolling: false);
 
     scrollController.value.addListener(() {
@@ -88,6 +89,7 @@ class ProductMgmtController extends GetxController {
         limit: mConst.limit);
 
     for (int i = 0; i < raw.length; i++) {
+      print(raw.length);
       Product tempProduct = Product(
         id: raw[i]['id'],
         title: raw[i]['product_name'],
@@ -99,6 +101,7 @@ class ProductMgmtController extends GetxController {
         hasBellIconAndBorder: (raw[i]['is_privilege'] as bool).obs,
         isSoldout: raw[i]['is_sold_out'] == true ? true.obs : false.obs,
       );
+      if(products.length!=raw.length)
       products.add(tempProduct);
     }
 

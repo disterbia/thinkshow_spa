@@ -7,6 +7,7 @@ import 'package:wholesaler_partner/app/widgets/bottom_navbar/bottom_navbar_contr
 import 'package:wholesaler_partner/app/widgets/bottom_navbar/bottom_navbar_view.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
+import 'package:wholesaler_user/app/data/firebase_service.dart';
 
 import '../controller/partner_main_controller.dart';
 
@@ -16,6 +17,7 @@ class PartnerMainView extends GetView<PartnerMainController> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseService.init();
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: PreferredSize(

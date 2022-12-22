@@ -13,7 +13,7 @@ class SalesMgmtContentTabWidget extends GetView {
   SalesMgmtController ctr = Get.put(SalesMgmtController());
   SalesTab currentSalesTab;
   SalesMgmtContentTabWidget(this.currentSalesTab);
-  List<String> titles = ['impression'.tr, 'click'.tr, 'like'.tr, 'order'.tr];
+  List<String> titles = ['impressions'.tr, 'click'.tr, 'like'.tr, 'order'.tr];
   var format = NumberFormat('###,###,###,###');
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class SalesMgmtContentTabWidget extends GetView {
                   children: [
                     SizedBox(height: 20),
                     Text(
-                      '내 상품이 얼마나 ${format.format(titles.elementAt(currentSalesTab.index))} 되었을까?',
+                      '내 상품이 얼마나 ${titles.elementAt(currentSalesTab.index)} 되었을까?',
                       style: MyTextStyles.f16.copyWith(color: MyColors.black3),
                     ),
                     SizedBox(height: 5),

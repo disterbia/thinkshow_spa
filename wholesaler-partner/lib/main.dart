@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/Constant/languages.dart';
+import 'package:wholesaler_user/app/data/firebase_service.dart';
 import 'package:wholesaler_user/app/data/notification_service.dart';
 import 'package:wholesaler_partner/app/modules/ad/views/ad_view.dart';
 import 'package:wholesaler_user/app/constants/theme.dart';
@@ -10,16 +13,26 @@ import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/modules/splash_screen/view/splash_screen_view.dart';
 
-Future<void> main() async {
-  WidgetsBinding widgetsBinding =WidgetsFlutterBinding.ensureInitialized();
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  MyVars.initializeVariables();
-  bool isLogin = CacheProvider().getToken().isNotEmpty;
-  print('CacheProvider().getToken() ${CacheProvider().getToken()}');
+  await MyVars.initializeVariables();
+  //bool isLogin = CacheProvider().getToken().isNotEmpty;
+  //print('CacheProvider().getToken() ${CacheProvider().getToken()}');
 
   NotificationService().init();
-
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(
     GetMaterialApp(
         localizationsDelegates: [

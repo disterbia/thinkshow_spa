@@ -35,18 +35,18 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10),
-        Expanded(
-          child: mOutlinedButton(
-            text: 'TOP10',
-            onPressed: () {
-              showDialog(
-                  context: Get.context!,
-                  builder: (context) {
-                    return _dialog(ProductMgmtButtons.top10);
-                  });
-            },
-          ),
-        ),
+        // Expanded(
+        //   child: mOutlinedButton(
+        //     text: 'TOP10',
+        //     onPressed: () {
+        //       showDialog(
+        //           context: Get.context!,
+        //           builder: (context) {
+        //             return _dialog(ProductMgmtButtons.top10);
+        //           });
+        //     },
+        //   ),
+        // ),
         SizedBox(width: 10),
         CacheProvider().isPrivilege()
             ? Expanded(
