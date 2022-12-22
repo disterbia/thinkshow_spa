@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/Constant/languages.dart';
+import 'package:wholesaler_partner/firebase_options.dart';
 import 'package:wholesaler_user/app/data/firebase_service.dart';
 import 'package:wholesaler_user/app/data/notification_service.dart';
 import 'package:wholesaler_partner/app/modules/ad/views/ad_view.dart';
@@ -18,7 +19,8 @@ import 'package:wholesaler_user/app/modules/splash_screen/view/splash_screen_vie
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   print("Handling a background message: ${message.messageId}");
 }
