@@ -31,6 +31,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_datepicker: ^19.4.56
   webview_flutter: ^3.0.4
+  firebase_analytics: ^10.0.7
   wholesaler_partner:
     path: ../wholesaler-partner
 

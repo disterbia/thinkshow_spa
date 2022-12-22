@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 
 class SimpleTabBar extends StatefulWidget {
   final Key? key;
@@ -9,6 +11,7 @@ class SimpleTabBar extends StatefulWidget {
   final List<Tab>? tabs;
   final Color? borderColor;
   final int initialIndex;
+
 
   SimpleTabBar({
     required this.initialIndex,
@@ -25,6 +28,7 @@ class SimpleTabBar extends StatefulWidget {
 
 class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
 
   @override
   void initState() {
@@ -45,7 +49,11 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
                 ),
               ),
               height: 45,
-              child: TabBar(
+              child: TabBar(onTap: (index){
+                if(index==3)
+                categoryTagCtr.isDingDongTab.value=true;
+                else categoryTagCtr.isDingDongTab.value=false;
+              },
                 labelStyle: MyTextStyles.f14.copyWith(color: MyColors.subTitle),
                 controller: _tabController,
                 indicator: BoxDecoration(

@@ -1908,7 +1908,7 @@ class uApiProvider extends GetConnect {
       log('sendTCMToken response ${response.bodyString}');
     } else {
       log('sendTCMToken error:' + response.bodyString!);
-      mSnackbar(message: '오류: ${response.bodyString!}');
+      //mSnackbar(message: '오류: ${response.bodyString!}');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
+import 'package:wholesaler_user/app/data/firebase_service.dart';
 import 'package:wholesaler_user/app/modules/page3_moabogi/views/page3_moabogi_view.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/page1_home_view.dart';
 import 'package:wholesaler_user/app/modules/page4_favorite_products/views/page4_favorite_products_view.dart';
@@ -24,6 +25,7 @@ class UserMainView extends GetView<UserMainController> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseService.init();
     return WillPopScope(
       onWillPop: () => ctr.onWillPop(),
       child: Scaffold(

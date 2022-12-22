@@ -56,7 +56,7 @@ class FirebaseService {
 }
 
 Future iOSRequestPermission(context, FirebaseMessaging firebaseMessaging) async {
-  if (Platform.isIOS) {
+
     firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,
@@ -66,5 +66,5 @@ Future iOSRequestPermission(context, FirebaseMessaging firebaseMessaging) async 
       provisional: false,
       sound: true,
     );
-  }
+
 }

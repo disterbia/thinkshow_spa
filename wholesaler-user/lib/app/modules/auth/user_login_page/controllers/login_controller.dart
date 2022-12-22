@@ -83,7 +83,7 @@ class User_LoginPageController extends GetxController {
     // initialize firebase
     if (isSuccess) {
       print('before initialize firebase');
-      FirebaseService.init();
+      await FirebaseService.init();
     }
   }
 

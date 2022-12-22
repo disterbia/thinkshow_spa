@@ -217,7 +217,7 @@ class Cart2PaymentView extends GetView {
             children: [
               // phone part 1: ex) 010
               Expanded(
-                child: CustomTextField(
+                child: CustomTextField(keyboardType: TextInputType.number,
                   focusNode: ctr.focusNode1,
                   onChanged: (value) {
                     if (value.length == 6) {
@@ -231,7 +231,7 @@ class Cart2PaymentView extends GetView {
               Text('  -  '),
               // phone part 2: ex) 1234
               Expanded(
-                child: CustomTextField(
+                child: CustomTextField(keyboardType: TextInputType.number,
                   onChanged: (value) {
                     if (value.length == 6) {
                       FocusScope.of(Get.context!).requestFocus(ctr.focusNode3);
@@ -245,7 +245,7 @@ class Cart2PaymentView extends GetView {
               Text('  -  '),
               // phone part 3: ex) 5678
               Expanded(
-                  child: CustomTextField(
+                  child: CustomTextField(keyboardType: TextInputType.number,
                 focusNode: ctr.focusNode3,
                 controller: ctr.phoneThirdPartController,
                 labelText: '',
