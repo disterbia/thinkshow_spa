@@ -39,16 +39,19 @@ class Tab2AdApplicationController extends GetxController {
   calendarCellTapped(CalendarTapDetails calendarTapDetails) {
     // if tap on already applied cell, deselect it
     if (selectedDates.contains(calendarTapDetails.date!)) {
+      print("aaaaaaaa");
       selectedDates.remove(calendarTapDetails.date!);
       return;
     }
 
     // if tap on not applicable do nothing
     if (notApplicableDateTimes.contains(calendarTapDetails.date!)) {
+      print("bbbbbbbbb");
       return;
     }
 
     selectedDates.add(calendarTapDetails.date!);
+    print(selectedDates);
   }
 
   /// Apply Button 신청하기

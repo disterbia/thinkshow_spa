@@ -73,7 +73,7 @@ class Page2OrderHistoryController extends GetxController {
     for (var element in response.orders!) {
       products.add(
         Product(
-          id: element.orderDetailId!,
+          id: element.productId!,
           title: element.productName.toString(),
           price: element.productPrice,
           OLD_option: element.productOptionName,

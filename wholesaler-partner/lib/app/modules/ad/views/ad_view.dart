@@ -17,7 +17,7 @@ class AdView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('AdView build Get.arguments ${Get.arguments}');
-    return Scaffold(
+    return Scaffold(resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: 'ad_apply'.tr),
       body: DefaultTabController(

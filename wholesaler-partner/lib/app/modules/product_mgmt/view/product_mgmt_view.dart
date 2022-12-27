@@ -34,11 +34,12 @@ class ProductMgmtView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    ctr.isBottomNavbar.value=false;
     return WillPopScope(
         child: Scaffold(
           bottomNavigationBar: Obx(
             () => Visibility(
-              visible: ctr.isBottomNavbar.isTrue,
+              visible: ctr.isBottomNavbar.value,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: isTop10Page! ||
@@ -97,7 +98,16 @@ class ProductMgmtView extends GetView {
                     productHeight: 260,
                     products: ctr.products,
                     addProductsId: (int id) {
-                      ctr.productsId.add(id);
+                      var temp =ctr.productsId;
+                      if(temp.contains(id)) {
+                        for (var i = 0; i < temp.length; i++) {
+                          if (temp[i] == id) ctr.productsId.removeAt(i);
+                        }
+                      }else {
+                        ctr.productsId.add(id);
+                        print(ctr.productsId);
+                      }
+
                     },
                     showBottomNavbar: () {
                       // show bottom navigation bar if at least one checkbox is checked
@@ -105,7 +115,8 @@ class ProductMgmtView extends GetView {
                           .any((product) => product.isChecked!.isTrue);
                       ctr.isBottomNavbar.value = isAtleastOneCheckboxChecked;
                     },
-                    isShowLoadingCircle: ctr.allowCallAPI,
+                    isShowLoadingCircle: false.obs,
+                    //ctr.allowCallAPI,
                   ),
                 ],
               ),

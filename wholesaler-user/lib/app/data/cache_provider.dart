@@ -35,6 +35,7 @@ class CacheProvider {
   }
 
   String getToken() {
+    print("token:${data.read(_tokenKey)}");
     return data.read(_tokenKey) ?? '';
   }
 

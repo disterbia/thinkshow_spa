@@ -12,6 +12,7 @@ import 'package:wholesaler_user/app/modules/auth/user_sign_up/controllers/user_s
 import 'package:wholesaler_user/app/modules/auth/user_sign_up/views/user_sign_up_view.dart';
 import 'package:wholesaler_user/app/modules/my_page_update_password/views/my_page_update_password_view.dart';
 import 'package:wholesaler_user/app/modules/page5_my_page/controllers/page5_my_page_controller.dart';
+import 'package:wholesaler_user/app/modules/page5_my_page/views/my_page_down.dart';
 import 'package:wholesaler_user/app/modules/page5_my_page/widgets/top_user_id_name_widget.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/custom_button.dart';
@@ -22,9 +23,10 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   Page5MyPageController ctr = Get.put(Page5MyPageController());
 
   MyPageSettingsView();
-
+  int myTest=0;
   @override
   Widget build(BuildContext context) {
+   myTest=0;
     return Scaffold(
       appBar: CustomAppbar(isBackEnable: true, title: 'My_page'.tr),
       body: SafeArea(child: _body()),
@@ -33,7 +35,12 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
 
   Widget _body() => Column(
         children: [
-          _userId(),
+          GestureDetector(onDoubleTap:() {
+            myTest++;
+            if(myTest==20){
+              Get.to(()=>MyPageDown());
+            }
+          }, child: _userId()),
           Divider(thickness: 6, color: MyColors.grey3),
           _settingOption('회원정보수정', () {
             Get.put(SignupOrEditController()).isEditing.value = true;

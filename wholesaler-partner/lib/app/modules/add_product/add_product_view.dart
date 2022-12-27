@@ -29,6 +29,7 @@ class AddProductView extends GetView<AddProductController> {
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: MyColors.white,
       resizeToAvoidBottomInset: true,
@@ -37,12 +38,14 @@ class AddProductView extends GetView<AddProductController> {
       appBar:
           CustomAppbar(isBackEnable: false, hasHomeButton: true, title: '상품등록'),
       // GestureDetector: when click on anywhere on the screen close keyboard
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: body(),
-      ),
+      body:
+      body(),
+      // GestureDetector(
+      //   onTap: () {
+      //     FocusScope.of(context).requestFocus(FocusNode());
+      //   },
+      //   child: body(),
+      // ),
     );
   }
 
@@ -98,7 +101,7 @@ Widget bottomSheet() {
                   });
             },
             rBtnOnPressed: () {
-              part2controller.isOptionCheckbox.value = false;
+              //part2controller.isOptionCheckbox.value = false;
 
 
               showDialog(
@@ -173,7 +176,7 @@ Dialog _saveDialog(
                           rBtnOnPressed: () {
                             if (isCloseBtnPressed) {
                               Get.back();
-                              Get.back();
+                               Get.back();
                             } else {
                               print("dddddddddddddddddddd${addProductCtr.productIdforEdit}");
                               print("dddddddddddddddddddd${addProductCtr.productNameController.text}");

@@ -12,7 +12,7 @@ class AP_Part2Controller extends GetxController {
   AddProductController addProductCtr = Get.put(AddProductController());
 
   RxBool unitPriceCheckbox = true.obs;
-  RxBool isOptionCheckbox = false.obs;
+  RxBool isOptionCheckbox = true.obs;
 
   RxList<ProductBodySizeModel> productBodySizeList = <ProductBodySizeModel>[].obs;
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
+import 'package:wholesaler_user/app/modules/main/controllers/user_main_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 
 class SimpleTabBar extends StatefulWidget {
@@ -29,6 +30,7 @@ class SimpleTabBar extends StatefulWidget {
 class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  UserMainController c = Get.find<UserMainController>();
 
   @override
   void initState() {
@@ -37,7 +39,12 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
   }
 
   @override
-  Widget build(final BuildContext context) => Column(
+  Widget build(final BuildContext context) => Obx(
+    () {
+      if(c.changed.value>0) {
+          _tabController!.index = 0;
+        }
+        return Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -49,10 +56,11 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
                 ),
               ),
               height: 45,
-              child: TabBar(onTap: (index){
-                if(index==3)
-                categoryTagCtr.isDingDongTab.value=true;
-                else categoryTagCtr.isDingDongTab.value=false;
+              child: TabBar(onTap: (index) {
+                if (index == 3)
+                  categoryTagCtr.isDingDongTab.value = true;
+                else
+                  categoryTagCtr.isDingDongTab.value = false;
               },
                 labelStyle: MyTextStyles.f14.copyWith(color: MyColors.subTitle),
                 controller: _tabController,
@@ -76,6 +84,9 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
           ),
         ],
       );
+
+    }
+  );
 
   @override
   void dispose() {

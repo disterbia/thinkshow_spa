@@ -100,6 +100,12 @@ class AP_Part6Controller extends GetxController {
       return;
     }
 
+    if(addProductController.colorsList.isEmpty){
+      Get.back();
+      mSnackbar(message: '색상을 추가해주세요.');
+      return;
+    }
+
     if (productName.isEmpty) {
       Get.back();
       mSnackbar(message: '상품명을 입력해주세요.');
@@ -314,6 +320,12 @@ class AP_Part6Controller extends GetxController {
     if(temp){
       Get.back();
       mSnackbar(message: '혼용률 입력하세요.');
+      return;
+    }
+
+    if(addProductController.colorsList.isEmpty){
+      Get.back();
+      mSnackbar(message: '색상을 추가해주세요.');
       return;
     }
 

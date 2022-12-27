@@ -10,7 +10,7 @@ PointChargeDialog(context) {
     builder: (BuildContext context) => Dialog(
       child: Container(
         padding: EdgeInsets.all(20),
-        height: 291,
+        height: 350,
         child: Column(
           children: [
             Row(

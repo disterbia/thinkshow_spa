@@ -24,7 +24,7 @@ Future<dynamic> SubmitInquiryDialog() {
               children: [
                 Center(child: Text('Register_product_inquiry'.tr)),
                 SizedBox(height: 15),
-                TextField(
+                TextField(controller: ctr.contentController,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     label: Text('문의내용'),

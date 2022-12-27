@@ -14,10 +14,10 @@ Tab3AdApplyHistoryBudgetDialog({required ApplicationDetailList tempApplicationDe
     builder: (BuildContext context) => Dialog(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        height: 280,
+        height: 350,
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text('예산설정', style: MyTextStyles.f16.copyWith(color: MyColors.black2)),
             SizedBox(height: 15),
             Row(
@@ -49,7 +49,7 @@ Tab3AdApplyHistoryBudgetDialog({required ApplicationDetailList tempApplicationDe
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: TextField(
+                      child: TextField(keyboardType: TextInputType.number,
                         controller: ctr.dailyBudgetController,
                         decoration: InputDecoration(
                           enabledBorder: const OutlineInputBorder(

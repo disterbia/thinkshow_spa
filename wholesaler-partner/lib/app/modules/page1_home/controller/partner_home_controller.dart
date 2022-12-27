@@ -107,6 +107,7 @@ class PartnerHomeController extends GetxController {
   }
 
   Future<void> getBestProducts() async {
+
     bestProducts.clear();
     offset = 0;
     List<BestProductsModel> bestProductsModels =

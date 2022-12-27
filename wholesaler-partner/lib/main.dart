@@ -12,6 +12,7 @@ import 'package:wholesaler_partner/app/modules/ad/views/ad_view.dart';
 import 'package:wholesaler_user/app/constants/theme.dart';
 import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
+import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/modules/splash_screen/view/splash_screen_view.dart';
 
 

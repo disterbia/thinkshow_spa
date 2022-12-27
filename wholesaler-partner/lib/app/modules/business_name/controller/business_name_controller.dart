@@ -68,7 +68,7 @@ class BusinessInfoController extends GetxController {
         var json = jsonDecode(response.data.toString());
         companyNameController.text = json['business_name'];
         typeController.text = json['is_privilege'];
-        ownerNameController.text = json['account_owner_name'];
+        ownerNameController.text = json['account_owner_name']??" ";
         employee.value = json['staff_list'];
         pointController.text = json['point'].toString();
         buildingController.text = json['store_building_location_id'].toString();

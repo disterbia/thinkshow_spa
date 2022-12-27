@@ -192,7 +192,8 @@ class StoreDetailView extends GetView {
                 options: CarouselOptions(
                     height: height,
                     autoPlay: false,
-                    viewportFraction: 1 / 3,
+                    viewportFraction: 1 / 3
+                    ,enableInfiniteScroll: false,
                     onPageChanged: (index, reason) {
                       ctr.sliderIndex.value = index;
                     }),

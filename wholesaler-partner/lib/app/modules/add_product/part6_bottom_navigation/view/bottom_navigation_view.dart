@@ -45,7 +45,7 @@ class AP_Part6View extends GetView<AP_Part6Controller> {
                       });
                 },
                 rBtnOnPressed: () {
-                  part2controller.isOptionCheckbox.value = true;
+                  //part2controller.isOptionCheckbox.value = true;
 
                   showDialog(
                       context: Get.context!,

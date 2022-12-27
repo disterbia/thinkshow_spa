@@ -410,6 +410,7 @@ class pApiProvider extends GetConnect {
     print(' Partner_login response ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
+      headers={ "Authorization" : "Bearer " +json["access_token"]};
       return json;
     }
     if (response.statusCode == 400) {
@@ -730,6 +731,9 @@ class pApiProvider extends GetConnect {
     required int offset,
     required int limit,
   }) async {
+    headers={
+      "Authorization": "Bearer " + CacheProvider().getToken()
+    };
     Map<String, dynamic> data = {};
 
     data['offset'] = offset.toString();
@@ -836,6 +840,9 @@ class pApiProvider extends GetConnect {
   }
 
   Future<List<BestProductsModel>> getBestProducts() async {
+    headers={
+      "Authorization": "Bearer " + CacheProvider().getToken()
+    };
     String url = mConst.API_BASE_URL +
         mConst.API_STORE_PATH +
         mConst.STORE_BEST_PRODUCTS;
@@ -873,6 +880,9 @@ class pApiProvider extends GetConnect {
   }
 
   Future<dynamic> getAdsMainPage() async {
+    headers={
+      "Authorization": "Bearer " + CacheProvider().getToken()
+    };
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.ADVERTISEMENT_LIST;
     final response = await get(url, headers: headers);
@@ -942,6 +952,11 @@ class pApiProvider extends GetConnect {
 
   /// Partner Main page > getMainStore
   Future<MainStoreModel> getMainStore() async {
+
+    headers={
+      "Authorization": "Bearer " + CacheProvider().getToken()
+    };
+    print("======getMainStore${headers}============");
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/main',
         headers: headers);
@@ -957,6 +972,9 @@ class pApiProvider extends GetConnect {
   }
 
   Future<Response> getUserInfo() async {
+    headers={
+      "Authorization": "Bearer " + CacheProvider().getToken()
+    };
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/me';
     final response = await get(url, headers: headers);
     return response;

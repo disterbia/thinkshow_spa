@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/data/api_provider.dart';
 import 'package:wholesaler_partner/app/models/ad_history_model/ad_history_model.dart';
 import 'package:wholesaler_partner/app/models/ad_history_model/application_detail_list.dart';
+import 'package:wholesaler_partner/app/modules/ad/tab1_ad_status/controller/tab1_ad_status_controller.dart';
 import 'package:wholesaler_partner/app/modules/product_mgmt/controller/product_mgmt_controller.dart';
 import 'package:wholesaler_partner/app/modules/product_mgmt/view/product_mgmt_view.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class Tab3AdApplicationHistoryController extends GetxController {
+  Tab1AdStatusController ctr = Get.put(Tab1AdStatusController());
   RxBool isLoading = false.obs;
   final pApiProvider _apiProvider = pApiProvider();
   String title = '';
@@ -43,6 +45,7 @@ class Tab3AdApplicationHistoryController extends GetxController {
   adPaymentBtnPressed(int advertisement_application_id) async {
     await _apiProvider.adPayment(advertisement_application_id);
     await getHistory();
+    await ctr.getPoints();
     Get.back();
   }
 

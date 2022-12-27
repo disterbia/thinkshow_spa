@@ -20,11 +20,13 @@ class mCalendarView extends GetView {
         date: ctr.tab2AdApplyModel.value.target_month_start_date!);
 
     return SfCalendar(
-      onTap: (calendarTapDetails) => ctr.calendarCellTapped(calendarTapDetails),
+      onTap: (calendarTapDetails)
+      { print(calendarTapDetails.date);
+        ctr.calendarCellTapped(calendarTapDetails);},
       minDate: DateTime(
           target_month_start_date.year, target_month_start_date.month, 1),
       maxDate: DateTime(
-          target_month_start_date.year, target_month_start_date.month + 1, 1),
+          target_month_start_date.year, target_month_start_date.month+ 1, 0),
       initialDisplayDate: target_month_start_date,
       headerHeight: 0,
       viewHeaderHeight: 0,

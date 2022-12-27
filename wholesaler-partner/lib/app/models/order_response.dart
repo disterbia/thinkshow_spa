@@ -32,6 +32,7 @@ OrderResponse copyWith({  int? totalAmount,
 
 class Orders {
   Orders({
+    this.productId,
       this.orderId, 
       this.orderCode, 
       this.orderDetailId, 
@@ -47,6 +48,7 @@ class Orders {
       this.createdAt,});
 
   Orders.fromJson(dynamic json) {
+    productId = json['product_id'];
     orderId = json['order_id'];
     orderCode = json['order_code'];
     orderDetailId = json['order_detail_id'];
@@ -62,6 +64,7 @@ class Orders {
     createdAt = json['created_at'];
   }
   int? orderId;
+  int? productId;
   String? orderCode;
   int? orderDetailId;
   String? orderDetailCode;
@@ -74,7 +77,7 @@ class Orders {
   int? orderStatusCode;
   String? orderStatusName;
   String? createdAt;
-Orders copyWith({  int? orderId,
+Orders copyWith({  int? orderId,int? productId,
   String? orderCode,
   int? orderDetailId,
   String? orderDetailCode,
@@ -87,7 +90,7 @@ Orders copyWith({  int? orderId,
   int? orderStatusCode,
   String? orderStatusName,
   String? createdAt,
-}) => Orders(  orderId: orderId ?? this.orderId,
+}) => Orders(  orderId: orderId ?? this.orderId,productId: productId,
   orderCode: orderCode ?? this.orderCode,
   orderDetailId: orderDetailId ?? this.orderDetailId,
   orderDetailCode: orderDetailCode ?? this.orderDetailCode,
@@ -103,6 +106,7 @@ Orders copyWith({  int? orderId,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['product_id'] = productId;
     map['order_id'] = orderId;
     map['order_code'] = orderCode;
     map['order_detail_id'] = orderDetailId;

@@ -129,6 +129,7 @@ class User_LoginPageController extends GetxController {
     if (status.toString() == "normal") {
       String token = response["access_token"];
       CacheProvider().setToken(token);
+      print("===============setToken${CacheProvider().getToken()}====================");
       // isPrivilage = response['is_privilege'];
       bool isOwner = response["is_owner"];
       // bool isPrivilege = response["is_privilege"];

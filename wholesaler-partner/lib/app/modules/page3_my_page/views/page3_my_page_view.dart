@@ -20,6 +20,7 @@ import 'package:wholesaler_partner/app/modules/my_bank_account_mgmt/views/my_ban
 import 'package:wholesaler_partner/app/modules/page1_home/controller/partner_home_controller.dart';
 import 'package:wholesaler_partner/app/modules/page1_home/view/page1_home_view.dart';
 import 'package:wholesaler_partner/app/modules/page2_order_history/controllers/page2_order_history_controller.dart';
+import 'package:wholesaler_partner/app/modules/page2_order_history/views/page2_order_history_view.dart';
 import 'package:wholesaler_partner/app/modules/page3_my_info_mgmt/views/my_info_mgmt_view.dart';
 import 'package:wholesaler_partner/app/modules/page3_my_page/controllers/page3_my_page_controller.dart';
 import 'package:wholesaler_partner/app/modules/payment/views/payment_view.dart';
@@ -30,11 +31,13 @@ import 'package:wholesaler_partner/app/widgets/bottom_navbar/bottom_navbar_contr
 import 'package:wholesaler_partner/app/widgets/my_page_item.dart';
 import 'package:wholesaler_partner/app/widgets/two_text_container_widget.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
+import 'package:wholesaler_user/app/Constants/functions.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/modules/auth/register_privacy_terms/views/register_privacy_terms_view.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/modules/bulletin_list/views/bulletin_list_view.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/review_list/views/review_list_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wholesaler_user/app/modules/splash_screen/controller/splash_screen_controller.dart';
@@ -46,12 +49,15 @@ import '../../page3_my_info_mgmt/controllers/my_info_mgmt_controller.dart';
 import '../../product_inquiry_list/controller/product_inquiry_list_controller.dart';
 import '../../product_inquiry_list/view/product_inquiry_list_view.dart';
 
-class Page3MyPageView extends StatelessWidget {
+class Page3MyPageView extends GetView<Page3MyPageController> {
   Page3MyPageController ctr = Get.put(Page3MyPageController());
   @override
   Widget build(BuildContext context) {
+    ctr.getUserInfo();
     return Obx(() {
-      return SingleChildScrollView(
+      return ctr.isLoading.value
+          ? LoadingWidget()
+      : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -349,9 +355,17 @@ class Page3MyPageView extends StatelessWidget {
             // CacheProvider().removeOwner();
             CacheProvider().removeFCMToken();
             CacheProvider().removeToken();
-            Get.offAllNamed('/login');
+            CacheProvider().removeUserId();
+            // Get.delete<Page1HomeController>();
+            // Get.delete<Page3MyPageController>();
+            // Get.delete<Page2OrderHistoryView>();
+            await Get.deleteAll();
+            //await Get.reset();
+            await Get.offAll(() => User_LoginPageView());
+            print("============${CacheProvider().getUserID()}");
+            //Get.offAllNamed('/login');
 
-            // Get.offAll(() => User_LoginPageView());
+
           },
           child: Text(
             'logout'.tr,

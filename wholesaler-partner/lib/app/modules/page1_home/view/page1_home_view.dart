@@ -144,8 +144,8 @@ class Page1HomeView extends GetView<PartnerHomeController> {
         width: Get.width,
         height: 400,
         decoration: BoxDecoration(color: MyColors.grey1),
-        child: (ctr.mainStoreInfo.value.mainTopImageUrl?.value.isNotEmpty ??
-                false || ctr.isImagePicked.value)
+        child: ((ctr.mainStoreInfo.value.mainTopImageUrl?.value.isNotEmpty ??
+                false || ctr.isImagePicked.value)&&ctr.mainStoreInfo.value.mainTopImageUrl != null)
             ? _image()
             : _imageIcon(),
       ),
@@ -395,7 +395,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
           SizedBox(height: 10),
           ProductGridViewBuilder(
             crossAxisCount: 3,
-            productHeight: 280,
+            productHeight: 300,
             products: ctr.products,
             isShowLoadingCircle: ctr.allowCallAPI,
           ),

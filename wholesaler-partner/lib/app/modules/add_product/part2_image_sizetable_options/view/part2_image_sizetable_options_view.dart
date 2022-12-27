@@ -31,16 +31,17 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             _clothPicture(),
             _sizeTable(),
             // 옵션 단가등록
-            _unitPriceCheckbox(),
-            Obx(
-              () => Column(
+            //_unitPriceCheckbox(),
+            Column(
                 children: [
-                  ctr.unitPriceCheckbox.isTrue && ctr.isOptionCheckbox.isTrue
-                      ? _optionUnitPriceChildrenNewMode()
-                      : Container(),
+                  // ctr.unitPriceCheckbox.isTrue &&
+                  //     ctr.isOptionCheckbox.isTrue
+                  //     ?
+                  _optionUnitPriceChildrenNewMode()
+                    //  : Container(),
                 ],
               ),
-            ),
+
             SizedBox(height: 10),
           ],
         ),
@@ -242,6 +243,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   _optionUnitPriceChildrenNewMode() {
+  print("cccccc");
     if(addProductCtr.colorsList.isEmpty) return Center(child: Text("색상추가하세요."),);
     if (ctr.productBodySizeList.isEmpty) {
       return Center(child: Text('사이즈 추가하세요.'));
@@ -250,13 +252,13 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     addProductCtr.optionsControllers.clear();
     addProductCtr.options.clear();
     for (var colorIndex = 0;
-        colorIndex < addProductCtr.colorsList.length;
-        colorIndex++) {
+        colorIndex < addProductCtr.colorsList.length; colorIndex++) {
       // FREE, XS, S, M, L
       if (ctr.productBodySizeList
           .firstWhere((element) => element.size == 'FREE')
           .isSelected
           .value) {
+        print("aaaaaa");
         Option? option;
         if (addProductCtr.isEditing.isTrue) {
           option = addProductCtr.productModifyModel.value.options!
@@ -264,6 +266,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'FREE' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
+        print("bbbbbbbb");
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(
@@ -365,6 +368,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   Widget _unitPriceTile(int colorIndex, int currentOptionLength, String size) {
+    print("ddddd");
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(

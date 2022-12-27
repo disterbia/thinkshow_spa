@@ -11,8 +11,8 @@ import 'package:wholesaler_user/app/data/firebase_service.dart';
 
 import '../controller/partner_main_controller.dart';
 
-class PartnerMainView extends GetView<PartnerMainController> {
-  PartnerMainController ctr = Get.put(PartnerMainController());
+class PartnerMainView extends GetView<BottomNavbarController> {
+ // PartnerMainController ctr = Get.put(PartnerMainController());
   BottomNavbarController navbarCtr = Get.put(BottomNavbarController());
 
   @override

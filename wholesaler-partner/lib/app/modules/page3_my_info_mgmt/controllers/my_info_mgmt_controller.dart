@@ -15,7 +15,7 @@ import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import '../../../data/api_provider.dart';
 
 class MyInfoMgmtController extends GetxController {
-  Page3MyPageController page3MyPageController = Get.find<Page3MyPageController>();
+  Page3MyPageController page3MyPageController = Get.put(Page3MyPageController());
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordVerifyController = TextEditingController();
