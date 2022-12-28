@@ -15,10 +15,16 @@ class Tab1UserHomeController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
+  RxBool isLoading= false.obs;
 
-  @override
-  Future<void> onInit() async {
-    products.value = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+  // @override
+  // Future<void> onInit() async {
+  //
+  // }
+
+  Future<void> init() async{
+    isLoading.value=true;
+    products.value = await _apiProvider.getAllProducts(offset: 0, limit: mConst.limit);
 
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
@@ -26,6 +32,7 @@ class Tab1UserHomeController extends GetxController {
         addDataToList();
       }
     });
+    isLoading.value=false;
     super.onInit();
   }
 

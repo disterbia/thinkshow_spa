@@ -21,9 +21,12 @@ class Tab2AdApplicationController extends GetxController {
   RxList<DateTime> notApplicableDateTimes = <DateTime>[].obs;
 
   RxBool isAdAvailable = false.obs;
+  RxBool isLoading = false.obs;
+  int adsId = Get.arguments;
 
   init() async {
-    var response = await _apiProvider.getAdTab2AdApplyInquiry();
+    isLoading.value=true;
+    var response = await _apiProvider.getAdTab2AdApplyInquiry(adsId);
     if (response != null) {
       tab2AdApplyModel.value = response;
       // convert to date time
@@ -34,6 +37,7 @@ class Tab2AdApplicationController extends GetxController {
     } else {
       isAdAvailable.value = false;
     }
+    isLoading.value=false;
   }
 
   calendarCellTapped(CalendarTapDetails calendarTapDetails) {

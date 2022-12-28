@@ -20,7 +20,7 @@ enum AdPaymentStatus {
 
 enum AdTabs {
   Tab1AdStatus,
-  Tab2AdApplication,
+  //Tab2AdApplication,
   Tab3AdApplicationHistory,
 }
 

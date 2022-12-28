@@ -1493,11 +1493,9 @@ class pApiProvider extends GetConnect {
   }
 
   /// Ad > Tab 2: Ad Apply > Inquiry
-  Future<AdTab2ApplyModel?> getAdTab2AdApplyInquiry() async {
+  Future<AdTab2ApplyModel?> getAdTab2AdApplyInquiry(int adsId) async {
     final response = await get(
-        mConst.API_BASE_URL +
-            mConst.API_STORE_PATH +
-            '/advertisement/application-info',
+        '${mConst.API_BASE_URL}${mConst.API_STORE_PATH}/advertisement/application-info?ads_application_id=$adsId',
         headers: headers);
 
     print('getAdTab2AdApplyInquiry :' + response.bodyString!);

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab2_best_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
@@ -14,33 +15,35 @@ class Tab2BestView extends GetView<Tab2BestController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Obx(() => HorizontalChipList().getAllMainCat(
-                categoryList:
-                    ClothCategory.getAllMainCat().map((e) => e.name).toList(),
-                onTapped: () {
-                  ctr.updateProducts();
-                })),
-          ),
-          SizedBox(height: 5),
-          _button(),
-          SizedBox(height: 10),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ProductGridViewBuilder(
-              crossAxisCount: 2,
-              productHeight: 360,
-              products: ctr.products,
-              isShowLoadingCircle: ctr.allowCallAPI,
+    return Obx(
+      ()=> ctr.isLoading.value?LoadingWidget():SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Obx(() => HorizontalChipList().getAllMainCat(
+                  categoryList:
+                      ClothCategory.getAllMainCat().map((e) => e.name).toList(),
+                  onTapped: () async{
+                    await ctr.updateProducts();
+                  })),
             ),
-          ),
-        ],
+            SizedBox(height: 5),
+            _button(),
+            SizedBox(height: 10),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ProductGridViewBuilder(
+                crossAxisCount: 2,
+                productHeight: 360,
+                products: ctr.products,
+                isShowLoadingCircle: ctr.allowCallAPI,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

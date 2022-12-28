@@ -13,8 +13,8 @@ class SplashScreenController extends GetxController {
     bool isLogin = await CacheProvider().getToken().isNotEmpty;
     isLogin
         ? MyVars.isUserProject()
-            ? Future.delayed(Duration(seconds: 1),() => Get.offAll(() => UserMainView()),)
-            : Future.delayed(Duration(seconds: 1),() =>Get.offAll(() => PartnerMainView()))
+            ?  Get.offAll(() => UserMainView())
+            : Get.offAll(() => PartnerMainView())
         : Future.delayed(Duration(seconds: 1),() => Get.offAll(() => User_LoginPageView()));
 
     super.onInit();

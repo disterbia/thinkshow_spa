@@ -9,6 +9,7 @@ import 'package:wholesaler_user/app/widgets/two_buttons.dart';
 
 Tab3AdApplyHistoryBudgetDialog({required ApplicationDetailList tempApplicationDetail}) {
   Tab3AdApplicationHistoryController ctr = Get.put(Tab3AdApplicationHistoryController());
+  ctr.dailyBudgetController.text=tempApplicationDetail.budget_setting_amount.toString();
   showDialog(
     context: Get.context!,
     builder: (BuildContext context) => Dialog(

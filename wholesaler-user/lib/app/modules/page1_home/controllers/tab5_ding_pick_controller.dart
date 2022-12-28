@@ -11,10 +11,11 @@ class Tab5DingPickController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
-
-  init() async {
-    products.value = await _apiProvider.getDingsPick(offset: offset, limit: mConst.limit);
-
+  RxBool isLoading=false.obs;
+  Future<void> init() async {
+    isLoading.value=true;
+    products.value = await _apiProvider.getDingsPick(offset: 0, limit: mConst.limit);
+    isLoading.value=false;
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
         offset += mConst.limit;

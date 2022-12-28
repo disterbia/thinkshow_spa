@@ -29,7 +29,7 @@ class AddressDropDown extends StatelessWidget {
         SizedBox(height: 6),
         // Drop down
         Container(
-          height: 50,
+          height: 60,
           child: InputDecorator(
             decoration: InputDecoration(isDense: true, border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(MyDimensions.radius)))),
             child: Obx(

@@ -10,7 +10,7 @@ class AdController extends GetxController with GetSingleTickerProviderStateMixin
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(vsync: this, length: 3);
+    tabController = TabController(vsync: this, length: 2);
     currentTab.value = Get.arguments;
     tabController.index = currentTab.value;
   }

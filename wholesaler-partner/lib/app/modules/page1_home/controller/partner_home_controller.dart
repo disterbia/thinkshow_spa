@@ -33,16 +33,19 @@ class PartnerHomeController extends GetxController {
   RxString selectedSortProductDropDownItem = SortProductDropDownItem.latest.obs;
 
   RxBool isShowSplashScreen = true.obs;
+  RxBool isLoading = false.obs;
 
-  void init() {
+  void init() async{
     print('PartnerHomeController init');
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      isShowSplashScreen.value = false;
-      getMainStore();
-      getBestProducts();
-      getAds();
-      callGetProductsAPI();
-    });
+   // WidgetsBinding.instance.addPostFrameCallback((_) {
+     // isShowSplashScreen.value = false;
+    isLoading.value=true;
+      await getMainStore();
+    await getBestProducts();
+    await getAds();
+    await callGetProductsAPI();
+      isLoading.value=false;
+    // });
   }
 
   @override

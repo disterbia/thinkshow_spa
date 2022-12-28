@@ -13,6 +13,7 @@ class Tab2BestController extends GetxController {
   RxList<Product> products = <Product>[].obs;
   Rx<ScrollController> scrollController = ScrollController().obs;
   RxBool allowCallAPI = false.obs;
+  RxBool isLoading = false.obs;
 
   /// WARNING: [apiSoftItems] and [dropdownItems]: if one is changed, the other one should also be changed.
   List<String> apiSoftItems = ['total', 'daily', 'weekly', 'lowPrice', 'highPrice'];
@@ -21,11 +22,14 @@ class Tab2BestController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    isLoading.value = true;
     products.value = await _apiProvider.getBestProductsWithALL(sort: apiSoftItems[categoryTagCtr.selectedMainCatIndex.value]);
+    isLoading.value = false;
     super.onInit();
   }
 
   Future<void> updateProducts() async {
+    isLoading.value = true;
     print('inside updateProducts: categoryTagCtr selectedIndex ${categoryTagCtr.selectedMainCatIndex.value}');
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
@@ -35,5 +39,6 @@ class Tab2BestController extends GetxController {
       print('index > 0 , show categories');
       products.value = await _apiProvider.getBestProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, sort: apiSoftItems[selectedDropdownIndex.value]);
     }
+    isLoading.value = false;
   }
 }

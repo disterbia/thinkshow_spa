@@ -6,6 +6,7 @@ class ApplicationDetailList {
   bool? isComplete;
   int? cost;
   bool? is_real_time_cost;
+  int? budget_setting_amount;
 
   ApplicationDetailList({
     this.id,
@@ -13,6 +14,7 @@ class ApplicationDetailList {
     this.isComplete,
     this.cost,
     this.is_real_time_cost,
+    this.budget_setting_amount
   });
 
   factory ApplicationDetailList.fromMap(Map<String, dynamic> data) {
@@ -22,6 +24,7 @@ class ApplicationDetailList {
       isComplete: data['is_complete'] as bool?,
       cost: data['cost'] as int?,
       is_real_time_cost: data['is_real_time_cost'] as bool?,
+      budget_setting_amount: data['budget_setting_amount'] as int?,
     );
   }
 
@@ -31,6 +34,7 @@ class ApplicationDetailList {
         'is_complete': isComplete,
         'cost': cost,
         'is_real_time_cost': is_real_time_cost,
+         'budget_setting_amount': budget_setting_amount,
       };
 
   /// `dart:convert`

@@ -7,7 +7,7 @@ import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller.dart';
 
 class Tab3NewProductsController extends GetxController {
-  CarouselController indicatorSliderController = CarouselController();
+  //CarouselController indicatorSliderController = CarouselController();
   RxInt sliderIndex = 0.obs;
   uApiProvider _apiProvider = uApiProvider();
   RxList<Product> products = <Product>[].obs;
@@ -15,14 +15,16 @@ class Tab3NewProductsController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
+  RxBool isLoading = false.obs;
 
-  init() async {
+  Future<void> init() async {
+    isLoading.value=true;
     print('inside Tab3NewProductsController onInit');
     // delete old controllers
-    Get.delete<CarousalProductHorizontalController>();
+    // Get.delete<CarousalProductHorizontalController>();
 
-    products.value = await _apiProvider.getNewProducts(offset: offset, limit: mConst.limit);
-
+    products.value = await _apiProvider.getNewProducts(offset: 0, limit: mConst.limit);
+    isLoading.value=false;
     scrollController.value.addListener(() {
       print('scrollController.value.addListener');
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {

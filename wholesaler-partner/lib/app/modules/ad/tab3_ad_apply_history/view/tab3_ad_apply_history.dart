@@ -10,6 +10,7 @@ import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
+import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 
 class Tab3AdApplicationHistoryView extends GetView {
   Tab3AdApplicationHistoryController ctr = Get.put(Tab3AdApplicationHistoryController());
@@ -21,41 +22,43 @@ class Tab3AdApplicationHistoryView extends GetView {
   @override
   Widget build(BuildContext context) {
     onInit();
-    return SingleChildScrollView(
-      child: Obx(
-        () => ctr.isLoading.value
-            ? LoadingWidget()
-            : Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RemainingPoints(),
-                        SizedBox(height: 25),
-                        _Listview1Builder(),
-                        SizedBox(height: 10),
-                      ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Obx(
+          () => ctr.isLoading.value
+              ? LoadingWidget()
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RemainingPoints(),
+                          SizedBox(height: 25),
+                          _Listview1Builder(),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                  // Container(
-                  //   height: 6,
-                  //   width: double.infinity,
-                  //   color: MyColors.grey3,
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(20),
-                  //   child: Column(
-                  //     children: [
-                  //       _expectedPaymentAmount(),
-                  //       SizedBox(height: 25),
-                  //       _completedPaymentAmount(),
-                  //     ],
-                  //   ),
-                  // ),
-                ],
-              ),
+                    // Container(
+                    //   height: 6,
+                    //   width: double.infinity,
+                    //   color: MyColors.grey3,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(20),
+                    //   child: Column(
+                    //     children: [
+                    //       _expectedPaymentAmount(),
+                    //       SizedBox(height: 25),
+                    //       _completedPaymentAmount(),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
+        ),
       ),
     );
   }

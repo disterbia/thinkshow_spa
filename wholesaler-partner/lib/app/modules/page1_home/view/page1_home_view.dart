@@ -15,6 +15,7 @@ import 'package:wholesaler_partner/app/widgets/bottom_navbar/bottom_navbar_contr
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_partner/app/widgets/search_field.dart';
 import 'package:wholesaler_partner/app/widgets/sort_dropdown.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -34,14 +35,17 @@ class Page1HomeView extends GetView<PartnerHomeController> {
   init() {
     ctr.init();
   }
-
+  double columnWidth = 0;
   @override
   Widget build(BuildContext context) {
     init();
+    columnWidth = context.width / 3;
     return Obx(
-      () => ctr.isShowSplashScreen.isTrue
-          ? SplashScreenPageView()
-          : SingleChildScrollView(
+      () =>ctr.isLoading.value ? SplashScreenPageView() :
+      // ctr.isShowSplashScreen.isTrue
+      //     ? SplashScreenPageView()
+      //     :
+      SingleChildScrollView(
               controller: ctr.scrollController.value,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 40),
@@ -422,23 +426,43 @@ class Page1HomeView extends GetView<PartnerHomeController> {
         Padding(
           padding: const EdgeInsets.only(left: 20),
           child: SizedBox(
-            height: 240,
+            height: 480,
             child: Obx(
-              () => ListView.separated(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: ctr.advertisements.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(width: 20),
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: 105,
-                    child: AdvertisementItemVertical(
-                      advertisement: ctr.advertisements.elementAt(index),
+              () =>
+                  GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: ctr.advertisements.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AdvertisementItemVertical(
+                        advertisement: ctr.advertisements.elementAt(index),
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      childAspectRatio: columnWidth /
+                          (MyVars.isSmallPhone()
+                              ? 270
+                              : 260), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                     ),
-                  );
-                },
-              ),
+                  ),
+              //     ListView.separated(
+              //   scrollDirection: Axis.horizontal,
+              //   shrinkWrap: true,
+              //   itemCount: ctr.advertisements.length,
+              //   separatorBuilder: (BuildContext context, int index) =>
+              //       SizedBox(width: 20),
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return SizedBox(
+              //       width: 105,
+              //       child: AdvertisementItemVertical(
+              //         advertisement: ctr.advertisements.elementAt(index),
+              //       ),
+              //     );
+              //   },
+              // ),
             ),
           ),
         ),

@@ -21,7 +21,7 @@ class AdView extends StatelessWidget {
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: 'ad_apply'.tr),
       body: DefaultTabController(
-        length: 3, // length of tabs
+        length: 2, // length of tabs
         initialIndex: ctr.currentTab.value,
         child: Column(
           children: [
@@ -33,7 +33,7 @@ class AdView extends StatelessWidget {
                 indicatorColor: Colors.black,
                 tabs: [
                   Tab(text: 'Advertising_Status'.tr),
-                  Tab(text: 'ad_apply'.tr),
+                  //Tab(text: 'ad_apply'.tr),
                   Tab(text: 'Application_history'.tr),
                 ],
               ),
@@ -47,7 +47,7 @@ class AdView extends StatelessWidget {
                 controller: ctr.tabController,
                 children: [
                   Tab1AdStatusView(),
-                  Tab2AdApplicationView(),
+                  //Tab2AdApplicationView(),
                   Tab3AdApplicationHistoryView(),
                 ],
               ),

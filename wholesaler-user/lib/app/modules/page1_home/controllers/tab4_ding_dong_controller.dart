@@ -15,17 +15,33 @@ class Tab4DingDongController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
+  RxBool isLoading= false.obs;
 
-  @override
-  Future<void> onInit() async {
-    products.value = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
-    scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-        offset += mConst.limit;
-        addDataToList();
-      }
-    });
-    super.onInit();
+  // @override
+  // Future<void> onInit() async {
+  //   isLoading.value= true;
+  //   products.value = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
+  //   scrollController.value.addListener(() {
+  //     if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+  //       offset += mConst.limit;
+  //       addDataToList();
+  //     }
+  //   });
+  //   isLoading.value=false;
+  //   super.onInit();
+  // }
+
+ Future<void> init() async{
+   isLoading.value= true;
+   products.value = await _apiProvider.getDingdongProductPopular(offset: 0, limit: mConst.limit);
+   scrollController.value.addListener(() {
+     if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+       offset += mConst.limit;
+       addDataToList();
+     }
+   });
+   isLoading.value=false;
+   super.onInit();
   }
 
   Future<void> updateProducts() async {
@@ -41,6 +57,7 @@ class Tab4DingDongController extends GetxController {
       print('index > 0 , show categories');
       products.value = await _apiProvider.getDingdongProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
+    allowCallAPI.value = false;
   }
 
   addDataToList() async {

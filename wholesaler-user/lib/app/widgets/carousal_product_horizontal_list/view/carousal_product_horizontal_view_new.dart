@@ -9,11 +9,16 @@ import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller.dart';
+import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller_new.dart';
 import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget.dart';
 
-class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalController> {
-  CarousalProductHorizontalController ctr = Get.put(CarousalProductHorizontalController());
-
+class CarousalProductHorizontalViewNew extends GetView<CarousalProductHorizontalControllerNew> {
+  CarousalProductHorizontalControllerNew ctr = Get.put(CarousalProductHorizontalControllerNew());
+  // CarousalProductHorizontalView({required UserHomeTabs currentTab}) {
+  //   //WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     ctr.init(currentTab);
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
