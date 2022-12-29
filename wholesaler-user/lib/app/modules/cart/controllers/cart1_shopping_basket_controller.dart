@@ -19,8 +19,10 @@ class Cart1ShoppingBasketController extends GetxController {
   RxBool isSelectAllChecked = false.obs;
   RxList<Cart> cartItems = <Cart>[].obs;
   RxInt totalPaymentPrice = 0.obs;
+  RxBool isLoading = false.obs;
 
   init() async {
+    isLoading.value=true;
     if (CacheProvider().getToken().isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Get.to(() => User_LoginPageView());
@@ -29,6 +31,7 @@ class Cart1ShoppingBasketController extends GetxController {
       cartItems.value = await _apiProvider.getCart1ShoppintBasket();
       updateTotalPaymentPrice();
     }
+    isLoading.value=false;
   }
 
   /// returns total number of products in the cart

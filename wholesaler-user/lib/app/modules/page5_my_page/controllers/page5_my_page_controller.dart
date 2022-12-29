@@ -8,16 +8,20 @@ import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class Page5MyPageController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
-
+  RxBool isLoading = false.obs;
   Rx<User> user = User(userID: 'userID', userName: 'userName').obs;
 
   init() async {
+
     if (CacheProvider().getToken().isNotEmpty) {
-      print('CacheProvider().getToken() : ${CacheProvider().getToken()}');
+      isLoading.value=true;
+     //print('CacheProvider().getToken() : ${CacheProvider().getToken()}');
       user.value = await _apiProvider.getUserInfo();
+      isLoading.value=false;
     } else {
       mFuctions.userLogout();
     }
+
     // user.value = await _apiProvider.getUserInfo();
   }
 

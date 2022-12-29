@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -30,18 +31,20 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
     );
   }
 
-  Widget _body() => SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 20),
-            HorizontalChipList().getIconTextList(onPressed: (index) => ctr.chipPressed(index)),
-            _dingDongDeliveryBanner(),
-            Divider(thickness: 6, color: MyColors.grey3),
-            _imageList(),
-          ],
+  Widget _body() => Obx(
+    ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              HorizontalChipList().getIconTextList(onPressed: (index) => ctr.chipPressed(index)),
+              _dingDongDeliveryBanner(),
+              Divider(thickness: 6, color: MyColors.grey3),
+              _imageList(),
+            ],
+          ),
         ),
-      );
+  );
 
   // ####### DingDong delivery banner
   Widget _dingDongDeliveryBanner() {

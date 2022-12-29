@@ -51,10 +51,10 @@ class Tab4DingDongController extends GetxController {
     allowCallAPI.value = true;
 
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print('index 0, show 인기');
+      //print('index 0, show 인기');
       products.value = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
     } else {
-      print('index > 0 , show categories');
+      //print('index > 0 , show categories');
       products.value = await _apiProvider.getDingdongProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
     allowCallAPI.value = false;
@@ -63,10 +63,10 @@ class Tab4DingDongController extends GetxController {
   addDataToList() async {
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print('index 0, show ALL');
+      //print('index 0, show ALL');
       tempProducts = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
     } else {
-      print('index > 0 , show categories');
+     // print('index > 0 , show categories');
       tempProducts = await _apiProvider.getDingdongProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
     products.addAll(tempProducts);

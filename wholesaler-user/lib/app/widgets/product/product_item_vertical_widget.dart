@@ -36,7 +36,7 @@ class ProductItemVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (() {
-        print('inside ProductItemVertical: ' + product.id.toString());
+        //print('inside ProductItemVertical: ' + product.id.toString());
         Get.delete<ProductDetailController>();
         Get.to(() => ProductDetailView(), arguments: product.id);
       }),
@@ -152,7 +152,7 @@ class ProductItemVertical extends StatelessWidget {
 
   CheckboxBuilder() {
     if (product.isChecked != null) {
-      print('inside CheckboxBuilder');
+     // print('inside CheckboxBuilder');
       return Container(
         margin: EdgeInsets.only(left: 5, top: 20),
         height: 20,

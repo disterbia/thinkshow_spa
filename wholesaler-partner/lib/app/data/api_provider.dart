@@ -707,7 +707,7 @@ class pApiProvider extends GetConnect {
     data['endDate'] = endDate;
     data['offset'] = offset.toString();
     data['limit'] = limit.toString();
-
+    headers={"Authorization": "Bearer " + CacheProvider().getToken()};
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.ORDERS;
     final response = await get(url, query: data, headers: headers);
     if (response.statusCode == 200) {

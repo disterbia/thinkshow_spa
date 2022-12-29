@@ -730,6 +730,7 @@ class uApiProvider extends GetConnect {
 
   // page 4: 찜 상품
   Future<List<Product>> getFavoriteProducts() async {
+    headers={"Authorization": "Bearer " + CacheProvider().getToken()};
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/product/favorites';
     final response = await get(url, headers: headers);

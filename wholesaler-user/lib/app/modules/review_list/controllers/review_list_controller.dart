@@ -50,7 +50,7 @@ class ReviewListController extends GetxController {
       }
 
       isLoading.value = false;
-      print('hello world ${reviews}');
+     // print('hello world ${reviews}');
     });
   }
 }

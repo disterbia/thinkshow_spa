@@ -26,8 +26,8 @@ class Tab3InquiryController extends GetxController {
 
   Future<void> submitInquiryPressed() async {
     int productId = productDetailController.productId;
-    print(
-        'submitInquiryPressed productId $productId content ${contentController.text} isSecret $isSecret');
+    // print(
+    //     'submitInquiryPressed productId $productId content ${contentController.text} isSecret $isSecret');
     if (contentController.text.isEmpty) {
       mSnackbar(message: '문의 사항을 입력해주세요');
       return;

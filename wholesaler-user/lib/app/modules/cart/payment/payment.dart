@@ -16,8 +16,8 @@ class Payment extends StatelessWidget {
   Payment();
   @override
   Widget build(BuildContext context) {
-    print(
-        'payment build: cart2Ctr.cart2checkoutModel.value.userInfo!.email! = ${cart2Ctr.cart2checkoutModel.value.userInfo!.email}');
+    // print(
+    //     'payment build: cart2Ctr.cart2checkoutModel.value.userInfo!.email! = ${cart2Ctr.cart2checkoutModel.value.userInfo!.email}');
     return IamportPayment(
         appBar: new AppBar(
           title: new Text('띵쇼마켓 결제'),
@@ -65,7 +65,7 @@ class Payment extends StatelessWidget {
             ),
         /* [필수입력] 콜백 함수 */
         callback: (Map<String, dynamic> result) {
-          print('payment result $result');
+         // print('payment result $result');
           if (result['imp_success'] == 'true') {
             cart2Ctr.paymentSuccessful(result);
           } else {

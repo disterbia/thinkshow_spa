@@ -24,10 +24,12 @@ class ProductDetailController extends GetxController {
 
   // size table widget
   ScrollController arrowsController = ScrollController();
+  RxBool isLoading= false.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    isLoading.value=true;
     print('productId $productId');
     productId = Get.arguments;
 
@@ -41,6 +43,7 @@ class ProductDetailController extends GetxController {
       product.value.quantity = 1.obs;
     }
     totalPrice.value = product.value.price!;
+    isLoading.value=false;
   }
 
   void UpdateTotalPrice() {

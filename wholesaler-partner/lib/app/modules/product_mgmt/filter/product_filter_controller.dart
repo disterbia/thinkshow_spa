@@ -44,7 +44,7 @@ class ProductMgmtFilterController extends GetxController {
     isLoading.value = false;
   }
 
-  void applyFilterPressed() {
+  void applyFilterPressed() async{
     print('selected dates: ${startDateController.text} ~ ${endDateController.text}');
     for (int i = 0; i < clothCategories.length; i++) {
       if (clothCategories[i].isSelected!.value == true) {
@@ -77,9 +77,9 @@ class ProductMgmtFilterController extends GetxController {
       }
     }
 
-    productMgmtCtr.getProductsWithFilter(startDate: startDateController.text, endDate: endDateController.text, clothCatIds: selectedClothCatIds);
-    // Get.back();
-    Get.to(ProductMgmtView());
+   await productMgmtCtr.getProductsWithFilter(startDate: startDateController.text, endDate: endDateController.text, clothCatIds: selectedClothCatIds);
+     Get.back();
+   // Get.to(ProductMgmtView());
   }
 
   chipPressed(int i) {

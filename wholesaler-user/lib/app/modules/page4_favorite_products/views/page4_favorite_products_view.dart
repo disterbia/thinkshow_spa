@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
@@ -29,7 +30,7 @@ class Page4FavoriteProductsView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: _appbar(),
-      body: _body(),
+      body: Obx(()=>ctr.isLoading.value?LoadingWidget(): _body()),
     );
   }
 

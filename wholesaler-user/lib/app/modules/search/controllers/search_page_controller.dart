@@ -29,7 +29,7 @@ class SearchPageController extends GetxController {
 
     // Recently Seen Products
     List productIds = CacheProvider().getAllRecentlyViewedProducts();
-    print('productIds ${productIds}');
+    //print('productIds ${productIds}');
     if (productIds.isNotEmpty) {
       recentlyVisitedProducts.value = await _apiProvider.getRecentlySeenProducts(productIds);
       if (recentlyVisitedProducts.length < mConst.limit) {
@@ -38,7 +38,7 @@ class SearchPageController extends GetxController {
     }
 
     scrollController.value.addListener(() {
-      print('scrollController.value.addListener');
+     // print('scrollController.value.addListener');
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
         offset += mConst.limit;
         addDataToList();
@@ -75,7 +75,7 @@ class SearchPageController extends GetxController {
   addDataToList() async {
     List<Product> tempProducts = [];
     tempProducts = await _apiProvider.getSearchProducts(searchContent: searchController.text, offset: offset, limit: mConst.limit);
-    print('tempProducts length ${tempProducts.length}');
+   // print('tempProducts length ${tempProducts.length}');
     searchProducts.addAll(tempProducts);
 
     // check if last product from server.

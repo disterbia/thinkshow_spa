@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
@@ -24,7 +25,7 @@ class Cart1ShoppingBasketView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: '장바구니'),
-      body: body(),
+      body: Obx(()=> ctr.isLoading.value? LoadingWidget(): body()),
     );
   }
 

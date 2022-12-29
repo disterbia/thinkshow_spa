@@ -17,6 +17,7 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
 
   @override
   Widget build(BuildContext context) {
+
     return Obx(
       ()
       {

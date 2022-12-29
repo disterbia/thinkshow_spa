@@ -37,7 +37,7 @@ class PartnerHomeController extends GetxController {
 
   void init() async{
     print('PartnerHomeController init');
-   // WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
      // isShowSplashScreen.value = false;
     isLoading.value=true;
       await getMainStore();
@@ -45,7 +45,7 @@ class PartnerHomeController extends GetxController {
     await getAds();
     await callGetProductsAPI();
       isLoading.value=false;
-    // });
+     });
   }
 
   @override
@@ -150,6 +150,8 @@ class PartnerHomeController extends GetxController {
         sort: sort,
         offset: offset,
         limit: mConst.limit);
+    print(products.length);
+    print(raw.length);
     for (int i = 0; i < raw.length; i++) {
       Store tempStore = Store(
         id: raw[i]['store_id'],
@@ -163,6 +165,7 @@ class PartnerHomeController extends GetxController {
         isLiked: raw[i]['is_favorite'] ? true.obs : false.obs,
         imgUrl: raw[i]['thumbnail_image_url'],
       );
+
       products.add(tempProduct);
     }
 

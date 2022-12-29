@@ -12,9 +12,12 @@ class Page2StoreListController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
 
   RxList<Store> stores = <Store>[].obs;
+  RxBool isLoading = false.obs;
 
   Future<void> getRankedStoreData() async {
+    Future.delayed(Duration.zero,() => isLoading.value=true);
     stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
+    isLoading.value=false;
   }
 
   Future<void> getBookmarkedStoreData() async {
@@ -23,8 +26,12 @@ class Page2StoreListController extends GetxController {
         Get.to(() => User_LoginPageView());
       });
     } else {
+      Future.delayed(Duration.zero,() => isLoading.value=true);
+
       stores.value = await _apiProvider.getStorebookmarked();
+      isLoading.value=false;
     }
+
   }
 
   Future<void> starIconPressed(Store store) async {

@@ -14,26 +14,26 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab3NewProductsView extends GetView<Tab3NewProductsController> {
   Tab3NewProductsController ctr = Get.put(Tab3NewProductsController());
-  CarousalProductHorizontalControllerNew recommendedProductCtr = Get.put(CarousalProductHorizontalControllerNew());
+  CarousalProductHorizontalControllerNew newRecommendedProductCtr = Get.put(CarousalProductHorizontalControllerNew());
 
   Tab3NewProductsView();
 
   init() {
     ctr.init();
     //Get.delete<CarousalProductHorizontalControllerNew>();
-   recommendedProductCtr.init();
+    newRecommendedProductCtr.init();
   }
 
   @override
   Widget build(BuildContext context) {
     init();
-    print('tab3 new products');
+   // print('tab3 new products');
     return Obx(
-      ()=>ctr.isLoading.value&&recommendedProductCtr.isLoading.value ? LoadingWidget(): SingleChildScrollView(
+      ()=>ctr.isLoading.value&&newRecommendedProductCtr.isLoading.value ? LoadingWidget(): SingleChildScrollView(
         controller: ctr.scrollController.value,
         child: Column(
           children: [
-            Column(
+            newRecommendedProductCtr.products.length!=0? Column(
                       children: [
                         _sponsorTitle(),
                         SizedBox(height: 5),
@@ -43,7 +43,7 @@ class Tab3NewProductsView extends GetView<Tab3NewProductsController> {
                         ),
                         Divider(thickness: 6, color: MyColors.grey3),
                       ],
-                    )
+                    ):Container()
              ,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),

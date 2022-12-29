@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
@@ -14,7 +15,7 @@ class StoreListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
+      () => ctr.isLoading.value?LoadingWidget():ListView.builder(
           itemCount: ctr.stores.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {

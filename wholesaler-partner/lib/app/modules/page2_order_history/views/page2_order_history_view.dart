@@ -5,6 +5,7 @@ import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
+import 'package:wholesaler_user/app/widgets/product/product_item_horiz_widget.dart';
 import 'package:wholesaler_user/app/widgets/range_date_picker/range_date_picker_widget.dart';
 
 import '../controllers/page2_order_history_controller.dart';
@@ -12,8 +13,12 @@ import '../controllers/page2_order_history_controller.dart';
 class Page2OrderHistoryView extends GetView {
   Page2OrderHistoryController ctr = Get.put(Page2OrderHistoryController());
 
+  init() {
+    ctr.init();
+  }
   @override
   Widget build(BuildContext context) {
+    init();
     return Obx(() {
       return ctr.isLoading.value
           ? LoadingWidget()
@@ -52,7 +57,27 @@ class Page2OrderHistoryView extends GetView {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             children: <Widget>[
-                              OrderItemCard(),
+                              ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: ctr.products.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        ctr.products[index].createdAt!,
+                                        style: MyTextStyles.f14.copyWith(color: MyColors.black3),
+                                      ),
+                                      SizedBox(height: 5),
+                                      ProductItemHorizontal(product: ctr.products[index]),
+                                    ],
+                                  );
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return SizedBox(height: 10);
+                                },
+                              ),
                               SizedBox(height: 20),
                             ],
                           ),

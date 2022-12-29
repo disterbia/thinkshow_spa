@@ -19,7 +19,7 @@ class ExhibitionProductsController extends GetxController {
 
   Future<void> getExhibitInformation(int imageId) async {
     await _apiProvider.getExhibitDetails(imageId.toString()).then((response) {
-      print(' ressssssssssss ${response}');
+    //  print(' ressssssssssss ${response}');
       if (response['detail_img_url'] != null) {
         bannerPicture.value = (response['detail_img_url'] as String);
       } else {

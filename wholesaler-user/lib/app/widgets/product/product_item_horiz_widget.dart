@@ -67,7 +67,7 @@ class ProductItemHorizontal extends StatelessWidget {
           return;
         }
         if (product.id != -1) {
-          print("${product.id}asdfasdf");
+          //print("${product.id}asdfasdf");
           Get.to(() => ProductDetailView(), arguments: product.id);
         }
       },

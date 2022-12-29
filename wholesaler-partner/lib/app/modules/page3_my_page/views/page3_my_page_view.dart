@@ -361,7 +361,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
             // Get.delete<Page2OrderHistoryView>();
             await Get.deleteAll();
             //await Get.reset();
-            await Get.offAll(() => User_LoginPageView());
+            await Get.off(() => User_LoginPageView());
             print("============${CacheProvider().getUserID()}");
             //Get.offAllNamed('/login');
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/modules/faq/controllers/faq_controller.dart';
@@ -26,31 +27,32 @@ class FaqView extends GetView<FaqController> {
 
   _Listview1Builder() {
     print('inside _Listview1Builder ctr.faqList.length ${ctr.faqList.length}');
-    return SingleChildScrollView(
-      child: Obx(
-        () => Padding(
-          padding: const EdgeInsets.all(15),
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: ctr.faqList.length,
-            separatorBuilder: (BuildContext context, int index1) => SizedBox(height: 10),
-            itemBuilder: (BuildContext context, int index1) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ctr.faqList[index1].faqCategoryName!,
-                    style: MyTextStyles.f16_bold.copyWith(color: MyColors.black3),
-                  ),
-                  SizedBox(height: 10),
-                  _Listview2Builder(index1),
-                  SizedBox(height: 20),
-                ],
-              );
-            },
+    return Obx(
+      ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+        child:  Padding(
+            padding: const EdgeInsets.all(15),
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: ctr.faqList.length,
+              separatorBuilder: (BuildContext context, int index1) => SizedBox(height: 10),
+              itemBuilder: (BuildContext context, int index1) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ctr.faqList[index1].faqCategoryName!,
+                      style: MyTextStyles.f16_bold.copyWith(color: MyColors.black3),
+                    ),
+                    SizedBox(height: 10),
+                    _Listview2Builder(index1),
+                    SizedBox(height: 20),
+                  ],
+                );
+              },
+            ),
           ),
-        ),
+
       ),
     );
   }

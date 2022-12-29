@@ -41,7 +41,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
     init();
     columnWidth = context.width / 3;
     return Obx(
-      () =>ctr.isLoading.value ? SplashScreenPageView() :
+      () =>ctr.isLoading.value ? LoadingWidget() :
       // ctr.isShowSplashScreen.isTrue
       //     ? SplashScreenPageView()
       //     :

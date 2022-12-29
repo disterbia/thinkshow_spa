@@ -7,15 +7,17 @@ import 'package:wholesaler_user/app/modules/page3_product_category_page/view/pro
 
 class Page3MoabogiController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
-
+  RxBool isLoading = false.obs;
   RxList<ImageBannerModel> imageBanners = <ImageBannerModel>[].obs;
 
   getBannerData() async {
+    isLoading.value=true;
     imageBanners.value = await _apiProvider.getBannerImageList();
+    isLoading.value=false;
   }
 
   void chipPressed(int index) {
-    print('tapped main category index $index');
+  //  print('tapped main category index $index');
     Get.to(() => ProductCategoryPageView(index));
   }
 }

@@ -15,14 +15,14 @@ class CarousalProductHorizontalController extends GetxController {
   @override
   Future<void> onInit() async {
     isLoading.value=true;
-    print('CarousalProductHorizontalController init currentTab $UserHomeTabs.home');
+    //print('CarousalProductHorizontalController init currentTab $UserHomeTabs.home');
     products.value = await _apiProvider.getAdProducts(UserHomeTabs.home);
     isLoading.value=false;
     super.onInit();
   }
 Future<void> init() async {
   isLoading.value=true;
-  print('CarousalProductHorizontalController init currentTab $UserHomeTabs.home');
+  //print('CarousalProductHorizontalController init currentTab $UserHomeTabs.home');
   products.value = await _apiProvider.getAdProducts(UserHomeTabs.home);
   isLoading.value=false;
 }

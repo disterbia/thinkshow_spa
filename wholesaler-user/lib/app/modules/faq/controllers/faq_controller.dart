@@ -9,11 +9,13 @@ class FaqController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
 
   RxList<FaqPageModel> faqList = <FaqPageModel>[].obs;
+  RxBool isLoading = false.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-
+    isLoading.value=true;
     faqList.value = await _apiProvider.getFaq();
+    isLoading.value=false;
   }
 }

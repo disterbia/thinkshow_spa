@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -25,44 +26,47 @@ class ProductDetailView extends GetView {
   List<String> tabTitles = ['상세정보', '리뷰', '문의'];
 
   init() {
+    //print("ddddddqqqqqq");
     if (Get.arguments != null) {
       CacheProvider().addRecentlyViewedProduct(Get.arguments);
-      print('ProductDetailView > addRecentlyViewedProduct: Get.arguments ${Get.arguments}');
+     // print('ProductDetailView > addRecentlyViewedProduct: Get.arguments ${Get.arguments}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     init();
-    return DefaultTabController(
-      length: tabTitles.length,
-      child: Scaffold(
-        bottomNavigationBar: User_BottomNavbar(),
-        backgroundColor: MyColors.white,
-        appBar: _appbar(),
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    MyVars.isUserProject() ? storeInfo() : Container(),
-                    _productImages(),
-                    _titleRatingPrice(),
-                    SizedBox(height: 15),
-                  ],
+    return Obx(
+      ()=> DefaultTabController(
+        length: tabTitles.length,
+        child: Scaffold(
+          bottomNavigationBar: User_BottomNavbar(),
+          backgroundColor: MyColors.white,
+          appBar: _appbar(),
+          body: ctr.isLoading.value?LoadingWidget():NestedScrollView(
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      MyVars.isUserProject() ? storeInfo() : Container(),
+                      _productImages(),
+                      _titleRatingPrice(),
+                      SizedBox(height: 15),
+                    ],
+                  ),
                 ),
-              ),
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                pinned: true,
-                elevation: 0,
-                backgroundColor: Colors.white,
-                title: _tabs(),
-              ),
-            ];
-          },
-          body: tabViewBody(),
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  pinned: true,
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  title: _tabs(),
+                ),
+              ];
+            },
+            body: tabViewBody(),
+          ),
         ),
       ),
     );

@@ -46,6 +46,7 @@ class SearchResults extends StatelessWidget {
                 : SizedBox.shrink(),
           ),
           _keywordResults(),
+          SizedBox(height: 20,),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -130,7 +131,7 @@ class SearchResults extends StatelessWidget {
   Widget _RecentlyVisitedProducts() {
     return Obx(
       () => SizedBox(
-        height: 220,
+        height: 270,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,

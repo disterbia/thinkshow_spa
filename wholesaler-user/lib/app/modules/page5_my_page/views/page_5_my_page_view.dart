@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/Constants/functions.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
@@ -31,11 +32,11 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
 
   @override
   Widget build(BuildContext context) {
-    print('inside Page5MyPageView build');
+   // print('inside Page5MyPageView build');
     init();
     return Scaffold(
       appBar: CustomAppbar(isBackEnable: false, title: '마이페이지'),
-      body: _body(),
+      body: Obx(()=>ctr.isLoading.value?LoadingWidget(): _body()),
     );
   }
 

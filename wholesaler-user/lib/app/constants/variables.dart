@@ -24,15 +24,15 @@ class MyVars {
     // 1. initialize isUserProject
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String packageName = packageInfo.packageName;
-    print('packageName $packageName');
+    //print('packageName $packageName');
     if (packageName == 'com.thinksmk.user') {
       MyVars.setIsUserProject(true);
     } else if (packageName == 'com.thinksmk.partner_new' ||
         packageName == 'com.thinksmk.partner') {
       MyVars.setIsUserProject(false);
     } else {
-      print(
-          'ERROR: isUserProject -> wholesaler partner or wholesaler user project name is changed. You should update isUserProject file');
+      //print(
+     //     'ERROR: isUserProject -> wholesaler partner or wholesaler user project name is changed. You should update isUserProject file');
     }
   }
 }

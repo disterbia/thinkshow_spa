@@ -11,7 +11,7 @@ class MyPageUpdatePasswordController extends GetxController {
   TextEditingController newPasswordVerifyCtr = TextEditingController();
 
   changePasswordPressed() async {
-    print('change password pressed');
+    //print('change password pressed');
     // check if empty
     if (originalPasswordCtr.text.isEmpty || newPasswordCtr.text.isEmpty || newPasswordVerifyCtr.text.isEmpty) {
       mSnackbar(message: '모든 항목을 입력해주세요.');

@@ -17,40 +17,52 @@ class ProductMgmtController extends GetxController {
   final pApiProvider _apiProvider = pApiProvider();
   List<int> productsId = [];
   int applicationId = -1;
+  RxList<Product> products = <Product>[].obs;
   // String? searchContent;
   TextEditingController searchController = TextEditingController();
-
+  bool isFilter = false;
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
+  RxBool isLoading = false.obs;
+  RxString startDate = "".obs;
+  RxString endDate= "".obs;
+  RxList<int> clothCatIds = <int>[].obs;
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    print('ㅁㅁㅁㅁ');
-    super.onClose();
+  // @override
+  // void onClose() {
+  //   // TODO: implement onClose
+  //   print('ㅁㅁㅁㅁ');
+  //   super.onClose();
+  // }
+
+  void init() async{
+    print('PartnerHomeController init');
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      // isShowSplashScreen.value = false;
+      isLoading.value=true;
+      await getProducts(startDate: startDate.value,endDate: endDate.value,clothCatIds: clothCatIds,isScrolling: false);
+      isLoading.value=false;
+    });
   }
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
     if (Get.arguments != null) {
       applicationId = Get.arguments;
     }
-    products.clear();
-    getProducts(isScrolling: false);
 
     scrollController.value.addListener(() {
+      print("dd");
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
         offset += mConst.limit;
-        getProducts(isScrolling: true);
+        getProducts(startDate: startDate.value,endDate: endDate.value,clothCatIds: clothCatIds,isScrolling: true);
         print("작동ㄴㄴ");
       }
     });
   }
-
-  RxList<Product> products = <Product>[].obs;
 
   void selectAllCheckbox() {
     isSelectAll.toggle();
@@ -74,12 +86,14 @@ class ProductMgmtController extends GetxController {
       {String? startDate,
       String? endDate,
       List<int>? clothCatIds,
-      required bool isScrolling}) async {
-    if (!isScrolling) {
+      required bool? isScrolling}) async {
+    if (isScrolling == null || isScrolling == false) {
       offset = 0;
       products.clear();
     }
-    print(startDate);
+    print("aaaaaaa$startDate");
+    print("bbbbbb$endDate");
+    print("cccccc$clothCatIds");
     dynamic raw = await _apiProvider.getProducts(
         searchContent: searchController.text,
         startDate: startDate,
@@ -87,7 +101,8 @@ class ProductMgmtController extends GetxController {
         clothCatIds: clothCatIds,
         offset: offset,
         limit: mConst.limit);
-
+    print(products.length);
+    print(raw.length);
     for (int i = 0; i < raw.length; i++) {
       print(raw.length);
       Product tempProduct = Product(
@@ -101,7 +116,7 @@ class ProductMgmtController extends GetxController {
         hasBellIconAndBorder: (raw[i]['is_privilege'] as bool).obs,
         isSoldout: raw[i]['is_sold_out'] == true ? true.obs : false.obs,
       );
-      if(products.length!=raw.length)
+      //if(products.length>=raw.length)
       products.add(tempProduct);
     }
 
@@ -257,9 +272,13 @@ class ProductMgmtController extends GetxController {
     getProducts(isScrolling: false);
   }
 
-  void getProductsWithFilter(
-      {String? startDate, String? endDate, List<int>? clothCatIds}) {
-    getProducts(
+   Future<void> getProductsWithFilter (
+      {String? startDate, String? endDate, List<int>? clothCatIds}) async{
+    this.startDate.value=startDate!;
+    this.endDate.value=endDate!;
+    this.clothCatIds.value=clothCatIds!;
+
+   await getProducts(
         startDate: startDate,
         endDate: endDate,
         clothCatIds: clothCatIds,

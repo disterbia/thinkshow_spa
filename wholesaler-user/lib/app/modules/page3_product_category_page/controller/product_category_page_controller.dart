@@ -43,8 +43,8 @@ class ProductCategoryPageController extends GetxController {
   }
 
   subCatChipPressed(ClothCategoryModel selectedSubcat) async {
-    print('selectedSubcat id: ${selectedSubcat.id}');
-    print('selectedSubcat parentId: ${selectedSubcat.parentId}');
+    // print('selectedSubcat id: ${selectedSubcat.id}');
+    // print('selectedSubcat parentId: ${selectedSubcat.parentId}');
     selectedCatIndex.value = selectedSubcat.id;
     // reset variables
     products.clear();

@@ -72,16 +72,16 @@ class Cart2PaymentController extends GetxController {
     // Text Edit Controllers
     updateTextEditControllers(cart2checkoutModel);
 
-    print('cart2checkoutModel.deliveryCost! = ${cart2checkoutModel.deliveryCost}');
+    //print('cart2checkoutModel.deliveryCost! = ${cart2checkoutModel.deliveryCost}');
   }
 
   // 포인트 상요 button
   usePointBtnPressed() {
-    print('usePointBtnPressed called');
+    //print('usePointBtnPressed called');
     if (pointController.text.isNotEmpty) {
       try {
         int tempUsedPoints = int.parse(pointController.text);
-        print('usedPoints: $tempUsedPoints');
+        //print('usedPoints: $tempUsedPoints');
         // check if used point is more than available point
         if (tempUsedPoints > cart2checkoutModel.value.userInfo!.point.value) {
           mSnackbar(message: '포인트 사용가능 금액을 초과하였습니다.');
@@ -133,14 +133,14 @@ class Cart2PaymentController extends GetxController {
     try {
       result = await Navigator.push(Get.context!, MaterialPageRoute(builder: (_) => KpostalView()));
     } catch (e) {
-      print('The user did not select an address. searchAddressBtnPressed error: $e');
+     // print('The user did not select an address. searchAddressBtnPressed error: $e');
       return;
     }
     address1ZipCodeController.text = result.postCode;
     address2Controller.text = result.address;
     // Update delivery fee. For 제주도 4,000원, for the rest of the country: free
     cart2checkoutModel.value.deliveryCost.value = await _apiProvider.getDeliveryFee(checkout_id: cart2checkoutModel.value.checkoutId!, postCode: result.postCode, address: result.address);
-    print('cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
+   // print('cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
 
     // update totalPrice with new delivery fee
     cart2checkoutModel.value.totalProductAmount.value = cart2checkoutModel.value.onlyProductPrice.value + cart2checkoutModel.value.deliveryCost.value - cart2checkoutModel.value.discountPrice.value;
@@ -181,8 +181,8 @@ class Cart2PaymentController extends GetxController {
   }
 
   Future<void> paymentSuccessful(Map<String, dynamic> result) async {
-    print(
-        'inside paymentSuccessful.  orderer_name ${nameController.text} zipcode ${address1ZipCodeController.text} address ${address2Controller.text} address_detail ${address3Controller.text} phone ${phoneFirstPartController.text}${phoneSecondPartController.text}${phoneThirdPartController.text} request_message ${requestController.text} checkout_id ${cart2checkoutModel.value.checkoutId!}');
+    // print(
+    //     'inside paymentSuccessful.  orderer_name ${nameController.text} zipcode ${address1ZipCodeController.text} address ${address2Controller.text} address_detail ${address3Controller.text} phone ${phoneFirstPartController.text}${phoneSecondPartController.text}${phoneThirdPartController.text} request_message ${requestController.text} checkout_id ${cart2checkoutModel.value.checkoutId!}');
     // call [주문페이지] 주문 > complete API ( 결제완료 요청 ) API
     bool isSuccess = await _apiProvider.postPaymentSucessfullyFinished(
       imp_uid: result['imp_uid']!,

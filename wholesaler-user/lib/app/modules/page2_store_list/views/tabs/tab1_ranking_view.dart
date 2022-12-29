@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shopping_controller.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/views/widgets/store_list_builder.dart';
 

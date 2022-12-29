@@ -45,7 +45,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
             //   child: _dingdongBanner(),
             // ),
             // SizedBox(height: 20),
-            Padding(
+            recommendedProductCtr.products.length!=0?Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         children: [
@@ -53,7 +53,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                           CarousalProductHorizontalView(),
                         ],
                       ),
-                    )
+                    ):Container()
 
             ,
             Divider(thickness: 6, color: MyColors.grey3),
