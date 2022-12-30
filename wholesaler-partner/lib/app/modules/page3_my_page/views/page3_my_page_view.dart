@@ -366,6 +366,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
             //Get.offAllNamed('/login');
 
 
+
           },
           child: Text(
             'logout'.tr,

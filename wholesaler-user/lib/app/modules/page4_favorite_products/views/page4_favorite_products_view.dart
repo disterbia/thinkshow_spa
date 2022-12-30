@@ -19,9 +19,9 @@ class Page4FavoriteProductsView extends GetView {
   }
 
   onInit() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+   // WidgetsBinding.instance.addPostFrameCallback((_) {
       ctr.updateProducts();
-    });
+   // });
   }
 
   @override

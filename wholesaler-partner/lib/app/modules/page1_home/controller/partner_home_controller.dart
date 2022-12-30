@@ -70,7 +70,6 @@ class PartnerHomeController extends GetxController {
 
     isScrollCtrAlreadySet = true;
   }
-
   Future<void> uploadImageBtnPressed() async {
     print('inside uploadMainTopImage1234');
     _pickedImage = await ImagePicker()

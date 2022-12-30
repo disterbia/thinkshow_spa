@@ -18,8 +18,9 @@ class Page4Favorite_RecentlyViewedController extends GetxController {
   }
 
   updateProducts() async {
-    products.clear();
     isLoading.value=true;
+    products.clear();
+
     if (isRecentSeenProduct) {
       // Recently Seen Products
       List productIds = _cacheProvider.getAllRecentlyViewedProducts();
