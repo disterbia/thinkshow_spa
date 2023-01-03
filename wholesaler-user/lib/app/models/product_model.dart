@@ -48,6 +48,8 @@ class Product {
   List<String>? colors;
   List<ProductMaterial>? materials;
   int? orderDetailId;
+  String? delivery_invoice_number;
+  String? delivery_company_name;
 
   Product({
     required this.id,
@@ -88,6 +90,8 @@ class Product {
     this.colors,
     this.materials,
     this.orderDetailId,
+    this.delivery_company_name,
+    this.delivery_invoice_number
   });
 
   Map<String, dynamic> toJson() => {

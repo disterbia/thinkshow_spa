@@ -27,6 +27,7 @@ class OrderOrReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("-=-=--=-=-=-=-=-=-=${item}");
     return Column(
       children: [
         // _informationBox(),
@@ -39,6 +40,7 @@ class OrderOrReviewItem extends StatelessWidget {
         // Delivery Status: 배달 상태
         _deliveryStatusBuilder(),
         SizedBox(height: 10),
+        Text("송장번호 : ${item.products[productId].delivery_company_name??""}+ ${item.products[productId].delivery_invoice_number??""}"),
         isReviewPage ? _reviewPageBottomButtons() : _orderPageBottomButtons(),
       ],
     );
@@ -123,7 +125,18 @@ class OrderOrReviewItem extends StatelessWidget {
       statusMessage = '상품준비중';
     } else if (item.products[productId].orderStatus == OrderStatus.deliveryStart || item.products[productId].orderStatus == OrderStatus.delivering) {
       statusMessage = '배송중';
-    } else {
+    }else if(item.products[productId].orderStatus == OrderStatus.cancelOrder){
+      statusMessage = '주문취소';
+    }else if(item.products[productId].orderStatus == OrderStatus.exchangeApply){
+      statusMessage = '교환신청';
+    }else if(item.products[productId].orderStatus == OrderStatus.exchangeFinished){
+      statusMessage='교환완료';
+    }else if(item.products[productId].orderStatus == OrderStatus.returnApply){
+      statusMessage = '반품신청';
+    }else if(item.products[productId].orderStatus == OrderStatus.returnFinished){
+      statusMessage = '반품완료';
+    }
+    else {
       statusMessage = '배송완료';
     }
     return Row(

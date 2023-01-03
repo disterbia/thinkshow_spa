@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_partner/firebase_options.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
+import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 
 class FirebaseService {
   static init() async {

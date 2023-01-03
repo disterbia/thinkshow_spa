@@ -23,7 +23,7 @@ class DingdongDeliveryController extends GetxController {
     super.onInit();
 
     scrollController.value.addListener(() {
-      // print('scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
+       print('scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
       if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
         offset += mConst.limit;
         callGetProductsAPI(isScrolling: true);
@@ -32,7 +32,7 @@ class DingdongDeliveryController extends GetxController {
   }
 
   Future<void> callGetProductsAPI({String? sort, required bool isScrolling}) async {
-    dynamic raw = await _apiProvider.getProducts(isDingDong: true, sort: sort, offset: offset, limit: mConst.limit);
+    dynamic raw = await _apiProvider.getProducts(isDingDong: true, sort: sort, offset: offset, limit: 12);
 
     log('getProducts raw $raw length ${raw.length}');
 

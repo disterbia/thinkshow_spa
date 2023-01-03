@@ -49,6 +49,10 @@ class PartnerHomeController extends GetxController {
   }
 
   @override
+
+  InternalFinalCallback<void> get onDelete => super.onDelete;
+
+  @override
   void onInit() {
     super.onInit();
     print(

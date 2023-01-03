@@ -180,67 +180,42 @@ class StoreDetailView extends GetView {
     );
   }
 
-  Widget _top10Products() {
-    double height = 240;
+  _top10Products() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(
-          () => Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: CarouselSlider(
-                carouselController: ctr.indicatorSliderController,
-                options: CarouselOptions(
-                    height: height,
-                    autoPlay: false,
-                    viewportFraction: 1 / 3
-                    ,enableInfiniteScroll: false,
-                    onPageChanged: (index, reason) {
-                      ctr.sliderIndex.value = index;
-                    }),
-                items: top10ProductItemsBuilder(height: height)
-                //  [
-
-                //   for (Product product in ctr.top10Products)
-
-                //     // CachedNetworkImage(
-                //     //   imageUrl: img,
-                //     //   // placeholder: (context, url) => CircularProgressIndicator(),
-                //     //   errorWidget: (context, url, error) => Icon(Icons.error),
-                //     // )
-                // ],
-                ),
+        // 우리매장 베스트
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: SizedBox(
+            height: 240,
+            child: Obx(
+                  () => ctr.top10Products.isNotEmpty
+                  ? ListView.separated(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: ctr.top10Products.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    SizedBox(width: 14),
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    width: 105,
+                    child: ProductItemVertical(
+                      product: ctr.top10Products.elementAt(index),
+                      productNumber: ProductNumber(
+                        number: index + 1,
+                        backgroundColor:
+                        MyColors.numberColors.length > index
+                            ? MyColors.numberColors[index]
+                            : MyColors.numberColors[0],
+                      ),
+                    ),
+                  );
+                },
+              )
+                  : Center(child: Text('제품을 등록해주세요.')),
+            ),
           ),
-        ),
-        // Obx(
-        //   () => ctr.top10Products.isNotEmpty
-        //       ? Padding(
-        //           padding: const EdgeInsets.only(left: 20),
-        //           child: SizedBox(
-        //             height: height,
-        //             child: ListView(
-        //               shrinkWrap: true,
-        //               scrollDirection: Axis.horizontal,
-        //               children: <Widget>[
-        //                 ...ctr.top10Products.map((product) {
-        //                   int index = ctr.top10Products.indexOf(product);
-        //                   return Container(
-        //                     width: 130,
-        //                     height: height,
-        //                     padding: const EdgeInsets.only(right: 10),
-        //                     child: ProductItemVertical(
-        //                       product: product,
-        //                       productNumber: ProductNumber(number: index + 1, backgroundColor: MyColors.numberColors[index > 10 ? 10 : index]),
-        //                     ),
-        //                   );
-        //                 }),
-        //               ],
-        //             ),
-        //           ),
-        //         )
-        //       : SizedBox(),
-        // ),
-        Obx(
-          () => _indicator(ctr.top10Products),
         ),
       ],
     );

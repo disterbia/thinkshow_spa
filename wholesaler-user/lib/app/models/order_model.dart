@@ -13,6 +13,8 @@ class OrderOrReview {
   int? totalPayAmount;
   int deliveryFee;
   int pointUsed;
+  String? delivery_invoice_number;
+  String? delivery_company_name;
   int? product_amount; // 상품 총 가격
   OrderOrReview({
     required this.id,
@@ -26,5 +28,7 @@ class OrderOrReview {
     required this.deliveryFee,
     required this.pointUsed,
     this.product_amount,
+    this.delivery_company_name,
+    this.delivery_invoice_number
   });
 }

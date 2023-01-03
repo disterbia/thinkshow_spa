@@ -31,7 +31,6 @@ import 'package:wholesaler_user/app/widgets/text_button.dart';
 class Page1HomeView extends GetView<PartnerHomeController> {
   PartnerHomeController ctr = Get.put(PartnerHomeController());
   BottomNavbarController navbarCtr = Get.put(BottomNavbarController());
-
   init() {
     ctr.init();
   }

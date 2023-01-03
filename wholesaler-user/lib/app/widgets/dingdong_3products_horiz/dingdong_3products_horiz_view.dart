@@ -23,14 +23,14 @@ class Dingdong3ProductsHorizView extends GetView<Dingdong3ProductsHorizControlle
           () => ctr.dingDongProducts.isNotEmpty
               ? ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
+                  // physics: NeverScrollableScrollPhysics(),
+                   shrinkWrap: false,
                   itemCount: ctr.dingDongProducts.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: (context.width / 3) - leftPadding,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MyVars.isSmallPhone() ? 3 : 0),
+                        padding: EdgeInsets.symmetric(horizontal: MyVars.isSmallPhone() ? 3 : 3),
                         child: ProductItemVertical(
                           product: ctr.dingDongProducts.elementAt(index),
                         ),

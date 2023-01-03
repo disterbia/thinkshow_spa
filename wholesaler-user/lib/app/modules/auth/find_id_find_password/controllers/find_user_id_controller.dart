@@ -35,7 +35,14 @@ class User_FindID_FindPasswordController extends GetxController {
     super.onInit();
     idController = TextEditingController();
     if (arguments != null) {
-      initialIndex.value = arguments;
+      print(arguments);
+     // idController.text=arguments["accountId"];
+      try{
+        initialIndex.value = arguments;
+      }catch(e){
+        //idController.text=arguments["accountId"];
+      }
+
     }
   }
 

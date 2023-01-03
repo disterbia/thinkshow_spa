@@ -17,29 +17,33 @@ class Tab4DingDongController extends GetxController {
   RxBool allowCallAPI = true.obs;
   RxBool isLoading= false.obs;
 
-  // @override
-  // Future<void> onInit() async {
-  //   isLoading.value= true;
-  //   products.value = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
-  //   scrollController.value.addListener(() {
-  //     if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-  //       offset += mConst.limit;
-  //       addDataToList();
-  //     }
-  //   });
-  //   isLoading.value=false;
-  //   super.onInit();
-  // }
+  @override
+  Future<void> onInit() async {
+    isLoading.value= true;
+    products.value = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
+    scrollController.value.addListener(() {
+      print("${scrollController.value.position.pixels}===== ${scrollController.value.position.maxScrollExtent}");
+      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+        print("bbbbb");
+        offset += mConst.limit;
+        addDataToList();
+      }
+    });
+    isLoading.value=false;
+    super.onInit();
+  }
 
  Future<void> init() async{
+    offset=0;
+    allowCallAPI.value = true;
    isLoading.value= true;
    products.value = await _apiProvider.getDingdongProductPopular(offset: 0, limit: mConst.limit);
-   scrollController.value.addListener(() {
-     if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-       offset += mConst.limit;
-       addDataToList();
-     }
-   });
+   // scrollController.value.addListener(() {
+   //   if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+   //     offset += mConst.limit;
+   //     addDataToList();
+   //   }
+   // });
    isLoading.value=false;
    super.onInit();
   }
@@ -63,10 +67,10 @@ class Tab4DingDongController extends GetxController {
   addDataToList() async {
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      //print('index 0, show ALL');
+      print(offset);
       tempProducts = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
     } else {
-     // print('index > 0 , show categories');
+      print('index > 0 , show categories');
       tempProducts = await _apiProvider.getDingdongProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
     }
     products.addAll(tempProducts);

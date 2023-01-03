@@ -16,6 +16,8 @@ class OrderDetailsController extends GetxController {
           date: DateTime.now(),
           orderNumber: "orderNumber",
           paymentMethod: "paymentMethod",
+      delivery_company_name:"a",
+      delivery_invoice_number: "-1",
           deliveryFee: -1,
           pointUsed: -1,
           totalPayAmount: -1,

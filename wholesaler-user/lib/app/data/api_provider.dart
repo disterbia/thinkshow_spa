@@ -210,6 +210,27 @@ class uApiProvider extends GetConnect {
     }
   }
 
+  Future<bool> chekToken() async {
+
+    Map<String, dynamic> body = {
+      'access_token': CacheProvider().getToken()
+    };
+
+    String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/login-check';
+    final response = await post(url, body, headers: headers);
+    log('putAddStoreFavorite $response');
+
+    if (response.statusCode == 200) {
+      log('response ${response.bodyString}');
+      return true;
+    } else {
+      var jsonList = jsonDecode(response.bodyString!);
+      log('error:' + jsonList.toString());
+      //mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
+      return false;
+    }
+  }
+
   /// Login page
   Future<StatusModel> postLogin_User(Map<String, dynamic> data) async {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + mConst.LOGIN;
@@ -923,6 +944,8 @@ class uApiProvider extends GetConnect {
             store: tempStore,
             orderStatus: product['order_status_code'],
             orderDetailId: product['id'],
+            delivery_company_name:product['delivery_company_name'],
+            delivery_invoice_number:product['delivery_invoice_number'],
             isReviewWritten: product['is_regist_review'],
             hasBellIconAndBorder: json['is_privilege'],
             price: product['product_price'],
@@ -985,6 +1008,8 @@ class uApiProvider extends GetConnect {
           orderStatus: orderDetailsJSON['order_status_code'],
           isReviewWritten: orderDetailsJSON['is_regist_review'],
           hasBellIconAndBorder: json['is_privilege'],
+          delivery_company_name:orderDetailsJSON['delivery_company_name'],
+          delivery_invoice_number:orderDetailsJSON['delivery_invoice_number'],
         );
 
         products.add(tempProduct);
@@ -1014,6 +1039,8 @@ class uApiProvider extends GetConnect {
         address: tempAddress,
         date: date,
         orderNumber: json['code'],
+        delivery_company_name:json['delivery_company_name'],
+        delivery_invoice_number:json['delivery_invoice_number'],
         paymentMethod: json['payment_info']['pay_method'] ?? '',
         deliveryFee: json['payment_info']['delivery_cost'],
         pointUsed: json['payment_info']['using_point'],

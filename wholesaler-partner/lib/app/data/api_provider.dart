@@ -49,6 +49,27 @@ class pApiProvider extends GetConnect {
     super.onInit();
   }
 
+  Future<bool> chekToken() async {
+
+    Map<String, dynamic> body = {
+      'access_token': CacheProvider().getToken()
+    };
+
+    String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/login-check';
+    final response = await post(url, body, headers: headers);
+    log('putAddStoreFavorite $response');
+
+    if (response.statusCode == 200) {
+      log('response ${response.bodyString}');
+      return true;
+    } else {
+      var jsonList = jsonDecode(response.bodyString!);
+      log('error:' + jsonList.toString());
+      //mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
+      return false;
+    }
+  }
+
   // ###### COMMON APIs ######
   /// Common 휴대폰 인증 요청 API
   Future<int> postRequestVerifyPhoneNum({required String phoneNumber}) async {
