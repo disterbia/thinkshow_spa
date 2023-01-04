@@ -38,6 +38,7 @@ class WebviewBuilder extends StatelessWidget {
               javaScriptEnabled: true,
               disableHorizontalScroll: true,
               disableVerticalScroll: true,
+              // clearCache: true,
             ),
           ),
           onWebViewCreated: (InAppWebViewController controller) {

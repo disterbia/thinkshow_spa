@@ -21,7 +21,7 @@ class Tab2BestView extends GetView<Tab2BestController> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: Obx(() => HorizontalChipList().getAllMainCat(
                   categoryList:
                       ClothCategory.getAllMainCat().map((e) => e.name).toList(),

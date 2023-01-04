@@ -102,7 +102,7 @@ class StoreDetailView extends GetView {
               imageUrl: ctr.mainStoreModel.value.mainTopImageUrl!.value,
               width: Get.width,
               height: 400,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
               // placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             )

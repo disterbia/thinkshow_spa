@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
@@ -10,8 +11,11 @@ import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gridview_builder.dart';
 
+import '../../cart/controllers/cart1_shopping_basket_controller.dart';
+
 class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
   ProductCategoryPageController ctr = Get.put(ProductCategoryPageController());
+    Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   ProductCategoryPageView(selectedMainCatIndex) {
     ctr.selectedMainCatIndex = selectedMainCatIndex;
@@ -19,6 +23,7 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
 
   init() async {
     ctr.init();
+    ctr2.init();
   }
 
   @override
@@ -42,14 +47,35 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
           Get.to(() => SearchPageView());
         },
       ),
-      IconButton(
-          onPressed: () {
-            Get.to(() => Cart1ShoppingBasketView());
-          },
-          icon: Icon(
-            Icons.shopping_cart_outlined,
-            color: MyColors.black,
-          ))
+      Obx(
+          () => ctr2.getNumberProducts() != 0
+              ? Badge(
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    ctr2.getNumberProducts().toString(),
+                    style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
+                      onPressed: () {
+                        Get.to(() => Cart1ShoppingBasketView());
+                      },
+                      icon: Icon(
+                        Icons.shopping_cart_outlined,
+                        color: MyColors.black,
+                      )),
+                )
+              : IconButton(
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
+        )
     ]);
   }
 

@@ -29,7 +29,7 @@ class Tab4DingDongView extends GetView<Tab4DingDongController> {
             ImageSliderView(CurrentPage.dingDongPage),
             SizedBox(height: 10),
             Obx(() => Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   child: HorizontalChipList().getAllMainCat(
                     categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),
                     onTapped: () => ctr.updateProducts(),

@@ -3,6 +3,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
+import 'package:wholesaler_user/app/constants/functions.dart';
 
 class Page4Favorite_RecentlyViewedController extends GetxController {
   bool isRecentSeenProduct = false;
@@ -18,20 +20,30 @@ class Page4Favorite_RecentlyViewedController extends GetxController {
   }
 
   updateProducts() async {
-    isLoading.value=true;
-    products.clear();
+    isLoading.value = true;
 
-    if (isRecentSeenProduct) {
-      // Recently Seen Products
-      List productIds = _cacheProvider.getAllRecentlyViewedProducts();
-     // print('productIds ${productIds}');
-      if (productIds.isNotEmpty) {
-        products.value = await _apiProvider.getRecentlySeenProducts(productIds);
-      }
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
     } else {
-      // Favorite Products
-      products.value = await _apiProvider.getFavoriteProducts();
+      products.clear();
+
+      if (isRecentSeenProduct) {
+        // Recently Seen Products
+        List productIds = _cacheProvider.getAllRecentlyViewedProducts();
+        // print('productIds ${productIds}');
+        if (productIds.isNotEmpty) {
+          products.value =
+              await _apiProvider.getRecentlySeenProducts(productIds);
+        }
+      } else {
+        // Favorite Products
+        products.value = await _apiProvider.getFavoriteProducts();
+      }
+      isLoading.value = false;
     }
-    isLoading.value=false;
   }
 }
