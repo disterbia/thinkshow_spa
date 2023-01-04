@@ -25,7 +25,7 @@ class Cart1ShoppingBasketView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: '장바구니'),
-      body: Obx(()=> ctr.isLoading.value? LoadingWidget(): body()),
+      body: Obx(() => ctr.isLoading.value ? LoadingWidget() : body()),
     );
   }
 
@@ -106,7 +106,9 @@ class Cart1ShoppingBasketView extends GetView {
         TextButton(
           onPressed: () => ctr.cartItems.isEmpty
               ? mSnackbar(message: "상품이 없습니다.")
-              : ctr.deleteSelectedProducts(),
+              : ctr.getTotalSelectedProducts() == 0
+                  ? mSnackbar(message: "선택된 상품이 없습니다.")
+                  : ctr.deleteSelectedProducts(),
           child: Text(
             '선택삭제',
             style: MyTextStyles.f14.copyWith(color: MyColors.black3),

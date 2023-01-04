@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/constants.dart';
+import 'package:wholesaler_user/app/constants/functions.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
@@ -15,6 +16,7 @@ import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
+import 'package:wholesaler_user/app/modules/page4_favorite_products/controllers/page4_favorite_products_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/widgets/product/number_widget.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
@@ -25,11 +27,12 @@ class ProductItemVertical extends StatelessWidget {
   final Product product;
   final ProductNumber? productNumber;
   Function(bool?)? onCheckboxChanged;
-
+  bool? isFavorite;
   ProductItemVertical({
     required this.product,
     this.productNumber,
     this.onCheckboxChanged,
+    this.isFavorite,
   });
 
   @override
@@ -152,7 +155,7 @@ class ProductItemVertical extends StatelessWidget {
 
   CheckboxBuilder() {
     if (product.isChecked != null) {
-     // print('inside CheckboxBuilder');
+      // print('inside CheckboxBuilder');
       return Container(
         margin: EdgeInsets.only(left: 5, top: 20),
         height: 20,
@@ -174,9 +177,18 @@ class ProductItemVertical extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
+                //
                 if (CacheProvider().getToken().isEmpty) {
-                  Get.to(() => User_LoginPageView());
+                  mFuctions.userLogout();
+                  return;
+                }
+
+                bool result = await uApiProvider().chekToken();
+                if (!result) {
+                  print('logout');
+                  mSnackbar(message: '로그인 세션이 만료되었습니다.');
+                  mFuctions.userLogout();
                   return;
                 }
                 product.isLiked!.toggle();
@@ -185,6 +197,12 @@ class ProductItemVertical extends StatelessWidget {
                   mSnackbar(message: '찜 완료', duration: 1);
                 } else {
                   mSnackbar(message: '찜 취소 완료', duration: 1);
+
+                  // if (isFavorite != null && isFavorite!) {
+                  //     Page4Favorite_RecentlyViewedController ctr = Get.put(Page4Favorite_RecentlyViewedController());
+                  //     ctr.updateProducts();
+                  //     ctr.dispose();
+                  // }
                 }
               },
               child: product.isLiked != null

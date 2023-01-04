@@ -24,7 +24,7 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: CustomAppbar(isBackEnable: true, title: ''),
+        // appBar: CustomAppbar(isBackEnable: true, title: ''),
         backgroundColor: MyColors.white,
         body: Center(
           child: SingleChildScrollView(

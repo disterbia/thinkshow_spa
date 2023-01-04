@@ -18,6 +18,7 @@ class ProductGridViewBuilder extends StatelessWidget {
   VoidCallback? showBottomNavbar; // 상품관리 product mgmt page -> bottom navbar
   List<ProductNumber>? productNumbers;
   RxBool isShowLoadingCircle;
+  bool? isFavorite;
 
   ProductGridViewBuilder({
     required this.crossAxisCount,
@@ -26,6 +27,7 @@ class ProductGridViewBuilder extends StatelessWidget {
     this.addProductsId,
     this.showBottomNavbar,
     this.productNumbers,
+    this.isFavorite,
     required this.isShowLoadingCircle,
   });
 
@@ -42,6 +44,7 @@ class ProductGridViewBuilder extends StatelessWidget {
                 return ProductItemVertical(
                   product: products[index],
                   productNumber: productNumbers != null ? productNumbers![index > 9 ? 9 : index] : null,
+                  isFavorite: isFavorite != null ? isFavorite : null,
                   onCheckboxChanged: (newValue) {
                     products[index].isChecked!.toggle();
                     showBottomNavbar!();

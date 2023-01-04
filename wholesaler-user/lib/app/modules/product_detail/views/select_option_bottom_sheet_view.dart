@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
+import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/dropdown_widget.dart';
@@ -10,6 +11,7 @@ import 'package:wholesaler_user/app/widgets/two_buttons.dart';
 
 Future<dynamic> SelectOptionBottomSheet() {
   ProductDetailController ctr = Get.put(ProductDetailController());
+  Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   return showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -52,11 +54,13 @@ Future<dynamic> SelectOptionBottomSheet() {
                     onTap: (isRightTapped) {
                       print('isRightTapped $isRightTapped');
                       if (isRightTapped) {
-                        ctr.product.value.quantity!.value = ctr.product.value.quantity!.value + 1;
+                        ctr.product.value.quantity!.value =
+                            ctr.product.value.quantity!.value + 1;
                         ctr.UpdateTotalPrice();
                       } else {
                         if (ctr.product.value.quantity!.value > 1) {
-                          ctr.product.value.quantity!.value = ctr.product.value.quantity!.value - 1;
+                          ctr.product.value.quantity!.value =
+                              ctr.product.value.quantity!.value - 1;
                           ctr.UpdateTotalPrice();
                         }
                       }
@@ -79,7 +83,8 @@ Future<dynamic> SelectOptionBottomSheet() {
                     Obx(
                       () => Text(
                         Utils.numberFormat(number: ctr.totalPrice.value),
-                        style: MyTextStyles.f18_bold.copyWith(color: MyColors.red),
+                        style:
+                            MyTextStyles.f18_bold.copyWith(color: MyColors.red),
                       ),
                     ),
                     Text(
@@ -92,8 +97,14 @@ Future<dynamic> SelectOptionBottomSheet() {
                 TwoButtons(
                   leftBtnText: 'shopping_basket'.tr,
                   rightBtnText: '구매하기',
-                  lBtnOnPressed: () => ctr.purchaseBtnPressed(isDirectBuy: false),
-                  rBtnOnPressed: () => ctr.purchaseBtnPressed(isDirectBuy: true),
+                  lBtnOnPressed: () {
+                    ctr.purchaseBtnPressed(isDirectBuy: false);
+                    ctr2.init();
+                  },
+                  rBtnOnPressed: () {
+                    ctr.purchaseBtnPressed(isDirectBuy: true);
+                    ctr2.init();
+                  },
                 ),
               ],
             ),

@@ -8,7 +8,7 @@ import 'package:wholesaler_user/app/modules/page2_store_list/views/widgets/store
 
 class Tab2BookmarksView extends StatelessWidget {
   Page2StoreListController ctr = Get.put(Page2StoreListController());
-  Tab2BookmarksView();
+  // Tab2BookmarksView();
   init()  {
      ctr.getBookmarkedStoreData();
     log('Tab2BookmarksView init');
