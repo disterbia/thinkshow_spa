@@ -42,7 +42,7 @@ class EditorWidget extends GetView {
                 await ctr.uploadImageToServer(file);
             // ctr.editorController.insertNetworkImage(tempImgModel.url);
             String image100Witdh =
-                """<img src="${tempImgModel.url}" data-filename="${file.name}" width="100%"/>""";
+                """<img src="${tempImgModel.url}" data-filename="${file.name}" width="70%"/>""";
             ctr.editorController.insertHtml(image100Witdh);
           }
 

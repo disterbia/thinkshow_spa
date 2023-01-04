@@ -32,7 +32,7 @@ class AddProductView extends GetView<AddProductController> {
 
     return Scaffold(
       backgroundColor: MyColors.white,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: bottomSheet(),
       appBar:
