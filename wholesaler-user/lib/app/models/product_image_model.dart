@@ -13,3 +13,19 @@ class ProductImageModel {
   });
 
 }
+
+class ProductImageModel2 {
+  String message;
+  int statusCode;
+  List<dynamic> url;
+  List<dynamic> path;
+
+
+  ProductImageModel2({
+    required this.message,
+    required this.statusCode,
+    required this.url,
+    required this.path,
+  });
+
+}

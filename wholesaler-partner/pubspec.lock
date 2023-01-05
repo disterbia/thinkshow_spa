@@ -44,15 +44,7 @@ packages:
     source: hosted
     version: "2.9.0"
   badges:
-<<<<<<< HEAD
     dependency: "direct main"
-=======
-<<<<<<< HEAD
-    dependency: transitive
-=======
-    dependency: "direct main"
->>>>>>> 7de6bb4 (에디터변경 및 파일업로드 방식 변경)
->>>>>>> 5810ad0
     description:
       name: badges
       url: "https://pub.dartlang.org"
