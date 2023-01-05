@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -160,18 +163,50 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl1.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl1.value,
-                            width: Get.width,
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        )
+                      ?
+                  Obx(
+                        () => Container(
+                      height: 100,
+                      width: Get.width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: ctr.imageUrl1.length,
+                        itemBuilder: (context, index) {
+                          return Badge(badgeColor: MyColors.primary,
+                              badgeContent: GestureDetector(
+                                child: Icon(Icons.remove_circle_outline,size: 20),
+                                onTap: () {
+                                  print(index);
+                                  ctr.imageUrl1.removeAt(index);
+                                },
+                              ),
+                              child: Container(
+                                width: 50,
+                                child:  CachedNetworkImage(
+                                  imageUrl: ctr.imageUrl1[index],
+                                  width: Get.width,
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+
+                              ));
+                        },
+                      ),
+                    ),
+                  )
+                  // InkWell(
+                  //         onTap: () => ctr.uploadImageBtnPressed(),
+                  //         child: CachedNetworkImage(
+                  //           imageUrl: ctr.imageUrl1.value,
+                  //           width: Get.width,
+                  //           errorWidget: (context, url, error) => Icon(Icons.error),
+                  //         ),
+                  //       )
                       : ctr.isUploadLoading1.value
                           ? LoadingWidget()
                           : IconButton(
-                              onPressed: () => ctr.uploadImageBtnPressed(),
+                              onPressed: () async {
+                                await ctr.uploadImageBtnPressed();
+                                },
                               padding: const EdgeInsets.all(0.0),
                               icon: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -196,14 +231,44 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl2.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed2(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl2.value,
-                            width: Get.width,
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        )
+                      ?
+                  Obx(
+                        () => Container(
+                      height: 100,
+                      width: Get.width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: ctr.imageUrl2.length,
+                        itemBuilder: (context, index) {
+                          return Badge(badgeColor: MyColors.primary,
+                              badgeContent: GestureDetector(
+                                child: Icon(Icons.remove_circle_outline,size: 20),
+                                onTap: () {
+                                  print(index);
+                                  ctr.imageUrl2.removeAt(index);
+                                },
+                              ),
+                              child: Container(
+                                width: 50,
+                                child:  CachedNetworkImage(
+                                  imageUrl: ctr.imageUrl2[index],
+                                  width: Get.width,
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+
+                              ));
+                        },
+                      ),
+                    ),
+                  )
+                  // InkWell(
+                  //         onTap: () => ctr.uploadImageBtnPressed2(),
+                  //         child: CachedNetworkImage(
+                  //           imageUrl: ctr.imageUrl2.value,
+                  //           width: Get.width,
+                  //           errorWidget: (context, url, error) => Icon(Icons.error),
+                  //         ),
+                  //       )
                       : ctr.isUploadLoading2.value
                           ? LoadingWidget()
                           : IconButton(
@@ -226,42 +291,42 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                 );
               }),
               // image 3
-              Obx(() {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: MyColors.grey1),
-                  ),
-                  child: ctr.imageUrl3.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed3(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl3.value,
-                            width: Get.width,
-                            // placeholder: (context, url) => CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        )
-                      : ctr.isUploadLoading3.value
-                          ? LoadingWidget()
-                          : IconButton(
-                              onPressed: () => ctr.uploadImageBtnPressed3(),
-                              padding: const EdgeInsets.all(0.0),
-                              icon: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic_image_icon.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Text(
-                                    '상품 사진 등록',
-                                  )
-                                ],
-                              ),
-                            ),
-                );
-              }),
+              // Obx(() {
+              //   return Container(
+              //     decoration: BoxDecoration(
+              //       border: Border.all(color: MyColors.grey1),
+              //     ),
+              //     child: ctr.imageUrl3.value.isNotEmpty
+              //         ? InkWell(
+              //             onTap: () => ctr.uploadImageBtnPressed3(),
+              //             child: CachedNetworkImage(
+              //               imageUrl: ctr.imageUrl3.value,
+              //               width: Get.width,
+              //               // placeholder: (context, url) => CircularProgressIndicator(),
+              //               errorWidget: (context, url, error) => Icon(Icons.error),
+              //             ),
+              //           )
+              //         : ctr.isUploadLoading3.value
+              //             ? LoadingWidget()
+              //             : IconButton(
+              //                 onPressed: () => ctr.uploadImageBtnPressed3(),
+              //                 padding: const EdgeInsets.all(0.0),
+              //                 icon: Column(
+              //                   crossAxisAlignment: CrossAxisAlignment.center,
+              //                   mainAxisAlignment: MainAxisAlignment.center,
+              //                   children: [
+              //                     Image.asset(
+              //                       'assets/icons/ic_image_icon.png',
+              //                       fit: BoxFit.fill,
+              //                     ),
+              //                     Text(
+              //                       '상품 사진 등록',
+              //                     )
+              //                   ],
+              //                 ),
+              //               ),
+              //   );
+              // }),
             ],
           ),
         ),

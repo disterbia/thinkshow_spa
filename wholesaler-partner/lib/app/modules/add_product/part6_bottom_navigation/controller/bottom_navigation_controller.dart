@@ -43,11 +43,11 @@ class AP_Part6Controller extends GetxController {
         : 0;
     String productName = addProductController.productNameController.text;
     String price = addProductController.priceController.text.replaceAll(RegExp(r'[^0-9]'),'');
-    String imagePath1 = part1controller.imagePath1.value;
-    String imagePath2 = part1controller.imagePath2.value;
-    String imagePath3 = part1controller.imagePath3.value;
+    List<dynamic> imagePath1 = part1controller.imagePath1;
+    List<dynamic> imagePath2 = part1controller.imagePath2;
+    //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = await editorCtr.editorController.getText();
+    String content = jsonEncode(editorCtr.editorController.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text
@@ -124,11 +124,11 @@ class AP_Part6Controller extends GetxController {
       return;
     }
 
-    if (imagePath3.isEmpty) {
-      Get.back();
-      mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
-      return;
-    }
+    // if (imagePath3.isEmpty) {
+    //   Get.back();
+    //   mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
+    //   return;
+    // }
 
     if (price.isEmpty) {
       Get.back();
@@ -181,7 +181,7 @@ class AP_Part6Controller extends GetxController {
       "sub_category_id": subCategoryId,
       "thumbnail_image_path": imagePath1,
       "color_image_path": imagePath2,
-      "detail_image_path": imagePath3,
+      // "detail_image_path": imagePath3,
       "is_privilege": part1controller.isDingdongDeliveryActive.value,
       "price": price,
       "keyword_list": addProductController.keywordList.toList(),
@@ -216,7 +216,6 @@ class AP_Part6Controller extends GetxController {
 
     if (isSuccess) {
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
-      editorCtr.editorController.clearFocus();
       Get.delete<PartnerHomeController>();
       Get.delete<DingdongDeliveryController>();
       Get.delete<EditorController>();
@@ -263,11 +262,11 @@ class AP_Part6Controller extends GetxController {
     print("productName==========$productName");
     print("productName3333==========${addProductController.productIdforEdit}");
     String price = addProductController.priceController.text.replaceAll(RegExp(r'[^0-9]'),'');
-    String imagePath1 = part1controller.imagePath1.value;
-    String imagePath2 = part1controller.imagePath2.value;
-    String imagePath3 = part1controller.imagePath3.value;
+    List<dynamic> imagePath1 = part1controller.imagePath1.value;
+    List<dynamic> imagePath2 = part1controller.imagePath2.value;
+    //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = await editorCtr.editorController.getText();
+    String content = jsonEncode(editorCtr.editorController.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text
@@ -353,11 +352,11 @@ class AP_Part6Controller extends GetxController {
       return;
     }
 
-    if (imagePath3.isEmpty) {
-      Get.back();
-      mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
-      return;
-    }
+    // if (imagePath3.isEmpty) {
+    //   Get.back();
+    //   mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
+    //   return;
+    // }
 
     if (price.isEmpty) {
       Get.back();
@@ -409,7 +408,7 @@ class AP_Part6Controller extends GetxController {
       "sub_category_id": subCategoryId,
       "thumbnail_image_path": imagePath1,
       "color_image_path": imagePath2,
-      "detail_image_path": imagePath3,
+      //"detail_image_path": imagePath3,
       "is_privilege": part1controller.isDingdongDeliveryActive.value,
       "price": price,
       "keyword_list": addProductController.keywordList.toList(),
@@ -443,9 +442,7 @@ class AP_Part6Controller extends GetxController {
           productId: addProductController.productIdforEdit, data: data);
 
     if (isSuccess) {
-      editorCtr.editorController.clearFocus();
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
-      editorCtr.editorController.clearFocus();
       Get.delete<PartnerHomeController>();
       Get.delete<DingdongDeliveryController>();
       Get.delete<EditorController>();
