@@ -17,6 +17,6 @@ class Tab1RankingView extends GetView<Page2StoreListController> {
   @override
   Widget build(BuildContext context) {
     init();
-    return StoreListBuilder();
+    return StoreListBuilder(prevPage: 'rank',);
   }
 }

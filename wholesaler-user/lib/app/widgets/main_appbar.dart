@@ -10,16 +10,16 @@ AppBar MainAppbar({String? title, required bool isBackEnable, IconData? icon, Fu
     title: Padding(
       padding: const EdgeInsets.symmetric(vertical: 50.0),
       child: Container(
-        width: 80,
-        height: 80,
+        width: 50,
+        height: 50,
         child: Image.asset(MyImages.logo),
       ),
     ),
-    leading: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[],
-    ),
+    // leading: Row(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: <Widget>[],
+    // ),
     actions: actions,
     elevation: 0,
     titleSpacing: 0.0,

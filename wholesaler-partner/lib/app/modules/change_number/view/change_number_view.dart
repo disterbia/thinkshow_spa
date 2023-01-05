@@ -14,7 +14,7 @@ class ChangeNumberView extends StatelessWidget {
     ctr.phoneNumberPhoneVerifyController.numberController.text = "";
     ctr.phoneNumberPhoneVerifyController.numberVerifyController.text = "";
     return Scaffold(
-      appBar: _appbar(),
+      appBar: CustomAppbar(isBackEnable: true, title: '휴대폰번호 변경'),
       body: _body(),
     );
   }
@@ -38,19 +38,19 @@ class ChangeNumberView extends StatelessWidget {
         ],
       );
 
-  AppBar _appbar() {
-    return CustomAppbar(isBackEnable: true, title: '휴대폰번호 변경', actions: [
-      Icon(
-        Icons.search,
-        color: Colors.black,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.black,
-        ),
-      )
-    ]);
-  }
+  // AppBar _appbar() {
+  //   return CustomAppbar(isBackEnable: true, title: '휴대폰번호 변경', actions: [
+  //     Icon(
+  //       Icons.search,
+  //       color: Colors.black,
+  //     ),
+  //     Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+  //       child: Icon(
+  //         Icons.shopping_cart_outlined,
+  //         color: Colors.black,
+  //       ),
+  //     )
+  //   ]);
+  // }
 }

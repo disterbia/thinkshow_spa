@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wholesaler_user/app/widgets/field_with_button.dart';
@@ -9,8 +11,20 @@ class PhoneNumberPhoneVerify extends StatelessWidget {
       Get.put(PhoneNumberPhoneVerifyController());
 
   double spaceBetween;
-
   PhoneNumberPhoneVerify({required this.spaceBetween});
+
+  // void startTimer() {
+  //   int _count = 120;
+  //   Timer.periodic(Duration(seconds: 1), (Timer timer) {
+  //     if(_count <= 0){
+  //       timer.cancel();
+  //     }
+  //     else{
+  //       _count--;
+  //       print(_count);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +32,13 @@ class PhoneNumberPhoneVerify extends StatelessWidget {
       children: [
         CustomField(
           isTextKeyboard: true,
-          fieldLabel: 'phone_number'.tr,
+          fieldLabel: '휴대폰 번호',
           fieldText: '휴대폰 번호 입력',
           fieldController: ctr.numberController,
           buttonText: 'verify'.tr,
           onTap: () {
             ctr.verifyPhoneBtnPressed();
+            // startTimer();
           },
           inputFormatters: [
             LengthLimitingTextInputFormatter(11),

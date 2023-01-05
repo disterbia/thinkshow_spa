@@ -17,6 +17,6 @@ class Tab2BookmarksView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     init();
-    return StoreListBuilder();
+    return StoreListBuilder(prevPage: 'bookmark',);
   }
 }

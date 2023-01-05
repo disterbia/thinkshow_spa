@@ -88,7 +88,7 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
           SizedBox(height: 5),
           Obx(
             () => Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: HorizontalChipList().getAllSubcat(
                 parentId: ctr.selectedMainCatIndex + 1,
                 subCatList: ClothCategory.getAllSubcatTitles(mainCatIndex: ctr.selectedMainCatIndex + 1),

@@ -41,8 +41,8 @@ class ProductDetailController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     isLoading.value = true;
-    print('productId $productId');
     productId = Get.arguments;
+    print('productId $productId');
 
     if (productId == -1) {
       print('ERROR: ProductDetailController > productID is -1');
@@ -83,7 +83,6 @@ class ProductDetailController extends GetxController {
       Get.to(() => Cart1ShoppingBasketView());
     } else {
       if (isSuccess) {
-        
         mSnackbar(
           message: '상품을 장바구니에 담았습니다.',
           actionText: 'go'.tr,
@@ -136,11 +135,24 @@ class ProductDetailController extends GetxController {
       Get.to(() => User_LoginPageView());
       return;
     }
+
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+      return;
+    }
+
     bool isSuccess =
         await _apiProvider.putProductLikeToggle(productId: product.value.id);
 
     if (isSuccess) {
       product.value.isLiked!.value = newValue;
+
+      if (newValue) mSnackbar(message: '찜 완료', duration: 1);
+      else mSnackbar(message: '찜 취소 완료', duration: 1);
     }
   }
 

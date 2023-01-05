@@ -17,6 +17,7 @@ class Product {
   int? selectedOptionId;
   String imgUrl;
   List<String>? images;
+  List<String>? imagesColor;
   double? imgHeight;
   double? imgWidth;
   int? orderNum; // 회
@@ -57,6 +58,7 @@ class Product {
     this.price,
     required this.imgUrl,
     this.images,
+    this.imagesColor,
     this.orderNum, // 회
     this.OLD_option,
     this.quantity,

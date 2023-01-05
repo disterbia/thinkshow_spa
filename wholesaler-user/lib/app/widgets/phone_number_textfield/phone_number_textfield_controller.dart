@@ -45,5 +45,7 @@ class PhoneNumberPhoneVerifyController extends GetxController {
         phoneNumber: numberController.text,
         phoneNumVerify: numberVerifyController.text,
         certifi_id: certifyId);
+
+    print('isPhoneVerifyFinished : $isPhoneVerifyFinished');
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/modules/auth/find_id_find_password/controllers/find_user_id_controller.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/modules/main/controllers/user_main_controller.dart';
@@ -10,7 +11,7 @@ class Tab1FindUserIdView extends GetView<User_FindID_FindPasswordController> {
   User_FindID_FindPasswordController ctr =
       Get.put(User_FindID_FindPasswordController());
   Tab1FindUserIdView();
-  UserMainController u =Get.put(UserMainController());
+  UserMainController u = Get.put(UserMainController());
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:wholesaler_partner/app/modules/add_product/part3_material_clothwash/controller/part3_material_clothwash_controller.dart';
+import 'package:wholesaler_partner/app/modules/add_product/view/widget/cloth_wash_toggle/cloth_wash_model.dart';
 import 'package:wholesaler_partner/app/modules/add_product/view/widget/cloth_wash_toggle/cloth_wash_toggle.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
+import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_1_detail_info_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/size_table_widget.dart';
 import 'package:wholesaler_user/app/widgets/webview_builder_flex_height.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 
 class Tab1DetailInfo extends GetView {
   Tab1DetailInfoController ctr = Tab1DetailInfoController();
@@ -16,7 +20,7 @@ class Tab1DetailInfo extends GetView {
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
 
   // Tab1DetailInfo();
-
+  QuillController _quillController = QuillController.basic();
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -28,12 +32,36 @@ class Tab1DetailInfo extends GetView {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Webview
-                Obx(
-                  () => productDetailCtr.product.value.content != null
-                      ? WebviewBuilder(
-                          htmlContent: productDetailCtr.product.value.content!)
-                      : Container(),
+                // Obx(
+                //   () => productDetailCtr.product.value.content != null
+                //       ? WebviewBuilder(
+                //           htmlContent: productDetailCtr.product.value.content!)
+                //       : Container(),
+
+                // ),
+
+                Container(
+                  height: 300,
+                  child: QuillEditor(
+                    controller: _quillController,
+                    scrollController: ScrollController(),
+                    scrollable: true,
+                    focusNode: FocusNode(),
+                    autoFocus: true,
+                    readOnly: true,
+                    expands: false,
+                    padding: EdgeInsets.all(15),
+                    keyboardAppearance: Brightness.light,
+                    locale: null,
+                    embedBuilders: null,
+                    showCursor: false,
+                    enableSelectionToolbar: false,
+                    placeholder: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                  ),
                 ),
+
+                Text(productDetailCtr.product.value.imagesColor![0]),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
@@ -49,7 +77,7 @@ class Tab1DetailInfo extends GetView {
                                 : Container()),
                       ),
                       // Color
-                      SizedBox(height: 20),
+                      // SizedBox(height: 20),
                       Text(
                         '색상',
                         style:
@@ -182,7 +210,7 @@ class Tab1DetailInfo extends GetView {
                             : SizedBox.shrink(),
                       ),
                       // 반품교환정보
-                      SizedBox(height: 20),
+                      SizedBox(height: 50),
                       Text(
                         '반품 및 교환',
                         style:
@@ -208,34 +236,47 @@ class Tab1DetailInfo extends GetView {
     );
   }
 
+  Widget EnableButton(String text, bool isSelected) {
+    return Expanded(
+      child: Container(
+        height: 35,
+        decoration: BoxDecoration(
+            color: isSelected ? MyColors.primary : MyColors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+                color: isSelected ? MyColors.white : MyColors.grey1)),
+        child: Center(
+            child: Text(
+          text,
+          style:
+              TextStyle(color: isSelected ? MyColors.white : MyColors.primary),
+        )),
+      ),
+    );
+  }
+
   // ThickThreeButtonBuilder [두꺼움, 중간, 얇음]
   List<Widget> ThickThreeButtonBuilder({required String selected}) {
     List<Widget> buttons = [];
     // thick '두꺼움'
     if (selected == ProductThicknessType.thick) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('두꺼움'))));
+      buttons.add(EnableButton('두꺼움', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('두꺼움'))));
+      buttons.add(EnableButton('두꺼움', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductThicknessType.middle) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // thin '얇음'
     if (selected == ProductThicknessType.thin) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('얇음'))));
+      buttons.add(EnableButton('얇음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('얇음'))));
+      buttons.add(EnableButton('얇음', false));
     }
 
     return buttons;
@@ -246,29 +287,23 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 높음
     if (selected == ProductSeethroughType.high) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductSeethroughType.middle) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (selected == ProductSeethroughType.none) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     return buttons;
   }
@@ -278,38 +313,30 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 높음
     if (selected == ProductFlexibilityType.high) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductFlexibilityType.middle) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (selected == ProductFlexibilityType.none) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     buttons.add(SizedBox(width: 10));
     // 밴딩
     if (selected == ProductFlexibilityType.banding) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('밴딩'))));
+      buttons.add(EnableButton('밴딩', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('밴딩'))));
+      buttons.add(EnableButton('밴딩', false));
     }
     return buttons;
   }
@@ -319,20 +346,16 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 있음
     if (isSelected == true) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('있음'))));
+      buttons.add(EnableButton('있음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('있음'))));
+      buttons.add(EnableButton('없음', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (isSelected == false) {
-      buttons.add(Expanded(
-          child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(
-          child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     return buttons;
   }
@@ -351,11 +374,53 @@ class Tab1DetailInfo extends GetView {
         crossAxisSpacing: 15.0,
         mainAxisSpacing: 15.0,
         children: List.generate(8, (index) {
-          return ClothWashToggle(
-            clothWash: addProduct3Ctr.clothWashToggles[index],
-            onPressed: () => null,
-          );
+          // return ClothWashToggle(
+          //   clothWash: addProduct3Ctr.clothWashToggles[index],
+          //   onPressed: () => null,
+          // );
+          return ClothWashToggleUser(addProduct3Ctr.clothWashToggles[index]);
         }),
+      ),
+    );
+  }
+
+  Widget ClothWashToggleUser(ClothWash clothWash) {
+    return Container(
+      decoration: BoxDecoration(
+        color: clothWash.isActive.value ? MyColors.primary : MyColors.white,
+        borderRadius: BorderRadius.all(Radius.circular(MyDimensions.radius)),
+        border: Border.all(
+          color: clothWash.isActive.value ? MyColors.primary : MyColors.grey1,
+        ),
+      ),
+      height: 10,
+      width: 20,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 24,
+              height: 24,
+              child: Image.asset(
+                clothWash.iconPath,
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(height: 5),
+            Center(
+              child: Text(
+                clothWash.title,
+                style: TextStyle(
+                    color: clothWash.isActive.value
+                        ? MyColors.black2
+                        : MyColors.black2,
+                    fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
