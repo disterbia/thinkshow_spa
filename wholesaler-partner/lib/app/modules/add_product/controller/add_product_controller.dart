@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ import 'package:wholesaler_partner/app/modules/add_product/view/widget/editor_wi
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/models/cloth_category_model.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
+import 'package:flutter_quill/flutter_quill.dart' as Quill;
 
 class AddProductController extends GetxController {
   pApiProvider _apiProvider = pApiProvider();
@@ -92,11 +94,14 @@ class AddProductController extends GetxController {
     part1controller.imageUrl1.value = productModifyModel.value.thumbnailImageUrl!;
     part1controller.imagePath2.value = productModifyModel.value.colorImagePath!;
     part1controller.imageUrl2.value = productModifyModel.value.colorImageUrl!;
-    part1controller.imagePath3.value = productModifyModel.value.detailImagePath!;
-    part1controller.imageUrl3.value = productModifyModel.value.detailImageUrl!;
+    // part1controller.imagePath3.value = productModifyModel.value.detailImagePath!;
+    // part1controller.imageUrl3.value = productModifyModel.value.detailImageUrl!;
 
     // content
-    editorCtr.editorController.setText(productModifyModel.value.content!);
+    //editorCtr.editorController.setText(productModifyModel.value.content!);
+    editorCtr.editorController=Quill.QuillController(
+        document: Quill.Document.fromJson(jsonDecode(productModifyModel.value.content!)),
+        selection: TextSelection.collapsed(offset: 0));
 
     // country
     part5controller.selectedCountry.value = productModifyModel.value.manufactureCountry!;
