@@ -17,7 +17,16 @@ class Page2StoreListController extends GetxController {
 
   Future<void> getRankedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
-    stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
+
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+    } else {
+      stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
+    }
     isLoading.value = false;
   }
 
@@ -52,7 +61,6 @@ class Page2StoreListController extends GetxController {
       return;
     }
 
-    
     bool result = await uApiProvider().chekToken();
     if (!result) {
       print('logout');

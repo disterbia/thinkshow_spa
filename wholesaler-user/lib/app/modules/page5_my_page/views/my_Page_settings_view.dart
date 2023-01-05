@@ -60,7 +60,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           _switch(),
           Divider(thickness: 6, color: MyColors.grey3),
           _settingOption(
-              'terms'.tr,
+              'Terms'.tr,
               () => Get.to(() => User_RegisterPrivacyTermsView(),
                   arguments: PrivacyOrTerms.terms)),
           Divider(color: MyColors.grey3),
@@ -86,7 +86,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomButton(
-              text: '탈퇴',
+              text: '회원탈퇴',
               fontSize: 14,
               textColor: MyColors.black1,
               onPressed: () {
@@ -117,6 +117,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
       () => ListTile(
         title: Text('event_marketing_alarm'.tr),
         trailing: Switch(
+          activeColor: MyColors.primary,
             value: ctr.user.value.isAgreeNotificaiton!.value,
             onChanged: (value) => ctr.notificationToggled(value)),
       ),

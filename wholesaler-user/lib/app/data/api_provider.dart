@@ -38,6 +38,7 @@ import 'package:wholesaler_user/app/modules/page1_home/models/image_banner_model
 import 'package:wholesaler_user/app/widgets/phone_number_textfield/phone_number_textfield_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart';
 
 class uApiProvider extends GetConnect {
   Map<String, String> headers = {
@@ -211,10 +212,7 @@ class uApiProvider extends GetConnect {
   }
 
   Future<bool> chekToken() async {
-
-    Map<String, dynamic> body = {
-      'access_token': CacheProvider().getToken()
-    };
+    Map<String, dynamic> body = {'access_token': CacheProvider().getToken()};
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/login-check';
     final response = await post(url, body, headers: headers);
@@ -751,7 +749,7 @@ class uApiProvider extends GetConnect {
 
   // page 4: 찜 상품
   Future<List<Product>> getFavoriteProducts() async {
-    headers={"Authorization": "Bearer " + CacheProvider().getToken()};
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/product/favorites';
     final response = await get(url, headers: headers);
@@ -907,8 +905,7 @@ class uApiProvider extends GetConnect {
   /// 마이페이지 > 주문 조회
   Future<List<OrderOrReview>> getOrderInquiry(
       {required int offset, required int limit, required String period}) async {
-    print(
-        ' getOrderInquiry offset: $offset, limit: $limit, period: $period');
+    print(' getOrderInquiry offset: $offset, limit: $limit, period: $period');
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/orders?offset=$offset&limit=$limit&periodType=$period';
@@ -944,8 +941,8 @@ class uApiProvider extends GetConnect {
             store: tempStore,
             orderStatus: product['order_status_code'],
             orderDetailId: product['id'],
-            delivery_company_name:product['delivery_company_name'],
-            delivery_invoice_number:product['delivery_invoice_number'],
+            delivery_company_name: product['delivery_company_name'],
+            delivery_invoice_number: product['delivery_invoice_number'],
             isReviewWritten: product['is_regist_review'],
             hasBellIconAndBorder: json['is_privilege'],
             price: product['product_price'],
@@ -1008,8 +1005,8 @@ class uApiProvider extends GetConnect {
           orderStatus: orderDetailsJSON['order_status_code'],
           isReviewWritten: orderDetailsJSON['is_regist_review'],
           hasBellIconAndBorder: json['is_privilege'],
-          delivery_company_name:orderDetailsJSON['delivery_company_name'],
-          delivery_invoice_number:orderDetailsJSON['delivery_invoice_number'],
+          delivery_company_name: orderDetailsJSON['delivery_company_name'],
+          delivery_invoice_number: orderDetailsJSON['delivery_invoice_number'],
         );
 
         products.add(tempProduct);
@@ -1039,8 +1036,8 @@ class uApiProvider extends GetConnect {
         address: tempAddress,
         date: date,
         orderNumber: json['code'],
-        delivery_company_name:json['delivery_company_name'],
-        delivery_invoice_number:json['delivery_invoice_number'],
+        delivery_company_name: json['delivery_company_name'],
+        delivery_invoice_number: json['delivery_invoice_number'],
         paymentMethod: json['payment_info']['pay_method'] ?? '',
         deliveryFee: json['payment_info']['delivery_cost'],
         pointUsed: json['payment_info']['using_point'],
@@ -1065,10 +1062,15 @@ class uApiProvider extends GetConnect {
       url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/product/$productId';
     }
 
+    print(url);
+    print(headers);
+
     final response = await get(url, headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
+      //1
+      // debugPrint(json.toString());
       // Store info
       Store tempStore = Store(
         id: json['store_info']['id'],
@@ -1110,6 +1112,13 @@ class uApiProvider extends GetConnect {
         colors.add(colorJSON);
       }
 
+      // images color
+      List<String> imagesColor = [];
+      for (var image in json['images_color']) {
+        imagesColor.add(image);
+      }
+
+      //3
       // product
       Product tempProduct = Product(
         id: json['id'],
@@ -1117,6 +1126,7 @@ class uApiProvider extends GetConnect {
         imgUrl: '',
         store: tempStore,
         images: images,
+        imagesColor: imagesColor,
         price: json['price'],
         totalRating: json['review_score'] != null
             ? double.parse(json['review_score'].toString()).obs
@@ -1444,8 +1454,7 @@ class uApiProvider extends GetConnect {
         '/search/product/keywords?searchContent=$searchContent';
 
     final response = await get(url, headers: headers);
-    print(
-        'getSearchProductAutoComplete response: ${response.bodyString}');
+    print('getSearchProductAutoComplete response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       List<SearchProductAutoModel> keywords = [];

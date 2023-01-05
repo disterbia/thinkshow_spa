@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/cart1_orders_model/cart1_orders_model.dart';
@@ -29,16 +30,17 @@ class Cart1ShoppingBasketController extends GetxController {
       // WidgetsBinding.instance.addPostFrameCallback((_) {
       //   Get.to(() => User_LoginPageView());
       // });
+      if (MyVars.isUserProject()) {
+        bool result = await uApiProvider().chekToken();
 
-      bool result = await uApiProvider().chekToken();
-
-      if (!result) {
-        print('logout');
-        mSnackbar(message: '로그인 세션이 만료되었습니다.');
-        mFuctions.userLogout();
-      } else {
-        cartItems.value = await _apiProvider.getCart1ShoppintBasket();
-        updateTotalPaymentPrice();
+        if (!result) {
+          print('logout');
+          mSnackbar(message: '로그인 세션이 만료되었습니다.');
+          mFuctions.userLogout();
+        } else {
+          cartItems.value = await _apiProvider.getCart1ShoppintBasket();
+          updateTotalPaymentPrice();
+        }
       }
     } else {
       mFuctions.userLogout();
@@ -90,7 +92,10 @@ class Cart1ShoppingBasketController extends GetxController {
         lBtnOnPressed: () {
           Get.back();
         },
-        rBtnOnPressed: () => callDeleteSelectedProductsAPI(isDeleteAll: true),
+        rBtnOnPressed: () {
+          callDeleteSelectedProductsAPI(isDeleteAll: true);
+          SelectAllCheckboxOnChanged(false);
+        },
       ),
     );
   }

@@ -96,7 +96,6 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
         width: double.infinity,
         child: ElevatedButton(
             onPressed: () {
-              
               ctr.loginBtnPressed();
             },
             child: Text(
@@ -118,7 +117,10 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
             style: MyTextStyles.f14.copyWith(color: MyColors.black1),
           ),
           onPressed: () {
-            Get.to(() => User_FindID_FindPasswordView(), arguments: FindIDPasswordTabIndex.findID.index);
+            print(FindIDPasswordTabIndex.findID.index);
+
+            Get.to(() => User_FindID_FindPasswordView(),
+                arguments: FindIDPasswordTabIndex.findID.index);
           },
         ),
         // Find Password Button
@@ -128,7 +130,9 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
             style: MyTextStyles.f14.copyWith(color: MyColors.black1),
           ),
           onPressed: () {
-            Get.to(() => User_FindID_FindPasswordView(), arguments: FindIDPasswordTabIndex.findPassword.index);
+            print(FindIDPasswordTabIndex.findPassword.index);
+            Get.to(() => User_FindID_FindPasswordView(),
+                arguments: FindIDPasswordTabIndex.findPassword.index);
           },
         ),
       ],

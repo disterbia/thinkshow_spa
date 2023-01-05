@@ -53,7 +53,6 @@ class Page4FavoriteProductsView extends GetView {
                   productHeight: 280,
                   products: ctr.products,
                   isShowLoadingCircle: false.obs,
-                  isFavorite: true,
                 ),
               ],
             ),

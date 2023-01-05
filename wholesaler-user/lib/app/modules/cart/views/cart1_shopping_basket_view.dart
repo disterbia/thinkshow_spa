@@ -17,6 +17,7 @@ class Cart1ShoppingBasketView extends GetView {
 
   init() {
     ctr.init();
+    ctr.SelectAllCheckboxOnChanged(false);
   }
 
   @override
@@ -84,18 +85,27 @@ class Cart1ShoppingBasketView extends GetView {
             onChanged: (bool value) => ctr.SelectAllCheckboxOnChanged(value),
           ),
         ),
-        SizedBox(width: 10),
-        Text(
-          '전체선택',
-          style: MyTextStyles.f16.copyWith(color: MyColors.black3),
-        ),
-        SizedBox(width: 5),
-        Obx(
-          () => Text(
-            '( ${ctr.getTotalSelectedProducts()} / ${ctr.getNumberProducts()} )',
-            style: MyTextStyles.f12.copyWith(color: MyColors.black1),
-          ),
-        ),
+        GestureDetector(
+            onTap: () {
+              ctr.SelectAllCheckboxOnChanged(!ctr.isSelectAllChecked.value);
+            },
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 5),
+                  child: Text(
+                    '전체선택',
+                    style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+                  ),
+                ),
+                Obx(
+                  () => Text(
+                    '( ${ctr.getTotalSelectedProducts()} / ${ctr.getNumberProducts()} )',
+                    style: MyTextStyles.f12.copyWith(color: MyColors.black1),
+                  ),
+                ),
+              ],
+            )),
       ],
     );
   }

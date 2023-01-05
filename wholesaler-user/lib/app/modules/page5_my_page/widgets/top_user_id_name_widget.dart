@@ -10,7 +10,8 @@ import 'package:wholesaler_user/app/modules/page5_my_page/views/my_Page_settings
 class TopUserIDUserNameSettings extends StatelessWidget {
   User user;
   bool showSettingsIcon;
-  TopUserIDUserNameSettings({required this.user, required this.showSettingsIcon});
+  TopUserIDUserNameSettings(
+      {required this.user, required this.showSettingsIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class TopUserIDUserNameSettings extends StatelessWidget {
                 onPressed: () {
                   Get.to(() => MyPageSettingsView());
                 },
-                icon: Image.asset('assets/icons/ic_settings.png'),
+                icon: Image.asset('assets/icons/ic_settings.png', height: 20,),
               )
             : SizedBox.shrink(),
       ],

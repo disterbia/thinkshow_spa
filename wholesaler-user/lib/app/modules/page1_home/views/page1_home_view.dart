@@ -26,7 +26,7 @@ class Page1HomeView extends GetView<Page1HomeController> {
   @override
   Widget build(BuildContext context) {
     init();
-    print(ctr2.getNumberProducts());
+    // print(ctr2.getNumberProducts());
     return Scaffold(
       appBar: _mainAppbar(),
       backgroundColor: MyColors.white,

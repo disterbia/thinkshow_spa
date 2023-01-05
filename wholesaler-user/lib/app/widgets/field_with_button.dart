@@ -43,6 +43,9 @@ class CustomField extends StatelessWidget {
     return Column(
       children: [
         _fieldLabel(),
+        SizedBox(
+          height: 7,
+        ),
         _field(),
       ],
     );

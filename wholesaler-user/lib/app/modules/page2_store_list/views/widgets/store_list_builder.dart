@@ -10,7 +10,11 @@ import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shoppin
 
 class StoreListBuilder extends StatelessWidget {
   Page2StoreListController ctr = Get.put(Page2StoreListController());
-  StoreListBuilder();
+  String? prevPage;
+  StoreListBuilder({String? prevPage}){
+    print(prevPage);
+    this.prevPage = prevPage;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class StoreListBuilder extends StatelessWidget {
   Widget _storeList(Store store) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => StoreDetailView(storeId: store.id));
+        Get.to(() => StoreDetailView(storeId: store.id, prevPage: prevPage,));
       },
       child: Container(
         decoration: BoxDecoration(

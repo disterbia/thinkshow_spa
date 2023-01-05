@@ -10,6 +10,7 @@ import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab4_ding_dong.dart';
 import 'package:wholesaler_user/app/modules/page2_store_detail/controller/store_detail_controller.dart';
+import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shopping_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/dingdong_3products_horiz/dingdong_3products_horiz_view.dart';
@@ -18,10 +19,19 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class StoreDetailView extends GetView {
   StoreDetailController ctr = Get.put(StoreDetailController());
-  StoreDetailView({required int storeId}) {
+  Page2StoreListController ctr2 = Get.put(Page2StoreListController());
+  String? prevPage;
+  StoreDetailView({required int storeId, String? prevPage}) {
     print('storeId $storeId');
     ctr.storeId.value = storeId;
     ctr.init();
+
+    if (prevPage != null) {
+      this.prevPage = prevPage;
+      print(prevPage);
+    } else {
+      ctr2.dispose();
+    }
   }
 
   @override
@@ -122,7 +132,16 @@ class StoreDetailView extends GetView {
                     bool value = ctr.mainStoreModel.value.isFavorite!.value;
                     ctr.mainStoreModel.value.isFavorite!.value = !value;
                     print('new value ${!value}');
-                    ctr.starIconPressed();
+                    ctr.starIconPressed().then((_) {
+                      if (prevPage != null) {
+                        print(prevPage);
+                        if (prevPage == 'rank') {
+                          ctr2.getRankedStoreData();
+                        } else if (prevPage == 'bookmark')
+                          ctr2.getBookmarkedStoreData();
+                      }
+                      
+                    });
                   },
                   icon: ctr.mainStoreModel.value.isFavorite!.value
                       ? Icon(
@@ -190,29 +209,29 @@ class StoreDetailView extends GetView {
           child: SizedBox(
             height: 240,
             child: Obx(
-                  () => ctr.top10Products.isNotEmpty
+              () => ctr.top10Products.isNotEmpty
                   ? ListView.separated(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: ctr.top10Products.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox(width: 14),
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: 105,
-                    child: ProductItemVertical(
-                      product: ctr.top10Products.elementAt(index),
-                      productNumber: ProductNumber(
-                        number: index + 1,
-                        backgroundColor:
-                        MyColors.numberColors.length > index
-                            ? MyColors.numberColors[index]
-                            : MyColors.numberColors[0],
-                      ),
-                    ),
-                  );
-                },
-              )
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: ctr.top10Products.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          SizedBox(width: 14),
+                      itemBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 105,
+                          child: ProductItemVertical(
+                            product: ctr.top10Products.elementAt(index),
+                            productNumber: ProductNumber(
+                              number: index + 1,
+                              backgroundColor:
+                                  MyColors.numberColors.length > index
+                                      ? MyColors.numberColors[index]
+                                      : MyColors.numberColors[0],
+                            ),
+                          ),
+                        );
+                      },
+                    )
                   : Center(child: Text('제품을 등록해주세요.')),
             ),
           ),
