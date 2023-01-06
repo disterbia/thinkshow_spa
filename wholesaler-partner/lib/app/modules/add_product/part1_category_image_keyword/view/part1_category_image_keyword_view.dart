@@ -176,6 +176,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                       ? ctr.isUploadLoading3.value?LoadingWidget():Container(
                           width: Get.width,
                           child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemCount: ctr.imageUrl1.length,
                             itemBuilder: (context, index) {

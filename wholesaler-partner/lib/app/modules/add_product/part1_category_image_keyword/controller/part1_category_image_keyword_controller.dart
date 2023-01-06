@@ -94,7 +94,7 @@ class AP_Part1Controller extends GetxController
     if(temp!=null) {
       imageUrl1.removeAt(index);
       imagePath1.removeAt(index);
-      pickedImage1.insert(index,temp);
+      pickedImage1.add(temp);
       uploadImage3(index);
     }
     else{
@@ -105,13 +105,20 @@ class AP_Part1Controller extends GetxController
   Future<void> uploadImage3(int index) async {
       isUploadLoading3.value = true;
       ProductImageModel productImageModel = await _apiProvider
-          .uploadProductImage3(pickedImage: File(pickedImage1[index]!.path));
+          .uploadProductImage3(pickedImage: File(pickedImage1[0]!.path));
       isUploadLoading3.value = false;
+      pickedImage1.clear();
       mSnackbar(message: "이미지가 등록되었습니다.");
 
       if (productImageModel.statusCode == 200) {
-        imagePath1.insert(index, productImageModel.path);
-        imageUrl1.insert (index,productImageModel.url);
+        if(index==2){
+          imagePath1.add(productImageModel.path);
+          imageUrl1.add (productImageModel.url);
+        }else{
+          imagePath1.insert(index, productImageModel.path);
+          imageUrl1.insert (index,productImageModel.url);
+        }
+
       }
   }
 

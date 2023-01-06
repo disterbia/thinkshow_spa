@@ -29,7 +29,7 @@ class AddProductView extends GetView<AddProductController> {
   }
   @override
   Widget build(BuildContext context) {
-
+    FocusScope.of(context).requestFocus(FocusNode());
     return Scaffold(
       backgroundColor: MyColors.white,
       resizeToAvoidBottomInset: false,
@@ -39,7 +39,7 @@ class AddProductView extends GetView<AddProductController> {
           CustomAppbar(isBackEnable: false, hasHomeButton: true, title: '상품등록'),
       // GestureDetector: when click on anywhere on the screen close keyboard
       body:
-      body(),
+      GestureDetector(onTap: () => FocusScope.of(context).requestFocus( FocusNode()),child: body()),
       // GestureDetector(
       //   onTap: () {
       //     FocusScope.of(context).requestFocus(FocusNode());
