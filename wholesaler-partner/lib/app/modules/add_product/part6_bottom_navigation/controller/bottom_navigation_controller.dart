@@ -120,7 +120,7 @@ class AP_Part6Controller extends GetxController {
 
     if (imagePath2.isEmpty) {
       Get.back();
-      mSnackbar(message: '색상별 이미지를 선택해주세요.');
+      mSnackbar(message: '상세 이미지를 선택해주세요.');
       return;
     }
 
@@ -348,7 +348,7 @@ class AP_Part6Controller extends GetxController {
 
     if (imagePath2.isEmpty) {
       Get.back();
-      mSnackbar(message: '색상별 이미지를 선택해주세요.');
+      mSnackbar(message: '상세 이미지를 선택해주세요.');
       return;
     }
 

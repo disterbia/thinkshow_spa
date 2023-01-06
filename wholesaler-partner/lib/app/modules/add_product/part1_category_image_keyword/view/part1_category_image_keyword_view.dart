@@ -173,7 +173,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl1.value.isNotEmpty
-                      ? Container(
+                      ? ctr.isUploadLoading3.value?LoadingWidget():Container(
                           width: Get.width,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -189,9 +189,9 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                       badgeContent: GestureDetector(
                                         child: Icon(Icons.remove_circle_outline,
                                             size: 20),
-                                        onTap: () {
-                                          print(index);
-                                          ctr.imageUrl1.removeAt(index);
+                                        onTap: () async{
+                                           await ctr.uploadImageBtnPressed3(index);
+
                                         },
                                       ),
                                       child: Container(
@@ -296,6 +296,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                           onTap: () {
                                             print(index);
                                             ctr.imageUrl2.removeAt(index);
+                                            ctr.imagePath2.removeAt(index);
                                           },
                                         ),
                                         child: Container(
