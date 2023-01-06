@@ -1084,7 +1084,7 @@ class uApiProvider extends GetConnect {
 
       // product images
       List<String> images = [];
-      for (var image in json['images']) {
+      for (var image in json['images_thum']) {
         images.add(image);
       }
 
@@ -1915,7 +1915,7 @@ class uApiProvider extends GetConnect {
     final response = await put(url, data, headers: headers);
 
     if (response.statusCode == 200) {
-      mSnackbar(message: '전화번호가 변경되었습니다.');
+      mSnackbar(message: '휴대폰 번호가 변경되었습니다.');
       return jsonDecode(response.bodyString!);
     } else {
       print('${response.body} ');

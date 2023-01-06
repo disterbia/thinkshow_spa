@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -20,7 +21,7 @@ class Tab1DetailInfo extends GetView {
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
 
   // Tab1DetailInfo();
-  QuillController _quillController = QuillController.basic();
+  
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -40,27 +41,29 @@ class Tab1DetailInfo extends GetView {
 
                 // ),
 
-                Container(
-                  height: 300,
-                  child: QuillEditor(
-                    controller: _quillController,
-                    scrollController: ScrollController(),
-                    scrollable: true,
-                    focusNode: FocusNode(),
-                    autoFocus: true,
-                    readOnly: true,
-                    expands: false,
-                    padding: EdgeInsets.all(15),
-                    keyboardAppearance: Brightness.light,
-                    locale: null,
-                    embedBuilders: null,
-                    showCursor: false,
-                    enableSelectionToolbar: false,
-                    placeholder: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                  ),
+                QuillEditor(
+                  controller: productDetailCtr.quillController,
+                  scrollController: ScrollController(),
+                  scrollable: true,
+                  focusNode: FocusNode(),
+                  autoFocus: true,
+                  readOnly: true,
+                  expands: false,
+                  padding: EdgeInsets.all(15),
+                  showCursor: false,
+                  enableSelectionToolbar: false,
+                  enableInteractiveSelection: false,
+
                 ),
 
-                Text(productDetailCtr.product.value.imagesColor![0]),
+                for (String imagesColor
+                    in productDetailCtr.product.value.imagesColor!) ...[
+                  CachedNetworkImage(
+                    imageUrl: imagesColor,
+                    fit: BoxFit.fill,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  )
+                ],
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

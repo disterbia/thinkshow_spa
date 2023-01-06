@@ -29,6 +29,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(
+      
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       elevation: 0,
       textStyle: TextStyle(

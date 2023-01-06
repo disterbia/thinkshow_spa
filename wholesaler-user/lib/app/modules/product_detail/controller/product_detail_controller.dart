@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/add_product/add_product_view.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
@@ -37,6 +40,8 @@ class ProductDetailController extends GetxController {
   ScrollController arrowsController = ScrollController();
   RxBool isLoading = false.obs;
 
+  late QuillController quillController;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -49,6 +54,15 @@ class ProductDetailController extends GetxController {
       return;
     }
     product.value = await _apiProvider.getProductDetail(productId: productId);
+    // print(product.value.content);
+    if(product.value.content != null){
+      quillController = QuillController(
+        document: Document.fromJson(jsonDecode(product.value.content!.value)),
+        selection: TextSelection.collapsed(offset: 0));
+    }
+    else{
+      quillController = QuillController.basic();
+    }
 
     if (product.value.quantity == null) {
       product.value.quantity = 1.obs;
@@ -151,8 +165,10 @@ class ProductDetailController extends GetxController {
     if (isSuccess) {
       product.value.isLiked!.value = newValue;
 
-      if (newValue) mSnackbar(message: '찜 완료', duration: 1);
-      else mSnackbar(message: '찜 취소 완료', duration: 1);
+      if (newValue)
+        mSnackbar(message: '찜 완료', duration: 1);
+      else
+        mSnackbar(message: '찜 취소 완료', duration: 1);
     }
   }
 
