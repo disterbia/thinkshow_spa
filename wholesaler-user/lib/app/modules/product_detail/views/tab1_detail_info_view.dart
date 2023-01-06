@@ -61,6 +61,14 @@ class Tab1DetailInfo extends GetView {
                   CachedNetworkImage(
                     imageUrl: imagesColor,
                     fit: BoxFit.fill,
+                    placeholder: (context, url) {
+                      return Container(
+                        height: 300,
+                        child: Center(
+                          child : CircularProgressIndicator()
+                        ),
+                      );
+                    },
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   )
                 ],
