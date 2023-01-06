@@ -58,7 +58,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
             ,
             Divider(thickness: 6, color: MyColors.grey3),
             Padding(
-              padding: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: Obx(
                 () => HorizontalChipList().getAllMainCat(
                     categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),

@@ -47,7 +47,7 @@ appBarBuilder(int index) {
       elevation: 0,
       centerTitle: false,
       title: Image.asset(
-        'assets/images/partner_home_appbar_logo.png',
+        'assets/images/login_logo.png',
         width: 60,
       ),
     );

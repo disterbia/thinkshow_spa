@@ -4,13 +4,17 @@ import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/models/main_store_model.dart';
 import 'package:wholesaler_user/app/Constants/constants.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
+import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 import 'package:wholesaler_user/app/widgets/dingdong_3products_horiz/dingdong_3products_horiz_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
+import 'package:wholesaler_user/app/constants/functions.dart';
 
 class StoreDetailController extends GetxController {
-  Dingdong3ProductsHorizController dingdong3productsHorizCtr = Get.put(Dingdong3ProductsHorizController());
+  Dingdong3ProductsHorizController dingdong3productsHorizCtr =
+      Get.put(Dingdong3ProductsHorizController());
   uApiProvider _apiProvider = uApiProvider();
   CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
 
@@ -33,17 +37,21 @@ class StoreDetailController extends GetxController {
   RxInt selectedDropdownIndex = 0.obs;
 
   init() async {
-    mainStoreModel.value = await _apiProvider.getStoreDetailMainInfo(storeId.value);
+    mainStoreModel.value =
+        await _apiProvider.getStoreDetailMainInfo(storeId.value);
     // Dingdong Products
     dingdong3productsHorizCtr.storeDingDongProducts(mainStoreModel.value);
     // top 10 products
-    top10Products.value = await _apiProvider.getTop10Products(storeId: storeId.value);
+    top10Products.value =
+        await _apiProvider.getTop10Products(storeId: storeId.value);
 
     // products
     updateProducts(isScrolling: false);
 
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
         offset += mConst.limit;
         updateProducts(isScrolling: true);
       }
@@ -51,14 +59,33 @@ class StoreDetailController extends GetxController {
   }
 
   Future<void> starIconPressed() async {
-    bool isSuccess = await _apiProvider.putAddStoreFavorite(storeId: mainStoreModel.value.storeId!);
+    if (CacheProvider().getToken().isEmpty) {
+      mFuctions.userLogout();
+      return;
+    }
+
+    bool result = await uApiProvider().chekToken();
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+      return;
+    }
+
+    bool isSuccess = await _apiProvider.putAddStoreFavorite(
+        storeId: mainStoreModel.value.storeId!);
     if (isSuccess) {
-      mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+      if (mainStoreModel.value.isFavorite!.value) {
+        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+      } else {
+        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+      }
     }
   }
 
   privilateProductsNotEmpty() {
-    return (mainStoreModel.value.privilegeProducts != null && mainStoreModel.value.privilegeProducts!.isNotEmpty);
+    return (mainStoreModel.value.privilegeProducts != null &&
+        mainStoreModel.value.privilegeProducts!.isNotEmpty);
   }
 
   Future<void> updateProducts({required bool isScrolling}) async {
@@ -71,12 +98,20 @@ class StoreDetailController extends GetxController {
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-     // print('index 0, show ALL');
-      tempProducts = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit, storeId: storeId.value, sort: apiSoftItems[selectedDropdownIndex.value]);
+      // print('index 0, show ALL');
+      tempProducts = await _apiProvider.getAllProducts(
+          offset: offset,
+          limit: mConst.limit,
+          storeId: storeId.value,
+          sort: apiSoftItems[selectedDropdownIndex.value]);
     } else {
-     // print('index > 0 , show categories');
+      // print('index > 0 , show categories');
       tempProducts = await _apiProvider.getProductsWithCat(
-          categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit, storeId: storeId.value, sort: apiSoftItems[selectedDropdownIndex.value]);
+          categoryId: categoryTagCtr.selectedMainCatIndex.value,
+          offset: offset,
+          limit: mConst.limit,
+          storeId: storeId.value,
+          sort: apiSoftItems[selectedDropdownIndex.value]);
     }
 
     products.addAll(tempProducts);

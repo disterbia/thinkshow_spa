@@ -12,22 +12,22 @@ class SizeTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) => SingleChildScrollView(
-        child: Container(
-          width: 200,
-          height: 100,
-          child: CrossScroll(
-            verticalBar: CrossScrollBar(thickness: 0),
-            child: DataTable(
-              columns: DataColumnBuilder(),
-              rows: <DataRow>[
-                ...ctr.product.value.sizes!.map(
-                  (size) => DataRow(
-                    cells: DataCellBuilder(size),
-                  ),
+      builder: (context, constraints) => Container(
+        // width: 200,
+        height: 170,
+        child: CrossScroll(
+          
+          horizontalBar: CrossScrollBar(thickness: 4, hoverThickness: 4),
+          verticalBar: CrossScrollBar(thickness: 0),
+          child: DataTable(
+            columns: DataColumnBuilder(),
+            rows: <DataRow>[
+              ...ctr.product.value.sizes!.map(
+                (size) => DataRow(
+                  cells: DataCellBuilder(size),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

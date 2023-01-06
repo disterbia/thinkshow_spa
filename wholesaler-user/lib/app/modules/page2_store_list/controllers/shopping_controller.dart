@@ -7,6 +7,7 @@ import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
+import 'package:wholesaler_user/app/constants/functions.dart';
 
 class Page2StoreListController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
@@ -15,34 +16,67 @@ class Page2StoreListController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<void> getRankedStoreData() async {
-    Future.delayed(Duration.zero,() => isLoading.value=true);
-    stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
-    isLoading.value=false;
+    Future.delayed(Duration.zero, () => isLoading.value = true);
+
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+    } else {
+      stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
+    }
+    isLoading.value = false;
   }
 
   Future<void> getBookmarkedStoreData() async {
-    if (CacheProvider().getToken().isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.to(() => User_LoginPageView());
-      });
+    Future.delayed(Duration.zero, () => isLoading.value = true);
+
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
     } else {
-      Future.delayed(Duration.zero,() => isLoading.value=true);
-
       stores.value = await _apiProvider.getStorebookmarked();
-      isLoading.value=false;
     }
+    // if (CacheProvider().getToken().isEmpty) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     Get.to(() => User_LoginPageView());
+    //   });
+    // } else {
+    //   Future.delayed(Duration.zero,() => isLoading.value=true);
 
+    //   stores.value = await _apiProvider.getStorebookmarked();
+    // }
+
+    isLoading.value = false;
   }
 
   Future<void> starIconPressed(Store store) async {
     if (CacheProvider().getToken().isEmpty) {
-      Get.to(() => User_LoginPageView());
+      mFuctions.userLogout();
+      return;
+    }
+
+    bool result = await uApiProvider().chekToken();
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
       return;
     }
     log('store id ${store.id}');
     bool isSuccess = await _apiProvider.putAddStoreFavorite(storeId: store.id);
+
     if (isSuccess) {
-      mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+      if (store.isBookmarked!.value) {
+        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+      } else {
+        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+      }
     }
   }
 }

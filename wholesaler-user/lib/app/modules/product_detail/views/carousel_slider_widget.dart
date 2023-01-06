@@ -29,7 +29,7 @@ class ImagesCarouselSlider extends StatelessWidget {
               for (String img in ctr.product.value.images!)
                 CachedNetworkImage(
                   imageUrl: img,
-                  // placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 )
             ],

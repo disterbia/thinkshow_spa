@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +22,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
   AddProductController addProductController = Get.put(AddProductController());
 
   double edgePadding = 15;
-  var f=NumberFormat('###,###,###,###');
+  var f = NumberFormat('###,###,###,###');
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,13 +45,14 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
             labelText: '단가',
             keyboardType: TextInputType.number,
             controller: addProductController.priceController,
-            onChanged: (value){
-              if(value.isNotEmpty){
-                String temp=value.replaceAll(RegExp(r'[^0-9]'),'');
-                temp=f.format(int.parse(temp));
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                String temp = value.replaceAll(RegExp(r'[^0-9]'), '');
+                temp = f.format(int.parse(temp));
                 addProductController.priceController.value = TextEditingValue(
                     text: temp,
-                    selection: TextSelection.collapsed(offset: temp.toString().length));
+                    selection: TextSelection.collapsed(
+                        offset: temp.toString().length));
               }
             },
           ),
@@ -72,7 +77,6 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
   }
 
   Widget _selectCategories() {
-
     return Obx(
       () => addProductController.category.value.id == -1
           ? TextField(
@@ -83,13 +87,15 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
               },
               decoration: InputDecoration(
                 hintText: '카테고리 선택',
-                labelStyle: const TextStyle(color: MyColors.black, fontSize: 16),
+                labelStyle:
+                    const TextStyle(color: MyColors.black, fontSize: 16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(MyDimensions.radius),
                 ),
                 enabledBorder: OutlineInputBorder(
                   // width: 0.0 produces a thin "hairline" border
-                  borderSide: const BorderSide(color: MyColors.grey1, width: MyDimensions.border),
+                  borderSide: const BorderSide(
+                      color: MyColors.grey1, width: MyDimensions.border),
                 ),
                 filled: true,
                 fillColor: MyColors.grey1,
@@ -105,15 +111,22 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                 hintText: addProductController.category.value.title +
                     ' > ' +
                     (addProductController.isEditing.isTrue
-                        ? ClothCategory.getAllItems().firstWhere((element) => element.id == addProductController.productModifyModel.value.subCategoryId!).name
+                        ? ClothCategory.getAllItems()
+                            .firstWhere((element) =>
+                                element.id ==
+                                addProductController
+                                    .productModifyModel.value.subCategoryId!)
+                            .name
                         : addProductController.selectedSubCat.value.name),
-                labelStyle: const TextStyle(color: MyColors.black, fontSize: 16),
+                labelStyle:
+                    const TextStyle(color: MyColors.black, fontSize: 16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(MyDimensions.radius),
                 ),
                 enabledBorder: OutlineInputBorder(
                   // width: 0.0 produces a thin "hairline" border
-                  borderSide: const BorderSide(color: MyColors.grey1, width: MyDimensions.border),
+                  borderSide: const BorderSide(
+                      color: MyColors.grey1, width: MyDimensions.border),
                 ),
                 filled: true,
                 fillColor: MyColors.grey1,
@@ -160,18 +173,81 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl1.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl1.value,
-                            width: Get.width,
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                      ? Container(
+                          width: Get.width,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: ctr.imageUrl1.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Badge(badgeContent: Text((index + 1).toString()),child: Container(height: Get.width / 5,),badgeColor: MyColors.primary,),
+                                    Badge(
+                                      badgeColor: MyColors.primary,
+                                      badgeContent: GestureDetector(
+                                        child: Icon(Icons.remove_circle_outline,
+                                            size: 20),
+                                        onTap: () {
+                                          print(index);
+                                          ctr.imageUrl1.removeAt(index);
+                                        },
+                                      ),
+                                      child: Container(
+                                        width: Get.width / 5,
+                                        height: Get.width / 5,
+                                        child: CachedNetworkImage(
+                                          imageBuilder: (context, imageProvider)
+                                          => Container(
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            )
+                                          ,
+                                          progressIndicatorBuilder:
+                                              (context, url, progress) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Center(
+                                                  child: SizedBox(
+                                                height: 25.0,
+                                                width: 25.0,
+                                                child: CircularProgressIndicator(
+                                                  value: progress.progress,
+                                                ),
+                                              )),
+                                            );
+                                          },
+                                          imageUrl: ctr.imageUrl1[index],
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                         )
+                      // InkWell(
+                      //         onTap: () => ctr.uploadImageBtnPressed(),
+                      //         child: CachedNetworkImage(
+                      //           imageUrl: ctr.imageUrl1.value,
+                      //           width: Get.width,
+                      //           errorWidget: (context, url, error) => Icon(Icons.error),
+                      //         ),
+                      //       )
                       : ctr.isUploadLoading1.value
                           ? LoadingWidget()
                           : IconButton(
-                              onPressed: () => ctr.uploadImageBtnPressed(),
+                              onPressed: () async {
+                                await ctr.uploadImageBtnPressed();
+                              },
                               padding: const EdgeInsets.all(0.0),
                               icon: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,7 +259,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                   ),
                                   Text(
                                     '상품 사진 등록',
-                                  )
+                                  ),
+                                  Text('(3장)')
                                 ],
                               ),
                             ),
@@ -196,14 +273,87 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl2.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed2(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl2.value,
-                            width: Get.width,
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
+                      ? Container(
+                          width: Get.width,
+                          child: GridView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: ctr.imageUrl2.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(
+                                    children: [
+                                      Badge(
+                                          badgeColor: MyColors.primary,
+                                          badgeContent:
+                                              Text((index + 1).toString()),
+                                          child: Container(height:Get.width / 6,)),
+                                      Badge(
+                                        badgeColor: MyColors.primary,
+                                        badgeContent: GestureDetector(
+                                          child: Icon(Icons.remove_circle_outline,
+                                              size: 20),
+                                          onTap: () {
+                                            print(index);
+                                            ctr.imageUrl2.removeAt(index);
+                                          },
+                                        ),
+                                        child: Container(
+                                          width: Get.width / 6,
+                                          height: Get.width / 6,
+                                          child: CachedNetworkImage(
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            ),
+                                            imageUrl: ctr.imageUrl2[index],
+                                            errorWidget: (context, url, error) =>
+                                                Icon(Icons.error),
+                                            progressIndicatorBuilder:
+                                                (context, url, progress) {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Center(
+                                                    child: SizedBox(
+                                                  height: 25.0,
+                                                  width: 25.0,
+                                                  child: CircularProgressIndicator(
+                                                    value: progress.progress,
+                                                  ),
+                                                )),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 10,
+                                crossAxisCount: 3,
+                                // childAspectRatio: columnWidth /
+                                //     (MyVars.isSmallPhone()
+                                //         ? 270
+                                //         : 260), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                              )),
                         )
+                      // InkWell(
+                      //         onTap: () => ctr.uploadImageBtnPressed2(),
+                      //         child: CachedNetworkImage(
+                      //           imageUrl: ctr.imageUrl2.value,
+                      //           width: Get.width,
+                      //           errorWidget: (context, url, error) => Icon(Icons.error),
+                      //         ),
+                      //       )
                       : ctr.isUploadLoading2.value
                           ? LoadingWidget()
                           : IconButton(
@@ -219,49 +369,50 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                   ),
                                   Text(
                                     '상품 사진 등록',
-                                  )
+                                  ),
+                                  Text("(30장 이하)")
                                 ],
                               ),
                             ),
                 );
               }),
               // image 3
-              Obx(() {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: MyColors.grey1),
-                  ),
-                  child: ctr.imageUrl3.value.isNotEmpty
-                      ? InkWell(
-                          onTap: () => ctr.uploadImageBtnPressed3(),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.imageUrl3.value,
-                            width: Get.width,
-                            // placeholder: (context, url) => CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        )
-                      : ctr.isUploadLoading3.value
-                          ? LoadingWidget()
-                          : IconButton(
-                              onPressed: () => ctr.uploadImageBtnPressed3(),
-                              padding: const EdgeInsets.all(0.0),
-                              icon: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic_image_icon.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Text(
-                                    '상품 사진 등록',
-                                  )
-                                ],
-                              ),
-                            ),
-                );
-              }),
+              // Obx(() {
+              //   return Container(
+              //     decoration: BoxDecoration(
+              //       border: Border.all(color: MyColors.grey1),
+              //     ),
+              //     child: ctr.imageUrl3.value.isNotEmpty
+              //         ? InkWell(
+              //             onTap: () => ctr.uploadImageBtnPressed3(),
+              //             child: CachedNetworkImage(
+              //               imageUrl: ctr.imageUrl3.value,
+              //               width: Get.width,
+              //               // placeholder: (context, url) => CircularProgressIndicator(),
+              //               errorWidget: (context, url, error) => Icon(Icons.error),
+              //             ),
+              //           )
+              //         : ctr.isUploadLoading3.value
+              //             ? LoadingWidget()
+              //             : IconButton(
+              //                 onPressed: () => ctr.uploadImageBtnPressed3(),
+              //                 padding: const EdgeInsets.all(0.0),
+              //                 icon: Column(
+              //                   crossAxisAlignment: CrossAxisAlignment.center,
+              //                   mainAxisAlignment: MainAxisAlignment.center,
+              //                   children: [
+              //                     Image.asset(
+              //                       'assets/icons/ic_image_icon.png',
+              //                       fit: BoxFit.fill,
+              //                     ),
+              //                     Text(
+              //                       '상품 사진 등록',
+              //                     )
+              //                   ],
+              //                 ),
+              //               ),
+              //   );
+              // }),
             ],
           ),
         ),

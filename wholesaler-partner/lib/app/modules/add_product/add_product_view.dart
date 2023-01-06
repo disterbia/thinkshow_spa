@@ -32,7 +32,7 @@ class AddProductView extends GetView<AddProductController> {
 
     return Scaffold(
       backgroundColor: MyColors.white,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
 
       bottomNavigationBar: bottomSheet(),
       appBar:
@@ -50,20 +50,22 @@ class AddProductView extends GetView<AddProductController> {
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        AP_Part1View(),
-        _divider(),
-        AP_Part2View(),
-        _divider(),
-        AP_Part3View(),
-        _divider(),
-        AP_Part4View(),
-        _divider(),
-        AP_Part5View(),
-        _divider(),
-        SizedBox(height: 100),
-      ]),
+    return Obx(
+        ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          AP_Part1View(),
+          _divider(),
+          AP_Part2View(),
+          _divider(),
+          AP_Part3View(),
+          _divider(),
+          AP_Part4View(),
+          _divider(),
+          AP_Part5View(),
+          _divider(),
+          SizedBox(height: 100),
+        ]),
+      ),
     );
   }
 

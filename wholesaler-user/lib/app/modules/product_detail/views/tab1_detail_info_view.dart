@@ -1,37 +1,80 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:wholesaler_partner/app/modules/add_product/part3_material_clothwash/controller/part3_material_clothwash_controller.dart';
+import 'package:wholesaler_partner/app/modules/add_product/view/widget/cloth_wash_toggle/cloth_wash_model.dart';
 import 'package:wholesaler_partner/app/modules/add_product/view/widget/cloth_wash_toggle/cloth_wash_toggle.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
+import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_1_detail_info_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/size_table_widget.dart';
 import 'package:wholesaler_user/app/widgets/webview_builder_flex_height.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 
 class Tab1DetailInfo extends GetView {
   Tab1DetailInfoController ctr = Tab1DetailInfoController();
   ProductDetailController productDetailCtr = Get.put(ProductDetailController());
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
 
-  Tab1DetailInfo();
-
+  // Tab1DetailInfo();
+  
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
+            childCount: 1,
             (context, index) => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Webview
-                Obx(
-                  () => productDetailCtr.product.value.content != null ? WebviewBuilder(htmlContent: productDetailCtr.product.value.content!) : Container(),
+                // Obx(
+                //   () => productDetailCtr.product.value.content != null
+                //       ? WebviewBuilder(
+                //           htmlContent: productDetailCtr.product.value.content!)
+                //       : Container(),
+
+                // ),
+
+                QuillEditor(
+                  controller: productDetailCtr.quillController,
+                  scrollController: ScrollController(),
+                  scrollable: true,
+                  focusNode: FocusNode(),
+                  autoFocus: true,
+                  readOnly: true,
+                  expands: false,
+                  padding: EdgeInsets.all(15),
+                  showCursor: false,
+                  enableSelectionToolbar: false,
+                  enableInteractiveSelection: false,
+
                 ),
+
+                for (String imagesColor
+                    in productDetailCtr.product.value.imagesColor!) ...[
+                  CachedNetworkImage(
+                    imageUrl: imagesColor,
+                    fit: BoxFit.fill,
+                    placeholder: (context, url) {
+                      return Container(
+                        height: 300,
+                        child: Center(
+                          child : CircularProgressIndicator()
+                        ),
+                      );
+                    },
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  )
+                ],
+
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -39,38 +82,51 @@ class Tab1DetailInfo extends GetView {
                       // Size Table
                       SizedBox(
                         width: double.infinity,
-                        child: Obx(() => productDetailCtr.product.value.sizes != null ? SizeTableWidget() : Container()),
+                        child: Obx(() =>
+                            productDetailCtr.product.value.sizes != null
+                                ? SizeTableWidget()
+                                : Container()),
                       ),
                       // Color
-                      SizedBox(height: 20),
+                      // SizedBox(height: 20),
                       Text(
                         '색상',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.colors != null ? colorsBuilder() : Container(),
+                        () => productDetailCtr.product.value.colors != null
+                            ? colorsBuilder()
+                            : Container(),
                       ),
                       SizedBox(height: 20),
                       Text(
                         '소재',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.materials != null ? materialsBuilder() : Container(),
+                        () => productDetailCtr.product.value.materials != null
+                            ? materialsBuilder()
+                            : Container(),
                       ),
                       SizedBox(height: 20),
                       // 두께감
                       Text(
                         '두께감',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.clothDetailSpec != null
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
                             ? Row(
-                                children: ThickThreeButtonBuilder(selected: productDetailCtr.product.value.clothDetailSpec!.thickness!),
+                                children: ThickThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.thickness!),
                               )
                             : SizedBox.shrink(),
                       ),
@@ -78,13 +134,17 @@ class Tab1DetailInfo extends GetView {
                       // 비침
                       Text(
                         '비침',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.clothDetailSpec != null
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
                             ? Row(
-                                children: SeethroughThreeButtonBuilder(selected: productDetailCtr.product.value.clothDetailSpec!.seeThrough!),
+                                children: SeethroughThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.seeThrough!),
                               )
                             : SizedBox.shrink(),
                       ),
@@ -92,13 +152,17 @@ class Tab1DetailInfo extends GetView {
                       SizedBox(height: 20),
                       Text(
                         '신축성',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.clothDetailSpec != null
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
                             ? Row(
-                                children: FlexibilityThreeButtonBuilder(selected: productDetailCtr.product.value.clothDetailSpec!.flexibility!),
+                                children: FlexibilityThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.flexibility!),
                               )
                             : SizedBox.shrink(),
                       ),
@@ -106,13 +170,17 @@ class Tab1DetailInfo extends GetView {
                       SizedBox(height: 20),
                       Text(
                         '안감',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.clothDetailSpec != null
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
                             ? Row(
-                                children: LiningTwoButtonBuilder(isSelected: productDetailCtr.product.value.clothDetailSpec!.isLining!),
+                                children: LiningTwoButtonBuilder(
+                                    isSelected: productDetailCtr.product.value
+                                        .clothDetailSpec!.isLining!),
                               )
                             : SizedBox.shrink(),
                       ),
@@ -120,21 +188,31 @@ class Tab1DetailInfo extends GetView {
                       SizedBox(height: 20),
                       Text(
                         '의류 관리 안내',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       // Cloth Washing tips
-                      Obx(() => productDetailCtr.product.value.clothCaringGuide != null ? clothWashTipsGrid() : SizedBox.shrink()),
+                      Obx(() =>
+                          productDetailCtr.product.value.clothCaringGuide !=
+                                  null
+                              ? clothWashTipsGrid()
+                              : SizedBox.shrink()),
                       // 모델정보
                       Obx(
-                        () => productDetailCtr.product.value.productModelInfo != null && productDetailCtr.product.value.productModelInfo!.modelSize != null
+                        () => productDetailCtr.product.value.productModelInfo !=
+                                    null &&
+                                productDetailCtr.product.value.productModelInfo!
+                                        .modelSize !=
+                                    null
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 20),
                                   Text(
                                     '모델정보',
-                                    style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                                    style: MyTextStyles.f16
+                                        .copyWith(color: MyColors.black2),
                                   ),
                                   SizedBox(height: 10),
                                   modelInfo(),
@@ -143,24 +221,48 @@ class Tab1DetailInfo extends GetView {
                             : SizedBox.shrink(),
                       ),
                       // 반품교환정보
-                      SizedBox(height: 20),
+                      SizedBox(height: 50),
                       Text(
                         '반품 및 교환',
-                        style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
                       ),
                       SizedBox(height: 10),
                       Obx(
-                        () => productDetailCtr.product.value.return_exchange_info != null ? Text(productDetailCtr.product.value.return_exchange_info!) : SizedBox.shrink(),
+                        () => productDetailCtr
+                                    .product.value.return_exchange_info !=
+                                null
+                            ? Text(productDetailCtr
+                                .product.value.return_exchange_info!)
+                            : SizedBox.shrink(),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            childCount: 1,
           ),
         ),
       ],
+    );
+  }
+
+  Widget EnableButton(String text, bool isSelected) {
+    return Expanded(
+      child: Container(
+        height: 35,
+        decoration: BoxDecoration(
+            color: isSelected ? MyColors.primary : MyColors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+                color: isSelected ? MyColors.white : MyColors.grey1)),
+        child: Center(
+            child: Text(
+          text,
+          style:
+              TextStyle(color: isSelected ? MyColors.white : MyColors.primary),
+        )),
+      ),
     );
   }
 
@@ -169,23 +271,23 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // thick '두꺼움'
     if (selected == ProductThicknessType.thick) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('두꺼움'))));
+      buttons.add(EnableButton('두꺼움', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('두꺼움'))));
+      buttons.add(EnableButton('두꺼움', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductThicknessType.middle) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // thin '얇음'
     if (selected == ProductThicknessType.thin) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('얇음'))));
+      buttons.add(EnableButton('얇음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('얇음'))));
+      buttons.add(EnableButton('얇음', false));
     }
 
     return buttons;
@@ -196,23 +298,23 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 높음
     if (selected == ProductSeethroughType.high) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductSeethroughType.middle) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (selected == ProductSeethroughType.none) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     return buttons;
   }
@@ -222,30 +324,30 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 높음
     if (selected == ProductFlexibilityType.high) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('높음'))));
+      buttons.add(EnableButton('높음', false));
     }
     buttons.add(SizedBox(width: 10));
     // middle '중간'
     if (selected == ProductFlexibilityType.middle) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('중간'))));
+      buttons.add(EnableButton('중간', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (selected == ProductFlexibilityType.none) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     buttons.add(SizedBox(width: 10));
     // 밴딩
     if (selected == ProductFlexibilityType.banding) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('밴딩'))));
+      buttons.add(EnableButton('밴딩', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('밴딩'))));
+      buttons.add(EnableButton('밴딩', false));
     }
     return buttons;
   }
@@ -255,16 +357,16 @@ class Tab1DetailInfo extends GetView {
     List<Widget> buttons = [];
     // 있음
     if (isSelected == true) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('있음'))));
+      buttons.add(EnableButton('있음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('있음'))));
+      buttons.add(EnableButton('없음', false));
     }
     buttons.add(SizedBox(width: 10));
     // 없음
     if (isSelected == false) {
-      buttons.add(Expanded(child: ElevatedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', true));
     } else {
-      buttons.add(Expanded(child: OutlinedButton(onPressed: (() => null), child: Text('없음'))));
+      buttons.add(EnableButton('없음', false));
     }
     return buttons;
   }
@@ -283,11 +385,53 @@ class Tab1DetailInfo extends GetView {
         crossAxisSpacing: 15.0,
         mainAxisSpacing: 15.0,
         children: List.generate(8, (index) {
-          return ClothWashToggle(
-            clothWash: addProduct3Ctr.clothWashToggles[index],
-            onPressed: () => null,
-          );
+          // return ClothWashToggle(
+          //   clothWash: addProduct3Ctr.clothWashToggles[index],
+          //   onPressed: () => null,
+          // );
+          return ClothWashToggleUser(addProduct3Ctr.clothWashToggles[index]);
         }),
+      ),
+    );
+  }
+
+  Widget ClothWashToggleUser(ClothWash clothWash) {
+    return Container(
+      decoration: BoxDecoration(
+        color: clothWash.isActive.value ? MyColors.primary : MyColors.white,
+        borderRadius: BorderRadius.all(Radius.circular(MyDimensions.radius)),
+        border: Border.all(
+          color: clothWash.isActive.value ? MyColors.primary : MyColors.grey1,
+        ),
+      ),
+      height: 10,
+      width: 20,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 24,
+              height: 24,
+              child: Image.asset(
+                clothWash.iconPath,
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(height: 5),
+            Center(
+              child: Text(
+                clothWash.title,
+                style: TextStyle(
+                    color: clothWash.isActive.value
+                        ? MyColors.black2
+                        : MyColors.black2,
+                    fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -297,15 +441,18 @@ class Tab1DetailInfo extends GetView {
       children: [
         Text('키'),
         SizedBox(width: 5),
-        Text(productDetailCtr.product.value.productModelInfo!.height.toString()),
+        Text(
+            productDetailCtr.product.value.productModelInfo!.height.toString()),
         SizedBox(width: 15),
         Text('몸무게'),
         SizedBox(width: 5),
-        Text(productDetailCtr.product.value.productModelInfo!.modelWeight.toString()),
+        Text(productDetailCtr.product.value.productModelInfo!.modelWeight
+            .toString()),
         SizedBox(width: 15),
         Text('사이즈'),
         SizedBox(width: 5),
-        Text(productDetailCtr.product.value.productModelInfo!.modelSize.toString()),
+        Text(productDetailCtr.product.value.productModelInfo!.modelSize
+            .toString()),
       ],
     );
   }

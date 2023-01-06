@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/constants/functions.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
@@ -12,15 +13,26 @@ class Page5MyPageController extends GetxController {
   Rx<User> user = User(userID: 'userID', userName: 'userName').obs;
 
   init() async {
+    isLoading.value = true;
 
     if (CacheProvider().getToken().isNotEmpty) {
-      isLoading.value=true;
-     //print('CacheProvider().getToken() : ${CacheProvider().getToken()}');
-      user.value = await _apiProvider.getUserInfo();
-      isLoading.value=false;
+      //print('CacheProvider().getToken() : ${CacheProvider().getToken()}');
+
+      bool result = await uApiProvider().chekToken();
+
+      if (!result) {
+        isLoading.value = false;
+
+        print('logout');
+        mSnackbar(message: '로그인 세션이 만료되었습니다.');
+        mFuctions.userLogout();
+      } else {
+        user.value = await _apiProvider.getUserInfo();
+      }
     } else {
       mFuctions.userLogout();
     }
+    isLoading.value = false;
 
     // user.value = await _apiProvider.getUserInfo();
   }

@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,6 +13,7 @@ import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
+import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
 import 'package:wholesaler_user/app/modules/review_detail/controllers/review_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/search/views/search_page_view.dart';
@@ -22,11 +24,18 @@ import 'package:wholesaler_user/app/widgets/two_buttons.dart';
 
 class ReviewDetailView extends GetView {
   ReviewDetailController ctr = Get.put(ReviewDetailController());
+  Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   bool isEditing;
 
-  ReviewDetailView({this.isEditing = false, required Review selectedReviw, Product? product, required bool isComingFromReviewPage}) {
-    ctr.init(tempSelectedReviw: selectedReviw, isComingFromOrderInquiryPage: isComingFromReviewPage);
+  ReviewDetailView(
+      {this.isEditing = false,
+      required Review selectedReviw,
+      Product? product,
+      required bool isComingFromReviewPage}) {
+    ctr.init(
+        tempSelectedReviw: selectedReviw,
+        isComingFromOrderInquiryPage: isComingFromReviewPage);
   }
 
   @override
@@ -84,13 +93,16 @@ class ReviewDetailView extends GetView {
     return MyVars.isUserProject()
         ? SizedBox.shrink()
         : Text(
-            ctr.selectedReviw!.value.writer != null ? ctr.selectedReviw!.value.writer! : "id",
+            ctr.selectedReviw!.value.writer != null
+                ? ctr.selectedReviw!.value.writer!
+                : "id",
             style: MyTextStyles.f16.copyWith(color: MyColors.black2),
           );
   }
 
   Widget _productItemBuilder() {
-    int totalPrice = ctr.price.value + ctr.selectedReviw!.value.product.selectedOptionAddPrice!;
+    int totalPrice = ctr.price.value +
+        ctr.selectedReviw!.value.product.selectedOptionAddPrice!;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -130,7 +142,8 @@ class ReviewDetailView extends GetView {
         onRatingUpdate: (rating) {
           print('rating $rating');
           ctr.selectedReviw!.value.rating = rating;
-          print('ctr.selectedReviw!.value.rating ${ctr.selectedReviw!.value.rating}');
+          print(
+              'ctr.selectedReviw!.value.rating ${ctr.selectedReviw!.value.rating}');
         },
       ),
     );
@@ -175,7 +188,10 @@ class ReviewDetailView extends GetView {
         ),
         height: 150,
         width: Get.width,
-        decoration: BoxDecoration(border: Border.all(color: MyColors.desc), borderRadius: BorderRadius.all(Radius.circular(MyDimensions.radius))),
+        decoration: BoxDecoration(
+            border: Border.all(color: MyColors.desc),
+            borderRadius:
+                BorderRadius.all(Radius.circular(MyDimensions.radius))),
       ),
     );
   }
@@ -213,14 +229,38 @@ class ReviewDetailView extends GetView {
           Get.to(() => SearchPageView());
         },
       ),
-      IconButton(
-          onPressed: () {
-            Get.to(() => Cart1ShoppingBasketView());
-          },
-          icon: Icon(
-            Icons.shopping_cart_outlined,
-            color: MyColors.black,
-          ))
+      Obx(
+        () => ctr2.getNumberProducts() != 0
+            ? Badge(
+                badgeColor: MyColors.primary,
+                badgeContent: Text(
+                  ctr2.getNumberProducts().toString(),
+                  style: TextStyle(
+                      color: MyColors.black,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold),
+                ),
+                toAnimate: false,
+                position: BadgePosition.topEnd(top: 5, end: 5),
+                child: IconButton(
+                    onPressed: () {
+                      Get.to(() => Cart1ShoppingBasketView());
+                    },
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: MyColors.black,
+                    )),
+              )
+            : IconButton(
+                onPressed: () {
+                  Get.to(() => Cart1ShoppingBasketView());
+                },
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: MyColors.black,
+                ),
+              ),
+      )
     ]);
   }
 

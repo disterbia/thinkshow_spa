@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:wholesaler_partner/app/data/api_provider.dart';
+import 'package:wholesaler_user/app/constants/constants.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class PhoneNumberPhoneVerifyController extends GetxController {
@@ -12,6 +15,23 @@ class PhoneNumberPhoneVerifyController extends GetxController {
 
   int certifyId = -1;
   bool isPhoneVerifyFinished = false;
+
+  RxInt verifyCount = mConst.verifyCountSecounds.obs;
+  RxBool verifyIsEnable = true.obs;
+
+  late Timer timer;
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (verifyCount <= 0) {
+        timer.cancel();
+        verifyIsEnable.value = true;
+        verifyCount.value = mConst.verifyCountSecounds;
+      } else {
+        verifyCount.value--;
+        verifyIsEnable.value = false;
+      }
+    });
+  }
 
   Future<void> verifyPhoneBtnPressed() async {
     log('verifyPhone');
@@ -32,6 +52,8 @@ class PhoneNumberPhoneVerifyController extends GetxController {
     certifyId = await apiProvider.postRequestVerifyPhoneNum(
         phoneNumber: numberController.text);
     log('certifi_id is $certifyId');
+
+    startTimer();
   }
 
   Future<void> verifyCodeBtnPressed() async {
@@ -45,5 +67,11 @@ class PhoneNumberPhoneVerifyController extends GetxController {
         phoneNumber: numberController.text,
         phoneNumVerify: numberVerifyController.text,
         certifi_id: certifyId);
+
+    print('isPhoneVerifyFinished : $isPhoneVerifyFinished');
+
+    timer.cancel();
+    verifyIsEnable.value = true;
+    verifyCount.value = mConst.verifyCountSecounds;
   }
 }

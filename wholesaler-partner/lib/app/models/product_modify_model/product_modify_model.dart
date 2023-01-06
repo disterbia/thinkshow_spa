@@ -10,12 +10,12 @@ class ProductModifyModel {
   String? productName;
   int? mainCategoryId;
   int? subCategoryId;
-  String? thumbnailImagePath;
-  String? thumbnailImageUrl;
-  String? colorImagePath;
-  String? colorImageUrl;
-  String? detailImagePath;
-  String? detailImageUrl;
+  List<dynamic>? thumbnailImagePath;
+  List<dynamic>? thumbnailImageUrl;
+  List<dynamic>? colorImagePath;
+  List<dynamic>? colorImageUrl;
+  // String? detailImagePath;
+  // String? detailImageUrl;
   bool? isPrivilege;
   ModelInfo? modelInfo;
   List<dynamic>? keywordList;
@@ -45,8 +45,8 @@ class ProductModifyModel {
     this.thumbnailImageUrl,
     this.colorImagePath,
     this.colorImageUrl,
-    this.detailImagePath,
-    this.detailImageUrl,
+    // this.detailImagePath,
+    // this.detailImageUrl,
     this.isPrivilege,
     this.modelInfo,
     this.keywordList,
@@ -76,12 +76,12 @@ class ProductModifyModel {
       price: json['price'] as int?,
       mainCategoryId: json['main_category_id'] as int?,
       subCategoryId: json['sub_category_id'] as int?,
-      thumbnailImagePath: json['thumbnail_image_path'] as String?,
-      thumbnailImageUrl: json['thumbnail_image_url'] as String?,
-      colorImagePath: json['color_image_path'] as String?,
-      colorImageUrl: json['color_image_url'] as String?,
-      detailImagePath: json['detail_image_path'] as String?,
-      detailImageUrl: json['detail_image_url'] as String?,
+      thumbnailImagePath: json['thumbnail_image_path'] as List<dynamic>?,
+      thumbnailImageUrl: json['thumbnail_image_arr'] as List<dynamic>?,
+      colorImagePath: json['color_image_path'] as List<dynamic>?,
+      colorImageUrl: json['color_image_arr'] as List<dynamic>?,
+      // detailImagePath: json['detail_image_path'] as String?,
+      // detailImageUrl: json['detail_image_url'] as String?,
       isPrivilege: json['is_privilege'] as bool?,
       modelInfo: json['model_info'] == null ? null : ModelInfo.fromJson(json['model_info'] as Map<String, dynamic>),
       keywordList: json['keyword_list'] as List<dynamic>?,
@@ -113,8 +113,8 @@ class ProductModifyModel {
         'thumbnail_image_url': thumbnailImageUrl,
         'color_image_path': colorImagePath,
         'color_image_url': colorImageUrl,
-        'detail_image_path': detailImagePath,
-        'detail_image_url': detailImageUrl,
+        // 'detail_image_path': detailImagePath,
+        // 'detail_image_url': detailImageUrl,
         'is_privilege': isPrivilege,
         'model_info': modelInfo?.toJson(),
         'keyword_list': keywordList,

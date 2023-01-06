@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/cart1_orders_model/cart1_orders_model.dart';
@@ -12,6 +13,7 @@ import 'package:wholesaler_user/app/modules/cart/views/cart2_payment_view.dart';
 import 'package:wholesaler_user/app/widgets/dialog.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:wholesaler_user/app/widgets/two_buttons.dart';
+import 'package:wholesaler_user/app/constants/functions.dart';
 
 class Cart1ShoppingBasketController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
@@ -22,16 +24,28 @@ class Cart1ShoppingBasketController extends GetxController {
   RxBool isLoading = false.obs;
 
   init() async {
-    isLoading.value=true;
-    if (CacheProvider().getToken().isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.to(() => User_LoginPageView());
-      });
+    isLoading.value = true;
+
+    if (CacheProvider().getToken().isNotEmpty) {
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   Get.to(() => User_LoginPageView());
+      // });
+      if (MyVars.isUserProject()) {
+        bool result = await uApiProvider().chekToken();
+
+        if (!result) {
+          print('logout');
+          mSnackbar(message: '로그인 세션이 만료되었습니다.');
+          mFuctions.userLogout();
+        } else {
+          cartItems.value = await _apiProvider.getCart1ShoppintBasket();
+          updateTotalPaymentPrice();
+        }
+      }
     } else {
-      cartItems.value = await _apiProvider.getCart1ShoppintBasket();
-      updateTotalPaymentPrice();
+      mFuctions.userLogout();
     }
-    isLoading.value=false;
+    isLoading.value = false;
   }
 
   /// returns total number of products in the cart
@@ -78,7 +92,10 @@ class Cart1ShoppingBasketController extends GetxController {
         lBtnOnPressed: () {
           Get.back();
         },
-        rBtnOnPressed: () => callDeleteSelectedProductsAPI(isDeleteAll: true),
+        rBtnOnPressed: () {
+          callDeleteSelectedProductsAPI(isDeleteAll: true);
+          SelectAllCheckboxOnChanged(false);
+        },
       ),
     );
   }
@@ -97,6 +114,8 @@ class Cart1ShoppingBasketController extends GetxController {
     bool isSuccess = await _apiProvider.deleteProductsFromCart(cart_id_list);
 
     if (isSuccess) {
+      //전체선택 해제 필요
+
       mSnackbar(message: '정상적으로 삭제되었습니다.');
       // update the cart items
       cartItems.value = await _apiProvider.getCart1ShoppintBasket();
@@ -123,7 +142,9 @@ class Cart1ShoppingBasketController extends GetxController {
       for (Product product in cart.products) {
         if (product.isCheckboxSelected!.value) {
           // calculate total price of selected products
-          totalSelectedPrice += (product.price! + product.selectedOptionAddPrice!) * product.quantity!.value;
+          totalSelectedPrice +=
+              (product.price! + product.selectedOptionAddPrice!) *
+                  product.quantity!.value;
         }
       }
     }
@@ -146,14 +167,17 @@ class Cart1ShoppingBasketController extends GetxController {
     }
     cart1OrdersModel.orders = orders;
 
-    Cart2CheckoutModel cart2checkoutModel = await _apiProvider.postOrderCheckout(cart1OrdersModel);
+    Cart2CheckoutModel cart2checkoutModel =
+        await _apiProvider.postOrderCheckout(cart1OrdersModel);
 
     Get.to(() => Cart2PaymentView(cart2checkoutModel));
   }
 
-  quantityPlusMinusOnPressed({required bool value, required int cartId, required int qty}) async {
+  quantityPlusMinusOnPressed(
+      {required bool value, required int cartId, required int qty}) async {
     int newQty = value ? qty + 1 : qty - 1;
-    bool isSuccess = await _apiProvider.changeQuantityInBasket(qty: newQty, cartId: cartId);
+    bool isSuccess =
+        await _apiProvider.changeQuantityInBasket(qty: newQty, cartId: cartId);
 
     if (isSuccess) {
       init();

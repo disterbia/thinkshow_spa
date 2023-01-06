@@ -23,11 +23,12 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   Page5MyPageController ctr = Get.put(Page5MyPageController());
 
   MyPageSettingsView();
-  int myTest=0;
+  int myTest = 0;
   @override
   Widget build(BuildContext context) {
-   myTest=0;
+    myTest = 0;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppbar(isBackEnable: true, title: 'My_page'.tr),
       body: SafeArea(child: _body()),
     );
@@ -35,12 +36,14 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
 
   Widget _body() => Column(
         children: [
-          GestureDetector(onDoubleTap:() {
-            myTest++;
-            if(myTest==20){
-              Get.to(()=>MyPageDown());
-            }
-          }, child: _userId()),
+          GestureDetector(
+              onDoubleTap: () {
+                myTest++;
+                if (myTest == 20) {
+                  Get.to(() => MyPageDown());
+                }
+              },
+              child: _userId()),
           Divider(thickness: 6, color: MyColors.grey3),
           _settingOption('회원정보수정', () {
             Get.put(SignupOrEditController()).isEditing.value = true;
@@ -51,13 +54,20 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
             Get.to(() => ChangeNumberView());
           }),
           Divider(color: MyColors.grey3),
-          _settingOption('비밀번호 변경', () => Get.to(() => MyPageUpdatePasswordView())),
+          _settingOption(
+              '비밀번호 변경', () => Get.to(() => MyPageUpdatePasswordView())),
           Divider(thickness: 6, color: MyColors.grey3),
           _switch(),
           Divider(thickness: 6, color: MyColors.grey3),
-          _settingOption('terms'.tr, () => Get.to(() => User_RegisterPrivacyTermsView(), arguments: PrivacyOrTerms.terms)),
+          _settingOption(
+              'Terms'.tr,
+              () => Get.to(() => User_RegisterPrivacyTermsView(),
+                  arguments: PrivacyOrTerms.terms)),
           Divider(color: MyColors.grey3),
-          _settingOption('privacy_policy'.tr, () => Get.to(() => User_RegisterPrivacyTermsView(), arguments: PrivacyOrTerms.privacy)),
+          _settingOption(
+              'privacy_policy'.tr,
+              () => Get.to(() => User_RegisterPrivacyTermsView(),
+                  arguments: PrivacyOrTerms.privacy)),
           Divider(color: MyColors.grey3),
           Spacer(),
           // Padding(
@@ -76,7 +86,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomButton(
-              text: '탈퇴',
+              text: '회원탈퇴',
               fontSize: 14,
               textColor: MyColors.black1,
               onPressed: () {
@@ -106,7 +116,10 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
     return Obx(
       () => ListTile(
         title: Text('event_marketing_alarm'.tr),
-        trailing: Switch(value: ctr.user.value.isAgreeNotificaiton!.value, onChanged: (value) => ctr.notificationToggled(value)),
+        trailing: Switch(
+          activeColor: MyColors.primary,
+            value: ctr.user.value.isAgreeNotificaiton!.value,
+            onChanged: (value) => ctr.notificationToggled(value)),
       ),
     );
   }
@@ -121,7 +134,8 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   Widget _userId() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: TopUserIDUserNameSettings(user: ctr.user.value, showSettingsIcon: false),
+      child: TopUserIDUserNameSettings(
+          user: ctr.user.value, showSettingsIcon: false),
     );
   }
 }
