@@ -1107,7 +1107,7 @@ packages:
     source: hosted
     version: "1.0.2"
   webview_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: webview_flutter
       url: "https://pub.dartlang.org"
@@ -1140,7 +1140,7 @@ packages:
       path: "../wholesaler-partner"
       relative: true
     source: path
-    version: "0.1.8+12"
+    version: "0.2.1+2"
   win32:
     dependency: transitive
     description:
