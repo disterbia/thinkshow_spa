@@ -7,24 +7,38 @@ class Tab1DetailInfoController extends GetxController {
   ProductDetailController productDetailCtr = Get.put(ProductDetailController());
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
 
+  // @override
+  // Future<void> onInit() async {
+  //   clothWashToggleInitilize();
+  //   super.onInit();
+  // }
   void clothWashToggleInitilize() {
+    print('???????');
     addProduct3Ctr.clothWashToggles.forEach((clothWash) {
       if (clothWash.id == ClothCareGuideId.handWash) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isHandWash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isHandWash!;
       } else if (clothWash.id == ClothCareGuideId.dryCleaning) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isDryCleaning!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isDryCleaning!;
       } else if (clothWash.id == ClothCareGuideId.noBleach) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isNotBleash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isNotBleash!;
       } else if (clothWash.id == ClothCareGuideId.noIron) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isNotIroning!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isNotIroning!;
       } else if (clothWash.id == ClothCareGuideId.noLaundryMachine) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isNotMachineWash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isNotMachineWash!;
       } else if (clothWash.id == ClothCareGuideId.separateWash) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isSingleWash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isSingleWash!;
       } else if (clothWash.id == ClothCareGuideId.waterWash) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isWaterWash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isWaterWash!;
       } else if (clothWash.id == ClothCareGuideId.woolWash) {
-        clothWash.isActive.value = productDetailCtr.product.value.clothCaringGuide!.isWoolWash!;
+        clothWash.isActive.value =
+            productDetailCtr.product.value.clothCaringGuide!.isWoolWash!;
       }
     });
   }

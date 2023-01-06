@@ -21,9 +21,12 @@ class Tab1DetailInfo extends GetView {
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
 
   // Tab1DetailInfo();
-  
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ctr.clothWashToggleInitilize();
+    });
     return CustomScrollView(
       slivers: [
         SliverList(
@@ -53,7 +56,6 @@ class Tab1DetailInfo extends GetView {
                   showCursor: false,
                   enableSelectionToolbar: false,
                   enableInteractiveSelection: false,
-
                 ),
 
                 for (String imagesColor
@@ -64,9 +66,7 @@ class Tab1DetailInfo extends GetView {
                     placeholder: (context, url) {
                       return Container(
                         height: 300,
-                        child: Center(
-                          child : CircularProgressIndicator()
-                        ),
+                        child: Center(child: CircularProgressIndicator()),
                       );
                     },
                     errorWidget: (context, url, error) => Icon(Icons.error),
@@ -373,10 +373,6 @@ class Tab1DetailInfo extends GetView {
 
 // clothing_care_guide
   Widget clothWashTipsGrid() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ctr.clothWashToggleInitilize();
-    });
-
     return Container(
       child: GridView.count(
         shrinkWrap: true,

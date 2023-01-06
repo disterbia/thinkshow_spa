@@ -26,13 +26,16 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text('혼용률 입력'),
           ),
-          for (var i = 0; i < ctr.materialTypeList.length; i++) _materialPercent(i),
+          for (var i = 0; i < ctr.materialTypeList.length; i++)
+            _materialPercent(i),
           SizedBox(
             height: 10,
           ),
           _thickness(ctr.thickNessList, 'thickness'.tr),
-          _seeThrough(ctr.seeThroughList, 'see_through'.tr, ctr.seeThroughSelected),
-          _flexibility(ctr.flexibilityList, 'elasticity'.tr, ctr.flexibilitySelected),
+          _seeThrough(
+              ctr.seeThroughList, 'see_through'.tr, ctr.seeThroughSelected),
+          _flexibility(
+              ctr.flexibilityList, 'elasticity'.tr, ctr.flexibilitySelected),
           _lining(ctr.liningList, 'lining'.tr, ctr.liningsSelected),
           Text('Garment_Care_Guide'.tr),
           clothWashTipsGrid()
@@ -62,7 +65,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
   Widget _materialPercent(int i) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: CustomInput(keyboardType: TextInputType.number,
+      child: CustomInput(
+        keyboardType: TextInputType.number,
         label: ctr.materialTypeList[i],
         fieldController: ctr.materialTypePercentControllers[i],
         prefix: '%',
@@ -83,12 +87,23 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                 Expanded(
                   // set padding for all buttons except last button. in other words, set padding in the middle of buttons only.
                   child: Padding(
-                    padding: EdgeInsets.only(right: buttons.length == buttons.indexOf(button) + 1 ? 0 : 10),
+                    padding: EdgeInsets.only(
+                        right: buttons.length == buttons.indexOf(button) + 1
+                            ? 0
+                            : 10),
                     child: CustomButton(
-                      textColor: ctr.thicknessSelected.value.name == button.name ? MyColors.white : MyColors.grey2,
+                      textColor: ctr.thicknessSelected.value.name == button.name
+                          ? MyColors.white
+                          : MyColors.grey2,
                       fontSize: 14,
-                      borderColor: ctr.thicknessSelected.value.name == button.name ? MyColors.primary : MyColors.grey1,
-                      backgroundColor: ctr.thicknessSelected.value.name == button.name ? MyColors.primary : MyColors.white,
+                      borderColor:
+                          ctr.thicknessSelected.value.name == button.name
+                              ? MyColors.primary
+                              : MyColors.grey1,
+                      backgroundColor:
+                          ctr.thicknessSelected.value.name == button.name
+                              ? MyColors.primary
+                              : MyColors.white,
                       onPressed: () {
                         ctr.thicknessSelected.value = button;
                       },
@@ -103,7 +118,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
     );
   }
 
-  Widget _seeThrough(List<SeeThroughModel> buttons, String title, Rx<SeeThroughModel> clothesSample) {
+  Widget _seeThrough(List<SeeThroughModel> buttons, String title,
+      Rx<SeeThroughModel> clothesSample) {
     return Obx(
       () => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -117,12 +133,21 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                   Expanded(
                     // set padding for all buttons except last button. in other words, set padding in the middle of buttons only.
                     child: Padding(
-                      padding: EdgeInsets.only(right: buttons.length == buttons.indexOf(button) + 1 ? 0 : 10),
+                      padding: EdgeInsets.only(
+                          right: buttons.length == buttons.indexOf(button) + 1
+                              ? 0
+                              : 10),
                       child: CustomButton(
-                        textColor: clothesSample.value.name == button.name ? MyColors.white : MyColors.grey2,
+                        textColor: clothesSample.value.name == button.name
+                            ? MyColors.white
+                            : MyColors.grey2,
                         fontSize: 14,
-                        borderColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.grey1,
-                        backgroundColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.white,
+                        borderColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.grey1,
+                        backgroundColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.white,
                         onPressed: () {
                           clothesSample.value = button;
                         },
@@ -138,7 +163,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
     );
   }
 
-  Widget _flexibility(List<FlexibilityModel> buttons, String title, Rx<FlexibilityModel> clothesSample) {
+  Widget _flexibility(List<FlexibilityModel> buttons, String title,
+      Rx<FlexibilityModel> clothesSample) {
     return Obx(
       () => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -152,12 +178,21 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                   Expanded(
                     // set padding for all buttons except last button. in other words, set padding in the middle of buttons only.
                     child: Padding(
-                      padding: EdgeInsets.only(right: buttons.length == buttons.indexOf(button) + 1 ? 0 : 10),
+                      padding: EdgeInsets.only(
+                          right: buttons.length == buttons.indexOf(button) + 1
+                              ? 0
+                              : 10),
                       child: CustomButton(
-                        textColor: clothesSample.value.name == button.name ? MyColors.white : MyColors.grey2,
+                        textColor: clothesSample.value.name == button.name
+                            ? MyColors.white
+                            : MyColors.grey2,
                         fontSize: 14,
-                        borderColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.grey1,
-                        backgroundColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.white,
+                        borderColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.grey1,
+                        backgroundColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.white,
                         onPressed: () {
                           clothesSample.value = button;
                         },
@@ -173,7 +208,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
     );
   }
 
-  Widget _lining(List<LiningModel> buttons, String title, Rx<LiningModel> clothesSample) {
+  Widget _lining(
+      List<LiningModel> buttons, String title, Rx<LiningModel> clothesSample) {
     return Obx(
       () => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -187,12 +223,21 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                   Expanded(
                     // set padding for all buttons except last button. in other words, set padding in the middle of buttons only.
                     child: Padding(
-                      padding: EdgeInsets.only(right: buttons.length == buttons.indexOf(button) + 1 ? 0 : 10),
+                      padding: EdgeInsets.only(
+                          right: buttons.length == buttons.indexOf(button) + 1
+                              ? 0
+                              : 10),
                       child: CustomButton(
-                        textColor: clothesSample.value.name == button.name ? MyColors.white : MyColors.grey2,
+                        textColor: clothesSample.value.name == button.name
+                            ? MyColors.white
+                            : MyColors.grey2,
                         fontSize: 14,
-                        borderColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.grey1,
-                        backgroundColor: clothesSample.value.name == button.name ? MyColors.primary : MyColors.white,
+                        borderColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.grey1,
+                        backgroundColor: clothesSample.value.name == button.name
+                            ? MyColors.primary
+                            : MyColors.white,
                         onPressed: () {
                           clothesSample.value = button;
                         },
