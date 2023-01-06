@@ -13,55 +13,56 @@ class EditorWidget extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      children: [
-        Quill.QuillToolbar.basic(
-          controller: ctr.editorController,
-          fontSizeValues: {
-            '10': '10',
-            '20': '20',
-            '30': '30',
-            '40': '40',
-            '50':'50',
-            '60':'60',
-            'Clear':'0'
-          },
-          showAlignmentButtons: false,
-          showBackgroundColorButton: true,
-          showBoldButton: true,
-          showCenterAlignment: false,
-          showClearFormat: false,
-          showCodeBlock: false,
-          showColorButton: true,
-          showDirection: false,
-          showDividers: false,
-          showFontFamily: true,
-          showFontSize: true,
-          showHeaderStyle: false,
-          showIndent: false,
-          showInlineCode: false,
-          showItalicButton: false,
-          showJustifyAlignment: false,
-          showLeftAlignment: false,
-          showLink: true,
-          showListBullets: false,
-          showListCheck: false,
-          showListNumbers: false,
-          showQuote: false,
-          showRedo: false,
-          showRightAlignment: false,
-          showSearchButton: false,
-          showSmallButton: false,
-          showStrikeThrough: false,
-          showUnderLineButton: true,
-          showUndo: false,
-          multiRowsDisplay: false,
-        ),
-        Quill.QuillEditor.basic(
-          controller: ctr.editorController,
-          readOnly: false, // true for view only mode
-        )
-      ],
+    return  Obx(()=> Column(
+        children: [
+          Quill.QuillToolbar.basic(
+            controller: ctr.editorController.value,
+            fontSizeValues: {
+              '10': '10',
+              '20': '20',
+              '30': '30',
+              '40': '40',
+              '50':'50',
+              '60':'60',
+              'Clear':'0'
+            },
+            showAlignmentButtons: false,
+            showBackgroundColorButton: true,
+            showBoldButton: true,
+            showCenterAlignment: false,
+            showClearFormat: false,
+            showCodeBlock: false,
+            showColorButton: true,
+            showDirection: false,
+            showDividers: false,
+            showFontFamily: true,
+            showFontSize: true,
+            showHeaderStyle: false,
+            showIndent: false,
+            showInlineCode: false,
+            showItalicButton: false,
+            showJustifyAlignment: false,
+            showLeftAlignment: false,
+            showLink: true,
+            showListBullets: false,
+            showListCheck: false,
+            showListNumbers: false,
+            showQuote: false,
+            showRedo: false,
+            showRightAlignment: false,
+            showSearchButton: false,
+            showSmallButton: false,
+            showStrikeThrough: false,
+            showUnderLineButton: true,
+            showUndo: false,
+            multiRowsDisplay: false,
+          ),
+          Quill.QuillEditor.basic(
+            controller: ctr.editorController.value,
+            readOnly: false, // true for view only mode
+          )
+        ],
+      ),
     );
 
   }

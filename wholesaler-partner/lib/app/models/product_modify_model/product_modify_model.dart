@@ -10,10 +10,10 @@ class ProductModifyModel {
   String? productName;
   int? mainCategoryId;
   int? subCategoryId;
-  List<String>? thumbnailImagePath;
-  List<String>? thumbnailImageUrl;
-  List<String>? colorImagePath;
-  List<String>? colorImageUrl;
+  List<dynamic>? thumbnailImagePath;
+  List<dynamic>? thumbnailImageUrl;
+  List<dynamic>? colorImagePath;
+  List<dynamic>? colorImageUrl;
   // String? detailImagePath;
   // String? detailImageUrl;
   bool? isPrivilege;
@@ -76,10 +76,10 @@ class ProductModifyModel {
       price: json['price'] as int?,
       mainCategoryId: json['main_category_id'] as int?,
       subCategoryId: json['sub_category_id'] as int?,
-      thumbnailImagePath: json['thumbnail_image_path'] as List<String>?,
-      thumbnailImageUrl: json['thumbnail_image_url'] as List<String>?,
-      colorImagePath: json['color_image_path'] as List<String>?,
-      colorImageUrl: json['color_image_url'] as List<String>?,
+      thumbnailImagePath: json['thumbnail_image_path'] as List<dynamic>?,
+      thumbnailImageUrl: json['thumbnail_image_arr'] as List<dynamic>?,
+      colorImagePath: json['color_image_path'] as List<dynamic>?,
+      colorImageUrl: json['color_image_arr'] as List<dynamic>?,
       // detailImagePath: json['detail_image_path'] as String?,
       // detailImageUrl: json['detail_image_url'] as String?,
       isPrivilege: json['is_privilege'] as bool?,

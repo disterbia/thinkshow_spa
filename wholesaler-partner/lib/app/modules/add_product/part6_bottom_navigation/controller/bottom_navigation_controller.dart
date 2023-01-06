@@ -47,7 +47,7 @@ class AP_Part6Controller extends GetxController {
     List<dynamic> imagePath2 = part1controller.imagePath2;
     //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = jsonEncode(editorCtr.editorController.document.toDelta().toJson());
+    String content = jsonEncode(editorCtr.editorController.value.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text
@@ -266,7 +266,7 @@ class AP_Part6Controller extends GetxController {
     List<dynamic> imagePath2 = part1controller.imagePath2.value;
     //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = jsonEncode(editorCtr.editorController.document.toDelta().toJson());
+    String content = jsonEncode(editorCtr.editorController.value.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text

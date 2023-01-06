@@ -40,7 +40,7 @@ class AP_Part1Controller extends GetxController
 
   final List<Tab> imageTabs = <Tab>[
     Tab(text: 'representative_image'.tr),
-    Tab(text: 'image_by_color'.tr),
+    Tab(text: '상세 이미지'.tr),
    // Tab(text: 'detail_cut'.tr)
   ];
 
@@ -59,7 +59,12 @@ class AP_Part1Controller extends GetxController
 
   Future<void> uploadImageBtnPressed() async {
     pickedImage1.value = await ImagePicker().pickMultiImage();
-   uploadImage();
+    if(pickedImage1.value.length==3){
+      uploadImage();
+    }else{
+      return mSnackbar(message: "대표이미지는 반드시 3장이어야 합니다.");
+    }
+
   }
 
 
@@ -100,7 +105,15 @@ class AP_Part1Controller extends GetxController
 
   Future<void> uploadImageBtnPressed2() async {
     pickedImage2.value =  await ImagePicker().pickMultiImage();
-    uploadImage2();
+    print(pickedImage2.value);
+    if(pickedImage2.value.length<30&&pickedImage2.value.isNotEmpty){
+      uploadImage2();
+    }else if(pickedImage2.value.isEmpty){
+      return mSnackbar(message: "상세이미지는 반드시 1장 이상 업로드 해야합니다.");
+    }
+    else{
+      return mSnackbar(message: "상세이미지는 30장 이상 업로드 할 수 없습니다.");
+    }
   }
 
   Future<void> uploadImage2() async {

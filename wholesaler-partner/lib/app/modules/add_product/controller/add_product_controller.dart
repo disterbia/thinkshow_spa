@@ -40,6 +40,7 @@ class AddProductController extends GetxController {
   RxBool isChangeCategoryInEditeMode = false.obs;
 
   int productIdforEdit = -1;
+  RxBool isLoading = false.obs;
 
   List<TextEditingController> optionsControllers = <TextEditingController>[];
 
@@ -72,8 +73,9 @@ class AddProductController extends GetxController {
     AP_Part4Controller part4controller = Get.put(AP_Part4Controller());
     AP_Part5Controller part5controller = Get.put(AP_Part5Controller());
     EditorController editorCtr = Get.put(EditorController());
-
+    isLoading.value=true;
     productModifyModel.value = await _apiProvider.getProductEditInfo(productId: productId);
+    isLoading.value=false;
 
     // category and subcaterory
     String catTitle = ClothCategory.getAllItems().firstWhere((clothCat) => clothCat.id == productModifyModel.value.mainCategoryId).name;
@@ -99,9 +101,10 @@ class AddProductController extends GetxController {
 
     // content
     //editorCtr.editorController.setText(productModifyModel.value.content!);
-    editorCtr.editorController=Quill.QuillController(
+    editorCtr.editorController.value=Quill.QuillController(
         document: Quill.Document.fromJson(jsonDecode(productModifyModel.value.content!)),
         selection: TextSelection.collapsed(offset: 0));
+
 
     // country
     part5controller.selectedCountry.value = productModifyModel.value.manufactureCountry!;

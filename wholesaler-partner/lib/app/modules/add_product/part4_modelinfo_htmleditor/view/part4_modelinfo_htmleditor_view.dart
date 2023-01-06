@@ -15,7 +15,7 @@ import 'package:wholesaler_user/app/widgets/custom_button.dart';
 /// 모델정보
 class AP_Part4View extends GetView<AP_Part4Controller> {
   AP_Part4Controller ctr = Get.put(AP_Part4Controller());
-  RxList<XFile> pickedFile = <XFile>[].obs;
+  /*RxList<XFile> pickedFile = <XFile>[].obs;*/
 
 
   @override
