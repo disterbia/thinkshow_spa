@@ -603,45 +603,45 @@ class pApiProvider extends GetConnect {
     }
   }
 
-  // Future<ProductImageModel> uploadProductImage(
-  //     {required File pickedImage}) async {
-  //   var dio = mDio.Dio();
-  //
-  //   dio.options.headers["Authorization"] =
-  //       "Bearer " + CacheProvider().getToken();
-  //   String url =
-  //       mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE;
-  //   File image = File(pickedImage.path);
-  //   String imageName = image.path.substring(image.path.length - 19);
-  //   log('image name: $imageName');
-  //
-  //   mDio.FormData formData = mDio.FormData.fromMap({
-  //     "image":
-  //         await mDio.MultipartFile.fromFile(image.path, filename: imageName),
-  //   });
-  //   final response = await dio.post(
-  //     url,
-  //     data: formData,
-  //   );
-  //   print(
-  //       ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
-  //
-  //   if (response.statusCode == 200) {
-  //     var json = response.data;
-  //     return ProductImageModel(
-  //         message: '업로드 완료',
-  //         statusCode: response.statusCode!,
-  //         url: json['url'],
-  //         path: json['file_path']);
-  //   }
-  //   if (response.statusCode == 400) {
-  //     mSnackbar(message: jsonDecode(response.data!)['description']);
-  //     return Future.error(response.statusMessage!);
-  //   } else {
-  //     mSnackbar(message: response.statusMessage!);
-  //     return Future.error(response.statusMessage!);
-  //   }
-  // }
+  Future<ProductImageModel> uploadProductImage3(
+      {required File pickedImage}) async {
+    var dio = mDio.Dio();
+
+    dio.options.headers["Authorization"] =
+        "Bearer " + CacheProvider().getToken();
+    String url =
+        mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE;
+    File image = File(pickedImage.path);
+    String imageName = image.path.substring(image.path.length - 19);
+    log('image name: $imageName');
+
+    mDio.FormData formData = mDio.FormData.fromMap({
+      "image":
+          await mDio.MultipartFile.fromFile(image.path, filename: imageName),
+    });
+    final response = await dio.post(
+      url,
+      data: formData,
+    );
+    print(
+        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      var json = response.data;
+      return ProductImageModel(
+          message: '업로드 완료',
+          statusCode: response.statusCode!,
+          url: json['url'],
+          path: json['file_path']);
+    }
+    if (response.statusCode == 400) {
+      mSnackbar(message: jsonDecode(response.data!)['description']);
+      return Future.error(response.statusMessage!);
+    } else {
+      mSnackbar(message: response.statusMessage!);
+      return Future.error(response.statusMessage!);
+    }
+  }
 
   Future<ProductImageModel2> uploadProductImage(
       {required List<File> pickedImage}) async {

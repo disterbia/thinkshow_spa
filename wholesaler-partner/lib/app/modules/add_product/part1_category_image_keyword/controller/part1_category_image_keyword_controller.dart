@@ -25,10 +25,10 @@ class AP_Part1Controller extends GetxController
   RxList<dynamic> imagePath2 = <dynamic>[].obs;
   RxBool isUploadLoading2 = false.obs;
 
-  // XFile? _pickedImage3;
-  // RxString imageUrl3 = ''.obs;
-  // RxString imagePath3 = ''.obs;
-  // RxBool isUploadLoading3 = false.obs;
+  XFile? pickedImage3;
+  RxString imageUrl3 = ''.obs;
+  RxString imagePath3 = ''.obs;
+  RxBool isUploadLoading3 = false.obs;
 
   TextEditingController categoryController = TextEditingController();
   TextEditingController keywordsController = TextEditingController();
@@ -68,20 +68,6 @@ class AP_Part1Controller extends GetxController
   }
 
 
-  // Future<void> uploadImage() async {
-  //   if (_pickedImage1 != null) {
-  //     isUploadLoading1.value = true;
-  //     ProductImageModel productImageModel = await _apiProvider
-  //         .uploadProductImage(pickedImage: File(_pickedImage1!.path));
-  //     isUploadLoading1.value = false;
-  //     mSnackbar(message: "이미지가 등록되었습니다.");
-  //
-  //     if (productImageModel.statusCode == 200) {
-  //       imageUrl1.value = productImageModel.url;
-  //       imagePath1.value = productImageModel.path;
-  //     }
-  //   }
-  // }
   Future<void> uploadImage() async {
     if (pickedImage1 != null) {
       isUploadLoading1.value = true;
@@ -102,6 +88,40 @@ class AP_Part1Controller extends GetxController
       }
     }
   }
+
+  Future<void> uploadImageBtnPressed3(int index) async {
+    XFile? temp =await ImagePicker().pickImage(source: ImageSource.gallery);
+    if(temp!=null) {
+      imageUrl1.removeAt(index);
+      imagePath1.removeAt(index);
+      pickedImage1.add(temp);
+      uploadImage3(index);
+    }
+    else{
+      return mSnackbar(message: "대표이미지는 반드시 3장이어야 합니다.");
+    }
+
+  }
+  Future<void> uploadImage3(int index) async {
+      isUploadLoading3.value = true;
+      ProductImageModel productImageModel = await _apiProvider
+          .uploadProductImage3(pickedImage: File(pickedImage1[0]!.path));
+      isUploadLoading3.value = false;
+      pickedImage1.clear();
+      mSnackbar(message: "이미지가 등록되었습니다.");
+
+      if (productImageModel.statusCode == 200) {
+        if(index==2){
+          imagePath1.add(productImageModel.path);
+          imageUrl1.add (productImageModel.url);
+        }else{
+          imagePath1.insert(index, productImageModel.path);
+          imageUrl1.insert (index,productImageModel.url);
+        }
+
+      }
+  }
+
 
   Future<void> uploadImageBtnPressed2() async {
     pickedImage2.value =  await ImagePicker().pickMultiImage();
