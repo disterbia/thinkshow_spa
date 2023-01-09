@@ -249,8 +249,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
       return Center(child: Text('사이즈 추가하세요.'));
     }
     final unitPriceChildren = <Widget>[];
-    addProductCtr.optionsControllers.clear();
-    addProductCtr.options.clear();
+    // addProductCtr.optionsControllers.clear();
+    // addProductCtr.options.clear();
     for (var colorIndex = 0;
         colorIndex < addProductCtr.colorsList.length; colorIndex++) {
       // FREE, XS, S, M, L
@@ -260,13 +260,14 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
           .value) {
         print("aaaaaa");
         Option? option;
+
         if (addProductCtr.isEditing.isTrue) {
           option = addProductCtr.productModifyModel.value.options!
               .firstWhereOrNull((option) =>
                   option.size == 'FREE' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
-        print("bbbbbbbb");
+        print(option);
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(

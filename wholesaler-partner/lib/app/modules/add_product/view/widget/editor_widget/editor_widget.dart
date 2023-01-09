@@ -26,10 +26,10 @@ class EditorWidget extends GetView {
               '60':'60',
               'Clear':'0'
             },
-            showAlignmentButtons: false,
+            showAlignmentButtons: true,
             showBackgroundColorButton: true,
             showBoldButton: true,
-            showCenterAlignment: false,
+            showCenterAlignment: true,
             showClearFormat: false,
             showCodeBlock: false,
             showColorButton: true,
@@ -41,15 +41,15 @@ class EditorWidget extends GetView {
             showIndent: false,
             showInlineCode: false,
             showItalicButton: false,
-            showJustifyAlignment: false,
-            showLeftAlignment: false,
+            showJustifyAlignment: true,
+            showLeftAlignment: true,
             showLink: true,
             showListBullets: false,
             showListCheck: false,
             showListNumbers: false,
             showQuote: false,
             showRedo: false,
-            showRightAlignment: false,
+            showRightAlignment: true,
             showSearchButton: false,
             showSmallButton: false,
             showStrikeThrough: false,
@@ -57,9 +57,14 @@ class EditorWidget extends GetView {
             showUndo: false,
             multiRowsDisplay: false,
           ),
-          Quill.QuillEditor.basic(
-            controller: ctr.editorController.value,
-            readOnly: false, // true for view only mode
+          SizedBox(height: 45,),
+          GestureDetector(
+            child: Container(height:200,decoration: BoxDecoration(border: Border.all()),
+              child: Quill.QuillEditor.basic(
+                controller: ctr.editorController.value,
+                readOnly: false, // true for view only mode
+              ),
+            ),
           )
         ],
       ),
