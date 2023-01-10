@@ -243,14 +243,11 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   _optionUnitPriceChildrenNewMode() {
-  print("cccccc");
     if(addProductCtr.colorsList.isEmpty) return Center(child: Text("색상추가하세요."),);
     if (ctr.productBodySizeList.isEmpty) {
       return Center(child: Text('사이즈 추가하세요.'));
     }
     final unitPriceChildren = <Widget>[];
-    // addProductCtr.optionsControllers.clear();
-    // addProductCtr.options.clear();
     for (var colorIndex = 0;
         colorIndex < addProductCtr.colorsList.length; colorIndex++) {
       // FREE, XS, S, M, L
@@ -258,7 +255,6 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
           .firstWhere((element) => element.size == 'FREE')
           .isSelected
           .value) {
-        print("aaaaaa");
         Option? option;
 
         if (addProductCtr.isEditing.isTrue) {
@@ -369,7 +365,6 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   Widget _unitPriceTile(int colorIndex, int currentOptionLength, String size) {
-    print("ddddd");
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(

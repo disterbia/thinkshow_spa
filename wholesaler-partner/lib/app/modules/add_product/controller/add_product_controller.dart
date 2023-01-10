@@ -110,12 +110,15 @@ class AddProductController extends GetxController {
     part5controller.selectedCountry.value = productModifyModel.value.manufactureCountry!;
 
     // optionss
+    colorsList.clear();
     for (Option option in productModifyModel.value.options!) {
       bool listAlreadyContainsColor = colorsList.contains(option.color!);
       colorsList.addIf(!listAlreadyContainsColor, option.color!);
     }
 
     // materialTypeList
+    part3controller.materialTypeList.clear();
+    part3controller.materialTypePercentControllers.clear();
     for (int i = 0; i < productModifyModel.value.materialList!.length; i++) {
       part3controller.materialTypeList.add(productModifyModel.value.materialList![i].name!);
       part3controller.materialTypePercentControllers.add(TextEditingController(text: productModifyModel.value.materialList![i].ratio.toString()));
