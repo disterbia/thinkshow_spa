@@ -58,16 +58,15 @@ class ProductMgmtController extends GetxController {
     }
 
     scrollController.value.addListener(() {
-      print("dd");
       if (scrollController.value.position.pixels ==
-          scrollController.value.position.maxScrollExtent) {
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
         offset += mConst.limit;
         getProducts(
             startDate: startDate.value,
             endDate: endDate.value,
             clothCatIds: clothCatIds,
             isScrolling: true);
-        print("작동ㄴㄴ");
       }
     });
   }
