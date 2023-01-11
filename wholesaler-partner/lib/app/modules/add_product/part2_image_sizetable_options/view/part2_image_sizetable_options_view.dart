@@ -18,6 +18,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
 
   @override
   Widget build(BuildContext context) {
+    // AP_Part2ColorController ctr2 = Get.put(AP_Part2ColorController());
+
     return Obx(
       () => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -32,20 +34,75 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             _sizeTable(),
             // 옵션 단가등록
             //_unitPriceCheckbox(),
-            Column(
-                children: [
-                  // ctr.unitPriceCheckbox.isTrue &&
-                  //     ctr.isOptionCheckbox.isTrue
-                  //     ?
-                  _optionUnitPriceChildrenNewMode()
-                    //  : Container(),
-                ],
-              ),
+            // Column(
+            //   children: [
+            //     // ctr.unitPriceCheckbox.isTrue &&
+            //     //     ctr.isOptionCheckbox.isTrue
+            //     //     ?
+            //     //  : Container(),
+            //   ],
+            // ),
 
+            _optionUnitPriceChildrenNewMode(),
+            // aaa(),
             SizedBox(height: 10),
           ],
         ),
       ),
+    );
+  }
+
+  aaa() {
+    final unitPriceChildren = <Widget>[];
+
+    int aa = 0;
+
+    for (var colorIndex = 0;
+        colorIndex < addProductCtr.colorsList.length;
+        colorIndex++) {
+      // print(addProductCtr.options.length);
+      if (ctr.productBodySizeList
+          .firstWhere((element) => element.size == 'FREE')
+          .isSelected
+          .value) {
+            
+        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'FREE'));
+        aa++;
+      }
+
+      if (ctr.productBodySizeList
+          .firstWhere((element) => element.size == 'XS')
+          .isSelected
+          .value) {
+        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'XS'));
+        aa++;
+      }
+      if (ctr.productBodySizeList
+          .firstWhere((element) => element.size == 'S')
+          .isSelected
+          .value) {
+        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'S'));
+        aa++;
+      }
+      if (ctr.productBodySizeList
+          .firstWhere((element) => element.size == 'M')
+          .isSelected
+          .value) {
+        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'M'));
+        aa++;
+        // print(addProductCtr.options.length);
+      }
+      if (ctr.productBodySizeList
+          .firstWhere((element) => element.size == 'L')
+          .isSelected
+          .value) {
+        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'L'));
+        aa++;
+      }
+    }
+
+    return Column(
+      children: unitPriceChildren,
     );
   }
 
@@ -243,13 +300,18 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   _optionUnitPriceChildrenNewMode() {
-    if(addProductCtr.colorsList.isEmpty) return Center(child: Text("색상추가하세요."),);
+    if (addProductCtr.colorsList.isEmpty) {
+      return Center(
+        child: Text("색상추가하세요."),
+      );
+    }
     if (ctr.productBodySizeList.isEmpty) {
       return Center(child: Text('사이즈 추가하세요.'));
     }
     final unitPriceChildren = <Widget>[];
     for (var colorIndex = 0;
-        colorIndex < addProductCtr.colorsList.length; colorIndex++) {
+        colorIndex < addProductCtr.colorsList.length;
+        colorIndex++) {
       // FREE, XS, S, M, L
       if (ctr.productBodySizeList
           .firstWhere((element) => element.size == 'FREE')
@@ -365,6 +427,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   Widget _unitPriceTile(int colorIndex, int currentOptionLength, String size) {
+    print('currentOptionLength ${currentOptionLength}');
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -406,8 +469,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
               Expanded(
                 child: Container(
                   child: TextField(
-                      controller: addProductCtr
-                          .optionsControllers[currentOptionLength - 1],
+                      controller:
+                          addProductCtr.optionsControllers[currentOptionLength - 1],
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           fillColor: MyColors.white,

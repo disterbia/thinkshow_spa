@@ -97,5 +97,8 @@ class Page2OrderHistoryController extends GetxController {
     if (response.orders!.length < mConst.limit) {
       allowCallAPI.value = false;
     }
+    else{
+      allowCallAPI.value = true;
+    }
   }
 }

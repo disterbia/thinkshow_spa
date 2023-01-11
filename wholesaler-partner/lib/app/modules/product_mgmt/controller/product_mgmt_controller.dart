@@ -26,7 +26,7 @@ class ProductMgmtController extends GetxController {
   RxBool allowCallAPI = true.obs;
   RxBool isLoading = false.obs;
   RxString startDate = "".obs;
-  RxString endDate= "".obs;
+  RxString endDate = "".obs;
   RxList<int> clothCatIds = <int>[].obs;
 
   // @override
@@ -36,18 +36,22 @@ class ProductMgmtController extends GetxController {
   //   super.onClose();
   // }
 
-  void init() async{
+  void init() async {
     print('PartnerHomeController init');
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       // isShowSplashScreen.value = false;
-      isLoading.value=true;
-      await getProducts(startDate: startDate.value,endDate: endDate.value,clothCatIds: clothCatIds,isScrolling: false);
-      isLoading.value=false;
+      isLoading.value = true;
+      await getProducts(
+          startDate: startDate.value,
+          endDate: endDate.value,
+          clothCatIds: clothCatIds,
+          isScrolling: false);
+      isLoading.value = false;
     });
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
     if (Get.arguments != null) {
       applicationId = Get.arguments;
@@ -58,7 +62,11 @@ class ProductMgmtController extends GetxController {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
         offset += mConst.limit;
-        getProducts(startDate: startDate.value,endDate: endDate.value,clothCatIds: clothCatIds,isScrolling: true);
+        getProducts(
+            startDate: startDate.value,
+            endDate: endDate.value,
+            clothCatIds: clothCatIds,
+            isScrolling: true);
         print("작동ㄴㄴ");
       }
     });
@@ -78,8 +86,7 @@ class ProductMgmtController extends GetxController {
         productsId.add(product.id);
       }
     }
-    print(
-        'selectAllCheckbox ${productsId.length} productsId ${productsId}');
+    print('selectAllCheckbox ${productsId.length} productsId ${productsId}');
   }
 
   Future<void> getProducts(
@@ -122,6 +129,8 @@ class ProductMgmtController extends GetxController {
 
     if (raw.length < mConst.limit) {
       allowCallAPI.value = false;
+    } else {
+      allowCallAPI.value = true;
     }
   }
 
@@ -272,13 +281,13 @@ class ProductMgmtController extends GetxController {
     getProducts(isScrolling: false);
   }
 
-   Future<void> getProductsWithFilter (
-      {String? startDate, String? endDate, List<int>? clothCatIds}) async{
-    this.startDate.value=startDate!;
-    this.endDate.value=endDate!;
-    this.clothCatIds.value=clothCatIds!;
+  Future<void> getProductsWithFilter(
+      {String? startDate, String? endDate, List<int>? clothCatIds}) async {
+    this.startDate.value = startDate!;
+    this.endDate.value = endDate!;
+    this.clothCatIds.value = clothCatIds!;
 
-   await getProducts(
+    await getProducts(
         startDate: startDate,
         endDate: endDate,
         clothCatIds: clothCatIds,

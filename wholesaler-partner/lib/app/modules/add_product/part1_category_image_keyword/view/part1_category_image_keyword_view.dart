@@ -69,7 +69,6 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
             hintText: 'enter_color'.tr,
             fieldController: ctr.colorsController,
             tagList: addProductController.colorsList,
-
           ),
           SizedBox(height: 20),
         ],
@@ -174,71 +173,89 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl1.value.isNotEmpty
-                      ? ctr.isUploadLoading3.value?LoadingWidget():Container(
-                          width: Get.width,
-                          child: Center(
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: ctr.imageUrl1.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Row(crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Badge(badgeContent: Text((index + 1).toString()),child: Container(height: Get.width / 5,),badgeColor: MyColors.primary,),
-                                      Badge(
-                                        badgeColor: MyColors.primary,
-                                        badgeContent: GestureDetector(
-                                          child: Icon(Icons.remove_circle_outline,
-                                              size: 20),
-                                          onTap: () async{
-                                             await ctr.uploadImageBtnPressed3(index);
-
-                                          },
-                                        ),
-                                        child: Container(
-                                          width: Get.width / 6,
-                                          height: Get.width / 6,
-                                          child: CachedNetworkImage(
-                                            imageBuilder: (context, imageProvider)
-                                            => Container(
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover),
-                                                ),
-                                              )
-                                            ,
-                                            progressIndicatorBuilder:
-                                                (context, url, progress) {
-                                              return Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Center(
-                                                    child: SizedBox(
-                                                  height: 25.0,
-                                                  width: 25.0,
-                                                  child: CircularProgressIndicator(
-                                                    value: progress.progress,
-                                                  ),
-                                                )),
-                                              );
-                                            },
-                                            imageUrl: ctr.imageUrl1[index],
-                                            errorWidget: (context, url, error) =>
-                                                Icon(Icons.error),
+                      ? ctr.isUploadLoading3.value
+                          ? LoadingWidget()
+                          : Container(
+                              width: Get.width,
+                              child: Center(
+                                child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: ctr.imageUrl1.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Badge(
+                                            badgeContent:
+                                                Text((index + 1).toString()),
+                                            child: Container(
+                                              height: Get.width / 5,
+                                            ),
+                                            badgeColor: MyColors.primary,
                                           ),
-                                        ),
+                                          Badge(
+                                            badgeColor: MyColors.primary,
+                                            badgeContent: GestureDetector(
+                                              child: Icon(
+                                                  Icons.remove_circle_outline,
+                                                  size: 20),
+                                              onTap: () async {
+                                                await ctr
+                                                    .uploadImageBtnPressed3(
+                                                        index);
+                                              },
+                                            ),
+                                            child: Container(
+                                              width: Get.width / 6,
+                                              height: Get.width / 6,
+                                              child: CachedNetworkImage(
+                                                imageBuilder:
+                                                    (context, imageProvider) =>
+                                                        Container(
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
+                                                progressIndicatorBuilder:
+                                                    (context, url, progress) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Center(
+                                                        child: SizedBox(
+                                                      height: 25.0,
+                                                      width: 25.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        value:
+                                                            progress.progress,
+                                                      ),
+                                                    )),
+                                                  );
+                                                },
+                                                imageUrl: ctr.imageUrl1[index],
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        )
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
                       // InkWell(
                       //         onTap: () => ctr.uploadImageBtnPressed(),
                       //         child: CachedNetworkImage(
@@ -278,81 +295,107 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                     border: Border.all(color: MyColors.grey1),
                   ),
                   child: ctr.imageUrl2.value.isNotEmpty
-                      ? Container(
-                          width: Get.width,
-                          child: Center(
-                            child: GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: ctr.imageUrl2.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Row(
-                                      children: [
-                                        Badge(
-                                            badgeColor: MyColors.primary,
-                                            badgeContent:
-                                                Text((index + 1).toString()),
-                                            child: Container(height:Get.width / 5,)),
-                                        Badge(
-                                          badgeColor: MyColors.primary,
-                                          badgeContent: GestureDetector(
-                                            child: Icon(Icons.remove_circle_outline,
-                                                size: 20),
-                                            onTap: () {
-                                              print(index);
-                                              ctr.imageUrl2.removeAt(index);
-                                              ctr.imagePath2.removeAt(index);
-                                            },
-                                          ),
-                                          child: Container(
-                                            width: Get.width / 6,
-                                            height: Get.width / 6,
-                                            child: CachedNetworkImage(
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
+                      ? Stack(
+                          children: [
+                            Container(
+                              width: Get.width,
+                              child: Center(
+                                child: GridView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: ctr.imageUrl2.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Row(
+                                          children: [
+                                            Badge(
+                                                badgeColor: MyColors.primary,
+                                                badgeContent: Text(
+                                                    (index + 1).toString()),
+                                                child: Container(
+                                                  height: Get.width / 5,
+                                                )),
+                                            Badge(
+                                              badgeColor: MyColors.primary,
+                                              badgeContent: GestureDetector(
+                                                child: Icon(
+                                                    Icons.remove_circle_outline,
+                                                    size: 20),
+                                                onTap: () {
+                                                  print(index);
+                                                  ctr.imageUrl2.removeAt(index);
+                                                  ctr.imagePath2
+                                                      .removeAt(index);
+                                                },
+                                              ),
+                                              child: Container(
+                                                width: Get.width / 6,
+                                                height: Get.width / 6,
+                                                child: CachedNetworkImage(
+                                                  imageBuilder: (context,
+                                                          imageProvider) =>
                                                       Container(
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover),
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
+                                                  imageUrl:
+                                                      ctr.imageUrl2[index],
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(Icons.error),
+                                                  progressIndicatorBuilder:
+                                                      (context, url, progress) {
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Center(
+                                                          child: SizedBox(
+                                                        height: 25.0,
+                                                        width: 25.0,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value:
+                                                              progress.progress,
+                                                        ),
+                                                      )),
+                                                    );
+                                                  },
                                                 ),
                                               ),
-                                              imageUrl: ctr.imageUrl2[index],
-                                              errorWidget: (context, url, error) =>
-                                                  Icon(Icons.error),
-                                              progressIndicatorBuilder:
-                                                  (context, url, progress) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Center(
-                                                      child: SizedBox(
-                                                    height: 25.0,
-                                                    width: 25.0,
-                                                    child: CircularProgressIndicator(
-                                                      value: progress.progress,
-                                                    ),
-                                                  )),
-                                                );
-                                              },
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 10,
-                                  crossAxisCount: 3,
-                                  // childAspectRatio: columnWidth /
-                                  //     (MyVars.isSmallPhone()
-                                  //         ? 270
-                                  //         : 260), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
-                                )),
-                          ),
+                                      );
+                                    },
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 10,
+                                      crossAxisCount: 3,
+                                      // childAspectRatio: columnWidth /
+                                      //     (MyVars.isSmallPhone()
+                                      //         ? 270
+                                      //         : 260), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                                    )),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 5, bottom: 5),
+                                child: FloatingActionButton(
+                                    backgroundColor: MyColors.primary,
+                                    onPressed: () {
+                                      ctr.updateImageBtnPressed();
+                                    },
+                                    child: Icon(Icons.add)),
+                              ),
+                            ),
+                          ],
                         )
                       // InkWell(
                       //         onTap: () => ctr.uploadImageBtnPressed2(),
