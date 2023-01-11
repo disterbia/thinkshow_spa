@@ -29,7 +29,7 @@ class AddProductView extends GetView<AddProductController> {
   }
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
+    // FocusScope.of(context).requestFocus(FocusNode());
     return Scaffold(
       backgroundColor: MyColors.white,
       resizeToAvoidBottomInset: false,
@@ -38,34 +38,39 @@ class AddProductView extends GetView<AddProductController> {
       appBar:
           CustomAppbar(isBackEnable: false, hasHomeButton: true, title: '상품등록'),
       // GestureDetector: when click on anywhere on the screen close keyboard
-      body:
-      GestureDetector(onTap: () => FocusScope.of(context).requestFocus( FocusNode()),child: body()),
-      // GestureDetector(
-      //   onTap: () {
-      //     FocusScope.of(context).requestFocus(FocusNode());
-      //   },
-      //   child: body(),
-      // ),
+      // body: GestureDetector(
+      //     onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      //     child: body()),
+      // body: body(),
+      body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: body()),
     );
   }
 
   Widget body() {
     return Obx(
-        ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AP_Part1View(),
-          _divider(),
-          AP_Part2View(),
-          _divider(),
-          AP_Part3View(),
-          _divider(),
-          AP_Part4View(),
-          _divider(),
-          AP_Part5View(),
-          _divider(),
-          SizedBox(height: 100),
-        ]),
-      ),
+      () => ctr.isLoading.value
+          ? LoadingWidget()
+          : SingleChildScrollView(
+              child: GestureDetector(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AP_Part1View(),
+                      _divider(),
+                      AP_Part2View(),
+                      _divider(),
+                      AP_Part3View(),
+                      _divider(),
+                      AP_Part4View(),
+                      _divider(),
+                      AP_Part5View(),
+                      _divider(),
+                      SizedBox(height: 100),
+                    ]),
+              ),
+            ),
     );
   }
 
@@ -104,7 +109,6 @@ Widget bottomSheet() {
             },
             rBtnOnPressed: () {
               //part2controller.isOptionCheckbox.value = false;
-
 
               showDialog(
                   context: Get.context!,
@@ -178,12 +182,15 @@ Dialog _saveDialog(
                           rBtnOnPressed: () {
                             if (isCloseBtnPressed) {
                               Get.back();
-                               Get.back();
+                              Get.back();
                             } else {
-                              print("dddddddddddddddddddd${addProductCtr.productIdforEdit}");
-                              print("dddddddddddddddddddd${addProductCtr.productNameController.text}");
-                              addProductCtr.isEditing.isTrue?
-                              ctr.editProduct():ctr.addProduct();
+                              print(
+                                  "dddddddddddddddddddd${addProductCtr.productIdforEdit}");
+                              print(
+                                  "dddddddddddddddddddd${addProductCtr.productNameController.text}");
+                              addProductCtr.isEditing.isTrue
+                                  ? ctr.editProduct()
+                                  : ctr.addProduct();
                             }
                           },
                         ),

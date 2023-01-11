@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart' as Quill;
 import 'package:wholesaler_partner/app/modules/add_product/view/widget/editor_widget/editor_controller.dart';
@@ -10,21 +11,24 @@ class EditorWidget extends GetView {
   EditorController ctr = Get.put(EditorController());
   EditorWidget();
 
+  final Map<String, String> _fontFamilyValues =  {'기본' : 'SpoqaHanSansNeo-Medium','본고딕': 'Noto_Sans', '본명조' : 'Noto_Serif', '나눔고딕' : 'Nanum_Gothic', '나눔명조' : 'Nanum_Myeongjo' };
 
   @override
   Widget build(BuildContext context) {
-    return  Obx(()=> Column(
+    return Obx(
+      () => Column(
         children: [
           Quill.QuillToolbar.basic(
+            fontFamilyValues: _fontFamilyValues,
             controller: ctr.editorController.value,
             fontSizeValues: {
               '10': '10',
               '20': '20',
               '30': '30',
               '40': '40',
-              '50':'50',
-              '60':'60',
-              'Clear':'0'
+              '50': '50',
+              '60': '60',
+              'Clear': '0'
             },
             showAlignmentButtons: true,
             showBackgroundColorButton: true,
@@ -57,18 +61,31 @@ class EditorWidget extends GetView {
             showUndo: false,
             multiRowsDisplay: false,
           ),
-          SizedBox(height: 45,),
+          SizedBox(
+            height: 45,
+          ),
           GestureDetector(
-            child: Container(height:200,decoration: BoxDecoration(border: Border.all()),
-              child: Quill.QuillEditor.basic(
+            child: Container(
+              height: 200, decoration: BoxDecoration(border: Border.all()),
+              // child: Quill.QuillEditor.basic(
+              //   controller: ctr.editorController.value,
+              //   readOnly: false, // true for view only mode
+              // ),
+              child: QuillEditor(
                 controller: ctr.editorController.value,
-                readOnly: false, // true for view only mode
+                scrollController: ScrollController(),
+                scrollable: true,
+                focusNode: FocusNode(),
+                autoFocus: false,
+                padding: EdgeInsets.zero,
+                expands: false,
+                readOnly: false,
+                showCursor: true,
               ),
             ),
           )
         ],
       ),
     );
-
   }
 }

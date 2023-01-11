@@ -23,16 +23,21 @@ class DingdongDeliveryController extends GetxController {
     super.onInit();
 
     scrollController.value.addListener(() {
-       print('scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+      print(
+          'scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
         offset += mConst.limit;
         callGetProductsAPI(isScrolling: true);
       }
     });
   }
 
-  Future<void> callGetProductsAPI({String? sort, required bool isScrolling}) async {
-    dynamic raw = await _apiProvider.getProducts(isDingDong: true, sort: sort, offset: offset, limit: 12);
+  Future<void> callGetProductsAPI(
+      {String? sort, required bool isScrolling}) async {
+    dynamic raw = await _apiProvider.getProducts(
+        isDingDong: true, sort: sort, offset: offset, limit: 12);
 
     log('getProducts raw $raw length ${raw.length}');
 
@@ -58,6 +63,8 @@ class DingdongDeliveryController extends GetxController {
 
     if (raw.length < mConst.limit) {
       allowCallAPI.value = false;
+    } else {
+      allowCallAPI.value = true;
     }
   }
 

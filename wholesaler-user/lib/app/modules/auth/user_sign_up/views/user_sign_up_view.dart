@@ -26,11 +26,11 @@ class User_SignUpView extends GetView {
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(
           isBackEnable: true, title: ctr.isEditing.value ? '회원정보' : '회원가입'),
-      body: _signUpBody(),
+      body: _signUpBody(context),
     );
   }
 
-  Widget _signUpBody() {
+  Widget _signUpBody(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,7 +45,7 @@ class User_SignUpView extends GetView {
             _passwordBuilder(),
             _nameBuilder(),
             SizedBox(height: 15),
-            _addressBuilder(),
+            _addressBuilder(context),
             // address search
             SizedBox(height: 15),
             _phoneNumberPhoneVerifyBuilder(),
@@ -124,7 +124,9 @@ class User_SignUpView extends GetView {
         fieldController: ctr.nameController);
   }
 
-  Widget _addressBuilder() {
+
+  FocusNode _addressFocusNode = FocusNode();
+  Widget _addressBuilder(BuildContext context) {
     return Column(
       children: [
         CustomField(
@@ -132,8 +134,9 @@ class User_SignUpView extends GetView {
           fieldText: 'Zip_code'.tr,
           buttonText: '주소 검색',
           fieldController: ctr.address1Controller,
-          onTap: () {
-            ctr.searchAddressBtnPressed();
+          onTap: () async{
+            await ctr.searchAddressBtnPressed();
+            FocusScope.of(context).requestFocus(_addressFocusNode);
           },
           fieldLabel: 'address'.tr,
         ),
@@ -146,6 +149,7 @@ class User_SignUpView extends GetView {
         ),
         SizedBox(height: 10),
         CustomTextField(
+          focusNode: _addressFocusNode,
           labelText: 'Address details'.tr,
           controller: ctr.address3Controller,
         ),

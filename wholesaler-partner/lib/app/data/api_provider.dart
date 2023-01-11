@@ -50,10 +50,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<bool> chekToken() async {
-
-    Map<String, dynamic> body = {
-      'access_token': CacheProvider().getToken()
-    };
+    Map<String, dynamic> body = {'access_token': CacheProvider().getToken()};
 
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/login-check';
     final response = await post(url, body, headers: headers);
@@ -117,7 +114,7 @@ class pApiProvider extends GetConnect {
       // return json['certifi_id'];
     }
     if (response.statusCode == 400) {
-     // mSnackbar(message: jsonDecode(response.bodyString!)['description']);
+      // mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
       mSnackbar(message: 'phone_verification_failed'.tr);
@@ -432,7 +429,7 @@ class pApiProvider extends GetConnect {
     print(' Partner_login response ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      headers={ "Authorization" : "Bearer " +json["access_token"]};
+      headers = {"Authorization": "Bearer " + json["access_token"]};
       return json;
     }
     if (response.statusCode == 400) {
@@ -469,8 +466,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<StatusModel> getOwnerInfo() async {
-    String url =
-        mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
+    String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
     final response = await get(url, headers: headers);
     String message = '';
     int statusCode = response.statusCode ?? 0;
@@ -509,8 +505,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<StatusModel> saveCompanyName(Map<String, dynamic> data) async {
-    String url =
-        mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
+    String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-name';
     final response = await put(url, data, headers: headers);
     int statusCode = response.statusCode ?? 0;
     String message = '';
@@ -525,6 +520,7 @@ class pApiProvider extends GetConnect {
     }
     return StatusModel(statusCode: statusCode, message: message);
   }
+
   Future<StatusModel> saveLicense(Map<String, dynamic> data) async {
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/business-license-info';
@@ -613,7 +609,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE;
     File image = File(pickedImage.path);
     String imageName = image.path.substring(image.path.length - 19);
-    log('image name: $imageName');
+    log('image name!!!!!!!!!!!!!!!!!!: $imageName');
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
@@ -649,11 +645,13 @@ class pApiProvider extends GetConnect {
 
     dio.options.headers["Authorization"] =
         "Bearer " + CacheProvider().getToken();
-    String url =
-        mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE+"-multi";
+    String url = mConst.API_BASE_URL +
+        mConst.API_STORE_PATH +
+        mConst.PRODUCT_IMAGE +
+        "-multi";
     List<File> images = [];
     List<String> imageNames = [];
-    for(int i = 0;i<pickedImage!.length;i++){
+    for (int i = 0; i < pickedImage.length; i++) {
       File image = File(pickedImage[i].path);
       String imageName = image.path.substring(image.path.length - 19);
       images.add(image);
@@ -662,14 +660,13 @@ class pApiProvider extends GetConnect {
       log('imageName: $imageName');
     }
     List<mDio.MultipartFile> temp = [];
-    for(int i = 0 ; i<images.length;i++){
+    for (int i = 0; i < images.length; i++) {
       print("11111111");
-      temp.add(await mDio.MultipartFile.fromFile(images[i].path, filename: imageNames[i]));
+      temp.add(await mDio.MultipartFile.fromFile(images[i].path,
+          filename: imageNames[i]));
       print("22222222");
     }
-    mDio.FormData formData = mDio.FormData.fromMap({
-      "image[]":temp
-    });
+    mDio.FormData formData = mDio.FormData.fromMap({"image[]": temp});
     print("33333");
     final response = await dio.post(
       url,
@@ -758,8 +755,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/reviews',
         headers: headers);
     if (response.statusCode == 200) {
-      print(' getStoreReviews response.bodyString : ' +
-          response.bodyString!);
+      print(' getStoreReviews response.bodyString : ' + response.bodyString!);
       return jsonDecode(response.bodyString!);
     }
     if (response.statusCode == 400) {
@@ -781,7 +777,7 @@ class pApiProvider extends GetConnect {
     data['endDate'] = endDate;
     data['offset'] = offset.toString();
     data['limit'] = limit.toString();
-    headers={"Authorization": "Bearer " + CacheProvider().getToken()};
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.ORDERS;
     final response = await get(url, query: data, headers: headers);
     if (response.statusCode == 200) {
@@ -805,9 +801,7 @@ class pApiProvider extends GetConnect {
     required int offset,
     required int limit,
   }) async {
-    headers={
-      "Authorization": "Bearer " + CacheProvider().getToken()
-    };
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     Map<String, dynamic> data = {};
 
     data['offset'] = offset.toString();
@@ -914,9 +908,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<List<BestProductsModel>> getBestProducts() async {
-    headers={
-      "Authorization": "Bearer " + CacheProvider().getToken()
-    };
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     String url = mConst.API_BASE_URL +
         mConst.API_STORE_PATH +
         mConst.STORE_BEST_PRODUCTS;
@@ -954,9 +946,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<dynamic> getAdsMainPage() async {
-    headers={
-      "Authorization": "Bearer " + CacheProvider().getToken()
-    };
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.ADVERTISEMENT_LIST;
     final response = await get(url, headers: headers);
@@ -1026,10 +1016,7 @@ class pApiProvider extends GetConnect {
 
   /// Partner Main page > getMainStore
   Future<MainStoreModel> getMainStore() async {
-
-    headers={
-      "Authorization": "Bearer " + CacheProvider().getToken()
-    };
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     print("======getMainStore${headers}============");
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/main',
@@ -1046,30 +1033,37 @@ class pApiProvider extends GetConnect {
   }
 
   Future<Response> getUserInfo() async {
-    headers={
-      "Authorization": "Bearer " + CacheProvider().getToken()
-    };
+    headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/me';
     final response = await get(url, headers: headers);
     return response;
   }
 
   Future<bool> addProduct({required Map<String, dynamic> data}) async {
+    print(data.toString());
+
     final response = await post(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT, data,
         headers: headers);
+
     log(response.body.toString());
 
     if (response.statusCode == 200) {
       return true;
     }
+
+    print('오류 message : ${response.bodyString}');
+
     if (response.statusCode == 400) {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
+      // print('오류 message : ${response.bodyString}');
+
       mSnackbar(message: '오류: ${response.bodyString}');
       return false;
     }
+
   }
 
   editProduct(
@@ -1087,6 +1081,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
+      print('오류 message : ${response.bodyString}');
       mSnackbar(message: '오류: ${response.bodyString}');
       return false;
     }
@@ -1402,8 +1397,7 @@ class pApiProvider extends GetConnect {
 
   Future<dynamic> getImpressionsInformation(
       String startDate, String endDate, String tag) async {
-    print(
-        'getImpressionsInformation startDate: $startDate endDate: $endDate');
+    print('getImpressionsInformation startDate: $startDate endDate: $endDate');
     // '광고R', '광고S', '광고1ST', '광고2ST', '광고3ST'
     int addNumber = -1;
     if (tag == '광고R') {
@@ -1518,8 +1512,8 @@ class pApiProvider extends GetConnect {
         '/search/store-location?store_name=$searchValue');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print('getSearchStoreName :' +
-          jsonDecode(response.bodyString!).toString());
+      print(
+          'getSearchStoreName :' + jsonDecode(response.bodyString!).toString());
       List<StoreLocation> storeLocations = [];
       for (var storeLocation in json) {
         StoreLocation tempStoreLocation = StoreLocation.fromJson(storeLocation);

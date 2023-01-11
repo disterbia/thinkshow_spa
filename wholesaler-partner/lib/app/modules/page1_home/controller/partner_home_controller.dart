@@ -35,21 +35,20 @@ class PartnerHomeController extends GetxController {
   RxBool isShowSplashScreen = true.obs;
   RxBool isLoading = false.obs;
 
-  void init() async{
+  void init() async {
     print('PartnerHomeController init');
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
-     // isShowSplashScreen.value = false;
-    isLoading.value=true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // isShowSplashScreen.value = false;
+      isLoading.value = true;
       await getMainStore();
-    await getBestProducts();
-    await getAds();
-    await callGetProductsAPI();
-      isLoading.value=false;
-     });
+      await getBestProducts();
+      await getAds();
+      await callGetProductsAPI();
+      isLoading.value = false;
+    });
   }
 
   @override
-
   InternalFinalCallback<void> get onDelete => super.onDelete;
 
   @override
@@ -59,10 +58,19 @@ class PartnerHomeController extends GetxController {
         'inside PartnerHomeController onInit isScrollCtrAlreadySet $isScrollCtrAlreadySet');
     if (isScrollCtrAlreadySet == false) {
       scrollController.value.addListener(() {
-        // print('scrollController.value.addListener ${scrollController.value.offset}');
+        // print(
+        //     'scrollController.value.addListener ${scrollController.value.offset}');
+
+        // print('여기1');
+        print(scrollController.value.position.pixels);
+        print(scrollController.value.position.maxScrollExtent);
+        // print('여기3');
+
         if (scrollController.value.position.pixels ==
                 scrollController.value.position.maxScrollExtent &&
             allowCallAPI.isTrue) {
+          // print('여기2');
+
           offset += mConst.limit;
           callGetProductsAPI(
               searchContent: searchController.text,
@@ -74,6 +82,7 @@ class PartnerHomeController extends GetxController {
 
     isScrollCtrAlreadySet = true;
   }
+
   Future<void> uploadImageBtnPressed() async {
     print('inside uploadMainTopImage1234');
     _pickedImage = await ImagePicker()
@@ -113,7 +122,6 @@ class PartnerHomeController extends GetxController {
   }
 
   Future<void> getBestProducts() async {
-
     bestProducts.clear();
     offset = 0;
     List<BestProductsModel> bestProductsModels =
@@ -173,7 +181,11 @@ class PartnerHomeController extends GetxController {
     }
 
     if (raw.length < mConst.limit) {
+      print('raw.length ${raw.length}');
+      print('mConst.limit ${mConst.limit}');
       allowCallAPI.value = false;
+    } else {
+      allowCallAPI.value = true;
     }
   }
 

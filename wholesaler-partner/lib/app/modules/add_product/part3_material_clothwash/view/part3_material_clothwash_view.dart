@@ -37,7 +37,10 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
           _flexibility(
               ctr.flexibilityList, 'elasticity'.tr, ctr.flexibilitySelected),
           _lining(ctr.liningList, 'lining'.tr, ctr.liningsSelected),
-          Text('Garment_Care_Guide'.tr),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Text('Garment_Care_Guide'.tr),
+          ),
           clothWashTipsGrid()
         ],
       );
