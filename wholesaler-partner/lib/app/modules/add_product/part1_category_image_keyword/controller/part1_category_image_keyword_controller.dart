@@ -152,7 +152,6 @@ class AP_Part1Controller extends GetxController
 
       ProductImageModel2 productImageModel =
           await _apiProvider.uploadProductImage(pickedImage: temp);
-      isUploadLoading2.value = false;
 
       if (productImageModel.statusCode == 200) {
         imageUrl2.value += productImageModel.url;
@@ -160,6 +159,7 @@ class AP_Part1Controller extends GetxController
         print(imageUrl2.value);
         print(imagePath2.value);
       }
+      isUploadLoading2.value = false;
     }
   }
 
