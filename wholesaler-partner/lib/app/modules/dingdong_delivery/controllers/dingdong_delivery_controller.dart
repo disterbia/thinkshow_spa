@@ -23,8 +23,8 @@ class DingdongDeliveryController extends GetxController {
     super.onInit();
 
     scrollController.value.addListener(() {
-      print(
-          'scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
+      // print(
+      //     'scrollController.value.position.pixels: ${scrollController.value.position.pixels}');
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
           allowCallAPI.isTrue) {

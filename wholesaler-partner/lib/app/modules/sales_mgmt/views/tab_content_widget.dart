@@ -7,13 +7,14 @@ import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
+import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/product/product_item_horiz_widget.dart';
 
 class SalesMgmtContentTabWidget extends GetView {
   SalesMgmtController ctr = Get.put(SalesMgmtController());
   SalesTab currentSalesTab;
   SalesMgmtContentTabWidget(this.currentSalesTab);
-  List<String> titles = ['impressions'.tr, 'click'.tr, 'like'.tr, 'order'.tr];
+  List<String> titles = ['노출', 'click'.tr, 'like'.tr, 'order'.tr];
   var format = NumberFormat('###,###,###,###');
   @override
   Widget build(BuildContext context) {
@@ -36,12 +37,15 @@ class SalesMgmtContentTabWidget extends GetView {
                     Row(
                       children: [
                         Text(
-                          ctr.countOfProducts,
-                          style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+                          Utils.numberFormat(
+                              number: int.parse(ctr.countOfProducts)),
+                          style: MyTextStyles.f18_bold
+                              .copyWith(color: MyColors.black3),
                         ),
                         Text(
-                          ' 회',
-                          style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+                          '회',
+                          style:
+                              MyTextStyles.f16.copyWith(color: MyColors.black3),
                         ),
                       ],
                     ),
@@ -62,7 +66,10 @@ class SalesMgmtContentTabWidget extends GetView {
                             product: ctr.products[index],
                             productNumber: ProductNumber(
                               number: index + 1,
-                              backgroundColor: MyColors.numberColors.length > index ? MyColors.numberColors[index] : MyColors.numberColors[0],
+                              backgroundColor:
+                                  MyColors.numberColors.length > index
+                                      ? MyColors.numberColors[index]
+                                      : MyColors.numberColors[0],
                             ),
                           ),
                         );
@@ -74,7 +81,8 @@ class SalesMgmtContentTabWidget extends GetView {
                             child: Center(
                               child: Text(
                                 '상품 없음',
-                                style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+                                style: MyTextStyles.f16
+                                    .copyWith(color: MyColors.black3),
                               ),
                             ),
                           )

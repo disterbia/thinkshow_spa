@@ -194,6 +194,9 @@ class ProductMgmtController extends GetxController {
         .isSoldout!
         .value;
 
+    print('asdfasdfasdfasdfasdfasdf');
+    print(isSoldout);
+
     StatusModel statusModel = await _apiProvider
         .soldOut(data: {"productIdList": productsId, "is_release": isSoldout});
     log('sold out . ${statusModel.message}');
