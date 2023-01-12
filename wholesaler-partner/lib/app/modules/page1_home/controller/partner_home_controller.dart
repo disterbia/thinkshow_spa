@@ -58,18 +58,9 @@ class PartnerHomeController extends GetxController {
         'inside PartnerHomeController onInit isScrollCtrAlreadySet $isScrollCtrAlreadySet');
     if (isScrollCtrAlreadySet == false) {
       scrollController.value.addListener(() {
-        // print(
-        //     'scrollController.value.addListener ${scrollController.value.offset}');
-
-        // print('여기1');
-        print(scrollController.value.position.pixels);
-        print(scrollController.value.position.maxScrollExtent);
-        // print('여기3');
-
         if (scrollController.value.position.pixels ==
                 scrollController.value.position.maxScrollExtent &&
             allowCallAPI.isTrue) {
-          // print('여기2');
 
           offset += mConst.limit;
           callGetProductsAPI(

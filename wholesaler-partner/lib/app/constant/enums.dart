@@ -56,6 +56,7 @@ enum FlexibilityType {
 }
 
 class ProductMgmtButtons {
+  static const String restock = '재입고';
   static const String soldout = '품절';
   static const String top10 = 'TOP10';
   static const String dingdong = '띵동';

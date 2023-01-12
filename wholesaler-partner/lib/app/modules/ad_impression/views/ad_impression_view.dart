@@ -27,7 +27,7 @@ class AdImpressionView extends GetView {
                       SizedBox(height: 20),
                       // Chips
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.only(left: 20, right: 20),
                         child: AdTags(
                           chipsName: ctr.tags,
                           onTap: (index) => ctr.categoryTagChanged(index),

@@ -18,7 +18,7 @@ import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_
 import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
 import 'package:wholesaler_user/app/widgets/product/number_widget.dart';
 import 'package:wholesaler_user/app/widgets/product/quantity_plus_minus_widget.dart';
-
+import 'package:wholesaler_user/app/utils/utils.dart';
 import '../../modules/product_detail/controller/product_detail_controller.dart';
 
 class ProductItemHorizontal extends StatelessWidget {
@@ -287,7 +287,8 @@ class ProductItemHorizontal extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              '${product.totalCount}',
+              Utils.numberFormat(number: product.totalCount!),
+              // '${product.totalCount}',
               style: MyTextStyles.f16_bold.copyWith(color: MyColors.black2),
             ),
             Text(
@@ -305,6 +306,7 @@ class ProductItemHorizontal extends StatelessWidget {
   SoldQuantityBuilder() {
     if (product.soldQuantity != null) {
       return Text('${product.soldQuantity.toString()}회');
+      // return Text('${Utils.numberFormat(number: product.soldQuantity!)}회');
     }
     return SizedBox.shrink();
   }

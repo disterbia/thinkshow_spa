@@ -11,7 +11,8 @@ import 'package:wholesaler_user/app/widgets/range_date_picker/range_date_picker_
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class Tab1AdStatusController extends GetxController {
-  RangeDatePickerController rangeDatePickerCtr = Get.put(RangeDatePickerController());
+  RangeDatePickerController rangeDatePickerCtr =
+      Get.put(RangeDatePickerController());
 
   final pApiProvider _apiProvider = pApiProvider();
   TextEditingController startDateController = TextEditingController();
@@ -27,7 +28,11 @@ class Tab1AdStatusController extends GetxController {
   String endDate = '';
   RxList<ExposureAdModel> exposureAds = <ExposureAdModel>[].obs;
 
-  Rx<AdEffectiveReportModel> adEffectiveReportModel = AdEffectiveReportModel(store_visit_count: '', order_total_amount: '', privilge_order_total_amount: '').obs;
+  Rx<AdEffectiveReportModel> adEffectiveReportModel = AdEffectiveReportModel(
+          store_visit_count: '',
+          order_total_amount: '',
+          privilge_order_total_amount: '')
+      .obs;
 
   @override
   void onInit() async {
@@ -55,22 +60,28 @@ class Tab1AdStatusController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> callGetAdEffectiveReportAPI(String startDate, String endDate) async {
+  Future<void> callGetAdEffectiveReportAPI(
+      String startDate, String endDate) async {
     isLoading.value = true;
-    adEffectiveReportModel.value = await _apiProvider.getAdEffectiveReport(startDate, endDate);
+    adEffectiveReportModel.value =
+        await _apiProvider.getAdEffectiveReport(startDate, endDate);
+
     isLoading.value = false;
   }
 
   Future<void> callGetAdExposureProducts({required int adTagIndex}) async {
     isLoadingProducts.value = true;
     // exposureAds.clear();
-    exposureAds.value = await _apiProvider.getAdExposureProducts(ads_type_code: adTagNumber[adTagIndex]);
+    exposureAds.value = await _apiProvider.getAdExposureProducts(
+        ads_type_code: adTagNumber[adTagIndex]);
 
     isLoadingProducts.value = false;
   }
 
   deleteAdProductBtnPressed(int adIndex, productIndex) async {
-    bool isSuccess = await _apiProvider.deleteAdProduct(exposureAds[adIndex].ads_application_id, exposureAds[adIndex].adProducts[productIndex].id);
+    bool isSuccess = await _apiProvider.deleteAdProduct(
+        exposureAds[adIndex].ads_application_id,
+        exposureAds[adIndex].adProducts[productIndex].id);
 
     if (isSuccess) {
       exposureAds[adIndex].adProducts.removeAt(productIndex);
@@ -81,14 +92,19 @@ class Tab1AdStatusController extends GetxController {
   // 상품을 등록해주세요 button pressed
   addOrEditAdProductsBtnPressed(int exposureAdIndex) {
     Get.put(ProductMgmtController()).isBottomNavbar.value = true;
-    Get.put(ProductMgmtController()).applicationId = exposureAds[exposureAdIndex].ads_application_id;
-    Get.to(() => ProductMgmtView(isRegisterAdProductPage: true), arguments: exposureAds[exposureAdIndex].ads_application_id);
+    Get.put(ProductMgmtController()).applicationId =
+        exposureAds[exposureAdIndex].ads_application_id;
+    Get.to(() => ProductMgmtView(isRegisterAdProductPage: true),
+        arguments: exposureAds[exposureAdIndex].ads_application_id);
   }
 
   // After the user selects products from Products Mgmt page
-  Future<void> addToAdProduct({required List<int> productsId, required int ads_application_id}) async {
-    print('addToAdProduct productsId $productsId ads_application_id $ads_application_id');
-    bool isSuccess = await _apiProvider.addToAd(data: {"product_ids": productsId}, adApplicationId: ads_application_id);
+  Future<void> addToAdProduct(
+      {required List<int> productsId, required int ads_application_id}) async {
+    print(
+        'addToAdProduct productsId $productsId ads_application_id $ads_application_id');
+    bool isSuccess = await _apiProvider.addToAd(
+        data: {"product_ids": productsId}, adApplicationId: ads_application_id);
 
     if (isSuccess) {
       mSnackbar(message: '추가 완료되었습니다.');

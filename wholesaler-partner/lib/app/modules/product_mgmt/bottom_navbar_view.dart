@@ -28,10 +28,22 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
               showDialog(
                   context: Get.context!,
                   builder: (context) {
-                    return _dialog(ProductMgmtButtons.soldout);
+                    if (ctr.products
+                        .firstWhere(
+                            (element) => ctr.productsId.first == element.id)
+                        .isSoldout!
+                        .value)
+                      return _dialog(ProductMgmtButtons.restock);
+                    else
+                      return _dialog(ProductMgmtButtons.soldout);
                   });
             },
-            child: Text('품절'),
+            child: ctr.products
+                    .firstWhere((element) => ctr.productsId.first == element.id)
+                    .isSoldout!
+                    .value
+                ? Text(ProductMgmtButtons.restock)
+                : Text(ProductMgmtButtons.soldout),
           ),
         ),
         SizedBox(width: 10),
@@ -87,7 +99,8 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 28.0, bottom: 10, right: 10, left: 10),
+        padding:
+            const EdgeInsets.only(top: 28.0, bottom: 10, right: 10, left: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -110,12 +123,13 @@ class ProductMgmtBottmNavbar extends StatelessWidget {
                     ctr.deleteSelectedProducts();
                   } else if (text == ProductMgmtButtons.top10) {
                     ctr.addOrRemoveTop10SelectedProducts();
-                  } else if (text == ProductMgmtButtons.soldout) {
+                  } else if (text == ProductMgmtButtons.soldout ||
+                      text == ProductMgmtButtons.restock) {
                     ctr.soldOut();
                   } else if (text == ProductMgmtButtons.dingdong) {
                     ctr.addToDingDong();
                   }
-                  ctr.isBottomNavbar.value=false;
+                  ctr.isBottomNavbar.value = false;
                   Get.back();
                 },
                 lBtnOnPressed: () {

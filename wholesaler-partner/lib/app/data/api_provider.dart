@@ -1063,7 +1063,6 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: '오류: ${response.bodyString}');
       return false;
     }
-
   }
 
   editProduct(
@@ -1328,8 +1327,10 @@ class pApiProvider extends GetConnect {
         headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
+      print(json);
       AdEffectiveReportModel adEffectiveReportModel = AdEffectiveReportModel(
-        store_visit_count: json['store_visit_count'].toString(),
+        store_visit_count:
+            Utils.numberFormat(number: json['store_visit_count']),
         order_total_amount:
             Utils.numberFormat(number: json['order_total_amount']),
         privilge_order_total_amount:
