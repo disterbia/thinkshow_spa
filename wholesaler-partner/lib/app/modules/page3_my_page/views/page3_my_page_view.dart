@@ -148,7 +148,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ctr.storeName.value!,
+                  ctr.storeName.value,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 6),

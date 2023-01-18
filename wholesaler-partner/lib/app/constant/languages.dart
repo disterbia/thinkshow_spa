@@ -126,7 +126,7 @@ class pLanguages extends Translations {
           'ad_center_required_docs': '광고 센터 이용필수 서류 안내',
           // 'staff_management': '직원관리',
           'image_uploaded': '사진 정상적으로 업로드 되었습니다.',
-          'ok': '획인',
+          'ok': '확인',
           // 'ddi_you_complete_product_registration': '상품 등록을 완료하시겠습니까?',
           'you_want_exit_product_registration_screen':
               '상품등록중입니다. 상품등록화면에서 나가시겠습니까?',

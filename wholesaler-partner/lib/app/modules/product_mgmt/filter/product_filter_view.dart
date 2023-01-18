@@ -16,7 +16,8 @@ import 'package:wholesaler_user/app/widgets/range_date_picker/range_date_picker_
 
 class ProductMgmtFilterView extends GetView {
   ProductMgmtFilterController ctr = Get.put(ProductMgmtFilterController());
-  RangeDatePickerController rangeDatePickerCtr = Get.put(RangeDatePickerController());
+  RangeDatePickerController rangeDatePickerCtr =
+      Get.put(RangeDatePickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class ProductMgmtFilterView extends GetView {
                       SizedBox(height: 10),
                       GridView.count(
                         scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         crossAxisCount: 3,
                         childAspectRatio: 0.99,
@@ -78,6 +80,7 @@ class ProductMgmtFilterView extends GetView {
                             ),
                         ],
                       ),
+                      SizedBox(height: 10),
                     ],
                   ),
           ),
@@ -99,16 +102,17 @@ class ProductMgmtFilterView extends GetView {
   }
 
   chipBuilder() {
-    List<ChipWidget> categoryChips = [];
+    List<Widget> categoryChips = [];
     // Add ALL chip
     for (int i = 0; i < ctr.categoryDates.length; i++) {
-      categoryChips.add(
-        ChipWidget(
+      categoryChips.add(Padding(
+        padding: EdgeInsets.only(right: 5),
+        child: ChipWidget(
           isSelected: ctr.selectedCategoryDateIndex.value == i,
           title: ctr.categoryDates[i],
           onTap: () => ctr.chipPressed(i),
         ),
-      );
+      ));
     }
     print('categoryChips length ${categoryChips.length}');
 

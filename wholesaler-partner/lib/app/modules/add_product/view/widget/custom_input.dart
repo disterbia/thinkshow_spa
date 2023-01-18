@@ -10,7 +10,15 @@ class CustomInput extends GetView<AddProductController> {
   final TextEditingController fieldController;
   final String? prefix;
   final TextInputType keyboardType;
-  const CustomInput({Key? key, required this.label, required this.fieldController, this.prefix, this.keyboardType = TextInputType.text}) : super(key: key);
+  final String? hintText;
+  const CustomInput(
+      {Key? key,
+      required this.label,
+      required this.fieldController,
+      this.prefix,
+      this.hintText,
+      this.keyboardType = TextInputType.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class CustomInput extends GetView<AddProductController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: context.width / 2,
+              width: context.width / 4,
               child: Text(
                 label,
                 style: MyTextStyles.f14.copyWith(color: MyColors.black2),
@@ -31,13 +39,14 @@ class CustomInput extends GetView<AddProductController> {
             Expanded(
               child: Row(
                 children: [
-                  _textField(keyboardType),
+                  _textField(keyboardType, hintText),
                   SizedBox(width: 10),
                   prefix == null
                       ? SizedBox()
                       : Text(
                           prefix!,
-                          style: MyTextStyles.f14.copyWith(color: MyColors.grey10),
+                          style:
+                              MyTextStyles.f14.copyWith(color: MyColors.grey10),
                         ),
                 ],
               ),
@@ -48,14 +57,22 @@ class CustomInput extends GetView<AddProductController> {
     );
   }
 
-  _textField(keyboardType) {
+  _textField(keyboardType, hintText) {
     return Expanded(
       child: SizedBox(
         height: 30,
         child: TextField(
           controller: fieldController,
           keyboardType: keyboardType,
+          // maxLines: 1,
+          minLines: 1,
           decoration: InputDecoration(
+              hintText: hintText ?? '',
+              hintStyle: TextStyle(
+                color: MyColors.grey11,
+                fontSize: 12
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.orange,

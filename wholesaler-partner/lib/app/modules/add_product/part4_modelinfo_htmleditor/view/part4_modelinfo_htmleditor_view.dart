@@ -17,7 +17,6 @@ class AP_Part4View extends GetView<AP_Part4Controller> {
   AP_Part4Controller ctr = Get.put(AP_Part4Controller());
   /*RxList<XFile> pickedFile = <XFile>[].obs;*/
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,12 +45,15 @@ class AP_Part4View extends GetView<AP_Part4Controller> {
           ),
           SizedBox(height: 5),
           CustomInput(
-            label: '사이즈',
+            label: 'FITTING',
+            hintText: 'FREE(55-66) / 멜란지그레이, 그레이',
             fieldController: ctr.modelSizeController,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
           ),
           SizedBox(height: 30),
           EditorWidget(),
+          // SizedBox(height: 10),
+          // Text('* 한글은 작성 후 변경할 영역을 선택하여 스타일을 변경해 주세요.'),
           SizedBox(height: 30),
           // Obx(
           //       () => Container(
@@ -78,7 +80,9 @@ class AP_Part4View extends GetView<AP_Part4Controller> {
           //     ),
           //   ),
           // ),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           // CustomButton(
           //   onPressed: () async {
           //     pickedFile.value = await ImagePicker().pickMultiImage();
@@ -86,7 +90,6 @@ class AP_Part4View extends GetView<AP_Part4Controller> {
           //   text: "이미지 업로드",
           //   width: double.infinity,
           // ),
-
         ],
       ),
     );

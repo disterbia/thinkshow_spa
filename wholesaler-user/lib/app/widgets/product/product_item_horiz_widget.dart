@@ -125,6 +125,11 @@ class ProductItemHorizontal extends StatelessWidget {
   }
 
   ImageBuilder() {
+    print(product.imgUrl);
+    print(product.imgUrl);
+    print(product.imgUrl);
+    print(product.imgUrl);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: CachedNetworkImage(

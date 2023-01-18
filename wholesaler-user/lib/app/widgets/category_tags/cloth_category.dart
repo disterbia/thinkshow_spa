@@ -27,53 +27,88 @@ class ClothCategory {
   });
 
   static const ALL = "전체"; // all
+  static const ACCESSORIES = "악세사리";
+  static const BAG = "가방";
+  static const SHOES = "신발";
   static const OUTER = "아우터"; // outer
   static const TOP = "상의"; // top
   static const PANTS = "바지"; // pants
   static const SKIRTS = "스커트"; // skirts
   static const ONE_PIECE = "원피스"; // onepiece
-  static const SET = "세트";
+  static const SET = "투피스/세트";
+  static const STYLEING = "스타일링";
 
   static const List<String> titles = [
+    ClothCategory.ACCESSORIES,
+    ClothCategory.BAG,
+    ClothCategory.SHOES,
     ClothCategory.OUTER,
     ClothCategory.TOP,
     ClothCategory.PANTS,
     ClothCategory.SKIRTS,
     ClothCategory.ONE_PIECE,
     ClothCategory.SET,
+    ClothCategory.STYLEING,
   ];
 
   static const Map<String, String> icons = {
-    ClothCategory.OUTER: 'assets/shared_images_icons/ic_cat_2_outer.png',
-    ClothCategory.TOP: 'assets/shared_images_icons/ic_cat_1_top.png',
-    ClothCategory.PANTS: 'assets/shared_images_icons/ic_cat_3_pants.png',
-    ClothCategory.SKIRTS: 'assets/shared_images_icons/ic_cat_4_skirts.png',
-    ClothCategory.ONE_PIECE: 'assets/shared_images_icons/ic_cat_5_onepiece.png',
-    ClothCategory.SET: 'assets/shared_images_icons/ic_cat_6_set.png',
+    ClothCategory.ACCESSORIES: 'assets/shared_images_icons/ic_cat_accessories.png',
+    ClothCategory.BAG: 'assets/shared_images_icons/ic_cat_bag.png',
+    ClothCategory.SHOES: 'assets/shared_images_icons/ic_cat_shoes.png',
+    ClothCategory.OUTER: 'assets/shared_images_icons/ic_cat_outer.png',
+    ClothCategory.TOP: 'assets/shared_images_icons/ic_cat_top.png',
+    ClothCategory.PANTS: 'assets/shared_images_icons/ic_cat_pants.png',
+    ClothCategory.SKIRTS: 'assets/shared_images_icons/ic_cat_skirts.png',
+    ClothCategory.ONE_PIECE: 'assets/shared_images_icons/ic_cat_onepiece.png',
+    ClothCategory.SET: 'assets/shared_images_icons/ic_cat_set.png',
+    ClothCategory.STYLEING: 'assets/shared_images_icons/ic_cat_accessories.png',
   };
 
   static Map<String, List<ClothCategoryModel>> subCats = {
-    ClothCategory.OUTER:
-        getAllItems().where((element) => element.parentId == 1).toList(),
-    ClothCategory.TOP:
-        getAllItems().where((element) => element.parentId == 2).toList(),
-    ClothCategory.PANTS:
-        getAllItems().where((element) => element.parentId == 3).toList(),
-    ClothCategory.SKIRTS:
-        getAllItems().where((element) => element.parentId == 4).toList(),
-    ClothCategory.ONE_PIECE:
-        getAllItems().where((element) => element.parentId == 5).toList(),
-    ClothCategory.SET:
-        getAllItems().where((element) => element.parentId == 6).toList(),
+    ClothCategory.ACCESSORIES: getAllItems()
+        .where(
+            (element) => element.parentId == ClothMainCategoryEnum.ACCESSORIES)
+        .toList(),
+    ClothCategory.BAG: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.BAG)
+        .toList(),
+    ClothCategory.SHOES: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.SHOES)
+        .toList(),
+    ClothCategory.OUTER: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.OUTER)
+        .toList(),
+    ClothCategory.TOP: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.TOP)
+        .toList(),
+    ClothCategory.PANTS: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.PANTS)
+        .toList(),
+    ClothCategory.SKIRTS: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.SKIRTS)
+        .toList(),
+    ClothCategory.ONE_PIECE: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.ONE_PIECE)
+        .toList(),
+    ClothCategory.SET: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.SET)
+        .toList(),
+    ClothCategory.STYLEING: getAllItems()
+        .where((element) => element.parentId == ClothMainCategoryEnum.STYLEING)
+        .toList(),
   };
 
   static const Map<String, String> clothImages = {
-    ClothCategory.TOP: 'assets/shared_images_icons/img_cat_top.png',
+    ClothCategory.ACCESSORIES: 'assets/shared_images_icons/img_cat_top.png',
+    ClothCategory.BAG: 'assets/shared_images_icons/img_cat_top.png',
+    ClothCategory.SHOES: 'assets/shared_images_icons/img_cat_top.png',
     ClothCategory.OUTER: 'assets/shared_images_icons/img_cat_outer.png',
+    ClothCategory.TOP: 'assets/shared_images_icons/img_cat_top.png',
     ClothCategory.PANTS: 'assets/shared_images_icons/img_cat_pants.png',
     ClothCategory.SKIRTS: 'assets/shared_images_icons/img_cat_skirt.png',
     ClothCategory.ONE_PIECE: 'assets/shared_images_icons/img_cat_one_piece.png',
-    ClothCategory.SET: '',
+    ClothCategory.SET: 'assets/shared_images_icons/img_cat_top.png',
+    ClothCategory.STYLEING: 'assets/shared_images_icons/img_cat_top.png',
   };
 
   static List<ClothCategoryModel> getAllMainCat() {
@@ -94,6 +129,7 @@ class ClothCategory {
   // we have two diffrent icon designs. One used in USER app, another used in PARTNER app
   static List<ClothCategory> getAll() {
     List<ClothCategoryModel> mainCats = getAllMainCat();
+
     return [
       for (int i = 0; i < mainCats.length; i++)
         ClothCategory(
@@ -109,7 +145,24 @@ class ClothCategory {
 
   static List<ClothCategoryModel> getAllItems() {
     return [
-      // ClothCategoryModel(id: 0, name: 'ALL', parentId: null, depth: 0, isUse: true),
+      ClothCategoryModel(
+          id: ClothMainCategoryEnum.ACCESSORIES,
+          name: '악세사리',
+          parentId: null,
+          depth: 0,
+          isUse: true),
+      ClothCategoryModel(
+          id: ClothMainCategoryEnum.BAG,
+          name: '가방',
+          parentId: null,
+          depth: 0,
+          isUse: true),
+      ClothCategoryModel(
+          id: ClothMainCategoryEnum.SHOES,
+          name: '신발',
+          parentId: null,
+          depth: 0,
+          isUse: true),
       ClothCategoryModel(
           id: ClothMainCategoryEnum.OUTER,
           name: '아우터',
@@ -142,84 +195,421 @@ class ClothCategory {
           isUse: true),
       ClothCategoryModel(
           id: ClothMainCategoryEnum.SET,
-          name: '세트',
+          name: '투피스/세트',
           parentId: null,
           depth: 0,
           isUse: true),
-      ////// 아우터
       ClothCategoryModel(
-          id: 7, name: '가디건', parentId: 1, depth: 1, isUse: true),
-      ClothCategoryModel(id: 8, name: '자켓', parentId: 1, depth: 1, isUse: true),
-      ClothCategoryModel(id: 9, name: '코트', parentId: 1, depth: 1, isUse: true),
+          id: ClothMainCategoryEnum.STYLEING,
+          name: '스타일링',
+          parentId: null,
+          depth: 0,
+          isUse: true),
+
+      /** 악세사리 */
       ClothCategoryModel(
-          id: 10, name: '점퍼', parentId: 1, depth: 1, isUse: true),
+          id: 11,
+          name: '양말',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 11, name: '야상', parentId: 1, depth: 1, isUse: true),
+          id: 12,
+          name: '스타킹',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 12, name: '베스트', parentId: 1, depth: 1, isUse: true),
+          id: 13,
+          name: '목걸이',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 13, name: '패딩', parentId: 1, depth: 1, isUse: true),
-      /////// 상의
+          id: 14,
+          name: '귀걸이',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 14, name: '티셔츠', parentId: 2, depth: 1, isUse: true),
+          id: 15,
+          name: '모자',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 15, name: '니트/스웨터', parentId: 2, depth: 1, isUse: true),
+          id: 16,
+          name: '헤어밴드',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 16, name: '셔츠/남방', parentId: 2, depth: 1, isUse: true),
+          id: 17,
+          name: '헤어핀/집게',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 17, name: '맨투맨', parentId: 2, depth: 1, isUse: true),
+          id: 18,
+          name: '헤어스크런치',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 18, name: '후드', parentId: 2, depth: 1, isUse: true),
+          id: 19,
+          name: '벨트',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 19, name: '블라우스', parentId: 2, depth: 1, isUse: true),
+          id: 20,
+          name: '시계',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 20, name: '민소매/나시', parentId: 2, depth: 1, isUse: true),
-      //// 바지
+          id: 21,
+          name: '머플러',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 21, name: '일자바지', parentId: 3, depth: 1, isUse: true),
+          id: 22,
+          name: '장갑',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 22, name: '슬랙스팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 23,
+          name: '이너웨어(상의)',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 23, name: '반바지', parentId: 3, depth: 1, isUse: true),
+          id: 24,
+          name: '이너웨어(하의)',
+          parentId: ClothMainCategoryEnum.ACCESSORIES,
+          depth: 1,
+          isUse: true),
+
+      /** 가방 */
       ClothCategoryModel(
-          id: 24, name: '와이드팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 25,
+          name: '백팩&클러치',
+          parentId: ClothMainCategoryEnum.BAG,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 25, name: '스키니팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 26,
+          name: '숄더백',
+          parentId: ClothMainCategoryEnum.BAG,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 26, name: '부츠컷팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 27,
+          name: '크로스백',
+          parentId: ClothMainCategoryEnum.BAG,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 27, name: '조거팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 28,
+          name: '토트백',
+          parentId: ClothMainCategoryEnum.BAG,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 28, name: '치마바지', parentId: 3, depth: 1, isUse: true),
+          id: 29,
+          name: '에코백',
+          parentId: ClothMainCategoryEnum.BAG,
+          depth: 1,
+          isUse: true),
+
+      /** 신발 */
       ClothCategoryModel(
-          id: 29, name: '멜빵바지', parentId: 3, depth: 1, isUse: true),
+          id: 30,
+          name: '샌들',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 30, name: '크롭팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 31,
+          name: '플랫',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 31, name: '배기팬츠', parentId: 3, depth: 1, isUse: true),
+          id: 32,
+          name: '로퍼',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 32, name: '레깅스', parentId: 3, depth: 1, isUse: true),
-      ////// 스커트
+          id: 33,
+          name: '부츠',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 33, name: '미니스커트', parentId: 4, depth: 1, isUse: true),
+          id: 34,
+          name: '힐',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 34, name: '미디스커트', parentId: 4, depth: 1, isUse: true),
+          id: 35,
+          name: '스니커즈',
+          parentId: ClothMainCategoryEnum.SHOES,
+          depth: 1,
+          isUse: true),
+
+      /** 아우터 */
       ClothCategoryModel(
-          id: 35, name: '롱스커트', parentId: 4, depth: 1, isUse: true),
-      //// 원피스
+          id: 36,
+          name: '코트',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 36, name: '미니원피스', parentId: 5, depth: 1, isUse: true),
+          id: 37,
+          name: '자켓',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 37, name: '미디원피스', parentId: 5, depth: 1, isUse: true),
+          id: 38,
+          name: '점퍼',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 38, name: '롱원피스', parentId: 5, depth: 1, isUse: true),
+          id: 39,
+          name: '가디건',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 39, name: '점푸슈트', parentId: 5, depth: 1, isUse: true),
-      ///// 세트
+          id: 40,
+          name: '무스탕&퍼',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
       ClothCategoryModel(
-          id: 40, name: '투피스', parentId: 6, depth: 1, isUse: true),
+          id: 41,
+          name: '베스트',
+          parentId: ClothMainCategoryEnum.OUTER,
+          depth: 1,
+          isUse: true),
+
+      /** 상의 */
       ClothCategoryModel(
-          id: 41, name: '세트', parentId: 6, depth: 1, isUse: true),
+          id: 42,
+          name: '티셔츠',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 43,
+          name: '블라우스&셔츠',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 44,
+          name: '니트&스웨터',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 45,
+          name: '맨투맨',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 46,
+          name: '후드',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 47,
+          name: '뷔스티에&슬리브리스',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 48,
+          name: '베스트',
+          parentId: ClothMainCategoryEnum.TOP,
+          depth: 1,
+          isUse: true),
+
+      /** 바지 */
+      ClothCategoryModel(
+          id: 49,
+          name: '슬랙스',
+          parentId: ClothMainCategoryEnum.PANTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 50,
+          name: '면바지',
+          parentId: ClothMainCategoryEnum.PANTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 51,
+          name: '데님',
+          parentId: ClothMainCategoryEnum.PANTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 52,
+          name: '조거&트레이닝',
+          parentId: ClothMainCategoryEnum.PANTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 53,
+          name: '반바지',
+          parentId: ClothMainCategoryEnum.PANTS,
+          depth: 1,
+          isUse: true),
+
+      /**스커트 */
+      ClothCategoryModel(
+          id: 54,
+          name: '미니스커트',
+          parentId: ClothMainCategoryEnum.SKIRTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 55,
+          name: '미디스커트',
+          parentId: ClothMainCategoryEnum.SKIRTS,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 56,
+          name: '롱스커트',
+          parentId: ClothMainCategoryEnum.SKIRTS,
+          depth: 1,
+          isUse: true),
+
+      /**원피스 */
+      ClothCategoryModel(
+          id: 57,
+          name: '미니원피스',
+          parentId: ClothMainCategoryEnum.ONE_PIECE,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 58,
+          name: '미디원피스',
+          parentId: ClothMainCategoryEnum.ONE_PIECE,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 59,
+          name: '롱원피스',
+          parentId: ClothMainCategoryEnum.ONE_PIECE,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 60,
+          name: '점프슈트',
+          parentId: ClothMainCategoryEnum.ONE_PIECE,
+          depth: 1,
+          isUse: true),
+
+      /**투피스/세트 */
+      ClothCategoryModel(
+          id: 61,
+          name: '치마세트',
+          parentId: ClothMainCategoryEnum.SET,
+          depth: 1,
+          isUse: true),
+      ClothCategoryModel(
+          id: 62,
+          name: '바지세트',
+          parentId: ClothMainCategoryEnum.SET,
+          depth: 1,
+          isUse: true),
+
+      // ////// 아우터
+      // ClothCategoryModel(
+      //     id: 7, name: '가디건', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(id: 8, name: '자켓', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(id: 9, name: '코트', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 10, name: '점퍼', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 11, name: '야상', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 12, name: '베스트', parentId: 1, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 13, name: '패딩', parentId: 1, depth: 1, isUse: true),
+      // /////// 상의
+      // ClothCategoryModel(
+      //     id: 14, name: '티셔츠', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 15, name: '니트/스웨터', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 16, name: '셔츠/남방', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 17, name: '맨투맨', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 18, name: '후드', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 19, name: '블라우스', parentId: 2, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 20, name: '민소매/나시', parentId: 2, depth: 1, isUse: true),
+      // //// 바지
+      // ClothCategoryModel(
+      //     id: 21, name: '일자바지', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 22, name: '슬랙스팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 23, name: '반바지', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 24, name: '와이드팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 25, name: '스키니팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 26, name: '부츠컷팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 27, name: '조거팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 28, name: '치마바지', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 29, name: '멜빵바지', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 30, name: '크롭팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 31, name: '배기팬츠', parentId: 3, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 32, name: '레깅스', parentId: 3, depth: 1, isUse: true),
+      // ////// 스커트
+      // ClothCategoryModel(
+      //     id: 33, name: '미니스커트', parentId: 4, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 34, name: '미디스커트', parentId: 4, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 35, name: '롱스커트', parentId: 4, depth: 1, isUse: true),
+      // //// 원피스
+      // ClothCategoryModel(
+      //     id: 36, name: '미니원피스', parentId: 5, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 37, name: '미디원피스', parentId: 5, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 38, name: '롱원피스', parentId: 5, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 39, name: '점푸슈트', parentId: 5, depth: 1, isUse: true),
+      // ///// 세트
+      // ClothCategoryModel(
+      //     id: 40, name: '투피스', parentId: 6, depth: 1, isUse: true),
+      // ClothCategoryModel(
+      //     id: 41, name: '세트', parentId: 6, depth: 1, isUse: true),
     ];
   }
 

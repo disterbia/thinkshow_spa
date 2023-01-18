@@ -11,7 +11,6 @@ import 'package:wholesaler_user/app/widgets/image_slider/view/image_slider_view.
 import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gridview_builder.dart';
 
 class Tab4DingDongView extends GetView<Tab4DingDongController> {
-  //CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
   Tab4DingDongController ctr = Get.put(Tab4DingDongController());
   Tab4DingDongView();
 
@@ -29,7 +28,7 @@ class Tab4DingDongView extends GetView<Tab4DingDongController> {
             ImageSliderView(CurrentPage.dingDongPage),
             SizedBox(height: 10),
             Obx(() => Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   child: HorizontalChipList().getAllMainCat(
                     categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),
                     onTapped: () => ctr.updateProducts(),

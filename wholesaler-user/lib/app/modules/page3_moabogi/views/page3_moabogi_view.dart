@@ -44,8 +44,10 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 20),
+
                     HorizontalChipList().getIconTextList(
                         onPressed: (index) => ctr.chipPressed(index)),
+                    
                     _dingDongDeliveryBanner(),
                     Divider(thickness: 6, color: MyColors.grey3),
                     _imageList(),

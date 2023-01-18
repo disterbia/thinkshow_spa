@@ -59,7 +59,7 @@ class AP_Part1Controller extends GetxController
 
   Future<void> uploadImageBtnPressed() async {
     pickedImage1.value = await ImagePicker().pickMultiImage();
-    if (pickedImage1.value.length == 3) {
+    if (pickedImage1.length == 3) {
       uploadImage();
     } else {
       return mSnackbar(message: "대표이미지는 반드시 3장이어야 합니다.");
@@ -67,11 +67,11 @@ class AP_Part1Controller extends GetxController
   }
 
   Future<void> uploadImage() async {
-    if (pickedImage1 != null) {
+    if (pickedImage1.isNotEmpty) {
       isUploadLoading1.value = true;
       List<File> temp = [];
-      for (int i = 0; i < pickedImage1!.length; i++) {
-        temp.add(File(pickedImage1![i].path));
+      for (int i = 0; i < pickedImage1.length; i++) {
+        temp.add(File(pickedImage1[i].path));
       }
       ProductImageModel2 productImageModel =
           await _apiProvider.uploadProductImage(pickedImage: temp);
@@ -81,8 +81,8 @@ class AP_Part1Controller extends GetxController
       if (productImageModel.statusCode == 200) {
         imageUrl1.value = productImageModel.url;
         imagePath1.value = productImageModel.path;
-        print("---------${imageUrl1.value}");
-        print("---------${imagePath1.value}");
+        // print("---------${imageUrl1.value}");
+        // print("---------${imagePath1.value}");
       }
     }
   }
@@ -120,10 +120,10 @@ class AP_Part1Controller extends GetxController
 
   Future<void> uploadImageBtnPressed2() async {
     pickedImage2.value = await ImagePicker().pickMultiImage();
-    print(pickedImage2.value);
-    if (pickedImage2.value.length < 30 && pickedImage2.value.isNotEmpty) {
+    // print(pickedImage2.value);
+    if (pickedImage2.length < 30 && pickedImage2.isNotEmpty) {
       uploadImage2();
-    } else if (pickedImage2.value.isEmpty) {
+    } else if (pickedImage2.isEmpty) {
       return mSnackbar(message: "상세이미지는 반드시 1장 이상 업로드 해야합니다.");
     } else {
       return mSnackbar(message: "상세이미지는 30장 이상 업로드 할 수 없습니다.");
@@ -141,7 +141,7 @@ class AP_Part1Controller extends GetxController
   }
 
   Future<void> updateImage() async {
-    if (pickedImage2.length != null) {
+    if (pickedImage2.isNotEmpty) {
       isUploadLoading2.value = true;
       List<File> temp = [];
 
@@ -156,15 +156,15 @@ class AP_Part1Controller extends GetxController
       if (productImageModel.statusCode == 200) {
         imageUrl2.value += productImageModel.url;
         imagePath2.value += productImageModel.path;
-        print(imageUrl2.value);
-        print(imagePath2.value);
+        // print(imageUrl2.value);
+        // print(imagePath2.value);
       }
       isUploadLoading2.value = false;
     }
   }
 
   Future<void> uploadImage2() async {
-    if (pickedImage2 != null) {
+    if (pickedImage2.isNotEmpty) {
       isUploadLoading2.value = true;
       List<File> temp = [];
       for (int i = 0; i < pickedImage2.length; i++) {
@@ -178,8 +178,8 @@ class AP_Part1Controller extends GetxController
       if (productImageModel.statusCode == 200) {
         imageUrl2.value = productImageModel.url;
         imagePath2.value = productImageModel.path;
-        print(imageUrl2.value);
-        print(imagePath2.value);
+        // print(imageUrl2.value);
+        // print(imagePath2.value);
       }
     }
   }

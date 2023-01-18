@@ -433,20 +433,27 @@ class Tab1DetailInfo extends GetView {
   }
 
   Widget modelInfo() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('키'),
-        SizedBox(width: 5),
-        Text(
-            productDetailCtr.product.value.productModelInfo!.height.toString()),
-        SizedBox(width: 15),
-        Text('몸무게'),
-        SizedBox(width: 5),
-        Text(productDetailCtr.product.value.productModelInfo!.modelWeight
-            .toString()),
-        SizedBox(width: 15),
-        Text('사이즈'),
-        SizedBox(width: 5),
+        Row(
+          children: [
+            Text('키'),
+            SizedBox(width: 5),
+            Text(productDetailCtr.product.value.productModelInfo!.height
+                .toString()),
+            SizedBox(width: 15),
+            Text('몸무게'),
+            SizedBox(width: 5),
+            Text(productDetailCtr.product.value.productModelInfo!.modelWeight
+                .toString()),
+            SizedBox(width: 15),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text('FITTING'),
         Text(productDetailCtr.product.value.productModelInfo!.modelSize
             .toString()),
       ],

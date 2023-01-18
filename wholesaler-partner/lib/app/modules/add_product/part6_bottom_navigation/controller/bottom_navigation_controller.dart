@@ -28,7 +28,8 @@ class AP_Part6Controller extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<void> addProduct() async {
-    AddProductController addProductController = Get.find<AddProductController>();
+    AddProductController addProductController =
+        Get.find<AddProductController>();
     AP_Part1Controller part1controller = Get.find<AP_Part1Controller>();
     AP_Part2Controller part2controller = Get.find<AP_Part2Controller>();
     AP_Part3Controller part3controller = Get.find<AP_Part3Controller>();
@@ -42,19 +43,22 @@ class AP_Part6Controller extends GetxController {
         ? addProductController.selectedSubCat.value.id
         : 0;
     String productName = addProductController.productNameController.text;
-    String price = addProductController.priceController.text.replaceAll(RegExp(r'[^0-9]'),'');
+    String price = addProductController.priceController.text
+        .replaceAll(RegExp(r'[^0-9]'), '');
     List<dynamic> imagePath1 = part1controller.imagePath1;
     List<dynamic> imagePath2 = part1controller.imagePath2;
     //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = jsonEncode(editorCtr.editorController.value.document.toDelta().toJson());
+    String content = jsonEncode(
+        editorCtr.editorController.value.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text
         : part5controller.selectedCountry.value;
 
     // option
-    print('optionsControllers.length ${addProductController.optionsControllers.length}');
+    print(
+        'optionsControllers.length ${addProductController.optionsControllers.length}');
     for (int i = 0; i < addProductController.optionsControllers.length; i++) {
       String addPrice = addProductController.optionsControllers[i].text;
       if (addPrice.isEmpty) {
@@ -91,7 +95,34 @@ class AP_Part6Controller extends GetxController {
     }
 
     for (int i = 0; i < part3controller.materialTypeList.length; i++) {
-      if(part3controller.materialTypePercentControllers[i].text.isEmpty) return mSnackbar(message: "혼용률 입력하세요.");
+      if (part3controller.materialTypePercentControllers[i].text.isEmpty) {
+        mSnackbar(message: "혼용률 입력하세요.");
+        return;
+      }
+    }
+
+    int tempPercent = 0;
+    bool tempisPercent = false;
+
+    for (int i = 0; i < part3controller.materialTypeList.length; i++) {
+      if (part3controller.materialTypePercentControllers[i].text.isNotEmpty) {
+        tempPercent +=
+            int.parse(part3controller.materialTypePercentControllers[i].text);
+        tempisPercent = true;
+      }
+    }
+
+    print(tempPercent);
+    if (tempisPercent && tempPercent < 100) {
+      Get.back();
+      mSnackbar(message: '혼용률 총합이 100% 미만입니다.');
+      return;
+    }
+
+    if (tempisPercent && tempPercent > 100) {
+      Get.back();
+      mSnackbar(message: '혼용률 총합이 100% 초과입니다.');
+      return;
     }
 
     if (mainCategoryId == 0) {
@@ -100,7 +131,7 @@ class AP_Part6Controller extends GetxController {
       return;
     }
 
-    if(addProductController.colorsList.isEmpty){
+    if (addProductController.colorsList.isEmpty) {
       Get.back();
       mSnackbar(message: '색상을 추가해주세요.');
       return;
@@ -170,7 +201,7 @@ class AP_Part6Controller extends GetxController {
     }
 
     if (sizeInfoList.isEmpty) {
-      isLoading.value=false;
+      isLoading.value = false;
       Get.back();
       mSnackbar(message: '사이즈 선택해주세요.');
       return;
@@ -211,8 +242,7 @@ class AP_Part6Controller extends GetxController {
     };
 
     bool isSuccess = false;
-      isSuccess = await _apiProvider.addProduct(data: data);
-
+    isSuccess = await _apiProvider.addProduct(data: data);
 
     if (isSuccess) {
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
@@ -230,20 +260,23 @@ class AP_Part6Controller extends GetxController {
       c.getProducts(isScrolling: false);
 
       Get.to(ProductMgmtView());
-
-
     }
     isLoading.value = false;
   }
-  void fuckingTest(){
-    AddProductController addProductController = Get.find<AddProductController>();
+
+  void fuckingTest() {
+    AddProductController addProductController =
+        Get.find<AddProductController>();
     String productName = addProductController.productNameController.text;
-    print("productName22222222====@======${addProductController.productIdforEdit}");
+    print(
+        "productName22222222====@======${addProductController.productIdforEdit}");
     print("productName====@======$productName");
     print("productName3333====@======${addProductController.productIdforEdit}");
   }
+
   Future<void> editProduct() async {
-    AddProductController addProductController = Get.find<AddProductController>();
+    AddProductController addProductController =
+        Get.find<AddProductController>();
     AP_Part1Controller part1controller = Get.find<AP_Part1Controller>();
     AP_Part2Controller part2controller = Get.find<AP_Part2Controller>();
     AP_Part3Controller part3controller = Get.find<AP_Part3Controller>();
@@ -251,7 +284,8 @@ class AP_Part6Controller extends GetxController {
     AP_Part5Controller part5controller = Get.find<AP_Part5Controller>();
     EditorController editorCtr = Get.find<EditorController>();
 
-    print("productName22222222==========${addProductController.productIdforEdit}");
+    print(
+        "productName22222222==========${addProductController.productIdforEdit}");
     int mainCategoryId = (addProductController.selectedSubCat != null)
         ? addProductController.selectedSubCat.value.parentId!
         : 0;
@@ -261,19 +295,22 @@ class AP_Part6Controller extends GetxController {
     String productName = addProductController.productNameController.text;
     print("productName==========$productName");
     print("productName3333==========${addProductController.productIdforEdit}");
-    String price = addProductController.priceController.text.replaceAll(RegExp(r'[^0-9]'),'');
+    String price = addProductController.priceController.text
+        .replaceAll(RegExp(r'[^0-9]'), '');
     List<dynamic> imagePath1 = part1controller.imagePath1.value;
     List<dynamic> imagePath2 = part1controller.imagePath2.value;
     //String imagePath3 = part1controller.imagePath3.value;
 
-    String content = jsonEncode(editorCtr.editorController.value.document.toDelta().toJson());
+    String content = jsonEncode(
+        editorCtr.editorController.value.document.toDelta().toJson());
 
     String country = part5controller.selectedCountry.value == '직접입력'
         ? part5controller.directController.text
         : part5controller.selectedCountry.value;
 
     // option
-    print('optionsControllers.length ${addProductController.optionsControllers.length}');
+    print(
+        'optionsControllers.length ${addProductController.optionsControllers.length}');
     for (int i = 0; i < addProductController.optionsControllers.length; i++) {
       String addPrice = addProductController.optionsControllers[i].text;
       if (addPrice.isEmpty) {
@@ -304,25 +341,49 @@ class AP_Part6Controller extends GetxController {
     List<MaterialModel> materialList = [];
     materialList.clear();
     for (int i = 0; i < part3controller.materialTypeList.length; i++) {
-      part3controller.materialTypePercentControllers.add(TextEditingController());
+      part3controller.materialTypePercentControllers
+          .add(TextEditingController());
       materialList.add(MaterialModel(
           name: part3controller.materialTypeList[i],
           percent: part3controller.materialTypePercentControllers[i].text));
     }
     bool temp = false;
     for (int i = 0; i < part3controller.materialTypeList.length; i++) {
-      if (part3controller.materialTypePercentControllers[i].text.isEmpty){
+      if (part3controller.materialTypePercentControllers[i].text.isEmpty) {
         temp = true;
       }
     }
 
-    if(temp){
+    int tempPercent = 0;
+    bool tempisPercent = false;
+    for (int i = 0; i < part3controller.materialTypeList.length; i++) {
+      if (part3controller.materialTypePercentControllers[i].text.isNotEmpty) {
+        tempPercent +=
+            int.parse(part3controller.materialTypePercentControllers[i].text);
+        tempisPercent = true;
+      }
+    }
+
+    print(tempPercent);
+    if (tempisPercent && tempPercent < 100) {
+      Get.back();
+      mSnackbar(message: '혼용률 총합이 100% 미만입니다.');
+      return;
+    }
+
+    if (tempisPercent && tempPercent > 100) {
+      Get.back();
+      mSnackbar(message: '혼용률 총합이 100% 초과입니다.');
+      return;
+    }
+
+    if (temp) {
       Get.back();
       mSnackbar(message: '혼용률 입력하세요.');
       return;
     }
 
-    if(addProductController.colorsList.isEmpty){
+    if (addProductController.colorsList.isEmpty) {
       Get.back();
       mSnackbar(message: '색상을 추가해주세요.');
       return;
@@ -382,12 +443,12 @@ class AP_Part6Controller extends GetxController {
     List<Map<String, dynamic>> sizeInfoList = [];
     for (int i = 0; i < part2controller.productBodySizeList.length; i++) {
       ProductBodySizeModel productBodySizeModel =
-      part2controller.productBodySizeList[i];
+          part2controller.productBodySizeList[i];
       if (productBodySizeModel.isSelected.value) {
         Map<String, dynamic> sizeInfo = {"size": productBodySizeModel.size};
         for (int j = 0;
-        j < productBodySizeModel.sizeCategory.children.length;
-        j++) {
+            j < productBodySizeModel.sizeCategory.children.length;
+            j++) {
           SizeChild sizeChild = productBodySizeModel.sizeCategory.children[j];
           sizeInfo[sizeChild.english] = part2controller
               .textEditingControllers[i.toString() + j.toString()]!.text;
@@ -402,6 +463,8 @@ class AP_Part6Controller extends GetxController {
       mSnackbar(message: '사이즈 선택해주세요.');
       return;
     }
+
+    print('subCategoryId ${subCategoryId}');
     Map<String, dynamic> data = {
       "product_name": productName,
       "main_category_id": mainCategoryId,
@@ -417,7 +480,7 @@ class AP_Part6Controller extends GetxController {
       "see_through": part3controller.seeThroughSelected.value.toString(),
       "flexibility": part3controller.flexibilitySelected.value.toString(),
       "is_lining":
-      part3controller.liningsSelected.value.toString() == 'included',
+          part3controller.liningsSelected.value.toString() == 'included',
       "content": content,
       "manufacture_country": country,
       "is_hand_wash": part3controller.clothWashToggles[0].isActive.value,
@@ -436,13 +499,15 @@ class AP_Part6Controller extends GetxController {
           : '',
       "model_size": part4controller.modelSizeController.text,
     };
-    print(json.decode(addProductController.options.toString()),);
+    print(
+      json.decode(addProductController.options.toString()),
+    );
     bool isSuccess = false;
-      isSuccess = await _apiProvider.editProduct(
-          productId: addProductController.productIdforEdit, data: data);
+    isSuccess = await _apiProvider.editProduct(
+        productId: addProductController.productIdforEdit, data: data);
 
     if (isSuccess) {
-      mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
+      mSnackbar(message: '제품이 정상적으로 수정되었습니다.');
       Get.delete<PartnerHomeController>();
       Get.delete<DingdongDeliveryController>();
       Get.delete<EditorController>();
@@ -456,9 +521,7 @@ class AP_Part6Controller extends GetxController {
       Get.delete<BottomNavbarController>();
       c.getProducts(isScrolling: false);
       Get.to(ProductMgmtView());
-
     }
     isLoading.value = false;
   }
-
 }

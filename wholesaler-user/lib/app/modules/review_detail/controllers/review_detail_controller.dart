@@ -8,10 +8,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/controllers/orders_inquiry_review_controller.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/order_inquiry_and_review_view.dart';
 import 'package:wholesaler_user/app/modules/page5_my_page/controllers/page5_my_page_controller.dart';
+import 'package:wholesaler_user/app/modules/product_detail/controller/tab_2_review_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
+
+import '../../main/view/user_main_view.dart';
 
 class ReviewDetailController extends GetxController {
   TextEditingController contentController = TextEditingController();
+  Tab2ReviewProductDetailController ctr =
+      Get.put(Tab2ReviewProductDetailController());
 
   uApiProvider _apiProvider = uApiProvider();
 
@@ -27,6 +32,13 @@ class ReviewDetailController extends GetxController {
       required bool isComingFromOrderInquiryPage}) {
     this.isComingFromReviewListPage = isComingFromOrderInquiryPage;
     // customize for UI
+
+    print(tempSelectedReviw.id);
+    print(tempSelectedReviw.id);
+    print(tempSelectedReviw.id);
+    print(tempSelectedReviw.id);
+    print(tempSelectedReviw.id);
+
     price.value = tempSelectedReviw.product.price!;
     // selectedReviw = tempSelectedReviw.obs;
     selectedReviw = Review(
@@ -75,8 +87,7 @@ class ReviewDetailController extends GetxController {
       mSnackbar(message: "이미지가 등록되었습니다.");
 
       if (productImageModel!.statusCode == 200) {
-        print(
-            'image uploaded productImageModel.url ${productImageModel!.url}');
+        print('image uploaded productImageModel.url ${productImageModel!.url}');
         selectedReviw!.value.reviewImageUrl = productImageModel!.url;
         reviewImageUrl.value = productImageModel!.url;
       }
@@ -87,11 +98,12 @@ class ReviewDetailController extends GetxController {
     print('reviewEditPressed');
     bool isSuccess = await _apiProvider.putReviewEdit(
         content: contentController.text,
-        image_path: productImageModel!.path,
+        image: productImageModel,
         reviewId: selectedReviw!.value.id,
         star: selectedReviw!.value.rating);
     print('edit');
     if (isSuccess) {
+      await ctr.getProductReviews(productId: selectedReviw!.value.product.id);
       mSnackbar(message: '수정이 완료되었습니다.');
       Get.back();
     }
@@ -128,10 +140,13 @@ class ReviewDetailController extends GetxController {
 
       print(
           'isComingFromReviewListPage $isComingFromReviewListPage go back to review list page');
-      Get.to(
-          () => OrderInquiryAndReviewView(
-              hasHomeButton: true, isBackEnable: false),
-          arguments: isComingFromReviewListPage);
+      // Get.to(
+      //     () => OrderInquiryAndReviewView(
+      //         hasHomeButton: true, isBackEnable: false),
+      //     arguments: isComingFromReviewListPage);
+
+      // Get.back();
+      Get.offAll(() => UserMainView());
     }
   }
 }

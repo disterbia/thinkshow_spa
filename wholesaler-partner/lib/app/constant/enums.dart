@@ -64,12 +64,16 @@ class ProductMgmtButtons {
 }
 
 class ClothMainCategoryEnum {
-  static const int OUTER = 1;
-  static const int TOP = 2;
-  static const int PANTS = 3;
-  static const int SKIRTS = 4;
-  static const int ONE_PIECE = 5;
-  static const int SET = 6;
+  static const int ACCESSORIES = 1;
+  static const int BAG = 2;
+  static const int SHOES = 3;
+  static const int OUTER = 4;
+  static const int TOP = 5;
+  static const int PANTS = 6;
+  static const int SKIRTS = 7;
+  static const int ONE_PIECE = 8;
+  static const int SET = 9;
+  static const int STYLEING = 10;
 }
 
 class ProductFilterDates {

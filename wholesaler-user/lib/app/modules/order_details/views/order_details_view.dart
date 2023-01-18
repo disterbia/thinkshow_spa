@@ -61,32 +61,55 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                             SizedBox(height: 10),
                             Divider(height: 1),
                             SizedBox(height: 10),
-                            _tile('gift_recipient'.tr, ctr.order.value.user.userName),
+                            _tile('gift_recipient'.tr,
+                                ctr.order.value.user.userName),
                             SizedBox(height: 10),
-                            _tile('contact'.tr, ctr.order.value.user.phoneNumber.toString()),
+                            _tile('contact'.tr,
+                                ctr.order.value.user.phoneNumber.toString()),
                             SizedBox(height: 10),
                             _tile(
                               'address'.tr,
-                              ctr.order.value.address.address + ' \n' + ctr.order.value.address.addressDetail,
+                              ctr.order.value.address.address +
+                                  ' \n' +
+                                  ctr.order.value.address.addressDetail,
                             ),
                             SizedBox(height: 10),
-                            _tile('요청사항', ctr.order.value.address.requestMessage),
+                            _tile(
+                                '요청사항', ctr.order.value.address.requestMessage),
                             SizedBox(height: 50),
                             _header('Payment_info'.tr),
                             SizedBox(height: 10),
                             Divider(height: 1),
                             SizedBox(height: 10),
-                            _spaceBetweenTile('payment_method'.tr, ctr.order.value.paymentMethod),
+                            _spaceBetweenTile('payment_method'.tr,
+                                ctr.order.value.paymentMethod),
                             SizedBox(height: 10),
                             Divider(height: 1),
                             SizedBox(height: 20),
-                            _spaceBetweenTile('총 상품 금액', Utils.numberFormat(number: ctr.order.value.product_amount!, suffix: '원')),
+                            _spaceBetweenTile(
+                                '총 상품 금액',
+                                Utils.numberFormat(
+                                    number: ctr.order.value.product_amount!,
+                                    suffix: '원')),
                             SizedBox(height: 10),
-                            _spaceBetweenTile('총 결제 금액', Utils.numberFormat(number: ctr.order.value.totalPayAmount!, suffix: '원')),
+                            _spaceBetweenTile(
+                                '총 결제 금액',
+                                Utils.numberFormat(
+                                    number: ctr.order.value.totalPayAmount!,
+                                    suffix: '원')),
                             SizedBox(height: 10),
-                            _spaceBetweenTile('totall_shipping_fee'.tr, Utils.numberFormat(number: ctr.order.value.deliveryFee, suffix: '원')),
+                            _spaceBetweenTile(
+                                'totall_shipping_fee'.tr,
+                                Utils.numberFormat(
+                                    number: ctr.order.value.deliveryFee,
+                                    suffix: '원')),
                             SizedBox(height: 10),
-                            _spaceBetweenTile('point'.tr, '-' + Utils.numberFormat(number: ctr.order.value.pointUsed, suffix: '원')),
+                            _spaceBetweenTile(
+                                'point'.tr,
+                                '-' +
+                                    Utils.numberFormat(
+                                        number: ctr.order.value.pointUsed,
+                                        suffix: '원')),
                           ],
                         ),
                       ),

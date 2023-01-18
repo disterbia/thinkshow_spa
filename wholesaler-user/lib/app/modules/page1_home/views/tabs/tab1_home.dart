@@ -19,7 +19,6 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab1HomeView extends GetView<Tab1UserHomeController> {
   Tab1UserHomeController ctr = Get.put(Tab1UserHomeController());
- // CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
  //  Page1HomeController page1HomeCtr = Get.put(Page1HomeController());
   CarousalProductHorizontalController recommendedProductCtr = Get.put(CarousalProductHorizontalController());
 
@@ -58,7 +57,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
             ,
             Divider(thickness: 6, color: MyColors.grey3),
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15),
               child: Obx(
                 () => HorizontalChipList().getAllMainCat(
                     categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),
