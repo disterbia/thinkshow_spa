@@ -14,7 +14,8 @@ class HorizontalChipList {
   CategoryTagController ctr = Get.put(CategoryTagController());
 
   // ############ Cloth categories
-  Widget getAllMainCat({required List<String> categoryList, required Function() onTapped}) {
+  Widget getAllMainCat(
+      {required List<String> categoryList, required Function() onTapped}) {
     List<ChipWidget> categoryChips = [];
     // Add ALL chip
     categoryChips.add(
@@ -33,10 +34,12 @@ class HorizontalChipList {
         ChipWidget(
             title: categoryList[i],
             onTap: () {
-              ctr.selectedMainCatIndex.value = i + 1; // the reason for i+1 instead of i: i==0 is "ALL" chip
+              ctr.selectedMainCatIndex.value =
+                  i + 1; // the reason for i+1 instead of i: i==0 is "ALL" chip
               onTapped();
             },
-            isSelected: (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
+            isSelected:
+                (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
       );
     }
 
@@ -51,10 +54,18 @@ class HorizontalChipList {
     );
   }
 
-  Widget getAllSubcat({required List<ClothCategoryModel> subCatList, required Function(ClothCategoryModel) onTapped, required int parentId}) {
+  Widget getAllSubcat(
+      {required List<ClothCategoryModel> subCatList,
+      required Function(ClothCategoryModel) onTapped,
+      required int parentId}) {
     List<ChipWidget> categoryChips = [];
     // Add ALL chip
-    ClothCategoryModel allClothCatModel = ClothCategoryModel(id: parentId, name: ClothCategory.ALL, parentId: parentId, depth: 0, isUse: false);
+    ClothCategoryModel allClothCatModel = ClothCategoryModel(
+        id: parentId,
+        name: ClothCategory.ALL,
+        parentId: parentId,
+        depth: 0,
+        isUse: false);
     categoryChips.add(
       ChipWidget(
           title: ClothCategory.ALL,
@@ -71,10 +82,12 @@ class HorizontalChipList {
         ChipWidget(
             title: subCatList[i].name,
             onTap: () {
-              ctr.selectedMainCatIndex.value = i + 1; // the reason for i+1 instead of i: i==0 is "ALL" chip
+              ctr.selectedMainCatIndex.value =
+                  i + 1; // the reason for i+1 instead of i: i==0 is "ALL" chip
               onTapped(subCatList[i]);
             },
-            isSelected: (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
+            isSelected:
+                (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
       );
     }
 
@@ -96,24 +109,48 @@ class HorizontalChipList {
     return Container(
       alignment: Alignment.center,
       width: screenWidth,
-      height: 98,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: clothCategories.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ClothCategoryItemBuilder(
-              clothCategory: clothCategories.elementAt(index),
-              height: screenWidth / clothCategories.length - 25,
-              width: screenWidth / clothCategories.length - 25,
-              onTap: () => onPressed(index),
-            );
-          }),
+      height: 150,
+      // child: ListView.builder(
+      //     scrollDirection: Axis.horizontal,
+      //     physics: NeverScrollableScrollPhysics(),
+      //     itemCount: clothCategories.length,
+      //     shrinkWrap: true,
+      //     itemBuilder: (context, index) {
+      //       return ClothCategoryItemBuilder(
+      //         clothCategory: clothCategories.elementAt(index),
+      //         height: screenWidth / clothCategories.length - 25,
+      //         width: screenWidth / clothCategories.length - 25,
+      //         onTap: () => onPressed(index),
+      //       );
+      //     }),
+      child: GridView.builder(
+        itemCount: clothCategories.length,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5, //1 개의 행에 보여줄 item 개수
+          childAspectRatio: 1 / 1, //item 의 가로 1, 세로 2 의 비율
+          mainAxisSpacing: 0, //수평 Padding
+          crossAxisSpacing: 0, //수직 Padding
+        ),
+        itemBuilder: (context, index) {
+          return ClothCategoryItemBuilder(
+            clothCategory: clothCategories.elementAt(index),
+            // height: screenWidth / clothCategories.length - 25,
+            // width: screenWidth / clothCategories.length - 25,
+            height: 30,
+            width: 30,
+            onTap: () => onPressed(index),
+          );
+        },
+      ),
     );
   }
 
-  Widget ClothCategoryItemBuilder({required ClothCategory clothCategory, required VoidCallback onTap, required double height, required double width}) {
+  Widget ClothCategoryItemBuilder(
+      {required ClothCategory clothCategory,
+      required VoidCallback onTap,
+      required double height,
+      required double width}) {
     return GestureDetector(
       onTap: onTap,
       child: Padding(

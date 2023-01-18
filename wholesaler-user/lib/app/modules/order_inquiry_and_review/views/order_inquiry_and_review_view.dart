@@ -17,7 +17,7 @@ class OrderInquiryAndReviewView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.arguments);
+
     return Scaffold(
       appBar: CustomAppbar(isBackEnable: isBackEnable, hasHomeButton: hasHomeButton, title: Get.arguments ? '리뷰' : 'order_history'.tr),
       body: SingleChildScrollView(
@@ -30,7 +30,7 @@ class OrderInquiryAndReviewView extends GetView {
                 ? SizedBox.shrink()
                 : Obx(
                     () => Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 15),
                       child: HorizontalChipList().getAllMainCat(
                         categoryList: ["3개월"],
                         onTapped: () => ctr.periodChipPressed(),

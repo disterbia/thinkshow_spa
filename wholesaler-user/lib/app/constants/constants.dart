@@ -5,7 +5,7 @@ class mConst {
   static const double fixedImgWidth = 116;
   static const double fixedImgHeight = 145;
   static const int limit = 9;
-  static const int verifyCountSecounds = 20;
+  static const int verifyCountSecounds = 180;
 
   static const bool isTestMode = true;
 

@@ -122,6 +122,9 @@ class ProductMgmtView extends GetView {
                       isShowLoadingCircle: ctr.allowCallAPI,
                       //ctr.allowCallAPI,
                     ),
+                    SizedBox(
+                      height: 30,
+                    )
                   ],
                 ),
               ),

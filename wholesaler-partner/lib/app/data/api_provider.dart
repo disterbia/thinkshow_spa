@@ -1710,6 +1710,9 @@ class pApiProvider extends GetConnect {
         mConst.API_STORE_PATH +
         '/product/$productId/for-modify';
 
+    print(url);
+    print(headers);
+
     var response = await get(url, headers: headers);
     print('getProductEditInfo ${response.bodyString}');
 

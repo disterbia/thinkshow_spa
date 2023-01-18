@@ -43,13 +43,15 @@ class ReviewDetailView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: _appbar(),
-      body: _body(),
+      body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: _body()),
     );
   }
 
   Widget _body() {
     print('ctr.selectedReviw!.value');
-    inspect(ctr.selectedReviw!.value);
+    print(ctr.selectedReviw!.value);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -280,7 +282,10 @@ class ReviewDetailView extends GetView {
             : SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => ctr.reviewAddBtnPressed(),
+                  onPressed: () {
+                    ctr.reviewAddBtnPressed();
+
+                  },
                   child: Text('추가'),
                 ),
               )

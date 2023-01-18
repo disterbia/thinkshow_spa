@@ -58,8 +58,10 @@ class ProductMgmtController extends GetxController {
     }
 
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels ==
-              scrollController.value.position.maxScrollExtent &&
+      print(scrollController.value.position.pixels);
+      print(scrollController.value.position.maxScrollExtent);
+      if (scrollController.value.position.pixels >
+              scrollController.value.position.maxScrollExtent - 50 &&
           allowCallAPI.isTrue) {
         offset += mConst.limit;
         getProducts(

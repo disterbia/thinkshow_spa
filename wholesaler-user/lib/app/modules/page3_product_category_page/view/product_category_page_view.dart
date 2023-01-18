@@ -15,7 +15,7 @@ import '../../cart/controllers/cart1_shopping_basket_controller.dart';
 
 class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
   ProductCategoryPageController ctr = Get.put(ProductCategoryPageController());
-    Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
+  Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   ProductCategoryPageView(selectedMainCatIndex) {
     ctr.selectedMainCatIndex = selectedMainCatIndex;
@@ -48,34 +48,37 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
         },
       ),
       Obx(
-          () => ctr2.getNumberProducts() != 0
-              ? Badge(
-                  badgeColor: MyColors.primary,
-                  badgeContent: Text(
-                    ctr2.getNumberProducts().toString(),
-                    style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                  toAnimate: false,
-                  position: BadgePosition.topEnd(top: 5, end: 5),
-                  child: IconButton(
-                      onPressed: () {
-                        Get.to(() => Cart1ShoppingBasketView());
-                      },
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: MyColors.black,
-                      )),
-                )
-              : IconButton(
-                  onPressed: () {
-                    Get.to(() => Cart1ShoppingBasketView());
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart_outlined,
-                    color: MyColors.black,
-                  ),
+        () => ctr2.getNumberProducts() != 0
+            ? Badge(
+                badgeColor: MyColors.primary,
+                badgeContent: Text(
+                  ctr2.getNumberProducts().toString(),
+                  style: TextStyle(
+                      color: MyColors.black,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold),
                 ),
-        )
+                toAnimate: false,
+                position: BadgePosition.topEnd(top: 5, end: 5),
+                child: IconButton(
+                    onPressed: () {
+                      Get.to(() => Cart1ShoppingBasketView());
+                    },
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: MyColors.black,
+                    )),
+              )
+            : IconButton(
+                onPressed: () {
+                  Get.to(() => Cart1ShoppingBasketView());
+                },
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: MyColors.black,
+                ),
+              ),
+      )
     ]);
   }
 
@@ -88,11 +91,13 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
           SizedBox(height: 5),
           Obx(
             () => Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15),
               child: HorizontalChipList().getAllSubcat(
                 parentId: ctr.selectedMainCatIndex + 1,
-                subCatList: ClothCategory.getAllSubcatTitles(mainCatIndex: ctr.selectedMainCatIndex + 1),
-                onTapped: (selectedSubcat) => ctr.subCatChipPressed(selectedSubcat),
+                subCatList: ClothCategory.getAllSubcatTitles(
+                    mainCatIndex: ctr.selectedMainCatIndex + 1),
+                onTapped: (selectedSubcat) =>
+                    ctr.subCatChipPressed(selectedSubcat),
               ),
             ),
           ),
@@ -124,8 +129,9 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {
-               // print('$newValue');
-                ctr.selectedDropdownIndex.value = ctr.dropdownItems.indexOf(newValue!);
+                // print('$newValue');
+                ctr.selectedDropdownIndex.value =
+                    ctr.dropdownItems.indexOf(newValue!);
                 ctr.updateProducts(isScrolling: false);
               },
             ),

@@ -13,14 +13,25 @@ class Tab2ReviewProductDetailController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    int productId = Get.arguments;
+
+    int productId = Get.arguments ?? -1;
+
     //print('productId in Tab2ReviewProductDetailController $productId');
-    reviews.value = await _apiProvider.getProductReviews(productId: productId, offset: 0, limit: 20);
+    // reviews.value = await _apiProvider.getProductReviews(
+    //     productId: productId, offset: 0, limit: 20);
+    await getProductReviews(productId: productId);
+  }
+
+  getProductReviews({required int productId}) async {
+    // print(productId);
+    reviews.value = await _apiProvider.getProductReviews(
+        productId: productId, offset: 0, limit: 20);
   }
 
   deleteReviewPressed(Review review) async {
     StatusModel status = await _apiProvider.deleteReview(reviewId: review.id);
     if (status.statusCode == 200) {
+      getProductReviews(productId: Get.arguments);
       mSnackbar(message: '삭제 되었습니다.');
     } else {
       mSnackbar(message: '오류: ' + status.message);

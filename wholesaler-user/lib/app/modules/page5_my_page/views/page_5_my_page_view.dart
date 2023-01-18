@@ -106,7 +106,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
           width: 10,
         ),
         _settingBox(
-            '리뷰',
+            '작성 가능한 리뷰',
             ctr.user.value.waitingReviewCount != null
                 ? ctr.user.value.waitingReviewCount.toString()
                 : '0', () {

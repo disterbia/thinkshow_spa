@@ -17,32 +17,39 @@ import 'package:wholesaler_user/app/widgets/product/product_item_horiz_widget.da
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class Tab2ReviewView extends GetView {
-  Tab2ReviewProductDetailController ctr = Get.put(Tab2ReviewProductDetailController());
+  Tab2ReviewProductDetailController ctr =
+      Get.put(Tab2ReviewProductDetailController());
   ProductDetailController productDetailCtr = Get.put(ProductDetailController());
 
   Tab2ReviewView();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (ctr.reviews.isNotEmpty && ctr.reviews.first.writableReviewInfoModel!.is_writable!) _addReviewButton(),
-            for (Review review in ctr.reviews) _reviewItemBuilder(review),
-            if (ctr.reviews.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Center(child: Text('아직 등록된 리뷰가 없습니다')),
-              ),
-            SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      ),
+    return Obx(
+      () {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (ctr.reviews.isNotEmpty &&
+                    ctr.reviews.first.writableReviewInfoModel!.is_writable!)
+                  _addReviewButton(),
+                for (Review review in ctr.reviews) _reviewItemBuilder(review),
+                if (ctr.reviews.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Center(child: Text('아직 등록된 리뷰가 없습니다')),
+                  ),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -67,7 +74,8 @@ class Tab2ReviewView extends GetView {
                     createdAt: Utils.dateToString(date: DateTime.now()),
                     product: ctr.reviews.first.product,
                     reviewImageUrl: '',
-                    writableReviewInfoModel: ctr.reviews.first.writableReviewInfoModel),
+                    writableReviewInfoModel:
+                        ctr.reviews.first.writableReviewInfoModel),
               ));
         }),
         child: Text(
