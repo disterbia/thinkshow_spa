@@ -169,24 +169,69 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   ];
 
   Widget _clothPicture() {
-    // return addProductCtr.category.value.id != -1
-    return addProductCtr.selectedSubCat.value.id != -1
-        ? subCatImageList[addProductCtr.selectedSubCat.value.id -
-                    ClothSubCategoryEnum.SOX] !=
-                ''
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Center(
-                  child: Image.asset(
-                    // ClothCategory.clothImages[addProductCtr.category.value.title]!,
-                    subCatImageList[addProductCtr.selectedSubCat.value.id -
-                        ClothSubCategoryEnum.SOX],
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              )
-            : SizedBox.shrink()
-        : SizedBox.shrink();
+    print('addProductCtr.selectedSubCat.value.id');
+    print(addProductCtr.selectedSubCat.value.id);
+    if (addProductCtr.selectedSubCat.value.id == -1) {
+      return SizedBox.shrink();
+    } else if (addProductCtr.selectedSubCat.value.id ==
+        ClothSubCategoryEnum.SKIRTSSET) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+                'assets/diagraming/[상의]티셔츠_니트&스웨터_맨투맨.jpg', fit: BoxFit.fill,
+              ),
+              Image.asset(
+                // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+                'assets/diagraming/[스커트]미니스커트_미디스커트_롱스커트.jpg',
+                fit: BoxFit.fill,
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (addProductCtr.selectedSubCat.value.id ==
+        ClothSubCategoryEnum.PANTSSET) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+                'assets/diagraming/[상의]티셔츠_니트&스웨터_맨투맨.jpg', fit: BoxFit.fill,
+              ),
+              Image.asset(
+                // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+                'assets/diagraming/[바지]슬랙스_면바지_데님_조거&트레이닝.jpg',
+                fit: BoxFit.fill,
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (subCatImageList[
+            addProductCtr.selectedSubCat.value.id - ClothSubCategoryEnum.SOX] ==
+        '') {
+      return SizedBox.shrink();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Center(
+          child: Image.asset(
+            // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+            subCatImageList[addProductCtr.selectedSubCat.value.id -
+                ClothSubCategoryEnum.SOX],
+            fit: BoxFit.fill,
+          ),
+        ),
+      );
+    }
   }
 
   Widget _sizeTable() {
@@ -230,19 +275,28 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   TableRow(children: [
                     // size field: ex 가슴단면
                     TableCell(
-                        // child: _sizeTitle(SizeCategory.getWithCatId(
-                        //         addProductCtr.category.value.id)
-                        //     .children[k]
-                        //     .korean)),
-                        child: _sizeTitle(SizeCategory.getWithCatId(
-                                addProductCtr.selectedSubCat.value.id)
-                            .children[k]
-                            .korean)),
-
+                      // child: _sizeTitle(SizeCategory.getWithCatId(
+                      //         addProductCtr.category.value.id)
+                      //     .children[k]
+                      //     .korean)),
+                      child: _sizeTitle(SizeCategory.getWithCatId(
+                              addProductCtr.selectedSubCat.value.id)
+                          .children[k]
+                          .korean),
+                    ),
                     // textfields holding values inside table
                     for (int j = 0; j < ctr.productBodySizeList.length; j++)
+                      // ctr.productBodySizeList[j].sizeCategory.seunghanTestValue;
                       sizeFieldBuilder(
-                          productBodySizeListIndex: j, sizeCategoryIndex: k),
+                          productBodySizeListIndex: j,
+                          sizeCategoryIndex: k,
+                          isLining: SizeCategory.getWithCatId(
+                                          addProductCtr.selectedSubCat.value.id)
+                                      .children[k]
+                                      .english ==
+                                  'lining'
+                              ? true
+                              : false),
                   ]),
               ],
             ),
@@ -296,7 +350,9 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   }
 
   sizeFieldBuilder(
-      {required int productBodySizeListIndex, required int sizeCategoryIndex}) {
+      {required int productBodySizeListIndex,
+      required int sizeCategoryIndex,
+      required bool isLining}) {
     ctr.sizeFieldInitialize(
         productBodySizeListIndex: productBodySizeListIndex,
         sizeCategoryIndex: sizeCategoryIndex);
@@ -306,6 +362,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
       isActive: ctr.productBodySizeList[productBodySizeListIndex].isSelected,
       productBodySizeListIndex: productBodySizeListIndex,
       sizeCategoryIndex: sizeCategoryIndex,
+      isLining: isLining,
     ));
   }
 
@@ -313,6 +370,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     required RxBool isActive,
     required int productBodySizeListIndex,
     required int sizeCategoryIndex,
+    required bool isLining,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -325,7 +383,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                 productBodySizeListIndex.toString() +
                     sizeCategoryIndex.toString()],
             readOnly: !isActive.value,
-            keyboardType: TextInputType.number,
+            keyboardType: isLining ? TextInputType.text : TextInputType.number,
             onChanged: (String value) => ctr.sizetableFieldChanged(
                 value: value,
                 productBodySizeListIndex: productBodySizeListIndex,
@@ -334,6 +392,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                 ? MyTextStyles.f12
                 : MyTextStyles.f12.copyWith(color: MyColors.grey8),
             decoration: InputDecoration(
+              hintText: isLining ? '유/무' : '',
+              hintStyle: TextStyle(fontSize: 9, color: MyColors.grey1),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: isActive.value ? MyColors.grey9 : MyColors.grey1,

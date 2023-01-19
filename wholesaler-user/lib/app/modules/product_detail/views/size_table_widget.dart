@@ -16,7 +16,6 @@ class SizeTableWidget extends StatelessWidget {
         // width: 200,
         height: 170,
         child: CrossScroll(
-          
           horizontalBar: CrossScrollBar(thickness: 4, hoverThickness: 4),
           verticalBar: CrossScrollBar(thickness: 0),
           child: DataTable(
@@ -99,6 +98,56 @@ class SizeTableWidget extends StatelessWidget {
         DataColumn(
           label: Text(ProductSizeType.lining),
         ),
+
+      //추가
+      if (ctr.product.value.sizes![0].entrance_cross_length != null)
+        DataColumn(
+          label: Text(ProductSizeType.entrance_cross_length),
+        ),
+      if (ctr.product.value.sizes![0].breadth != null)
+        DataColumn(
+          label: Text(ProductSizeType.breadth),
+        ),
+      if (ctr.product.value.sizes![0].diameter != null)
+        DataColumn(
+          label: Text(ProductSizeType.diameter),
+        ),
+      if (ctr.product.value.sizes![0].width != null)
+        DataColumn(
+          label: Text(ProductSizeType.width),
+        ),
+      if (ctr.product.value.sizes![0].height != null)
+        DataColumn(
+          label: Text(ProductSizeType.height),
+        ),
+      if (ctr.product.value.sizes![0].handle_height != null)
+        DataColumn(
+          label: Text(ProductSizeType.handle_height),
+        ),
+      if (ctr.product.value.sizes![0].handle_length != null)
+        DataColumn(
+          label: Text(ProductSizeType.handle_length),
+        ),
+      if (ctr.product.value.sizes![0].front_heel_height != null)
+        DataColumn(
+          label: Text(ProductSizeType.front_heel_height),
+        ),
+      if (ctr.product.value.sizes![0].back_heel_height != null)
+        DataColumn(
+          label: Text(ProductSizeType.back_heel_height),
+        ),
+      if (ctr.product.value.sizes![0].calf_cross_length != null)
+        DataColumn(
+          label: Text(ProductSizeType.calf_cross_length),
+        ),
+      if (ctr.product.value.sizes![0].weight != null)
+        DataColumn(
+          label: Text(ProductSizeType.weight),
+        ),
+      if (ctr.product.value.sizes![0].foot_width != null)
+        DataColumn(
+          label: Text(ProductSizeType.foot_width),
+        ),
     ];
   }
 
@@ -166,6 +215,54 @@ class SizeTableWidget extends StatelessWidget {
       if (size.lining != null)
         DataCell(
           Text(size.lining.toString()),
+        ),
+      if (size.entrance_cross_length != null)
+        DataCell(
+          Text(size.entrance_cross_length.toString()),
+        ),
+      if (size.breadth != null)
+        DataCell(
+          Text(size.breadth.toString()),
+        ),
+      if (size.diameter != null)
+        DataCell(
+          Text(size.diameter.toString()),
+        ),
+      if (size.width != null)
+        DataCell(
+          Text(size.width.toString()),
+        ),
+      if (size.height != null)
+        DataCell(
+          Text(size.height.toString()),
+        ),
+      if (size.handle_height != null)
+        DataCell(
+          Text(size.handle_height.toString()),
+        ),
+      if (size.handle_length != null)
+        DataCell(
+          Text(size.handle_length.toString()),
+        ),
+      if (size.front_heel_height != null)
+        DataCell(
+          Text(size.front_heel_height.toString()),
+        ),
+      if (size.back_heel_height != null)
+        DataCell(
+          Text(size.back_heel_height.toString()),
+        ),
+      if (size.calf_cross_length != null)
+        DataCell(
+          Text(size.calf_cross_length.toString()),
+        ),
+      if (size.weight != null)
+        DataCell(
+          Text(size.weight.toString()),
+        ),
+      if (size.foot_width != null)
+        DataCell(
+          Text(size.foot_width.toString()),
         ),
     ];
   }
