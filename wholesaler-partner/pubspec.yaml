@@ -65,6 +65,7 @@ flutter:
     - assets/icons/
     - assets/fonts/SpoqaHanSansNeo/
     - assets/shared_images_icons/
+    - assets/diagraming/
 
   fonts:
     - family: SpoqaHanSansNeo-Medium

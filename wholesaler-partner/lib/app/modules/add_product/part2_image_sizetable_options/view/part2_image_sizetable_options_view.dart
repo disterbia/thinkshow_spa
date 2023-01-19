@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/models/add_product/option.dart';
 import 'package:wholesaler_partner/app/models/add_product/product_body_size/product_body_size_model.dart';
 import 'package:wholesaler_partner/app/models/add_product/product_body_size/size_category.dart';
@@ -65,7 +66,6 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
           .firstWhere((element) => element.size == 'FREE')
           .isSelected
           .value) {
-            
         unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'FREE'));
         aa++;
       }
@@ -113,17 +113,79 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     );
   }
 
+  List<String> subCatImageList = [
+    '', //양말
+    '', //스타킹
+    '', //목걸이
+    '', //귀걸이
+    '', //모자
+    '', //헤어밴드
+    '', //헤어핀/집게
+    '', //헤어스크런치
+    '', //벨트
+    '', //시계
+    '', //머플러
+    '', //장갑
+    '', //이너웨어(상의)
+    '', //이너웨어(하의)
+    'assets/diagraming/가방.jpg', //백팩&클러치
+    'assets/diagraming/가방.jpg', //숄더백
+    'assets/diagraming/가방.jpg', //크로스백
+    'assets/diagraming/가방.jpg', //토트백
+    'assets/diagraming/가방.jpg', //에코백
+    'assets/diagraming/[신발]샌들_플랫_로퍼_힐_스니커즈.jpg', //샌들
+    'assets/diagraming/[신발]샌들_플랫_로퍼_힐_스니커즈.jpg', //플랫
+    'assets/diagraming/[신발]샌들_플랫_로퍼_힐_스니커즈.jpg', //로퍼
+    'assets/diagraming/[신발]부츠.jpg', //부츠
+    'assets/diagraming/[신발]샌들_플랫_로퍼_힐_스니커즈.jpg', //힐
+    'assets/diagraming/[신발]샌들_플랫_로퍼_힐_스니커즈.jpg', //스니커즈
+    'assets/diagraming/[아우터]코트.jpg', //코트
+    'assets/diagraming/[아우터]자켓_무스탕&퍼.jpg', //자켓
+    'assets/diagraming/[아우터]점퍼.jpg', //점퍼
+    'assets/diagraming/[아우터]가디건.jpg', //가디건
+    'assets/diagraming/[아우터]자켓_무스탕&퍼.jpg', //무스탕&퍼
+    'assets/diagraming/[아우터]베스트.jpg', //아우터베스트
+    'assets/diagraming/[상의]티셔츠_니트&스웨터_맨투맨.jpg', //티셔츠
+    'assets/diagraming/[상의]블라우스&셔츠.jpg', //블라우스&셔츠
+    'assets/diagraming/[상의]티셔츠_니트&스웨터_맨투맨.jpg', //니트&스웨터
+    'assets/diagraming/[상의]티셔츠_니트&스웨터_맨투맨.jpg', //맨투맨
+    'assets/diagraming/[상의]후드.jpg', //후드
+    'assets/diagraming/[상의]뷔스티에&슬리브리스.jpg', //뷔스티에&슬리브리스
+    'assets/diagraming/[상의]베스트.jpg', //상의베스트
+    'assets/diagraming/[바지]슬랙스_면바지_데님_조거&트레이닝.jpg', //슬랙스
+    'assets/diagraming/[바지]슬랙스_면바지_데님_조거&트레이닝.jpg', //면바지
+    'assets/diagraming/[바지]슬랙스_면바지_데님_조거&트레이닝.jpg', //데님
+    'assets/diagraming/[바지]슬랙스_면바지_데님_조거&트레이닝.jpg', //조거트레이닝
+    'assets/diagraming/[바지]반바지.jpg', //반바지
+    'assets/diagraming/[스커트]미니스커트_미디스커트_롱스커트.jpg', //미니스커트
+    'assets/diagraming/[스커트]미니스커트_미디스커트_롱스커트.jpg', //미디스커트
+    'assets/diagraming/[스커트]미니스커트_미디스커트_롱스커트.jpg', //롱스커트
+    'assets/diagraming/[원피스]미니원피스_미디원피스_롱원피스.jpg', //미니원피스
+    'assets/diagraming/[원피스]미니원피스_미디원피스_롱원피스.jpg', //미디원피스
+    'assets/diagraming/[원피스]미니원피스_미디원피스_롱원피스.jpg', //롱원피스
+    'assets/diagraming/[원피스]점프수트.jpg', //점프슈트
+    '', //치마셑
+    '', //바지셋
+  ];
+
   Widget _clothPicture() {
-    return addProductCtr.category.value.id != -1
-        ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Center(
-              child: Image.asset(
-                ClothCategory.clothImages[addProductCtr.category.value.title]!,
-                fit: BoxFit.fill,
-              ),
-            ),
-          )
+    // return addProductCtr.category.value.id != -1
+    return addProductCtr.selectedSubCat.value.id != -1
+        ? subCatImageList[addProductCtr.selectedSubCat.value.id -
+                    ClothSubCategoryEnum.SOX] !=
+                ''
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Center(
+                  child: Image.asset(
+                    // ClothCategory.clothImages[addProductCtr.category.value.title]!,
+                    subCatImageList[addProductCtr.selectedSubCat.value.id -
+                        ClothSubCategoryEnum.SOX],
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              )
+            : SizedBox.shrink()
         : SizedBox.shrink();
   }
 
@@ -155,18 +217,28 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                 ]),
                 for (int k = 0;
                     k <
+                        // SizeCategory.getWithCatId(
+                        //         addProductCtr.category.value.id)
+                        //     .children
+                        //     .length;
+
                         SizeCategory.getWithCatId(
-                                addProductCtr.category.value.id)
+                                addProductCtr.selectedSubCat.value.id)
                             .children
                             .length;
                     k++)
                   TableRow(children: [
                     // size field: ex 가슴단면
                     TableCell(
+                        // child: _sizeTitle(SizeCategory.getWithCatId(
+                        //         addProductCtr.category.value.id)
+                        //     .children[k]
+                        //     .korean)),
                         child: _sizeTitle(SizeCategory.getWithCatId(
-                                addProductCtr.category.value.id)
+                                addProductCtr.selectedSubCat.value.id)
                             .children[k]
                             .korean)),
+
                     // textfields holding values inside table
                     for (int j = 0; j < ctr.productBodySizeList.length; j++)
                       sizeFieldBuilder(
@@ -469,8 +541,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
               Expanded(
                 child: Container(
                   child: TextField(
-                      controller:
-                          addProductCtr.optionsControllers[currentOptionLength - 1],
+                      controller: addProductCtr
+                          .optionsControllers[currentOptionLength - 1],
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           fillColor: MyColors.white,

@@ -14,7 +14,8 @@ class AP_Part2Controller extends GetxController {
   RxBool unitPriceCheckbox = true.obs;
   RxBool isOptionCheckbox = true.obs;
 
-  RxList<ProductBodySizeModel> productBodySizeList = <ProductBodySizeModel>[].obs;
+  RxList<ProductBodySizeModel> productBodySizeList =
+      <ProductBodySizeModel>[].obs;
 
   // This list of controllers can be used to set and get the text from/to the TextFields
   Map<String, TextEditingController> textEditingControllers = {};
@@ -23,18 +24,26 @@ class AP_Part2Controller extends GetxController {
     List<String> sizes = ['FREE', 'XS', 'S', 'M', 'L'];
 
     productBodySizeList.clear();
+    // textEditingControllers.clear();
 
     if (addProductCtr.isEditing.isTrue) {
       for (int i = 0; i < sizes.length; i++) {
         // if is selected:
-        if (addProductCtr.productModifyModel.value.sizeInfoList!.any((element) => element.size == sizes[i])) {
-          SizeInfoModel tempSizeInfo = addProductCtr.productModifyModel.value.sizeInfoList!.firstWhere((element) => element.size == sizes[i]);
+        if (addProductCtr.productModifyModel.value.sizeInfoList!
+            .any((element) => element.size == sizes[i])) {
+          SizeInfoModel tempSizeInfo = addProductCtr
+              .productModifyModel.value.sizeInfoList!
+              .firstWhere((element) => element.size == sizes[i]);
           productBodySizeList.add(
             ProductBodySizeModel(
               size: tempSizeInfo.size!,
               isSelected: true.obs,
-              clothMainCategory: addProductCtr.productModifyModel.value.mainCategoryId!,
-              sizeCategory: SizeCategory.getWithCatId(addProductCtr.productModifyModel.value.mainCategoryId!),
+              // clothMainCategory:
+              //     addProductCtr.productModifyModel.value.mainCategoryId!,
+              // sizeCategory: SizeCategory.getWithCatId(
+              //     addProductCtr.productModifyModel.value.mainCategoryId!),
+              sizeCategory: SizeCategory.getWithCatId(
+                  addProductCtr.productModifyModel.value.subCategoryId!),
             ),
           );
         }
@@ -44,8 +53,12 @@ class AP_Part2Controller extends GetxController {
             ProductBodySizeModel(
               size: sizes[i],
               isSelected: false.obs,
-              clothMainCategory: addProductCtr.productModifyModel.value.mainCategoryId!,
-              sizeCategory: SizeCategory.getWithCatId(addProductCtr.productModifyModel.value.mainCategoryId!),
+              // clothMainCategory:
+              //     addProductCtr.productModifyModel.value.mainCategoryId!,
+              // sizeCategory: SizeCategory.getWithCatId(
+              //     addProductCtr.productModifyModel.value.mainCategoryId!),
+              sizeCategory: SizeCategory.getWithCatId(
+                  addProductCtr.productModifyModel.value.subCategoryId!),
             ),
           );
         }
@@ -56,15 +69,18 @@ class AP_Part2Controller extends GetxController {
           ProductBodySizeModel(
             size: sizes[i],
             isSelected: false.obs,
-            clothMainCategory: id!,
-            sizeCategory: SizeCategory.getWithCatId(id),
+            // clothMainCategory: id!,
+            sizeCategory: SizeCategory.getWithCatId(id!),
           ),
         );
       }
     }
   }
 
-  sizetableFieldChanged({required String value, required int productBodySizeListIndex, required int sizeCategoryIndex}) {
+  sizetableFieldChanged(
+      {required String value,
+      required int productBodySizeListIndex,
+      required int sizeCategoryIndex}) {
     if (value.isEmpty) {
       return;
     }
@@ -75,56 +91,151 @@ class AP_Part2Controller extends GetxController {
     // }
   }
 
-  void sizeFieldInitialize({required int productBodySizeListIndex, required int sizeCategoryIndex}) {
+  void sizeFieldInitialize(
+      {required int productBodySizeListIndex, required int sizeCategoryIndex}) {
     // check if is editing or adding new product
     var textEditingController = TextEditingController(text: '');
 
-    if (addProductCtr.isEditing.value && !addProductCtr.isChangeCategoryInEditeMode.value) {
-      String currentSizeStr = productBodySizeList[productBodySizeListIndex].size;
-      for (int i = 0; i < addProductCtr.productModifyModel.value.sizeInfoList!.length; i++) {
+    if (addProductCtr.isEditing.value &&
+        !addProductCtr.isChangeCategoryInEditeMode.value) {
+      String currentSizeStr =
+          productBodySizeList[productBodySizeListIndex].size;
+      for (int i = 0;
+          i < addProductCtr.productModifyModel.value.sizeInfoList!.length;
+          i++) {
         // filter 1: sizes example Free, S, M, L
-        if (currentSizeStr == addProductCtr.productModifyModel.value.sizeInfoList![i].size) {
+        if (currentSizeStr ==
+            addProductCtr.productModifyModel.value.sizeInfoList![i].size) {
           // print('currentSizeStr   : $currentSizeStr');
           // filter 2: sizeCategoryIndex example 0, 1, 2, 3, 4
-          String currentSizeCategoryEnglishStr = productBodySizeList[productBodySizeListIndex].sizeCategory.children[sizeCategoryIndex].english;
+          String currentSizeCategoryEnglishStr =
+              productBodySizeList[productBodySizeListIndex]
+                  .sizeCategory
+                  .children[sizeCategoryIndex]
+                  .english;
           // print('currentSizeCategoryEnglishStr $currentSizeCategoryEnglishStr');
-          SizeInfoModel sizeList = addProductCtr.productModifyModel.value.sizeInfoList![i];
+          SizeInfoModel sizeList =
+              addProductCtr.productModifyModel.value.sizeInfoList![i];
 
-          if (currentSizeCategoryEnglishStr == SizeChild.arm_cross_length.english && sizeList.armCrossLength != null) {
+          if (currentSizeCategoryEnglishStr ==
+                  SizeChild.arm_cross_length.english &&
+              sizeList.armCrossLength != null) {
             textEditingController.text = sizeList.armCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.arm_straight_length.english && sizeList.armStraightLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.arm_straight_length.english &&
+              sizeList.armStraightLength != null) {
             textEditingController.text = sizeList.armStraightLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.armhole.english && sizeList.armhole != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.armhole.english &&
+              sizeList.armhole != null) {
             textEditingController.text = sizeList.armhole.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.bottom_cross_length.english && sizeList.bottomCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.bottom_cross_length.english &&
+              sizeList.bottomCrossLength != null) {
             textEditingController.text = sizeList.bottomCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.bottom_top_cross_length.english && sizeList.bottomTopCrossLength != null) {
-            textEditingController.text = sizeList.bottomTopCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.chest_cross_length.english && sizeList.chestCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.bottom_top_cross_length.english &&
+              sizeList.bottomTopCrossLength != null) {
+            textEditingController.text =
+                sizeList.bottomTopCrossLength.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.chest_cross_length.english &&
+              sizeList.chestCrossLength != null) {
             textEditingController.text = sizeList.chestCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.hip_cross_length.english && sizeList.hipCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.hip_cross_length.english &&
+              sizeList.hipCrossLength != null) {
             textEditingController.text = sizeList.hipCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.lining.english && sizeList.lining != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.lining.english &&
+              sizeList.lining != null) {
             textEditingController.text = sizeList.lining.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.open.english && sizeList.open != null) {
+          } else if (currentSizeCategoryEnglishStr == SizeChild.open.english &&
+              sizeList.open != null) {
             textEditingController.text = sizeList.open.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.shoulder_cross_length.english && sizeList.shoulderCrossLength != null) {
-            textEditingController.text = sizeList.shoulderCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.sleeve_cross_length.english && sizeList.sleeveCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.shoulder_cross_length.english &&
+              sizeList.shoulderCrossLength != null) {
+            textEditingController.text =
+                sizeList.shoulderCrossLength.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.sleeve_cross_length.english &&
+              sizeList.sleeveCrossLength != null) {
             textEditingController.text = sizeList.sleeveCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.strap.english && sizeList.strap != null) {
+          } else if (currentSizeCategoryEnglishStr == SizeChild.strap.english &&
+              sizeList.strap != null) {
             textEditingController.text = sizeList.strap.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.total_entry_length.english && sizeList.totalEntryLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.total_entry_length.english &&
+              sizeList.totalEntryLength != null) {
             textEditingController.text = sizeList.totalEntryLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.waist_cross_length.english && sizeList.waistCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.waist_cross_length.english &&
+              sizeList.waistCrossLength != null) {
             textEditingController.text = sizeList.waistCrossLength.toString();
-          } else if (currentSizeCategoryEnglishStr == SizeChild.thigh_cross_length.english && sizeList.thighCrossLength != null) {
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.thigh_cross_length.english &&
+              sizeList.thighCrossLength != null) {
             textEditingController.text = sizeList.thighCrossLength.toString();
+          }
+
+          //추가
+
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.entrance_cross_length.english &&
+              sizeList.entrance_cross_length != null) {
+            textEditingController.text =
+                sizeList.entrance_cross_length.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.breadth.english &&
+              sizeList.breadth != null) {
+            textEditingController.text = sizeList.breadth.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.diameter.english &&
+              sizeList.diameter != null) {
+            textEditingController.text = sizeList.diameter.toString();
+          } else if (currentSizeCategoryEnglishStr == SizeChild.width.english &&
+              sizeList.width != null) {
+            textEditingController.text = sizeList.width.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.height.english &&
+              sizeList.height != null) {
+            textEditingController.text = sizeList.height.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.handle_height.english &&
+              sizeList.handle_height != null) {
+            textEditingController.text = sizeList.handle_height.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.handle_length.english &&
+              sizeList.handle_length != null) {
+            textEditingController.text = sizeList.handle_length.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.front_heel_height.english &&
+              sizeList.front_heel_height != null) {
+            textEditingController.text = sizeList.front_heel_height.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.back_heel_height.english &&
+              sizeList.back_heel_height != null) {
+            textEditingController.text = sizeList.back_heel_height.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.calf_cross_length.english &&
+              sizeList.calf_cross_length != null) {
+            textEditingController.text = sizeList.calf_cross_length.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.weight.english &&
+              sizeList.weight != null) {
+            textEditingController.text = sizeList.weight.toString();
+          } else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.foot_width.english &&
+              sizeList.foot_width != null) {
+            textEditingController.text = sizeList.foot_width.toString();
           }
         }
       }
     }
 
-    textEditingControllers.putIfAbsent(productBodySizeListIndex.toString() + sizeCategoryIndex.toString(), () => textEditingController);
+    textEditingControllers.putIfAbsent(
+        productBodySizeListIndex.toString() + sizeCategoryIndex.toString(),
+        () => textEditingController);
   }
 }
