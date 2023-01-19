@@ -88,18 +88,31 @@ class ProductSizeType {
   static const String shoulder_cross_length = '어깨단면';
   static const String chest_cross_length = '가슴단면';
   static const String armhole = '암홀';
-  static const String arm_straight_length = '팔기장';
-  static const String arm_cross_length = '팔단면';
+  static const String arm_straight_length = '소매길이';
+  static const String arm_cross_length = '소매통단면';
   static const String sleeve_cross_length = '소매단면';
-  static const String bottom_cross_length = '밑단단면';
+  static const String bottom_cross_length = '밑단길이';
   static const String strap = '스트랩';
-  static const String total_entry_length = '총기장';
+  static const String total_entry_length = '총길이';
   static const String waist_cross_length = '허리단면';
   static const String hip_cross_length = '엉덩이단면';
   static const String bottom_top_cross_length = '밑위단면';
   static const String thigh_cross_length = '허벅지단면';
   static const String open = '트임';
   static const String lining = '안감';
+  
+  static const String entrance_cross_length = '입구단면';
+  static const String breadth = '폭';
+  static const String diameter = '지름';
+  static const String width = '가로';
+  static const String height = '세로';
+  static const String handle_height = '손잡이끈높이';
+  static const String handle_length = '끈길이';
+  static const String front_heel_height = '앞굽높이';
+  static const String back_heel_height = '뒷굽높이';
+  static const String calf_cross_length = '종아리단면';
+  static const String weight = '무게';
+  static const String foot_width = '발볼넓이';
 }
 
 // ProductThicknessType ['thick' or 'middle' or 'thin']

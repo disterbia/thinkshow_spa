@@ -29,7 +29,9 @@ class ProductModel {
         sizes?.add(Sizes.fromJson(v));
       });
     }
-    storeInfo = json['store_info'] != null ? StoreInfo.fromJson(json['store_info']) : null;
+    storeInfo = json['store_info'] != null
+        ? StoreInfo.fromJson(json['store_info'])
+        : null;
     returnExchangeInfo = json['return_exchange_info'];
   }
   int? id;
@@ -146,6 +148,18 @@ class Sizes {
     this.thighCrossLength,
     this.open,
     this.lining,
+    this.entrance_cross_length,
+    this.breadth,
+    this.diameter,
+    this.width,
+    this.height,
+    this.handle_height,
+    this.handle_length,
+    this.front_heel_height,
+    this.back_heel_height,
+    this.calf_cross_length,
+    this.weight,
+    this.foot_width,
     this.createdAt,
   });
 
@@ -170,6 +184,19 @@ class Sizes {
     thighCrossLength = json['thigh_cross_length'];
     open = json['open'];
     lining = json['lining'];
+
+    entrance_cross_length = json['entrance_cross_length'];
+    breadth = json['breadth'];
+    diameter = json['diameter'];
+    width = json['width'];
+    height = json['height'];
+    handle_height = json['handle_height'];
+    handle_length = json['handle_length'];
+    front_heel_height = json['front_heel_height'];
+    back_heel_height = json['back_heel_height'];
+    calf_cross_length = json['calf_cross_length'];
+    weight = json['weight'];
+    foot_width = json['foot_width'];
     createdAt = json['created_at'];
   }
   int? id;
@@ -192,6 +219,20 @@ class Sizes {
   dynamic thighCrossLength;
   dynamic open;
   dynamic lining;
+
+  dynamic entrance_cross_length;
+  dynamic breadth;
+  dynamic diameter;
+  dynamic width;
+  dynamic height;
+  dynamic handle_height;
+  dynamic handle_length;
+  dynamic front_heel_height;
+  dynamic back_heel_height;
+  dynamic calf_cross_length;
+  dynamic weight;
+  dynamic foot_width;
+
   String? createdAt;
   Sizes copyWith({
     int? id,
@@ -214,6 +255,18 @@ class Sizes {
     dynamic thighCrossLength,
     dynamic open,
     dynamic lining,
+    dynamic entrance_cross_length,
+    dynamic breadth,
+    dynamic diameter,
+    dynamic width,
+    dynamic height,
+    dynamic handle_height,
+    dynamic handle_length,
+    dynamic front_heel_height,
+    dynamic back_heel_height,
+    dynamic calf_cross_length,
+    dynamic weight,
+    dynamic foot_width,
     String? createdAt,
   }) =>
       Sizes(
@@ -237,6 +290,19 @@ class Sizes {
         thighCrossLength: thighCrossLength ?? this.thighCrossLength,
         open: open ?? this.open,
         lining: lining ?? this.lining,
+        entrance_cross_length:
+            entrance_cross_length ?? this.entrance_cross_length,
+        breadth: breadth ?? this.breadth,
+        diameter: diameter ?? this.diameter,
+        width: width ?? this.width,
+        height: height ?? this.height,
+        handle_height: handle_height ?? this.handle_height,
+        handle_length: handle_length ?? this.handle_length,
+        front_heel_height: front_heel_height ?? this.front_heel_height,
+        back_heel_height: back_heel_height ?? this.back_heel_height,
+        calf_cross_length: calf_cross_length ?? this.calf_cross_length,
+        weight: weight ?? this.weight,
+        foot_width: foot_width ?? this.foot_width,
         createdAt: createdAt ?? this.createdAt,
       );
   Map<String, dynamic> toJson() {
@@ -262,6 +328,20 @@ class Sizes {
     map['open'] = open;
     map['lining'] = lining;
     map['created_at'] = createdAt;
+
+    map['entrance_cross_length'] = entrance_cross_length;
+    map['breadth'] = breadth;
+    map['diameter'] = diameter;
+    map['width'] = width;
+    map['height'] = height;
+    map['handle_height'] = handle_height;
+    map['handle_length'] = handle_length;
+    map['front_heel_height'] = front_heel_height;
+    map['back_heel_height'] = back_heel_height;
+    map['calf_cross_length'] = calf_cross_length;
+    map['weight'] = weight;
+    map['foot_width'] = foot_width;
+    
     return map;
   }
 }
