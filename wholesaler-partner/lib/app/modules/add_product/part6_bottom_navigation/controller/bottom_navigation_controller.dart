@@ -188,12 +188,24 @@ class AP_Part6Controller extends GetxController {
           part2controller.productBodySizeList[i];
       if (productBodySizeModel.isSelected.value) {
         Map<String, dynamic> sizeInfo = {"size": productBodySizeModel.size};
+
+        print('productBodySizeModel.sizeCategory.children.length');
+        print(productBodySizeModel.sizeCategory.children.length);
         for (int j = 0;
             j < productBodySizeModel.sizeCategory.children.length;
             j++) {
           SizeChild sizeChild = productBodySizeModel.sizeCategory.children[j];
+          print('sizeChild');
+          print(sizeChild.english);
+
           sizeInfo[sizeChild.english] = part2controller
               .textEditingControllers[i.toString() + j.toString()]!.text;
+
+          print('part2controller.textEditingControllers');
+          print(part2controller
+              .textEditingControllers[i.toString() + j.toString()]!.text);
+          print('sizeInfo[sizeChild.english]');
+          print(sizeInfo[sizeChild.english]);
         }
 
         sizeInfoList.add(sizeInfo);
@@ -240,6 +252,12 @@ class AP_Part6Controller extends GetxController {
           : '',
       "model_size": part4controller.modelSizeController.text,
     };
+    print('qqqqqqqqqqqqqqq');
+    print(data);
+    print(data);
+    print(data);
+    print(data);
+    print(data);
 
     bool isSuccess = false;
     isSuccess = await _apiProvider.addProduct(data: data);
@@ -268,10 +286,10 @@ class AP_Part6Controller extends GetxController {
     AddProductController addProductController =
         Get.find<AddProductController>();
     String productName = addProductController.productNameController.text;
-    print(
-        "productName22222222====@======${addProductController.productIdforEdit}");
-    print("productName====@======$productName");
-    print("productName3333====@======${addProductController.productIdforEdit}");
+    // print(
+    //     "productName22222222====@======${addProductController.productIdforEdit}");
+    // print("productName====@======$productName");
+    // print("productName3333====@======${addProductController.productIdforEdit}");
   }
 
   Future<void> editProduct() async {
@@ -284,8 +302,8 @@ class AP_Part6Controller extends GetxController {
     AP_Part5Controller part5controller = Get.find<AP_Part5Controller>();
     EditorController editorCtr = Get.find<EditorController>();
 
-    print(
-        "productName22222222==========${addProductController.productIdforEdit}");
+    // print(
+    //     "productName22222222==========${addProductController.productIdforEdit}");
     int mainCategoryId = (addProductController.selectedSubCat != null)
         ? addProductController.selectedSubCat.value.parentId!
         : 0;
@@ -293,8 +311,8 @@ class AP_Part6Controller extends GetxController {
         ? addProductController.selectedSubCat.value.id
         : 0;
     String productName = addProductController.productNameController.text;
-    print("productName==========$productName");
-    print("productName3333==========${addProductController.productIdforEdit}");
+    // print("productName==========$productName");
+    // print("productName3333==========${addProductController.productIdforEdit}");
     String price = addProductController.priceController.text
         .replaceAll(RegExp(r'[^0-9]'), '');
     List<dynamic> imagePath1 = part1controller.imagePath1.value;
@@ -309,8 +327,8 @@ class AP_Part6Controller extends GetxController {
         : part5controller.selectedCountry.value;
 
     // option
-    print(
-        'optionsControllers.length ${addProductController.optionsControllers.length}');
+    // print(
+    //     'optionsControllers.length ${addProductController.optionsControllers.length}');
     for (int i = 0; i < addProductController.optionsControllers.length; i++) {
       String addPrice = addProductController.optionsControllers[i].text;
       if (addPrice.isEmpty) {
@@ -499,9 +517,9 @@ class AP_Part6Controller extends GetxController {
           : '',
       "model_size": part4controller.modelSizeController.text,
     };
-    print(
-      json.decode(addProductController.options.toString()),
-    );
+    // print(
+    //   json.decode(addProductController.options.toString()),
+    // );
     bool isSuccess = false;
     isSuccess = await _apiProvider.editProduct(
         productId: addProductController.productIdforEdit, data: data);

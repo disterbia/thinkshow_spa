@@ -44,7 +44,6 @@ class ClothCategoryItemsView extends StatelessWidget {
     return ListTile(
       onTap: () {
         ctr.clothCategorySelected(subCat, clothCategory);
-        //에디터 다 클리어해줘야함;;
       },
       title: Text(subCat.name),
     );

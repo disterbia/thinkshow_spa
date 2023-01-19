@@ -16,24 +16,48 @@ class SizeInfoModel {
   dynamic open;
   dynamic lining;
 
-  SizeInfoModel({
-    this.size,
-    this.shoulderCrossLength,
-    this.chestCrossLength,
-    this.armhole,
-    this.armStraightLength,
-    this.armCrossLength,
-    this.sleeveCrossLength,
-    this.bottomCrossLength,
-    this.strap,
-    this.totalEntryLength,
-    this.waistCrossLength,
-    this.hipCrossLength,
-    this.bottomTopCrossLength,
-    this.thighCrossLength,
-    this.open,
-    this.lining,
-  });
+  dynamic entrance_cross_length;
+  dynamic breadth;
+  dynamic diameter;
+  dynamic width;
+  dynamic height;
+  dynamic handle_height;
+  dynamic handle_length;
+  dynamic front_heel_height;
+  dynamic back_heel_height;
+  dynamic calf_cross_length;
+  dynamic weight;
+  dynamic foot_width;
+
+  SizeInfoModel(
+      {this.size,
+      this.shoulderCrossLength,
+      this.chestCrossLength,
+      this.armhole,
+      this.armStraightLength,
+      this.armCrossLength,
+      this.sleeveCrossLength,
+      this.bottomCrossLength,
+      this.strap,
+      this.totalEntryLength,
+      this.waistCrossLength,
+      this.hipCrossLength,
+      this.bottomTopCrossLength,
+      this.thighCrossLength,
+      this.open,
+      this.lining,
+      this.entrance_cross_length,
+      this.breadth,
+      this.diameter,
+      this.width,
+      this.height,
+      this.handle_height,
+      this.handle_length,
+      this.front_heel_height,
+      this.back_heel_height,
+      this.calf_cross_length,
+      this.weight,
+      this.foot_width});
 
   factory SizeInfoModel.fromJson(Map<String, dynamic> json) => SizeInfoModel(
         size: json['size'] as String?,
@@ -52,6 +76,18 @@ class SizeInfoModel {
         thighCrossLength: json['thigh_cross_length'] as dynamic,
         open: json['open'] as dynamic,
         lining: json['lining'] as dynamic,
+        entrance_cross_length: json['entrance_cross_length'] as dynamic,
+        breadth: json['breadth'] as dynamic,
+        diameter: json['diameter'] as dynamic,
+        width: json['width'] as dynamic,
+        height: json['height'] as dynamic,
+        handle_height: json['handle_height'] as dynamic,
+        handle_length: json['handle_length'] as dynamic,
+        front_heel_height: json['front_heel_height'] as dynamic,
+        back_heel_height: json['back_heel_height'] as dynamic,
+        calf_cross_length: json['calf_cross_length'] as dynamic,
+        weight: json['weight'] as dynamic,
+        foot_width: json['foot_width'] as dynamic,
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +107,18 @@ class SizeInfoModel {
         'thigh_cross_length': thighCrossLength,
         'open': open,
         'lining': lining,
+
+        'entrance_cross_length' : entrance_cross_length,
+        'breadth' : breadth,
+        'diameter' : diameter,
+        'width' : width,
+        'height' : height,
+        'handle_height' : handle_height,
+        'handle_length' : handle_length,
+        'front_heel_height' : front_heel_height,
+        'back_heel_height' : back_heel_height,
+        'calf_cross_length' : calf_cross_length,
+        'weight' : weight,
+        'foot_width' : foot_width,
       };
 }
