@@ -34,6 +34,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.4.56
 #  webview_flutter: ^3.0.4
   firebase_analytics: ^10.0.7
+  pull_to_refresh: ^2.0.0
   wholesaler_partner:
     path: ../wholesaler-partner
 
