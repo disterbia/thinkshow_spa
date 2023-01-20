@@ -12,7 +12,8 @@ class ProductCategoryPageController extends GetxController {
   RxList<Product> products = <Product>[].obs;
   late int selectedMainCatIndex;
   late String title;
-  ClothCategoryModel selectedSubcat = ClothCategoryModel(id: -1, name: 'name', parentId: -2, depth: -3, isUse: false);
+  ClothCategoryModel selectedSubcat = ClothCategoryModel(
+      id: -1, name: 'name', parentId: -2, depth: -3, isUse: false);
 
   List<String> apiSoftItems = ['latest', 'popular', 'review'];
   List<String> dropdownItems = ['최신순', '인기순', '리뷰순'];
@@ -22,24 +23,34 @@ class ProductCategoryPageController extends GetxController {
   int offset = 0;
   RxBool allowCallAPI = true.obs;
 
+  @override
+  onInit() async {
+    scrollController.value.addListener(() {
+      // print('inside ProductCategoryPageView > init > scrollController.value.position.pixels ${scrollController.value.position.pixels}');
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
+        offset += mConst.limit;
+        updateProducts(isScrolling: true);
+      }
+    });
+    super.onInit();
+  }
+
   init() async {
     // print('inside ProductCategoryPageView > init > selectedMainCatIndex $selectedMainCatIndex');
     title = ClothCategory.getTitleAt(selectedMainCatIndex);
     selectedCatIndex.value = selectedMainCatIndex + 1;
 
-    products.value = await apiProvider.getProductsWithCat(offset: offset, limit: mConst.limit, categoryId: selectedCatIndex.value, sort: apiSoftItems[selectedDropdownIndex.value]);
+    products.value = await apiProvider.getProductsWithCat(
+        offset: offset,
+        limit: mConst.limit,
+        categoryId: selectedCatIndex.value,
+        sort: apiSoftItems[selectedDropdownIndex.value]);
 
     if (products.length < mConst.limit) {
       allowCallAPI.value = false;
     }
-
-    scrollController.value.addListener(() {
-      // print('inside ProductCategoryPageView > init > scrollController.value.position.pixels ${scrollController.value.position.pixels}');
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-        offset += mConst.limit;
-        updateProducts(isScrolling: true);
-      }
-    });
   }
 
   subCatChipPressed(ClothCategoryModel selectedSubcat) async {
@@ -50,7 +61,11 @@ class ProductCategoryPageController extends GetxController {
     products.clear();
     offset = 0;
     allowCallAPI.value = true;
-    products.value = await apiProvider.getProductsWithCat(offset: offset, limit: mConst.limit, categoryId: selectedCatIndex.value, sort: apiSoftItems[selectedDropdownIndex.value]);
+    products.value = await apiProvider.getProductsWithCat(
+        offset: offset,
+        limit: mConst.limit,
+        categoryId: selectedCatIndex.value,
+        sort: apiSoftItems[selectedDropdownIndex.value]);
 
     if (products.length < mConst.limit) {
       allowCallAPI.value = false;
@@ -59,7 +74,11 @@ class ProductCategoryPageController extends GetxController {
 
   updateProducts({required bool isScrolling}) async {
     List<Product> tempProducts = [];
-    tempProducts = await apiProvider.getProductsWithCat(offset: offset, limit: mConst.limit, categoryId: selectedCatIndex.value, sort: apiSoftItems[selectedDropdownIndex.value]);
+    tempProducts = await apiProvider.getProductsWithCat(
+        offset: offset,
+        limit: mConst.limit,
+        categoryId: selectedCatIndex.value,
+        sort: apiSoftItems[selectedDropdownIndex.value]);
 
     if (isScrolling) {
       products.addAll(tempProducts);

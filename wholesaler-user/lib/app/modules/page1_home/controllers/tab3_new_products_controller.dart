@@ -17,29 +17,37 @@ class Tab3NewProductsController extends GetxController {
   RxBool allowCallAPI = true.obs;
   RxBool isLoading = false.obs;
 
-  Future<void> init() async {
-    isLoading.value=true;
-   // print('inside Tab3NewProductsController onInit');
-    // delete old controllers
-    // Get.delete<CarousalProductHorizontalController>();
-
-    products.value = await _apiProvider.getNewProducts(offset: 0, limit: mConst.limit);
-    isLoading.value=false;
+  @override
+  Future<void> onInit() async {
     scrollController.value.addListener(() {
-    //  print('scrollController.value.addListener');
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
-      //  print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
+      //  print('scrollController.value.addListener');
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
+        //  print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
         offset += mConst.limit;
-      //  print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
+        //  print('scrollController end detected. isLoading.value = ${allowCallAPI.value} offset = $offset');
         addDataToList();
       }
     });
     super.onInit();
   }
 
+  Future<void> init() async {
+    isLoading.value = true;
+    // print('inside Tab3NewProductsController onInit');
+    // delete old controllers
+    // Get.delete<CarousalProductHorizontalController>();
+
+    products.value =
+        await _apiProvider.getNewProducts(offset: 0, limit: mConst.limit);
+    isLoading.value = false;
+  }
+
   addDataToList() async {
-   // print('inside addDataToList: offset $offset');
-    List<Product> tempProducts = await _apiProvider.getNewProducts(offset: offset, limit: mConst.limit);
+    // print('inside addDataToList: offset $offset');
+    List<Product> tempProducts =
+        await _apiProvider.getNewProducts(offset: offset, limit: mConst.limit);
     products.addAll(tempProducts);
     // check if last product from server.
     if (tempProducts.length == 0) {

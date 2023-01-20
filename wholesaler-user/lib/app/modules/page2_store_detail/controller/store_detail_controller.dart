@@ -36,6 +36,19 @@ class StoreDetailController extends GetxController {
   List<String> dropdownItems = ['최신순', '인기순', '리뷰순'];
   RxInt selectedDropdownIndex = 0.obs;
 
+  @override
+  onInit() async {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
+        offset += mConst.limit;
+        updateProducts(isScrolling: true);
+      }
+    });
+    super.onInit();
+  }
+
   init() async {
     mainStoreModel.value =
         await _apiProvider.getStoreDetailMainInfo(storeId.value);
@@ -47,15 +60,6 @@ class StoreDetailController extends GetxController {
 
     // products
     updateProducts(isScrolling: false);
-
-    scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels ==
-              scrollController.value.position.maxScrollExtent &&
-          allowCallAPI.isTrue) {
-        offset += mConst.limit;
-        updateProducts(isScrolling: true);
-      }
-    });
   }
 
   Future<void> starIconPressed() async {

@@ -11,21 +11,30 @@ class Tab5DingPickController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
-  RxBool isLoading=false.obs;
-  Future<void> init() async {
-    isLoading.value=true;
-    products.value = await _apiProvider.getDingsPick(offset: 0, limit: mConst.limit);
-    isLoading.value=false;
+  RxBool isLoading = false.obs;
+  @override
+  onInit() async {
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
         offset += mConst.limit;
         addDataToList();
       }
     });
+    super.onInit();
+  }
+
+  Future<void> init() async {
+    isLoading.value = true;
+    products.value =
+        await _apiProvider.getDingsPick(offset: 0, limit: mConst.limit);
+    isLoading.value = false;
   }
 
   addDataToList() async {
-    List<Product> tempProducts = await _apiProvider.getDingsPick(offset: offset, limit: mConst.limit);
+    List<Product> tempProducts =
+        await _apiProvider.getDingsPick(offset: offset, limit: mConst.limit);
 
     products.addAll(tempProducts);
     // check if last product from server.
