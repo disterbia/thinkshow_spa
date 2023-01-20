@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
@@ -19,8 +20,12 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab1HomeView extends GetView<Tab1UserHomeController> {
   Tab1UserHomeController ctr = Get.put(Tab1UserHomeController());
- //  Page1HomeController page1HomeCtr = Get.put(Page1HomeController());
-  CarousalProductHorizontalController recommendedProductCtr = Get.put(CarousalProductHorizontalController());
+  //  Page1HomeController page1HomeCtr = Get.put(Page1HomeController());
+  CarousalProductHorizontalController recommendedProductCtr =
+      Get.put(CarousalProductHorizontalController());
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   init() {
     ctr.init();
@@ -28,58 +33,82 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
     recommendedProductCtr.init();
   }
 
+  void _onRefresh() async {
+    ctr.getAllProducts();
+    recommendedProductCtr.init();
+
+    _refreshController.refreshCompleted();
+  }
+
+  // void _onLoading() async {
+  //   ctr.addDataToList();
+  //   _refreshController.loadComplete();
+  // }
+
   @override
   Widget build(BuildContext context) {
     init();
     return Obx(
-       ()=> ctr.isLoading.value&&recommendedProductCtr.isLoading.value ? LoadingWidget():SingleChildScrollView(
-        controller: ctr.scrollController.value,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ImageSliderView(CurrentPage.homePage),
-            // SizedBox(height: 20),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: _dingdongBanner(),
-            // ),
-            // SizedBox(height: 20),
-            recommendedProductCtr.products.length!=0?Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        children: [
-                          _recommendedItemsTitle(),
-                          CarousalProductHorizontalView(),
-                        ],
+      () => ctr.isLoading.value && recommendedProductCtr.isLoading.value
+          ? LoadingWidget()
+          : SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: false,
+              onRefresh: _onRefresh,
+              // onLoading: _onLoading,
+              scrollController: ctr.scrollController.value,
+              child: SingleChildScrollView(
+                // controller: ctr.scrollController.value,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ImageSliderView(CurrentPage.homePage),
+                    // SizedBox(height: 20),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                    //   child: _dingdongBanner(),
+                    // ),
+                    // SizedBox(height: 20),
+                    recommendedProductCtr.products.length != 0
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              children: [
+                                _recommendedItemsTitle(),
+                                CarousalProductHorizontalView(),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    Divider(thickness: 6, color: MyColors.grey3),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Obx(
+                        () => HorizontalChipList().getAllMainCat(
+                            categoryList: ClothCategory.getAllMainCat()
+                                .map((e) => e.name)
+                                .toList(),
+                            onTapped: () {
+                              ctr.updateProducts();
+                            }),
                       ),
-                    ):Container()
+                    ),
 
-            ,
-            Divider(thickness: 6, color: MyColors.grey3),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Obx(
-                () => HorizontalChipList().getAllMainCat(
-                    categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),
-                    onTapped: () {
-                      ctr.updateProducts();
-                    }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: ProductGridViewBuilder(
+                        crossAxisCount: 3,
+                        productHeight: 280,
+                        products: ctr.products,
+                        isShowLoadingCircle: ctr.allowCallAPI,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ProductGridViewBuilder(
-                crossAxisCount: 3,
-                productHeight: 280,
-                products: ctr.products,
-                isShowLoadingCircle: ctr.allowCallAPI,
-              ),
-            ),
-          ],
-        ),
-    ),
-     );
+    );
   }
 
   // Widget _dingdongBanner() {

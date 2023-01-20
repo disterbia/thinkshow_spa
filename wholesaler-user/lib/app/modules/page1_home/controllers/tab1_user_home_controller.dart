@@ -15,25 +15,39 @@ class Tab1UserHomeController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
-  RxBool isLoading= false.obs;
+  RxBool isLoading = false.obs;
 
   // @override
   // Future<void> onInit() async {
   //
   // }
 
-  Future<void> init() async{
-    isLoading.value=true;
-    products.value = await _apiProvider.getAllProducts(offset: 0, limit: mConst.limit);
-
+  Future<void> init() async {
+    isLoading.value = true;
+    getAllProducts();
+    // print('??????????????????');
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent && allowCallAPI.isTrue) {
+      // print(scrollController.value.position.pixels);
+      if (scrollController.value.position.pixels ==
+              scrollController.value.position.maxScrollExtent &&
+          allowCallAPI.isTrue) {
         offset += mConst.limit;
+        print(offset);
         addDataToList();
       }
     });
-    isLoading.value=false;
+    isLoading.value = false;
     super.onInit();
+  }
+
+  getAllProducts() async {
+    isLoading.value = true;
+
+    offset = 0;
+    products.value =
+        await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+
+    isLoading.value = false;
   }
 
   Future<void> updateProducts() async {
@@ -45,10 +59,14 @@ class Tab1UserHomeController extends GetxController {
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('index 0, show ALL');
-      products.value = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+      products.value = await _apiProvider.getAllProducts(
+          offset: offset, limit: mConst.limit);
     } else {
       print('index > 0 , show categories');
-      products.value = await _apiProvider.getProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
+      products.value = await _apiProvider.getProductsWithCat(
+          categoryId: categoryTagCtr.selectedMainCatIndex.value,
+          offset: offset,
+          limit: mConst.limit);
     }
     if (products.length < mConst.limit) {
       allowCallAPI.value = false;
@@ -59,10 +77,14 @@ class Tab1UserHomeController extends GetxController {
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('index 0, show ALL');
-      tempProducts = await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+      tempProducts = await _apiProvider.getAllProducts(
+          offset: offset, limit: mConst.limit);
     } else {
       print('index > 0 , show categories');
-      tempProducts = await _apiProvider.getProductsWithCat(categoryId: categoryTagCtr.selectedMainCatIndex.value, offset: offset, limit: mConst.limit);
+      tempProducts = await _apiProvider.getProductsWithCat(
+          categoryId: categoryTagCtr.selectedMainCatIndex.value,
+          offset: offset,
+          limit: mConst.limit);
     }
     products.addAll(tempProducts);
     // check if last product from server.

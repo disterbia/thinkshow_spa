@@ -137,8 +137,8 @@ class HorizontalChipList {
             clothCategory: clothCategories.elementAt(index),
             // height: screenWidth / clothCategories.length - 25,
             // width: screenWidth / clothCategories.length - 25,
-            height: 30,
-            width: 30,
+            height: 25,
+            width: 25,
             onTap: () => onPressed(index),
           );
         },
@@ -153,26 +153,28 @@ class HorizontalChipList {
       required double width}) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.asset(
-                clothCategory.icon,
-                height: height,
-                width: width,
-                fit: BoxFit.fill,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                color: Color(0xFFFFF1DA),
+                borderRadius: BorderRadius.circular(15)),
+            child: Image.asset(
+              clothCategory.icon,
+              height: height,
+              width: width,
+              fit: BoxFit.fill,
             ),
-            SizedBox(height: 5),
-            Text(
-              clothCategory.title,
-              style: MyTextStyles.f12.copyWith(color: MyColors.grey2),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 5),
+          Text(
+            clothCategory.title,
+            style: MyTextStyles.f12.copyWith(color: MyColors.black1),
+          ),
+        ],
       ),
     );
   }
