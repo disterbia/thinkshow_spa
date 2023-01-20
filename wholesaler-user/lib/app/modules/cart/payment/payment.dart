@@ -45,7 +45,7 @@ class Payment extends StatelessWidget {
         data: PaymentData(
             pg: cart2Ctr.cart2checkoutModel.value.iamportInfo!.pg!, // PG사
             payMethod: 'card', // 결제수단
-            name: '아임포트 결제데이터 분석', // 주문명
+            name: '(주)생각바구니', // 주문명
             merchantUid: cart2Ctr
                 .cart2checkoutModel.value.iamportInfo!.merchantUid!
                 .toString(), // 주문번호

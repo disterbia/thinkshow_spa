@@ -18,6 +18,7 @@ class HorizontalChipList {
       {required List<String> categoryList, required Function() onTapped}) {
     List<ChipWidget> categoryChips = [];
     // Add ALL chip
+    print(ctr.selectedMainCatIndex.value);
     categoryChips.add(
       ChipWidget(
           title: ctr.isDingDongTab.isTrue ? "인기" : ClothCategory.ALL,
@@ -25,7 +26,7 @@ class HorizontalChipList {
             ctr.selectedMainCatIndex.value = 0;
             onTapped();
           },
-          isSelected: 0 == ctr.selectedMainCatIndex.value ? true : false),
+          isSelected: ctr.selectedMainCatIndex.value == 0 ? true : false),
     );
 
     // Add main or sub categories: ex: shirt,
@@ -43,6 +44,7 @@ class HorizontalChipList {
       );
     }
 
+    ctr.selectedMainCatIndex.value = 0;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Wrap(
@@ -66,6 +68,8 @@ class HorizontalChipList {
         parentId: parentId,
         depth: 0,
         isUse: false);
+
+
     categoryChips.add(
       ChipWidget(
           title: ClothCategory.ALL,
@@ -73,7 +77,7 @@ class HorizontalChipList {
             ctr.selectedMainCatIndex.value = 0;
             onTapped(allClothCatModel);
           },
-          isSelected: 0 == ctr.selectedMainCatIndex.value ? true : false),
+          isSelected: ctr.selectedMainCatIndex.value == 0 ? true : false),
     );
 
     // Add main or sub categories: ex: shirt,
@@ -90,7 +94,7 @@ class HorizontalChipList {
                 (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
       );
     }
-
+    ctr.selectedMainCatIndex.value = 0;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Wrap(

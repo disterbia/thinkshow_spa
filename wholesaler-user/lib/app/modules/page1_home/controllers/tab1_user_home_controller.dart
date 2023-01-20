@@ -17,38 +17,40 @@ class Tab1UserHomeController extends GetxController {
   RxBool allowCallAPI = true.obs;
   RxBool isLoading = false.obs;
 
-  // @override
-  // Future<void> onInit() async {
-  //
-  // }
-
-  Future<void> init() async {
-    isLoading.value = true;
-    getAllProducts();
-    // print('??????????????????');
+  @override
+  Future<void> onInit() async {
     scrollController.value.addListener(() {
       // print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
           allowCallAPI.isTrue) {
         offset += mConst.limit;
-        print(offset);
         addDataToList();
       }
     });
+    super.onInit();
+  }
+
+  Future<void> init() async {
+    isLoading.value = true;
+    offset = 0;
+    products.value =
+        await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+    // print('??????????????????');
+
     isLoading.value = false;
     super.onInit();
   }
 
-  getAllProducts() async {
-    isLoading.value = true;
+  // getAllProducts() async {
+  //   isLoading.value = true;
 
-    offset = 0;
-    products.value =
-        await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
+  //   offset = 0;
+  //   products.value =
+  //       await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
 
-    isLoading.value = false;
-  }
+  //   isLoading.value = false;
+  // }
 
   Future<void> updateProducts() async {
     // reset variables

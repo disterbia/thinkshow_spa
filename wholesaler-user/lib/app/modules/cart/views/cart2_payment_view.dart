@@ -23,9 +23,12 @@ class Cart2PaymentView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: '결제'),
-      body: body(),
+      body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: body()),
     );
   }
 
@@ -39,7 +42,8 @@ class Cart2PaymentView extends GetView {
             () => ctr.cartItems.length > 0
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: CartItemsList(isCart1Page: false, cartItems: ctr.cartItems),
+                    child: CartItemsList(
+                        isCart1Page: false, cartItems: ctr.cartItems),
                   )
                 : SizedBox.shrink(),
           ),
@@ -113,36 +117,46 @@ class Cart2PaymentView extends GetView {
                       Spacer(),
                       Obx(
                         () => Text(
-                          '사용가능 ' + Utils.numberFormat(number: ctr.cart2checkoutModel.value.userInfo!.point.value, suffix: 'P'),
-                          style: MyTextStyles.f12.copyWith(color: MyColors.grey2),
+                          '사용가능 ' +
+                              Utils.numberFormat(
+                                  number: ctr.cart2checkoutModel.value.userInfo!
+                                      .point.value,
+                                  suffix: 'P'),
+                          style:
+                              MyTextStyles.f12.copyWith(color: MyColors.grey2),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 6),
                   CustomField(
-                    fieldText: '0 원',
-                    fieldController: ctr.pointController,
-                    isTextKeyboard: false,
-                    buttonText: '사용',
-                    onTap: () => ctr.usePointBtnPressed(),
-                  ),
+                      fieldText: '0 원',
+                      fieldController: ctr.pointController,
+                      isTextKeyboard: true,
+                      buttonText: '사용',
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        ctr.usePointBtnPressed();
+                      }),
                   SizedBox(height: 20),
                   // 결제정보
                   _titleBuilder('결제정보'),
                   Divider(color: MyColors.grey3, thickness: 1, height: 20),
                   // 주문 상품
 
-                  _twoSideText('주문 상품', ctr.cart2checkoutModel.value.onlyProductPrice.value),
+                  _twoSideText('주문 상품',
+                      ctr.cart2checkoutModel.value.onlyProductPrice.value),
                   SizedBox(height: 15),
                   // 할인 / 부가결제
                   Obx(
-                    () => _twoSideText('할인 / 부가결제', ctr.cart2checkoutModel.value.discountPrice.value),
+                    () => _twoSideText('할인 / 부가결제',
+                        ctr.cart2checkoutModel.value.discountPrice.value),
                   ),
                   SizedBox(height: 15),
                   // 배송비
                   Obx(
-                    () => _twoSideText('배송비', ctr.cart2checkoutModel.value.deliveryCost.value),
+                    () => _twoSideText(
+                        '배송비', ctr.cart2checkoutModel.value.deliveryCost.value),
                   ),
                   SizedBox(height: 15),
                   // 경제금액
@@ -173,7 +187,10 @@ class Cart2PaymentView extends GetView {
           SizedBox(
             width: 24,
             height: 24,
-            child: Checkbox(activeColor: MyColors.primary, value: !ctr.isUseNewAddress.value, onChanged: (value) => ctr.checkboxPressed()),
+            child: Checkbox(
+                activeColor: MyColors.primary,
+                value: !ctr.isUseNewAddress.value,
+                onChanged: (value) => ctr.checkboxPressed()),
           ),
           SizedBox(width: 6),
           Text('회원정보와 동일'),
@@ -183,7 +200,10 @@ class Cart2PaymentView extends GetView {
               SizedBox(
                 width: 24,
                 height: 24,
-                child: Checkbox(activeColor: MyColors.primary, value: ctr.isUseNewAddress.value, onChanged: (value) => ctr.checkboxPressed()),
+                child: Checkbox(
+                    activeColor: MyColors.primary,
+                    value: ctr.isUseNewAddress.value,
+                    onChanged: (value) => ctr.checkboxPressed()),
               ),
               SizedBox(width: 6),
               Text('새로운 배송지'),
@@ -217,7 +237,8 @@ class Cart2PaymentView extends GetView {
             children: [
               // phone part 1: ex) 010
               Expanded(
-                child: CustomTextField(keyboardType: TextInputType.number,
+                child: CustomTextField(
+                  keyboardType: TextInputType.number,
                   focusNode: ctr.focusNode1,
                   onChanged: (value) {
                     if (value.length == 6) {
@@ -231,7 +252,8 @@ class Cart2PaymentView extends GetView {
               Text('  -  '),
               // phone part 2: ex) 1234
               Expanded(
-                child: CustomTextField(keyboardType: TextInputType.number,
+                child: CustomTextField(
+                  keyboardType: TextInputType.number,
                   onChanged: (value) {
                     if (value.length == 6) {
                       FocusScope.of(Get.context!).requestFocus(ctr.focusNode3);
@@ -245,7 +267,8 @@ class Cart2PaymentView extends GetView {
               Text('  -  '),
               // phone part 3: ex) 5678
               Expanded(
-                  child: CustomTextField(keyboardType: TextInputType.number,
+                  child: CustomTextField(
+                keyboardType: TextInputType.number,
                 focusNode: ctr.focusNode3,
                 controller: ctr.phoneThirdPartController,
                 labelText: '',
@@ -283,7 +306,9 @@ class Cart2PaymentView extends GetView {
         ),
         Obx(
           () => Text(
-            Utils.numberFormat(number: ctr.cart2checkoutModel.value.totalProductAmount.value, suffix: '원'),
+            Utils.numberFormat(
+                number: ctr.cart2checkoutModel.value.totalProductAmount.value,
+                suffix: '원'),
             style: MyTextStyles.f16.copyWith(color: MyColors.red),
           ),
         ),
@@ -294,7 +319,9 @@ class Cart2PaymentView extends GetView {
   Widget _paymentButton() {
     return CustomButton(
       width: Get.width,
-      onPressed: () => ctr.paymentBtnPressed(),
+      onPressed: () {
+        ctr.paymentBtnPressed();
+      },
       text: '결제하기',
     );
   }

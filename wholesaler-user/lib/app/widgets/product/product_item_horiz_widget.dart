@@ -125,16 +125,18 @@ class ProductItemHorizontal extends StatelessWidget {
   }
 
   ImageBuilder() {
-    print(product.imgUrl);
-    print(product.imgUrl);
-    print(product.imgUrl);
-    print(product.imgUrl);
+    // print(product.imgUrl);
+    // print(product.imgUrl);
+    // print(product.imgUrl);
+    // String result = product.imgUrl.substring(0, product.imgUrl.indexOf(','));
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: CachedNetworkImage(
         fit: BoxFit.fitHeight,
-        imageUrl: product.imgUrl,
+        imageUrl: product.imgUrl.contains(",")
+            ? product.imgUrl.substring(0, product.imgUrl.indexOf(','))
+            : product.imgUrl,
         height: product.imgHeight ?? 145,
         width: product.imgWidth ?? 116,
         // placeholder: (context, url) => CircularProgressIndicator(),

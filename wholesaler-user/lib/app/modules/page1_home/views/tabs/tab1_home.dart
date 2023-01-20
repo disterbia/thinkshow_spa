@@ -34,8 +34,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
   }
 
   void _onRefresh() async {
-    ctr.getAllProducts();
-    recommendedProductCtr.init();
+    ctr.updateProducts();
 
     _refreshController.refreshCompleted();
   }
