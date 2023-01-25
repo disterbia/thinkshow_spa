@@ -1042,6 +1042,14 @@ class pApiProvider extends GetConnect {
   Future<bool> addProduct({required Map<String, dynamic> data}) async {
     print(data.toString());
 
+    bool checkTokenResult = await chekToken();
+
+    if (!checkTokenResult) {
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.storeLogout();
+      return false;
+    }
+
     final response = await post(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT, data,
         headers: headers);

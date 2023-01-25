@@ -13,6 +13,7 @@ class AP_Part2Controller extends GetxController {
 
   RxBool unitPriceCheckbox = true.obs;
   RxBool isOptionCheckbox = true.obs;
+  RxBool showWeightPopup = false.obs;
 
   RxList<ProductBodySizeModel> productBodySizeList =
       <ProductBodySizeModel>[].obs;
@@ -233,9 +234,32 @@ class AP_Part2Controller extends GetxController {
         }
       }
     }
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+    // print(
+    //     '    print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());');
+
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
+    // print(productBodySizeListIndex.toString() + sizeCategoryIndex.toString());
 
     textEditingControllers.putIfAbsent(
         productBodySizeListIndex.toString() + sizeCategoryIndex.toString(),
         () => textEditingController);
+
   }
 }

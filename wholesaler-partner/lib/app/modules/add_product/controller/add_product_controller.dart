@@ -35,6 +35,7 @@ class AddProductController extends GetxController {
   List<Option> options = [];
 
   List<String> sizesStr = ['FREE, XS, S, M, L'];
+  // RxList<int> isAddOptionsList = <int>[0, 0, 0, 0, 0].obs;
 
   RxBool isEditing = false.obs;
   RxBool isChangeCategoryInEditeMode = false.obs;
@@ -44,8 +45,12 @@ class AddProductController extends GetxController {
 
   List<TextEditingController> optionsControllers = <TextEditingController>[];
 
-  Rx<ClothCategory> category = ClothCategory(icon: '', id: -1, image: '', subCategories: [], title: '').obs;
-  Rx<ClothCategoryModel> selectedSubCat = ClothCategoryModel(depth: 0, id: -1, isUse: false, name: '', parentId: -1).obs;
+  Rx<ClothCategory> category =
+      ClothCategory(icon: '', id: -1, image: '', subCategories: [], title: '')
+          .obs;
+  Rx<ClothCategoryModel> selectedSubCat =
+      ClothCategoryModel(depth: 0, id: -1, isUse: false, name: '', parentId: -1)
+          .obs;
   late TextEditingController productNameController;
   late TextEditingController priceController;
 
@@ -60,6 +65,14 @@ class AddProductController extends GetxController {
     priceController = TextEditingController();
   }
 
+  optionDuplicateRemove(String value) {
+    for (int k = 0; k < options.length; k++) {
+      if (options[k].size == value) {
+        optionsControllers.removeAt(k);
+        options.removeAt(k);
+      }
+    }
+  }
 
   toSubCategoryListView(ClothCategory category) {
     Get.to(() => ClothCategoryItemsView(category));
@@ -73,27 +86,44 @@ class AddProductController extends GetxController {
     AP_Part4Controller part4controller = Get.put(AP_Part4Controller());
     AP_Part5Controller part5controller = Get.put(AP_Part5Controller());
     EditorController editorCtr = Get.put(EditorController());
-    isLoading.value=true;
-    productModifyModel.value = await _apiProvider.getProductEditInfo(productId: productId);
-    isLoading.value=false;
+    isLoading.value = true;
+    productModifyModel.value =
+        await _apiProvider.getProductEditInfo(productId: productId);
+    isLoading.value = false;
 
     // category and subcaterory
-    String catTitle = ClothCategory.getAllItems().firstWhere((clothCat) => clothCat.id == productModifyModel.value.mainCategoryId).name;
+    String catTitle = ClothCategory.getAllItems()
+        .firstWhere((clothCat) =>
+            clothCat.id == productModifyModel.value.mainCategoryId)
+        .name;
     // initialize category
-    category.value = ClothCategory(icon: '', id: productModifyModel.value.mainCategoryId!, image: '', subCategories: [], title: catTitle, selectedSubcatIndex: productModifyModel.value.subCategoryId!);
-    selectedSubCat.value = ClothCategoryModel(depth: 0, id: productModifyModel.value.subCategoryId!, isUse: true, name: 'selectedSubCat', parentId: productModifyModel.value.mainCategoryId);
+    category.value = ClothCategory(
+        icon: '',
+        id: productModifyModel.value.mainCategoryId!,
+        image: '',
+        subCategories: [],
+        title: catTitle,
+        selectedSubcatIndex: productModifyModel.value.subCategoryId!);
+    selectedSubCat.value = ClothCategoryModel(
+        depth: 0,
+        id: productModifyModel.value.subCategoryId!,
+        isUse: true,
+        name: 'selectedSubCat',
+        parentId: productModifyModel.value.mainCategoryId);
 
     // product name
     productNameController.text = productModifyModel.value.productName!;
 
     // price
-    var f=NumberFormat('###,###,###,###');
+    var f = NumberFormat('###,###,###,###');
 
     priceController.text = f.format(productModifyModel.value.price).toString();
 
     // images
-    part1controller.imagePath1.value = productModifyModel.value.thumbnailImagePath!;
-    part1controller.imageUrl1.value = productModifyModel.value.thumbnailImageUrl!;
+    part1controller.imagePath1.value =
+        productModifyModel.value.thumbnailImagePath!;
+    part1controller.imageUrl1.value =
+        productModifyModel.value.thumbnailImageUrl!;
     part1controller.imagePath2.value = productModifyModel.value.colorImagePath!;
     part1controller.imageUrl2.value = productModifyModel.value.colorImageUrl!;
     // part1controller.imagePath3.value = productModifyModel.value.detailImagePath!;
@@ -101,13 +131,14 @@ class AddProductController extends GetxController {
 
     // content
     //editorCtr.editorController.setText(productModifyModel.value.content!);
-    editorCtr.editorController.value=Quill.QuillController(
-        document: Quill.Document.fromJson(jsonDecode(productModifyModel.value.content!)),
+    editorCtr.editorController.value = Quill.QuillController(
+        document: Quill.Document.fromJson(
+            jsonDecode(productModifyModel.value.content!)),
         selection: TextSelection.collapsed(offset: 0));
 
-
     // country
-    part5controller.selectedCountry.value = productModifyModel.value.manufactureCountry!;
+    part5controller.selectedCountry.value =
+        productModifyModel.value.manufactureCountry!;
 
     // optionss
     colorsList.clear();
@@ -120,8 +151,10 @@ class AddProductController extends GetxController {
     part3controller.materialTypeList.clear();
     part3controller.materialTypePercentControllers.clear();
     for (int i = 0; i < productModifyModel.value.materialList!.length; i++) {
-      part3controller.materialTypeList.add(productModifyModel.value.materialList![i].name!);
-      part3controller.materialTypePercentControllers.add(TextEditingController(text: productModifyModel.value.materialList![i].ratio.toString()));
+      part3controller.materialTypeList
+          .add(productModifyModel.value.materialList![i].name!);
+      part3controller.materialTypePercentControllers.add(TextEditingController(
+          text: productModifyModel.value.materialList![i].ratio.toString()));
     }
 
     // keyword list
@@ -131,87 +164,130 @@ class AddProductController extends GetxController {
     }
 
     // isPrivilage
-    part1controller.isDingdongDeliveryActive.value = productModifyModel.value.isPrivilege!;
+    part1controller.isDingdongDeliveryActive.value =
+        productModifyModel.value.isPrivilege!;
 
     // 두께감 ThicknessModel ThicknessType [두꺼움, 얇음, 중간] [thick, thin, middle]
     if (productModifyModel.value.thickness! == 'thick') {
-      part3controller.thicknessSelected.value = ThicknessModel(name: '두꺼움', value: ThicknessType.thick);
+      part3controller.thicknessSelected.value =
+          ThicknessModel(name: '두꺼움', value: ThicknessType.thick);
     } else if (productModifyModel.value.thickness! == 'thin') {
-      part3controller.thicknessSelected.value = ThicknessModel(name: '얇음', value: ThicknessType.thin);
+      part3controller.thicknessSelected.value =
+          ThicknessModel(name: '얇음', value: ThicknessType.thin);
     } else if (productModifyModel.value.thickness! == 'middle') {
-      part3controller.thicknessSelected.value = ThicknessModel(name: '중간', value: ThicknessType.middle);
+      part3controller.thicknessSelected.value =
+          ThicknessModel(name: '중간', value: ThicknessType.middle);
     }
 
     // 비침 SeeThroughModel SeeThroughType [비침, 비침안함] [seeThrough, seeThroughNo]
     if (productModifyModel.value.seeThrough! == 'high') {
-      part3controller.seeThroughSelected.value = SeeThroughModel(name: '높음', value: SeeThroughType.high);
+      part3controller.seeThroughSelected.value =
+          SeeThroughModel(name: '높음', value: SeeThroughType.high);
     } else if (productModifyModel.value.seeThrough! == 'middle') {
-      part3controller.seeThroughSelected.value = SeeThroughModel(name: '중간', value: SeeThroughType.middle);
+      part3controller.seeThroughSelected.value =
+          SeeThroughModel(name: '중간', value: SeeThroughType.middle);
     } else if (productModifyModel.value.seeThrough! == 'none') {
-      part3controller.seeThroughSelected.value = SeeThroughModel(name: '없음', value: SeeThroughType.none);
+      part3controller.seeThroughSelected.value =
+          SeeThroughModel(name: '없음', value: SeeThroughType.none);
     }
 
     // 신축성 FlexibilityModel FlexibilityType [높음, 중간, 없음, 밴딩] [high, middle, none, banding]
     if (productModifyModel.value.flexibility! == 'high') {
-      part3controller.flexibilitySelected.value = FlexibilityModel(name: '높음', value: FlexibilityType.high);
+      part3controller.flexibilitySelected.value =
+          FlexibilityModel(name: '높음', value: FlexibilityType.high);
     } else if (productModifyModel.value.flexibility! == 'middle') {
-      part3controller.flexibilitySelected.value = FlexibilityModel(name: '중간', value: FlexibilityType.middle);
+      part3controller.flexibilitySelected.value =
+          FlexibilityModel(name: '중간', value: FlexibilityType.middle);
     } else if (productModifyModel.value.flexibility! == 'none') {
-      part3controller.flexibilitySelected.value = FlexibilityModel(name: '없음', value: FlexibilityType.none);
+      part3controller.flexibilitySelected.value =
+          FlexibilityModel(name: '없음', value: FlexibilityType.none);
     } else if (productModifyModel.value.flexibility! == 'banding') {
-      part3controller.flexibilitySelected.value = FlexibilityModel(name: '밴딩', value: FlexibilityType.banding);
+      part3controller.flexibilitySelected.value =
+          FlexibilityModel(name: '밴딩', value: FlexibilityType.banding);
     }
 
     // 안감 LiningModel LiningType isLining [true, false]
     if (productModifyModel.value.isLining! == true) {
-      part3controller.liningsSelected.value = LiningModel(name: 'included', title: '있음');
+      part3controller.liningsSelected.value =
+          LiningModel(name: 'included', title: '있음');
     } else {
-      part3controller.liningsSelected.value = LiningModel(name: 'not_included', title: '없음');
+      part3controller.liningsSelected.value =
+          LiningModel(name: 'not_included', title: '없음');
     }
 
     // clothWashToggle
     // handWash handWash
     if (productModifyModel.value.isHandWash! == true) {
-      part3controller.clothWashToggles.firstWhere((clothwash) => clothwash.id == ClothCareGuideId.handWash).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((clothwash) => clothwash.id == ClothCareGuideId.handWash)
+          .isActive
+          .value = true;
     }
     // isDryCleaning dryCleaning
     if (productModifyModel.value.isDryCleaning! == true) {
-      part3controller.clothWashToggles.firstWhere((clothwash) => clothwash.id == ClothCareGuideId.dryCleaning).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere(
+              (clothwash) => clothwash.id == ClothCareGuideId.dryCleaning)
+          .isActive
+          .value = true;
     }
     // isWaterWash waterWash
     if (productModifyModel.value.isWaterWash! == true) {
-      part3controller.clothWashToggles.firstWhere((clothwash) => clothwash.id == ClothCareGuideId.waterWash).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((clothwash) => clothwash.id == ClothCareGuideId.waterWash)
+          .isActive
+          .value = true;
     }
     // isSingleWash separateWash
     if (productModifyModel.value.isSingleWash! == true) {
-      part3controller.clothWashToggles.firstWhere((clothwash) => clothwash.id == ClothCareGuideId.separateWash).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere(
+              (clothwash) => clothwash.id == ClothCareGuideId.separateWash)
+          .isActive
+          .value = true;
     }
     // ClothCareGuideId.woolWash
     if (productModifyModel.value.isWoolWash! == true) {
-      part3controller.clothWashToggles.firstWhere((clothwash) => clothwash.id == ClothCareGuideId.woolWash).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((clothwash) => clothwash.id == ClothCareGuideId.woolWash)
+          .isActive
+          .value = true;
     }
 
     // isNotBleash noBleach
     if (productModifyModel.value.isNotBleash! == true) {
-      part3controller.clothWashToggles.firstWhere((bleach) => bleach.id == ClothCareGuideId.noBleach).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((bleach) => bleach.id == ClothCareGuideId.noBleach)
+          .isActive
+          .value = true;
     }
 
     // isNotIroning noIron
     if (productModifyModel.value.isNotIroning! == true) {
-      part3controller.clothWashToggles.firstWhere((iron) => iron.id == ClothCareGuideId.noIron).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((iron) => iron.id == ClothCareGuideId.noIron)
+          .isActive
+          .value = true;
     }
 
     // isNotMachineWash noLaundryMachine
     if (productModifyModel.value.isNotMachineWash! == true) {
-      part3controller.clothWashToggles.firstWhere((laundryMachine) => laundryMachine.id == ClothCareGuideId.noLaundryMachine).isActive.value = true;
+      part3controller.clothWashToggles
+          .firstWhere((laundryMachine) =>
+              laundryMachine.id == ClothCareGuideId.noLaundryMachine)
+          .isActive
+          .value = true;
     }
 
     // model info > modelHeightController
-    part4controller.modelHeightController.text = productModifyModel.value.modelInfo!.height ?? '';
+    part4controller.modelHeightController.text =
+        productModifyModel.value.modelInfo!.height ?? '';
     // modelWeightController
-    part4controller.modelWeightController.text = productModifyModel.value.modelInfo!.modelWeight ?? '';
+    part4controller.modelWeightController.text =
+        productModifyModel.value.modelInfo!.modelWeight ?? '';
     // modelSizeController
-    part4controller.modelSizeController.text = productModifyModel.value.modelInfo!.modelSize ?? '';
+    part4controller.modelSizeController.text =
+        productModifyModel.value.modelInfo!.modelSize ?? '';
 
     // productBodySizeList
     // List<String> sizes = ['FREE', 'XS', 'S', 'M', 'L'];
