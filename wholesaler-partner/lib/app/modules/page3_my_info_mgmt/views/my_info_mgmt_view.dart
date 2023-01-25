@@ -15,7 +15,7 @@ import '../../../widgets/my_page_item.dart';
 import '../controllers/my_info_mgmt_controller.dart';
 
 class MyInfoMgmtView extends GetView<MyInfoMgmtController> {
-  UserMainController c = Get.put(UserMainController());
+  // UserMainController c = Get.put(UserMainController());
   MyInfoMgmtController ctr = Get.put(MyInfoMgmtController());
   int myTest=0;
   @override

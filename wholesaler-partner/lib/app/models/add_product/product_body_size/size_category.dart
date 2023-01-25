@@ -185,7 +185,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -199,7 +199,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -213,7 +213,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -227,7 +227,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -241,7 +241,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -256,7 +256,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -270,7 +270,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -284,7 +284,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -298,7 +298,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -312,7 +312,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -326,7 +326,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -337,7 +337,7 @@ class SizeCategory {
       SizeChild.chest_cross_length,
       SizeChild.armhole,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
     ],
   );
   static SizeCategory TOP_BEST = SizeCategory(
@@ -350,7 +350,7 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.weight
     ],
   );
@@ -365,7 +365,7 @@ class SizeCategory {
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory COTTONPANTS = SizeCategory(
@@ -377,7 +377,7 @@ class SizeCategory {
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory DENIM = SizeCategory(
@@ -389,7 +389,7 @@ class SizeCategory {
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory TRAINING = SizeCategory(
@@ -401,7 +401,7 @@ class SizeCategory {
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory SHORTS = SizeCategory(
@@ -413,7 +413,7 @@ class SizeCategory {
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
 
@@ -425,7 +425,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory MIDISKIRT = SizeCategory(
@@ -435,7 +435,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory LONGSKIRT = SizeCategory(
@@ -445,7 +445,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   //원피스
@@ -461,7 +461,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory MIDIONE = SizeCategory(
@@ -476,7 +476,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory LONGONE = SizeCategory(
@@ -491,7 +491,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   static SizeCategory JUMB = SizeCategory(
@@ -506,7 +506,7 @@ class SizeCategory {
       SizeChild.hip_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
 
@@ -521,12 +521,12 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   //바지셋
@@ -540,14 +540,14 @@ class SizeCategory {
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining,
+      //SizeChild.lining,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
       SizeChild.total_entry_length,
-      SizeChild.lining
+      // SizeChild.lining
     ],
   );
   // static SizeCategory OUTER = SizeCategory(

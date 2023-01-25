@@ -21,11 +21,13 @@ class SizeTableWidget extends StatelessWidget {
           child: DataTable(
             columns: DataColumnBuilder(),
             rows: <DataRow>[
-              ...ctr.product.value.sizes!.map(
-                (size) => DataRow(
+              ...ctr.product.value.sizes!.map((size) {
+                print('size');
+                print(ctr.product.value.sizes!.length);
+                return DataRow(
                   cells: DataCellBuilder(size),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),
@@ -38,113 +40,130 @@ class SizeTableWidget extends StatelessWidget {
       DataColumn(
         label: Text('CM'),
       ),
-      if (ctr.product.value.sizes![0].shoulderCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.shoulderCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.shoulder_cross_length),
         ),
-      if (ctr.product.value.sizes![0].chestCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.chestCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.chest_cross_length),
         ),
-      if (ctr.product.value.sizes![0].armhole != null)
+      if (ctr.product.value.sizes!.any((element) => element.armhole != null))
         DataColumn(
           label: Text(ProductSizeType.armhole),
         ),
-      if (ctr.product.value.sizes![0].armStraightLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.armStraightLength != null))
         DataColumn(
           label: Text(ProductSizeType.arm_straight_length),
         ),
-      if (ctr.product.value.sizes![0].armCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.armCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.arm_cross_length),
         ),
-      if (ctr.product.value.sizes![0].sleeveCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.sleeveCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.sleeve_cross_length),
         ),
-      if (ctr.product.value.sizes![0].bottomCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.bottomCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.bottom_cross_length),
         ),
-      if (ctr.product.value.sizes![0].strap != null)
+      if (ctr.product.value.sizes!.any((element) => element.strap != null))
         DataColumn(
           label: Text(ProductSizeType.strap),
         ),
-      if (ctr.product.value.sizes![0].totalEntryLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.totalEntryLength != null))
         DataColumn(
           label: Text(ProductSizeType.total_entry_length),
         ),
-      if (ctr.product.value.sizes![0].waistCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.waistCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.waist_cross_length),
         ),
-      if (ctr.product.value.sizes![0].hipCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.hipCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.hip_cross_length),
         ),
-      if (ctr.product.value.sizes![0].bottomTopCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.bottomTopCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.bottom_top_cross_length),
         ),
-      if (ctr.product.value.sizes![0].thighCrossLength != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.thighCrossLength != null))
         DataColumn(
           label: Text(ProductSizeType.thigh_cross_length),
         ),
-      if (ctr.product.value.sizes![0].open != null)
+      if (ctr.product.value.sizes!.any((element) => element.open != null))
         DataColumn(
           label: Text(ProductSizeType.open),
         ),
-      if (ctr.product.value.sizes![0].lining != null)
+      if (ctr.product.value.sizes!.any((element) => element.lining != null))
         DataColumn(
           label: Text(ProductSizeType.lining),
         ),
 
       //추가
-      if (ctr.product.value.sizes![0].entrance_cross_length != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.entrance_cross_length != null))
         DataColumn(
           label: Text(ProductSizeType.entrance_cross_length),
         ),
-      if (ctr.product.value.sizes![0].breadth != null)
+      if (ctr.product.value.sizes!.any((element) => element.breadth != null))
         DataColumn(
           label: Text(ProductSizeType.breadth),
         ),
-      if (ctr.product.value.sizes![0].diameter != null)
+      if (ctr.product.value.sizes!.any((element) => element.diameter != null))
         DataColumn(
           label: Text(ProductSizeType.diameter),
         ),
-      if (ctr.product.value.sizes![0].width != null)
+      if (ctr.product.value.sizes!.any((element) => element.width != null))
         DataColumn(
           label: Text(ProductSizeType.width),
         ),
-      if (ctr.product.value.sizes![0].height != null)
+      if (ctr.product.value.sizes!.any((element) => element.height != null))
         DataColumn(
           label: Text(ProductSizeType.height),
         ),
-      if (ctr.product.value.sizes![0].handle_height != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.handle_height != null))
         DataColumn(
           label: Text(ProductSizeType.handle_height),
         ),
-      if (ctr.product.value.sizes![0].handle_length != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.handle_length != null))
         DataColumn(
           label: Text(ProductSizeType.handle_length),
         ),
-      if (ctr.product.value.sizes![0].front_heel_height != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.front_heel_height != null))
         DataColumn(
           label: Text(ProductSizeType.front_heel_height),
         ),
-      if (ctr.product.value.sizes![0].back_heel_height != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.back_heel_height != null))
         DataColumn(
           label: Text(ProductSizeType.back_heel_height),
         ),
-      if (ctr.product.value.sizes![0].calf_cross_length != null)
+      if (ctr.product.value.sizes!
+          .any((element) => element.calf_cross_length != null))
         DataColumn(
           label: Text(ProductSizeType.calf_cross_length),
         ),
-      if (ctr.product.value.sizes![0].weight != null)
+      if (ctr.product.value.sizes!.any((element) => element.weight != null))
         DataColumn(
           label: Text(ProductSizeType.weight),
         ),
-      if (ctr.product.value.sizes![0].foot_width != null)
+      if (ctr.product.value.sizes!.any((element) => element.foot_width != null))
         DataColumn(
           label: Text(ProductSizeType.foot_width),
         ),

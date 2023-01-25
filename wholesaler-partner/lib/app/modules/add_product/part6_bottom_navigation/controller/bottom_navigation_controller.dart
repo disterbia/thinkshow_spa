@@ -183,6 +183,7 @@ class AP_Part6Controller extends GetxController {
 
     // size_info_list
     List<Map<String, dynamic>> sizeInfoList = [];
+
     for (int i = 0; i < part2controller.productBodySizeList.length; i++) {
       ProductBodySizeModel productBodySizeModel =
           part2controller.productBodySizeList[i];
@@ -253,11 +254,9 @@ class AP_Part6Controller extends GetxController {
       "model_size": part4controller.modelSizeController.text,
     };
     print('qqqqqqqqqqqqqqq');
-    print(data);
-    print(data);
-    print(data);
-    print(data);
-    print(data);
+    print(data['option_list']);
+    print('qqqqqqqqqqqqqqq');
+    print(data['size_info_list']);
 
     bool isSuccess = false;
     isSuccess = await _apiProvider.addProduct(data: data);

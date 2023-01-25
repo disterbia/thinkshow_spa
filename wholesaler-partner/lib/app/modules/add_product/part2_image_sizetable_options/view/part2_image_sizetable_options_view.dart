@@ -32,7 +32,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             SizedBox(height: 5),
             // cloth pictures
             _clothPicture(),
-            _sizeTable(),
+            _sizeTable(context),
             // 옵션 단가등록
             //_unitPriceCheckbox(),
             // Column(
@@ -53,58 +53,58 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     );
   }
 
-  aaa() {
-    final unitPriceChildren = <Widget>[];
+  // aaa() {
+  //   final unitPriceChildren = <Widget>[];
 
-    int aa = 0;
+  //   int aa = 0;
 
-    for (var colorIndex = 0;
-        colorIndex < addProductCtr.colorsList.length;
-        colorIndex++) {
-      // print(addProductCtr.options.length);
-      if (ctr.productBodySizeList
-          .firstWhere((element) => element.size == 'FREE')
-          .isSelected
-          .value) {
-        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'FREE'));
-        aa++;
-      }
+  //   for (var colorIndex = 0;
+  //       colorIndex < addProductCtr.colorsList.length;
+  //       colorIndex++) {
+  //     // print(addProductCtr.options.length);
+  //     if (ctr.productBodySizeList
+  //         .firstWhere((element) => element.size == 'FREE')
+  //         .isSelected
+  //         .value) {
+  //       unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'FREE'));
+  //       aa++;
+  //     }
 
-      if (ctr.productBodySizeList
-          .firstWhere((element) => element.size == 'XS')
-          .isSelected
-          .value) {
-        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'XS'));
-        aa++;
-      }
-      if (ctr.productBodySizeList
-          .firstWhere((element) => element.size == 'S')
-          .isSelected
-          .value) {
-        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'S'));
-        aa++;
-      }
-      if (ctr.productBodySizeList
-          .firstWhere((element) => element.size == 'M')
-          .isSelected
-          .value) {
-        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'M'));
-        aa++;
-        // print(addProductCtr.options.length);
-      }
-      if (ctr.productBodySizeList
-          .firstWhere((element) => element.size == 'L')
-          .isSelected
-          .value) {
-        unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'L'));
-        aa++;
-      }
-    }
+  //     if (ctr.productBodySizeList
+  //         .firstWhere((element) => element.size == 'XS')
+  //         .isSelected
+  //         .value) {
+  //       unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'XS'));
+  //       aa++;
+  //     }
+  //     if (ctr.productBodySizeList
+  //         .firstWhere((element) => element.size == 'S')
+  //         .isSelected
+  //         .value) {
+  //       unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'S'));
+  //       aa++;
+  //     }
+  //     if (ctr.productBodySizeList
+  //         .firstWhere((element) => element.size == 'M')
+  //         .isSelected
+  //         .value) {
+  //       unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'M'));
+  //       aa++;
+  //       // print(addProductCtr.options.length);
+  //     }
+  //     if (ctr.productBodySizeList
+  //         .firstWhere((element) => element.size == 'L')
+  //         .isSelected
+  //         .value) {
+  //       unitPriceChildren.add(_unitPriceTile(colorIndex, aa, 'L'));
+  //       aa++;
+  //     }
+  //   }
 
-    return Column(
-      children: unitPriceChildren,
-    );
-  }
+  //   return Column(
+  //     children: unitPriceChildren,
+  //   );
+  // }
 
   Widget _title() {
     return Text(
@@ -234,7 +234,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
     }
   }
 
-  Widget _sizeTable() {
+  Widget _sizeTable(BuildContext context) {
     return addProductCtr.category != null
         ? Center(
             child: Table(
@@ -290,13 +290,14 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                       sizeFieldBuilder(
                           productBodySizeListIndex: j,
                           sizeCategoryIndex: k,
-                          isLining: SizeCategory.getWithCatId(
+                          isWeight: SizeCategory.getWithCatId(
                                           addProductCtr.selectedSubCat.value.id)
                                       .children[k]
                                       .english ==
-                                  'lining'
+                                  'weight'
                               ? true
-                              : false),
+                              : false,
+                          context: context),
                   ]),
               ],
             ),
@@ -314,7 +315,10 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero, // and this
                   ),
-                  onPressed: () => isEnable.toggle(),
+                  onPressed: () {
+                    isEnable.toggle();
+                    addProductCtr.optionDuplicateRemove(value);
+                  },
                   child: Text(
                     value,
                     style: MyTextStyles.f11.copyWith(
@@ -326,7 +330,10 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero, // and this
                   ),
-                  onPressed: () => isEnable.toggle(),
+                  onPressed: () {
+                    isEnable.toggle();
+                    addProductCtr.optionDuplicateRemove(value);
+                  },
                   child: Text(
                     value,
                     style: MyTextStyles.f11.copyWith(
@@ -352,7 +359,8 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
   sizeFieldBuilder(
       {required int productBodySizeListIndex,
       required int sizeCategoryIndex,
-      required bool isLining}) {
+      required bool isWeight,
+      required BuildContext context}) {
     ctr.sizeFieldInitialize(
         productBodySizeListIndex: productBodySizeListIndex,
         sizeCategoryIndex: sizeCategoryIndex);
@@ -362,15 +370,19 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
       isActive: ctr.productBodySizeList[productBodySizeListIndex].isSelected,
       productBodySizeListIndex: productBodySizeListIndex,
       sizeCategoryIndex: sizeCategoryIndex,
-      isLining: isLining,
+      isWeight: isWeight,
+      context: context,
     ));
   }
+
+  bool isWeightTab = true;
 
   Widget _sizeField({
     required RxBool isActive,
     required int productBodySizeListIndex,
     required int sizeCategoryIndex,
-    required bool isLining,
+    required bool isWeight,
+    required BuildContext context,
   }) {
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -378,21 +390,105 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
         height: 35,
         child: Obx(
           () => TextField(
+            onTap: () {
+              if (isActive.value && isWeight) {
+                // print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+                // 가벼움 / 적당함 / 무거움
+                FocusManager.instance.primaryFocus?.unfocus();
+                // ctr.showWeightPopup.value = true;
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                          child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                ctr
+                                    .textEditingControllers[
+                                        productBodySizeListIndex.toString() +
+                                            sizeCategoryIndex.toString()]!
+                                    .text = '가벼움';
+                                ctr.sizetableFieldChanged(
+                                    value: '가벼움',
+                                    productBodySizeListIndex:
+                                        productBodySizeListIndex,
+                                    sizeCategoryIndex: sizeCategoryIndex);
+
+                                Navigator.pop(context);
+                                // FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: ListTile(
+                                title: Text('가벼움'),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                ctr
+                                    .textEditingControllers[
+                                        productBodySizeListIndex.toString() +
+                                            sizeCategoryIndex.toString()]!
+                                    .text = '적당함';
+                                ctr.sizetableFieldChanged(
+                                    value: '적당함',
+                                    productBodySizeListIndex:
+                                        productBodySizeListIndex,
+                                    sizeCategoryIndex: sizeCategoryIndex);
+                                Navigator.pop(context);
+
+                                // FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: ListTile(
+                                title: Text('적당함'),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                ctr
+                                    .textEditingControllers[
+                                        productBodySizeListIndex.toString() +
+                                            sizeCategoryIndex.toString()]!
+                                    .text = '무거움';
+                                ctr.sizetableFieldChanged(
+                                    value: '무거움',
+                                    productBodySizeListIndex:
+                                        productBodySizeListIndex,
+                                    sizeCategoryIndex: sizeCategoryIndex);
+                                Navigator.pop(context);
+
+                                // FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: ListTile(
+                                title: Text('무거움'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ));
+                    });
+              }
+              // print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            },
             textAlign: TextAlign.center,
             controller: ctr.textEditingControllers[
                 productBodySizeListIndex.toString() +
                     sizeCategoryIndex.toString()],
             readOnly: !isActive.value,
-            keyboardType: isLining ? TextInputType.text : TextInputType.number,
+            keyboardType: isWeight ? TextInputType.none : TextInputType.number,
+            // keyboardType: TextInputType.none,
             onChanged: (String value) => ctr.sizetableFieldChanged(
                 value: value,
                 productBodySizeListIndex: productBodySizeListIndex,
                 sizeCategoryIndex: sizeCategoryIndex),
             style: isActive.value
-                ? MyTextStyles.f12
+                ? isWeight
+                    ? MyTextStyles.f12.copyWith(fontSize: 9.0)
+                    : MyTextStyles.f12
                 : MyTextStyles.f12.copyWith(color: MyColors.grey8),
             decoration: InputDecoration(
-              hintText: isLining ? '유/무' : '',
+              // hintText: isWeight ? '유/무' : '',
               hintStyle: TextStyle(fontSize: 9, color: MyColors.grey1),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
@@ -457,15 +553,28 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'FREE' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
-        print(option);
+
+        for (int k = 0; k < addProductCtr.options.length; k++) {
+          if (addProductCtr.options[k].size == 'FREE' &&
+              addProductCtr.options[k].color ==
+                  addProductCtr.colorsList[colorIndex]) {
+            addProductCtr.optionsControllers.removeAt(k);
+            addProductCtr.options.removeAt(k);
+          }
+        }
+
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
+
         addProductCtr.options.add(Option(
             color: addProductCtr.colorsList[colorIndex],
             size: 'FREE',
             addPrice: option != null ? option.addPrice : '0'));
+
         unitPriceChildren.add(
             _unitPriceTile(colorIndex, addProductCtr.options.length, 'FREE'));
+
+        // print(unitPriceChildren.length);
       }
       if (ctr.productBodySizeList
           .firstWhere((element) => element.size == 'XS')
@@ -478,6 +587,16 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'XS' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
+
+        for (int k = 0; k < addProductCtr.options.length; k++) {
+          if (addProductCtr.options[k].size == 'XS' &&
+              addProductCtr.options[k].color ==
+                  addProductCtr.colorsList[colorIndex]) {
+            addProductCtr.optionsControllers.removeAt(k);
+            addProductCtr.options.removeAt(k);
+          }
+        }
+
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(
@@ -498,6 +617,16 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'S' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
+
+        for (int k = 0; k < addProductCtr.options.length; k++) {
+          if (addProductCtr.options[k].size == 'S' &&
+              addProductCtr.options[k].color ==
+                  addProductCtr.colorsList[colorIndex]) {
+            addProductCtr.optionsControllers.removeAt(k);
+            addProductCtr.options.removeAt(k);
+          }
+        }
+
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(
@@ -518,6 +647,16 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'M' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
+
+        for (int k = 0; k < addProductCtr.options.length; k++) {
+          if (addProductCtr.options[k].size == 'M' &&
+              addProductCtr.options[k].color ==
+                  addProductCtr.colorsList[colorIndex]) {
+            addProductCtr.optionsControllers.removeAt(k);
+            addProductCtr.options.removeAt(k);
+          }
+        }
+
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(
@@ -538,6 +677,16 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                   option.size == 'L' &&
                   option.color == addProductCtr.colorsList[colorIndex]);
         }
+
+        for (int k = 0; k < addProductCtr.options.length; k++) {
+          if (addProductCtr.options[k].size == 'L' &&
+              addProductCtr.options[k].color ==
+                  addProductCtr.colorsList[colorIndex]) {
+            addProductCtr.optionsControllers.removeAt(k);
+            addProductCtr.options.removeAt(k);
+          }
+        }
+
         addProductCtr.optionsControllers.add(TextEditingController(
             text: option != null ? option.addPrice : '0'));
         addProductCtr.options.add(Option(
