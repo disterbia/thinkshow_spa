@@ -44,7 +44,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].shoulderCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].shoulderCrossLength = '';
+          if (ctr.product.value.sizes![j].shoulderCrossLength == null)
+            ctr.product.value.sizes![j].shoulderCrossLength = '';
         }
       }
 
@@ -52,7 +53,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].chestCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].chestCrossLength = '';
+          if (ctr.product.value.sizes![j].chestCrossLength == null)
+            ctr.product.value.sizes![j].chestCrossLength = '';
         }
       }
 
@@ -60,7 +62,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].armhole != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].armhole = '';
+          if (ctr.product.value.sizes![j].armhole == null)
+            ctr.product.value.sizes![j].armhole = '';
         }
       }
 
@@ -68,7 +71,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].armStraightLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].armStraightLength = '';
+          if (ctr.product.value.sizes![j].armStraightLength == null)
+            ctr.product.value.sizes![j].armStraightLength = '';
         }
       }
 
@@ -76,7 +80,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].armCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].armCrossLength = '';
+          if (ctr.product.value.sizes![j].armCrossLength == null)
+            ctr.product.value.sizes![j].armCrossLength = '';
         }
       }
 
@@ -84,7 +89,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].sleeveCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].sleeveCrossLength = '';
+          if (ctr.product.value.sizes![j].sleeveCrossLength == null)
+            ctr.product.value.sizes![j].sleeveCrossLength = '';
         }
       }
 
@@ -92,7 +98,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].bottomCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].bottomCrossLength = '';
+          if (ctr.product.value.sizes![j].bottomCrossLength == null)
+            ctr.product.value.sizes![j].bottomCrossLength = '';
         }
       }
 
@@ -100,7 +107,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].strap != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].strap = '';
+          if (ctr.product.value.sizes![j].strap == null)
+            ctr.product.value.sizes![j].strap = '';
         }
       }
 
@@ -108,7 +116,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].totalEntryLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].totalEntryLength = '';
+          if (ctr.product.value.sizes![j].totalEntryLength == null)
+            ctr.product.value.sizes![j].totalEntryLength = '';
         }
       }
 
@@ -116,7 +125,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].waistCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].waistCrossLength = '';
+          if (ctr.product.value.sizes![j].waistCrossLength == null)
+            ctr.product.value.sizes![j].waistCrossLength = '';
         }
       }
 
@@ -124,7 +134,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].hipCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].hipCrossLength = '';
+          if (ctr.product.value.sizes![j].hipCrossLength == null)
+            ctr.product.value.sizes![j].hipCrossLength = '';
         }
       }
 
@@ -132,7 +143,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].bottomTopCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].bottomTopCrossLength = '';
+          if (ctr.product.value.sizes![j].bottomTopCrossLength == null)
+            ctr.product.value.sizes![j].bottomTopCrossLength = '';
         }
       }
 
@@ -140,7 +152,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].thighCrossLength != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].thighCrossLength = '';
+          if (ctr.product.value.sizes![j].thighCrossLength == null)
+            ctr.product.value.sizes![j].thighCrossLength = '';
         }
       }
 
@@ -148,7 +161,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].open != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].open = '';
+          if (ctr.product.value.sizes![j].open == null)
+            ctr.product.value.sizes![j].open = '';
         }
       }
 
@@ -156,7 +170,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].lining != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].lining = '';
+          if (ctr.product.value.sizes![j].lining == null)
+            ctr.product.value.sizes![j].lining = '';
         }
       }
 
@@ -164,7 +179,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].entrance_cross_length != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].entrance_cross_length = '';
+          if (ctr.product.value.sizes![j].entrance_cross_length == null)
+            ctr.product.value.sizes![j].entrance_cross_length = '';
         }
       }
 
@@ -172,7 +188,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].breadth != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].breadth = '';
+          if (ctr.product.value.sizes![j].breadth == null)
+            ctr.product.value.sizes![j].breadth = '';
         }
       }
 
@@ -180,7 +197,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].diameter != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].diameter = '';
+          if (ctr.product.value.sizes![j].diameter == null)
+            ctr.product.value.sizes![j].diameter = '';
         }
       }
 
@@ -188,7 +206,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].width != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].width = '';
+          if (ctr.product.value.sizes![j].width == null)
+            ctr.product.value.sizes![j].width = '';
         }
       }
 
@@ -196,7 +215,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].height != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].height = '';
+          if (ctr.product.value.sizes![j].height == null)
+            ctr.product.value.sizes![j].height = '';
         }
       }
 
@@ -204,7 +224,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].handle_height != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].handle_height = '';
+          if (ctr.product.value.sizes![j].handle_height == null)
+            ctr.product.value.sizes![j].handle_height = '';
         }
       }
 
@@ -212,7 +233,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].handle_length != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].handle_length = '';
+          if (ctr.product.value.sizes![j].handle_length == null)
+            ctr.product.value.sizes![j].handle_length = '';
         }
       }
 
@@ -220,7 +242,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].front_heel_height != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].front_heel_height = '';
+          if (ctr.product.value.sizes![j].front_heel_height == null)
+            ctr.product.value.sizes![j].front_heel_height = '';
         }
       }
 
@@ -228,7 +251,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].back_heel_height != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].back_heel_height = '';
+          if (ctr.product.value.sizes![j].back_heel_height == null)
+            ctr.product.value.sizes![j].back_heel_height = '';
         }
       }
 
@@ -236,7 +260,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].calf_cross_length != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].calf_cross_length = '';
+          if (ctr.product.value.sizes![j].calf_cross_length == null)
+            ctr.product.value.sizes![j].calf_cross_length = '';
         }
       }
 
@@ -244,7 +269,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].weight != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].weight = '';
+          if (ctr.product.value.sizes![j].weight == null)
+            ctr.product.value.sizes![j].weight = '';
         }
       }
 
@@ -252,7 +278,8 @@ class SizeTableWidget extends StatelessWidget {
           ctr.product.value.sizes![k].foot_width != '') {
         for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
           if (j == k) continue;
-          ctr.product.value.sizes![j].foot_width = '';
+          if (ctr.product.value.sizes![j].foot_width == null)
+            ctr.product.value.sizes![j].foot_width = '';
         }
       }
     }
