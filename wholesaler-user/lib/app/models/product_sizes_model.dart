@@ -1,8 +1,8 @@
 class ProductSizeModel {
   String? size;
-  int? shoulderCrossLength;
+  dynamic shoulderCrossLength;
   dynamic chestCrossLength;
-  int? armhole;
+  dynamic armhole;
   dynamic armStraightLength;
   dynamic armCrossLength;
   dynamic sleeveCrossLength;
@@ -62,9 +62,9 @@ class ProductSizeModel {
   factory ProductSizeModel.fromJson(Map<String, dynamic> json) {
     return ProductSizeModel(
       size: json['size'] as String?,
-      shoulderCrossLength: json['shoulder_cross_length'] as int?,
+      shoulderCrossLength: json['shoulder_cross_length'] as dynamic,
       chestCrossLength: json['chest_cross_length'] as dynamic,
-      armhole: json['armhole'] as int?,
+      armhole: json['armhole'] as dynamic,
       armStraightLength: json['arm_straight_length'] as dynamic,
       armCrossLength: json['arm_cross_length'] as dynamic,
       sleeveCrossLength: json['sleeve_cross_length'] as dynamic,
