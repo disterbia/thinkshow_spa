@@ -11,13 +11,15 @@ class CustomInput extends GetView<AddProductController> {
   final String? prefix;
   final TextInputType keyboardType;
   final String? hintText;
+  final Function(String)? onChanged;
   const CustomInput(
       {Key? key,
       required this.label,
       required this.fieldController,
       this.prefix,
       this.hintText,
-      this.keyboardType = TextInputType.text})
+      this.keyboardType = TextInputType.text,
+      this.onChanged})
       : super(key: key);
 
   @override
@@ -62,16 +64,14 @@ class CustomInput extends GetView<AddProductController> {
       child: SizedBox(
         height: 30,
         child: TextField(
+          onChanged: onChanged,
           controller: fieldController,
           keyboardType: keyboardType,
           // maxLines: 1,
           minLines: 1,
           decoration: InputDecoration(
               hintText: hintText ?? '',
-              hintStyle: TextStyle(
-                color: MyColors.grey11,
-                fontSize: 12
-              ),
+              hintStyle: TextStyle(color: MyColors.grey11, fontSize: 12),
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(

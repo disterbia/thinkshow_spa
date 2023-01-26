@@ -23,8 +23,12 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
         children: [
           _materialField(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
             child: Text('혼용률 입력'),
+          ),
+          _materialPercentCheck(),
+          SizedBox(
+            height: 10,
           ),
           for (var i = 0; i < ctr.materialTypeList.length; i++)
             _materialPercent(i),
@@ -47,6 +51,28 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
     });
   }
 
+  Widget _materialPercentCheck() {
+    if (ctr.materialTypePercentControllers.isNotEmpty) {
+      if (ctr.materialPercentCheck.value > 100) {
+        return Center(
+            child: Text(
+          '혼용률 총합이 100% 초과입니다.',
+          style: TextStyle(color: Colors.redAccent),
+        ));
+      } else if (ctr.materialPercentCheck.value < 100) {
+        return Center(
+            child: Text(
+          '혼용률 총합이 100% 미만입니다.',
+          style: TextStyle(color: Colors.redAccent),
+        ));
+      } else {
+        return SizedBox.shrink();
+      }
+    } else {
+      return SizedBox.shrink();
+    }
+  }
+
   Widget _materialField() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18),
@@ -55,12 +81,7 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
         tagList: ctr.materialTypeList,
         fieldController: ctr.materialTypeController,
         percentList: ctr.materialTypePercentControllers,
-        onAddTag: () {
-          ctr.materialTypePercentControllers.add(TextEditingController());
-        },
-        onDeleteTag: (i) {
-          ctr.materialTypePercentControllers.removeAt(i);
-        },
+        materialPercentCheck: ctr.materialPercentCheck,
       ),
     );
   }
@@ -73,6 +94,15 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
         label: ctr.materialTypeList[i],
         fieldController: ctr.materialTypePercentControllers[i],
         prefix: '%',
+        onChanged: (value) {
+          ctr.materialPercentCheck.value = 0;
+          for (int k = 0; k < ctr.materialTypePercentControllers.length; k++) {
+            ctr.materialPercentCheck.value +=
+                int.parse(ctr.materialTypePercentControllers[k].text);
+            // print(ctr.materialTypePercentControllers[k].text);
+          }
+          // print(ctr.materialPercentCheck.value);
+        },
       ),
     );
   }

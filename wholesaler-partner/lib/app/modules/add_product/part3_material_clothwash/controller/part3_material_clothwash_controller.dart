@@ -12,6 +12,7 @@ import '../../../../models/add_product/tickness_model.dart';
 class AP_Part3Controller extends GetxController {
   TextEditingController materialTypeController = TextEditingController();
   List<TextEditingController> materialTypePercentControllers = [];
+  RxInt materialPercentCheck = 0.obs;
 
   // Material Variables
   RxList<String> materialTypeList = <String>[].obs;
