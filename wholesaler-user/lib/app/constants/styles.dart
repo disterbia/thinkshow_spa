@@ -25,7 +25,7 @@ class MyTextStyles {
   );
   static const TextStyle f18_bold = TextStyle(
     color: MyColors.black,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontStyle: FontStyle.normal,
     fontFamily: 'SpoqaHanSansNeo-Medium',
     fontSize: 18.0,

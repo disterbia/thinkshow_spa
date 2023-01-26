@@ -24,54 +24,44 @@ class Cart1ShoppingBasketView extends GetView {
   Widget build(BuildContext context) {
     init();
     return Scaffold(
-      backgroundColor: MyColors.white,
+      backgroundColor: MyColors.grey3,
       appBar: CustomAppbar(isBackEnable: true, title: '장바구니'),
       body: Obx(() => ctr.isLoading.value ? LoadingWidget() : body()),
     );
   }
 
   Widget body() {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                children: [
-                  _selectAllCheckbox(),
-                  Spacer(),
-                  _deleteTextButtons(),
-                ],
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+            color: Colors.white,
+            child: Row(
+              children: [
+                _selectAllCheckbox(),
+                Spacer(),
+                _deleteTextButtons(),
+              ],
             ),
-            SizedBox(height: 12),
-            Divider(thickness: 10, color: MyColors.grey3),
-            // empty cart
-            Obx(() => ctr.cartItems.isEmpty
-                ? Column(
-                    children: [
-                      SizedBox(height: 40),
-                      Text('상품 없음'),
-                    ],
-                  )
-                : SizedBox.shrink()),
-            SizedBox(height: 15),
-            // Cart
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
-            ),
-            Divider(thickness: 10, color: MyColors.grey3),
-            SizedBox(height: 15),
-            _bottomSection(),
-
-            SizedBox(height: 50),
-            _paymentButton(),
-            SizedBox(height: 50),
-          ],
-        ),
+          ),
+          //Divider(thickness: 10, color: MyColors.grey3),
+          // empty cart
+          Obx(() => ctr.cartItems.isEmpty
+              ? Column(
+                  children: [
+                    SizedBox(height: 40),
+                    Text('상품 없음'),
+                  ],
+                )
+              : SizedBox.shrink()),
+          // Cart
+          CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
+          _bottomSection(),
+          SizedBox(height: 50),
+          _paymentButton(),
+          SizedBox(height: 50),
+        ],
       ),
     );
   }
@@ -80,7 +70,7 @@ class Cart1ShoppingBasketView extends GetView {
     return Row(
       children: [
         Obx(
-          () => CircularCheckbox(
+          () => CustomCheckbox(
             isChecked: ctr.isSelectAllChecked.value,
             onChanged: (bool value) => ctr.SelectAllCheckboxOnChanged(value),
           ),
@@ -92,16 +82,16 @@ class Cart1ShoppingBasketView extends GetView {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 10, right: 5),
+                  padding: EdgeInsets.only(left: 10),
                   child: Text(
                     '전체선택',
-                    style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+                    style: MyTextStyles.f14.copyWith(color: MyColors.black3),
                   ),
                 ),
                 Obx(
                   () => Text(
-                    '( ${ctr.getTotalSelectedProducts()} / ${ctr.getNumberProducts()} )',
-                    style: MyTextStyles.f12.copyWith(color: MyColors.black1),
+                    '(${ctr.getTotalSelectedProducts()}/${ctr.getNumberProducts()})',
+                    style: MyTextStyles.f14.copyWith(color: MyColors.black1),
                   ),
                 ),
               ],
@@ -113,25 +103,25 @@ class Cart1ShoppingBasketView extends GetView {
   Widget _deleteTextButtons() {
     return Row(
       children: [
-        TextButton(
-          onPressed: () => ctr.cartItems.isEmpty
+        InkWell(
+          onTap: () => ctr.cartItems.isEmpty
               ? mSnackbar(message: "상품이 없습니다.")
               : ctr.getTotalSelectedProducts() == 0
-                  ? mSnackbar(message: "선택된 상품이 없습니다.")
-                  : ctr.deleteSelectedProducts(),
+              ? mSnackbar(message: "선택된 상품이 없습니다.")
+              : ctr.deleteSelectedProducts(),
           child: Text(
             '선택삭제',
-            style: MyTextStyles.f14.copyWith(color: MyColors.black3),
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey4),
           ),
         ),
-        SizedBox(width: 15),
-        TextButton(
-          onPressed: () => ctr.cartItems.isEmpty
+       Container(height: 15,child: VerticalDivider(thickness: 2,color: MyColors.grey4,)),
+        InkWell(
+          onTap: () => ctr.cartItems.isEmpty
               ? mSnackbar(message: "상품이 없습니다.")
               : ctr.deleteAllProducts(),
           child: Text(
             '전체삭제',
-            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey4),
           ),
         ),
       ],

@@ -24,56 +24,60 @@ class CartItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Product> products = [];
 
-    return SafeArea(
-        child: Column(
-      children: [
-        Obx(
-          () => ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: cartItems.length,
-            shrinkWrap: true,
-            itemBuilder: (context, cartIndex) {
-              // Cart 1: show all products
-              if (isCart1Page) {
-                products = cartItems[cartIndex].products;
-              } else {
-                // Cart 2: show selected products only
-                products = cartItems[cartIndex]
-                    .products
-                    .where(
-                        (tempProduct) => tempProduct.isCheckboxSelected == true)
-                    .toList();
-              }
+    return Obx(
+      () => ListView.builder(
+        //padding: EdgeInsets.all(15),
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: cartItems.length,
+        shrinkWrap: true,
+        itemBuilder: (context, cartIndex) {
+          // Cart 1: show all products
+          if (isCart1Page) {
+            products = cartItems[cartIndex].products;
+          } else {
+            // Cart 2: show selected products only
+            products = cartItems[cartIndex]
+                .products
+                .where(
+                    (tempProduct) => tempProduct.isCheckboxSelected == true)
+                .toList();
+          }
 
-              return Column(
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Card(
+              elevation: 0,
+              color: Colors.white,
+              //margin: EdgeInsets.all(10),
+              shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+              ),
+              child: Column(
                 children: [
                   // show store only if it contains products
                   products.length > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: _store(cartItems[cartIndex].store),
-                        )
+                      ? _store(cartItems[cartIndex].store)
                       : SizedBox.shrink(),
-
+                  Divider(),
                   // if cart 2 page, only show selected products
                   ...products.map(
                     (product) => _orderedProductBuilder(
                         cartIndex, products.indexOf(product), product),
                   ),
                 ],
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              if (products.length > 0) {
-                return Divider(height: 25);
-              } else {
-                return SizedBox.shrink();
-              }
-            },
-          ),
-        ),
-      ],
-    ));
+              ),
+            ),
+          );
+        },
+        // separatorBuilder: (BuildContext context, int index) {
+        //   if (products.length > 0) {
+        //     return SizedBox(height: 0);
+        //   } else {
+        //     return SizedBox.shrink();
+        //   }
+        // },
+      ),
+    );
   }
 
   Widget _store(Store store) {
@@ -83,28 +87,28 @@ class CartItemsList extends StatelessWidget {
       },
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: store.imgUrl != null
-                ? CachedNetworkImage(
-                    imageUrl: store.imgUrl!.value,
-                    width: 35,
-                    height: 35,
-                    fit: BoxFit.fill,
-                    // placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  )
-                : Image.asset(
-                    store.imgAssetUrl,
-                    width: 35,
-                  ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
+          // ClipRRect(
+          //   borderRadius: BorderRadius.circular(50),
+          //   child: store.imgUrl != null
+          //       ? CachedNetworkImage(
+          //           imageUrl: store.imgUrl!.value,
+          //           width: 35,
+          //           height: 35,
+          //           fit: BoxFit.fill,
+          //           // placeholder: (context, url) => CircularProgressIndicator(),
+          //           errorWidget: (context, url, error) => Icon(Icons.error),
+          //         )
+          //       : Image.asset(
+          //           store.imgAssetUrl,
+          //           width: 35,
+          //         ),
+          // ),
+          // SizedBox(
+          //   width: 10,
+          // ),
           Text(
             store.name ?? '',
-            style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+            style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
           )
         ],
       ),
@@ -137,7 +141,7 @@ class CartItemsList extends StatelessWidget {
             isCart1Page
                 // Checkbox left of Product
                 ? Obx(
-                    () => CircularCheckbox(
+                    () => CustomCheckbox(
                       isChecked: product.isCheckboxSelected!.value,
                       cartIndex: cartIndex,
                       productIndex: productIndex,
