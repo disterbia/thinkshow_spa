@@ -11,6 +11,7 @@ class SizeTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initDataCell();
     return LayoutBuilder(
       builder: (context, constraints) => Container(
         // width: 200,
@@ -24,6 +25,8 @@ class SizeTableWidget extends StatelessWidget {
               ...ctr.product.value.sizes!.map((size) {
                 print('size');
                 print(ctr.product.value.sizes!.length);
+                //한줄이다 이건
+
                 return DataRow(
                   cells: DataCellBuilder(size),
                 );
@@ -35,10 +38,230 @@ class SizeTableWidget extends StatelessWidget {
     );
   }
 
+  initDataCell() {
+    for (int k = 0; k < ctr.product.value.sizes!.length; k++) {
+      if (ctr.product.value.sizes![k].shoulderCrossLength != null &&
+          ctr.product.value.sizes![k].shoulderCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].shoulderCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].chestCrossLength != null &&
+          ctr.product.value.sizes![k].chestCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].chestCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].armhole != null &&
+          ctr.product.value.sizes![k].armhole != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].armhole = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].armStraightLength != null &&
+          ctr.product.value.sizes![k].armStraightLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].armStraightLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].armCrossLength != null &&
+          ctr.product.value.sizes![k].armCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].armCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].sleeveCrossLength != null &&
+          ctr.product.value.sizes![k].sleeveCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].sleeveCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].bottomCrossLength != null &&
+          ctr.product.value.sizes![k].bottomCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].bottomCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].strap != null &&
+          ctr.product.value.sizes![k].strap != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].strap = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].totalEntryLength != null &&
+          ctr.product.value.sizes![k].totalEntryLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].totalEntryLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].waistCrossLength != null &&
+          ctr.product.value.sizes![k].waistCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].waistCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].hipCrossLength != null &&
+          ctr.product.value.sizes![k].hipCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].hipCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].bottomTopCrossLength != null &&
+          ctr.product.value.sizes![k].bottomTopCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].bottomTopCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].thighCrossLength != null &&
+          ctr.product.value.sizes![k].thighCrossLength != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].thighCrossLength = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].open != null &&
+          ctr.product.value.sizes![k].open != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].open = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].lining != null &&
+          ctr.product.value.sizes![k].lining != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].lining = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].entrance_cross_length != null &&
+          ctr.product.value.sizes![k].entrance_cross_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].entrance_cross_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].breadth != null &&
+          ctr.product.value.sizes![k].breadth != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].breadth = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].diameter != null &&
+          ctr.product.value.sizes![k].diameter != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].diameter = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].width != null &&
+          ctr.product.value.sizes![k].width != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].width = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].height != null &&
+          ctr.product.value.sizes![k].height != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].height = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].handle_height != null &&
+          ctr.product.value.sizes![k].handle_height != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].handle_height = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].handle_length != null &&
+          ctr.product.value.sizes![k].handle_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].handle_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].front_heel_height != null &&
+          ctr.product.value.sizes![k].front_heel_height != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].front_heel_height = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].back_heel_height != null &&
+          ctr.product.value.sizes![k].back_heel_height != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].back_heel_height = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].calf_cross_length != null &&
+          ctr.product.value.sizes![k].calf_cross_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].calf_cross_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].weight != null &&
+          ctr.product.value.sizes![k].weight != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].weight = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].foot_width != null &&
+          ctr.product.value.sizes![k].foot_width != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          ctr.product.value.sizes![j].foot_width = '';
+        }
+      }
+    }
+  }
+
   DataColumnBuilder() {
     return <DataColumn>[
       DataColumn(
-        label: Text('CM'),
+        label: Text('Size'),
       ),
       if (ctr.product.value.sizes!
           .any((element) => element.shoulderCrossLength != null))
@@ -173,115 +396,115 @@ class SizeTableWidget extends StatelessWidget {
   DataCellBuilder(ProductSizeModel size) {
     return <DataCell>[
       DataCell(
-        Text('${size.size}'),
+        Center(child: Text('${size.size}')),
       ),
       if (size.shoulderCrossLength != null)
         DataCell(
-          Text(size.shoulderCrossLength.toString()),
+          Center(child: Text(size.shoulderCrossLength.toString())),
         ),
       if (size.chestCrossLength != null)
         DataCell(
-          Text(size.chestCrossLength.toString()),
+          Center(child: Text(size.chestCrossLength.toString())),
         ),
       if (size.armhole != null)
         DataCell(
-          Text(size.armhole.toString()),
+          Center(child: Text(size.armhole.toString())),
         ),
       if (size.armStraightLength != null)
         DataCell(
-          Text(size.armStraightLength.toString()),
+          Center(child: Text(size.armStraightLength.toString())),
         ),
       if (size.armCrossLength != null)
         DataCell(
-          Text(size.armCrossLength.toString()),
+          Center(child: Text(size.armCrossLength.toString())),
         ),
       if (size.sleeveCrossLength != null)
         DataCell(
-          Text(size.sleeveCrossLength.toString()),
+          Center(child: Text(size.sleeveCrossLength.toString())),
         ),
       if (size.bottomCrossLength != null)
         DataCell(
-          Text(size.bottomCrossLength.toString()),
+          Center(child: Text(size.bottomCrossLength.toString())),
         ),
       if (size.strap != null)
         DataCell(
-          Text(size.strap.toString()),
+          Center(child: Text(size.strap.toString())),
         ),
       if (size.totalEntryLength != null)
         DataCell(
-          Text(size.totalEntryLength.toString()),
+          Center(child: Text(size.totalEntryLength.toString())),
         ),
       if (size.waistCrossLength != null)
         DataCell(
-          Text(size.waistCrossLength.toString()),
+          Center(child: Text(size.waistCrossLength.toString())),
         ),
       if (size.hipCrossLength != null)
         DataCell(
-          Text(size.hipCrossLength.toString()),
+          Center(child: Text(size.hipCrossLength.toString())),
         ),
       if (size.bottomTopCrossLength != null)
         DataCell(
-          Text(size.bottomTopCrossLength.toString()),
+          Center(child: Text(size.bottomTopCrossLength.toString())),
         ),
       if (size.thighCrossLength != null)
         DataCell(
-          Text(size.thighCrossLength.toString()),
+          Center(child: Text(size.thighCrossLength.toString())),
         ),
       if (size.open != null)
         DataCell(
-          Text(size.open.toString()),
+          Center(child: Text(size.open.toString())),
         ),
       if (size.lining != null)
         DataCell(
-          Text(size.lining.toString()),
+          Center(child: Text(size.lining.toString())),
         ),
       if (size.entrance_cross_length != null)
         DataCell(
-          Text(size.entrance_cross_length.toString()),
+          Center(child: Text(size.entrance_cross_length.toString())),
         ),
       if (size.breadth != null)
         DataCell(
-          Text(size.breadth.toString()),
+          Center(child: Text(size.breadth.toString())),
         ),
       if (size.diameter != null)
         DataCell(
-          Text(size.diameter.toString()),
+          Center(child: Text(size.diameter.toString())),
         ),
       if (size.width != null)
         DataCell(
-          Text(size.width.toString()),
+          Center(child: Text(size.width.toString())),
         ),
       if (size.height != null)
         DataCell(
-          Text(size.height.toString()),
+          Center(child: Text(size.height.toString())),
         ),
       if (size.handle_height != null)
         DataCell(
-          Text(size.handle_height.toString()),
+          Center(child: Text(size.handle_height.toString())),
         ),
       if (size.handle_length != null)
         DataCell(
-          Text(size.handle_length.toString()),
+          Center(child: Text(size.handle_length.toString())),
         ),
       if (size.front_heel_height != null)
         DataCell(
-          Text(size.front_heel_height.toString()),
+          Center(child: Text(size.front_heel_height.toString())),
         ),
       if (size.back_heel_height != null)
         DataCell(
-          Text(size.back_heel_height.toString()),
+          Center(child: Text(size.back_heel_height.toString())),
         ),
       if (size.calf_cross_length != null)
         DataCell(
-          Text(size.calf_cross_length.toString()),
+          Center(child: Text(size.calf_cross_length.toString())),
         ),
       if (size.weight != null)
         DataCell(
-          Text(size.weight.toString()),
+          Center(child: Text(size.weight.toString())),
         ),
       if (size.foot_width != null)
         DataCell(
-          Text(size.foot_width.toString()),
+          Center(child: Text(size.foot_width.toString())),
         ),
     ];
   }
