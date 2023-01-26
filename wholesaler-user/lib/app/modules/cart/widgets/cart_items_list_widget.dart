@@ -44,7 +44,7 @@ class CartItemsList extends StatelessWidget {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10,left: 15,right: 15),
             child: Card(
               elevation: 0,
               color: Colors.white,
@@ -53,10 +53,14 @@ class CartItemsList extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // show store only if it contains products
                   products.length > 0
-                      ? _store(cartItems[cartIndex].store)
+                      ? Padding(
+                        padding: const EdgeInsets.only(top: 10.0,bottom: 0,left: 10),
+                        child: _store(cartItems[cartIndex].store),
+                      )
                       : SizedBox.shrink(),
                   Divider(),
                   // if cart 2 page, only show selected products
@@ -87,31 +91,39 @@ class CartItemsList extends StatelessWidget {
       },
       child: Row(
         children: [
-          // ClipRRect(
-          //   borderRadius: BorderRadius.circular(50),
-          //   child: store.imgUrl != null
-          //       ? CachedNetworkImage(
-          //           imageUrl: store.imgUrl!.value,
-          //           width: 35,
-          //           height: 35,
-          //           fit: BoxFit.fill,
-          //           // placeholder: (context, url) => CircularProgressIndicator(),
-          //           errorWidget: (context, url, error) => Icon(Icons.error),
-          //         )
-          //       : Image.asset(
-          //           store.imgAssetUrl,
-          //           width: 35,
-          //         ),
-          // ),
-          // SizedBox(
-          //   width: 10,
-          // ),
           Text(
             store.name ?? '',
             style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
-          )
+          ),
         ],
-      ),
+      )
+      // Row(
+      //   children: [
+      //     ClipRRect(
+      //       borderRadius: BorderRadius.circular(50),
+      //       child: store.imgUrl != null
+      //           ? CachedNetworkImage(
+      //               imageUrl: store.imgUrl!.value,
+      //               width: 35,
+      //               height: 35,
+      //               fit: BoxFit.fill,
+      //               // placeholder: (context, url) => CircularProgressIndicator(),
+      //               errorWidget: (context, url, error) => Icon(Icons.error),
+      //             )
+      //           : Image.asset(
+      //               store.imgAssetUrl,
+      //               width: 35,
+      //             ),
+      //     ),
+      //     SizedBox(
+      //       width: 10,
+      //     ),
+      //     Text(
+      //       store.name ?? '',
+      //       style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+      //     )
+      //   ],
+      // ),
     );
   }
 

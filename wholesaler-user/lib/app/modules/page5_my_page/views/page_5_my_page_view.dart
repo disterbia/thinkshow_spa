@@ -119,15 +119,15 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
         SizedBox(
           width: 10,
         ),
-        Obx(() => ctr.user.value.points != null
-            ? _settingBox(
-                '내 포인트',
-                Utils.numberFormat(number: ctr.user.value.points!.value),
-                () => Get.to(
-                  () => PointMgmtView(),
-                ),
-              )
-            : Container()),
+        // Obx(() => ctr.user.value.points != null
+        //     ? _settingBox(
+        //         '내 포인트',
+        //         Utils.numberFormat(number: ctr.user.value.points!.value),
+        //         () => Get.to(
+        //           () => PointMgmtView(),
+        //         ),
+        //       )
+        //     : Container()),
         SizedBox(
           width: 10,
         ),

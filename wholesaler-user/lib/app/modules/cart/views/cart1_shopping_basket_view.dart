@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -56,6 +57,7 @@ class Cart1ShoppingBasketView extends GetView {
                 )
               : SizedBox.shrink()),
           // Cart
+          SizedBox(height: 15),
           CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
           _bottomSection(),
           SizedBox(height: 50),
