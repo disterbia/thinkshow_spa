@@ -160,6 +160,15 @@ class Sizes {
     this.calf_cross_length,
     this.weight,
     this.foot_width,
+    this.necklace_breadth,
+    this.necklace_total_entry_length,
+    this.earring_total_entry_length,
+    this.clock_diameter,
+    this.clock_breadth,
+    this.total_length,
+    this.total_length2,
+    this.entrace_circum,
+    this.total_height,
     this.createdAt,
   });
 
@@ -197,6 +206,17 @@ class Sizes {
     calf_cross_length = json['calf_cross_length'];
     weight = json['weight'];
     foot_width = json['foot_width'];
+
+    necklace_breadth = json['necklace_breadth'];
+    necklace_total_entry_length = json['necklace_total_entry_length'];
+    earring_total_entry_length = json['earring_total_entry_length'];
+    clock_diameter = json['clock_diameter'];
+    clock_breadth = json['clock_breadth'];
+    total_length = json['total_length'];
+    total_length2 = json['total_length2'];
+    entrace_circum = json['entrace_circum'];
+    total_height = json['total_height'];
+
     createdAt = json['created_at'];
   }
   int? id;
@@ -233,6 +253,16 @@ class Sizes {
   dynamic weight;
   dynamic foot_width;
 
+  dynamic necklace_breadth;
+  dynamic necklace_total_entry_length;
+  dynamic earring_total_entry_length;
+  dynamic clock_diameter;
+  dynamic clock_breadth;
+  dynamic total_length;
+  dynamic total_length2;
+  dynamic entrace_circum;
+  dynamic total_height;
+
   String? createdAt;
   Sizes copyWith({
     int? id,
@@ -267,6 +297,15 @@ class Sizes {
     dynamic calf_cross_length,
     dynamic weight,
     dynamic foot_width,
+    dynamic necklace_breadth,
+    dynamic necklace_total_entry_length,
+    dynamic earring_total_entry_length,
+    dynamic clock_diameter,
+    dynamic clock_breadth,
+    dynamic total_length,
+    dynamic total_length2,
+    dynamic entrace_circum,
+    dynamic total_height,
     String? createdAt,
   }) =>
       Sizes(
@@ -303,6 +342,17 @@ class Sizes {
         calf_cross_length: calf_cross_length ?? this.calf_cross_length,
         weight: weight ?? this.weight,
         foot_width: foot_width ?? this.foot_width,
+        necklace_breadth: necklace_breadth ?? this.necklace_breadth,
+        necklace_total_entry_length:
+            necklace_total_entry_length ?? this.necklace_total_entry_length,
+        earring_total_entry_length:
+            earring_total_entry_length ?? this.earring_total_entry_length,
+        clock_diameter: clock_diameter ?? this.clock_diameter,
+        clock_breadth: clock_breadth ?? this.clock_breadth,
+        total_length: total_length ?? this.total_length,
+        total_length2: total_length2 ?? this.total_length2,
+        entrace_circum: entrace_circum ?? this.entrace_circum,
+        total_height: total_height ?? this.total_height,
         createdAt: createdAt ?? this.createdAt,
       );
   Map<String, dynamic> toJson() {
@@ -341,7 +391,17 @@ class Sizes {
     map['calf_cross_length'] = calf_cross_length;
     map['weight'] = weight;
     map['foot_width'] = foot_width;
-    
+
+    map['necklace_breadth'] = necklace_breadth;
+    map['necklace_total_entry_length'] = necklace_total_entry_length;
+    map['earring_total_entry_length'] = earring_total_entry_length;
+    map['clock_diameter'] = clock_diameter;
+    map['clock_breadth'] = clock_breadth;
+    map['total_length'] = total_length;
+    map['total_length2'] = total_length2;
+    map['entrace_circum'] = entrace_circum;
+    map['total_height'] = total_height;
+
     return map;
   }
 }

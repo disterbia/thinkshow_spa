@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  snapping_sheet: ^3.1.0
   badges: ^2.0.3
   flutter_quill: ^6.0.0
   pointer_interceptor: ^0.9.3+3

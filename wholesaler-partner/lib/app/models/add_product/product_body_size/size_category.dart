@@ -20,11 +20,18 @@ class SizeCategory {
   );
   static SizeCategory NECKLACE = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.NECKLACE,
-    children: [SizeChild.breadth, SizeChild.total_entry_length],
+    children: [
+      SizeChild.necklace_breadth,
+      SizeChild.necklace_total_entry_length
+    ],
   );
+
   static SizeCategory EARRING = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.EARRING,
-    children: [SizeChild.diameter, SizeChild.total_entry_length],
+    children: [
+      SizeChild.earring_total_entry_length,
+      SizeChild.diameter,
+    ],
   );
   static SizeCategory HAT = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.HAT,
@@ -49,8 +56,8 @@ class SizeCategory {
   static SizeCategory CLOCK = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.CLOCK,
     children: [
-      SizeChild.diameter,
-      SizeChild.breadth,
+      SizeChild.clock_diameter,
+      SizeChild.clock_breadth,
       SizeChild.total_entry_length
     ],
   );
@@ -65,11 +72,11 @@ class SizeCategory {
   );
   static SizeCategory INNER_TOP = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.INNER_TOP,
-    children: [SizeChild.chest_cross_length, SizeChild.total_entry_length],
+    children: [SizeChild.chest_cross_length, SizeChild.total_length],
   );
   static SizeCategory INNER_PANTS = SizeCategory(
     seunghanTestValue: ClothSubCategoryEnum.INNER_PANTS,
-    children: [SizeChild.waist_cross_length, SizeChild.total_entry_length],
+    children: [SizeChild.waist_cross_length, SizeChild.total_length],
   );
   //가방
   static SizeCategory BAGPACK = SizeCategory(
@@ -153,9 +160,9 @@ class SizeCategory {
       SizeChild.front_heel_height,
       SizeChild.back_heel_height,
       SizeChild.foot_width,
-      SizeChild.entrance_cross_length,
+      SizeChild.entrace_circum,
       SizeChild.calf_cross_length,
-      SizeChild.height
+      SizeChild.total_height
     ],
   );
   static SizeCategory HELL = SizeCategory(
@@ -184,7 +191,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -198,7 +205,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -212,7 +219,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -226,7 +233,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -240,7 +247,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -252,12 +259,7 @@ class SizeCategory {
       SizeChild.shoulder_cross_length,
       SizeChild.chest_cross_length,
       SizeChild.armhole,
-      SizeChild.arm_straight_length,
-      SizeChild.arm_cross_length,
-      SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
-      //SizeChild.lining,
-      SizeChild.weight
+      SizeChild.total_length,
     ],
   );
   static SizeCategory TSHIRT = SizeCategory(
@@ -269,7 +271,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -283,7 +285,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -297,7 +299,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -311,7 +313,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -325,7 +327,7 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.weight
     ],
@@ -336,7 +338,7 @@ class SizeCategory {
       SizeChild.shoulder_cross_length,
       SizeChild.chest_cross_length,
       SizeChild.armhole,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
     ],
   );
@@ -346,12 +348,7 @@ class SizeCategory {
       SizeChild.shoulder_cross_length,
       SizeChild.chest_cross_length,
       SizeChild.armhole,
-      SizeChild.arm_straight_length,
-      SizeChild.arm_cross_length,
-      SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
-      //SizeChild.lining,
-      SizeChild.weight
+      SizeChild.total_length,
     ],
   );
 
@@ -364,7 +361,7 @@ class SizeCategory {
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -376,7 +373,7 @@ class SizeCategory {
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -388,7 +385,7 @@ class SizeCategory {
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -400,7 +397,7 @@ class SizeCategory {
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -412,7 +409,7 @@ class SizeCategory {
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -423,8 +420,8 @@ class SizeCategory {
     children: [
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
-      SizeChild.bottom_top_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.bottom_cross_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -433,8 +430,8 @@ class SizeCategory {
     children: [
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
-      SizeChild.bottom_top_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.bottom_cross_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -443,8 +440,8 @@ class SizeCategory {
     children: [
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
-      SizeChild.bottom_top_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.bottom_cross_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -457,10 +454,11 @@ class SizeCategory {
       SizeChild.armhole,
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
+      SizeChild.sleeve_cross_length,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -472,10 +470,11 @@ class SizeCategory {
       SizeChild.armhole,
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
+      SizeChild.sleeve_cross_length,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -487,10 +486,11 @@ class SizeCategory {
       SizeChild.armhole,
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
+      SizeChild.sleeve_cross_length,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -502,10 +502,12 @@ class SizeCategory {
       SizeChild.armhole,
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
+      SizeChild.sleeve_cross_length,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
-      SizeChild.bottom_top_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.thigh_cross_length,
+      SizeChild.bottom_cross_length,
+      SizeChild.total_length,
       // SizeChild.lining
     ],
   );
@@ -520,12 +522,12 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length2,
       // SizeChild.lining
     ],
   );
@@ -539,14 +541,14 @@ class SizeCategory {
       SizeChild.arm_straight_length,
       SizeChild.arm_cross_length,
       SizeChild.sleeve_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length,
       //SizeChild.lining,
       SizeChild.waist_cross_length,
       SizeChild.hip_cross_length,
       SizeChild.thigh_cross_length,
       SizeChild.bottom_top_cross_length,
       SizeChild.bottom_cross_length,
-      SizeChild.total_entry_length,
+      SizeChild.total_length2,
       // SizeChild.lining
     ],
   );

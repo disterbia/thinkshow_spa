@@ -315,7 +315,7 @@ class ClothCategory {
           isUse: true),
       ClothCategoryModel(
           id: 27,
-          name: '점프슈트',
+          name: '점프수트',
           parentId: ClothMainCategoryEnum.ONE_PIECE,
           depth: 1,
           isUse: true),

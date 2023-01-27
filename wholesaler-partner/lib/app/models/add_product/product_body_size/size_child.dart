@@ -16,9 +16,9 @@ class SizeChild {
   static SizeChild arm_cross_length =
       SizeChild(korean: '소매통단면', english: 'arm_cross_length', value: null);
 
-  /// 소매단면
+  /// 소매끝단
   static SizeChild sleeve_cross_length =
-      SizeChild(korean: '소매단면', english: 'sleeve_cross_length', value: null);
+      SizeChild(korean: '소매끝단', english: 'sleeve_cross_length', value: null);
 
   /// 밑단단면
   static SizeChild bottom_cross_length =
@@ -33,7 +33,7 @@ class SizeChild {
 
   /// 안감
   static SizeChild lining =
-      SizeChild(korean: '안감유무', english: 'lining', value: null);
+      SizeChild(korean: '안감', english: 'lining', value: null);
 
   /// 허리단면
   static SizeChild waist_cross_length =
@@ -45,7 +45,7 @@ class SizeChild {
 
   /// 밑위단면
   static SizeChild bottom_top_cross_length = SizeChild(
-      korean: '밑위단면', english: 'bottom_top_cross_length', value: null);
+      korean: '밑위길이', english: 'bottom_top_cross_length', value: null);
 
   /// 허벅지단면
   static SizeChild thigh_cross_length =
@@ -82,7 +82,7 @@ class SizeChild {
       SizeChild(korean: '손잡이끈높이', english: 'handle_height', value: null);
 
   static SizeChild handle_length =
-      SizeChild(korean: '끈길이', english: 'handle_length', value: null);
+      SizeChild(korean: '끈길이(최대)', english: 'handle_length', value: null);
 
   static SizeChild front_heel_height =
       SizeChild(korean: '앞굽높이', english: 'front_heel_height', value: null);
@@ -98,4 +98,26 @@ class SizeChild {
 
   static SizeChild foot_width =
       SizeChild(korean: '발볼넓이', english: 'foot_width', value: null);
+
+  //추가2
+  static SizeChild necklace_breadth =
+      SizeChild(korean: '팬던트(폭)', english: 'necklace_breadth', value: null);
+  static SizeChild necklace_total_entry_length = SizeChild(
+      korean: '총길이(연장줄포함)',
+      english: 'necklace_total_entry_length',
+      value: null);
+  static SizeChild earring_total_entry_length = SizeChild(
+      korean: '침길이', english: 'earring_total_entry_length', value: null);
+  static SizeChild clock_diameter =
+      SizeChild(korean: '메달지름', english: 'clock_diameter', value: null);
+  static SizeChild clock_breadth =
+      SizeChild(korean: '끈폭넓이', english: 'clock_breadth', value: null);
+  static SizeChild total_length =
+      SizeChild(korean: '총장', english: 'total_length', value: null);
+  static SizeChild total_length2 =
+      SizeChild(korean: '총장', english: 'total_length2', value: null);
+  static SizeChild entrace_circum =
+      SizeChild(korean: '입구둘레', english: 'entrace_circum', value: null);
+  static SizeChild total_height =
+      SizeChild(korean: '총높이', english: 'total_height', value: null);
 }
