@@ -1,6 +1,6 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -12,10 +12,15 @@ import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
+
+
 class Cart1ShoppingBasketView extends GetView {
   Cart1ShoppingBasketController ctr = Get.put(Cart1ShoppingBasketController());
-  Cart1ShoppingBasketView();
 
+  Cart1ShoppingBasketView();
+  RxDouble expandableHeight=(Get.height/6).obs;
+  RxBool isFirstDrag = true.obs;
+  RxBool isExpanded = false.obs;
   init() {
     ctr.init();
     ctr.SelectAllCheckboxOnChanged(false);
@@ -27,44 +32,81 @@ class Cart1ShoppingBasketView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.grey3,
       appBar: CustomAppbar(isBackEnable: true, title: '장바구니'),
-      body: Obx(() => ctr.isLoading.value ? LoadingWidget() : body()),
+      body: Obx(() => ctr.isLoading.value ? LoadingWidget() : body(context)),
     );
   }
 
-  Widget body() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-            color: Colors.white,
-            child: Row(
-              children: [
-                _selectAllCheckbox(),
-                Spacer(),
-                _deleteTextButtons(),
-              ],
+  Widget body(BuildContext context) {
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    _selectAllCheckbox(),
+                    Spacer(),
+                    _deleteTextButtons(),
+                  ],
+                ),
+              ),
+              //Divider(thickness: 10, color: MyColors.grey3),
+              // empty cart
+              Obx(() => ctr.cartItems.isEmpty
+                  ? Column(
+                      children: [
+                        SizedBox(height: 40),
+                        Text('상품 없음'),
+                      ],
+                    )
+                  : SizedBox.shrink()),
+              // Cart
+              SizedBox(height: 15),
+              CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
+              Obx(
+                ()=> Container(
+                  height: expandableHeight.value,
+                ),
+              )
+            ],
+          ),
+        ),
+        Obx(
+          ()=> ExpandableNotifier(
+            child: Positioned(
+              bottom: 0,
+              height: expandableHeight.value,
+              width: Get.width,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 25, color: Colors.black.withOpacity(0.2)),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: isExpanded.value ? _expandSection() : _collaspeSection()
+                        // Expandable(
+                        //     collapsed: _collaspeSection(), expanded: _expandSection()),
+                      ),
+                    ),
+                    Container(height:Get.height/15,child: _paymentButton()),
+                    SizedBox(height: 10,)
+                  ],
+                ),
+              ),
             ),
           ),
-          //Divider(thickness: 10, color: MyColors.grey3),
-          // empty cart
-          Obx(() => ctr.cartItems.isEmpty
-              ? Column(
-                  children: [
-                    SizedBox(height: 40),
-                    Text('상품 없음'),
-                  ],
-                )
-              : SizedBox.shrink()),
-          // Cart
-          SizedBox(height: 15),
-          CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
-          _bottomSection(),
-          SizedBox(height: 50),
-          _paymentButton(),
-          SizedBox(height: 50),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -109,14 +151,19 @@ class Cart1ShoppingBasketView extends GetView {
           onTap: () => ctr.cartItems.isEmpty
               ? mSnackbar(message: "상품이 없습니다.")
               : ctr.getTotalSelectedProducts() == 0
-              ? mSnackbar(message: "선택된 상품이 없습니다.")
-              : ctr.deleteSelectedProducts(),
+                  ? mSnackbar(message: "선택된 상품이 없습니다.")
+                  : ctr.deleteSelectedProducts(),
           child: Text(
             '선택삭제',
             style: MyTextStyles.f14.copyWith(color: MyColors.grey4),
           ),
         ),
-       Container(height: 15,child: VerticalDivider(thickness: 2,color: MyColors.grey4,)),
+        Container(
+            height: 15,
+            child: VerticalDivider(
+              thickness: 2,
+              color: MyColors.grey4,
+            )),
         InkWell(
           onTap: () => ctr.cartItems.isEmpty
               ? mSnackbar(message: "상품이 없습니다.")
@@ -130,32 +177,132 @@ class Cart1ShoppingBasketView extends GetView {
     );
   }
 
-  Widget _bottomSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
+  Widget _collaspeSection() {
+    return Builder(builder: (context) {
+      var controller = ExpandableController.of(context, required: true,)!;
+      return Row(
         children: [
-          Row(
-            children: [
-              Text('selected_products_num'.tr),
-              Spacer(),
-              Obx(() => Text(ctr.getTotalSelectedProducts().toString() + '개')),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(bottom:10,left: 20,top: 20),
+            child: Text("결제 예상금액",style: MyTextStyles.f14,),
           ),
-          SizedBox(height: 25),
-          Row(
-            children: [
-              Text('결제 금액'),
-              Spacer(),
-              Obx(
-                () => Text(Utils.numberFormat(
-                    number: ctr.totalPaymentPrice.value, suffix: '원')),
-              ),
-            ],
+          Spacer(),
+          Obx(() => Padding(
+            padding: const EdgeInsets.only(bottom:10,top: 20),
+            child: Text(Utils.numberFormat(
+                number: ctr.totalPaymentPrice.value, suffix: '원'),
+              style: MyTextStyles.f14_bold,
+            ),
+          )),
+          Padding(
+            padding: EdgeInsets.only(bottom:10,top: 15,right: 20),
+            child: InkWell(
+                onTap: () {
+                  isExpanded.value=true;
+                  controller.toggle();
+                  expandableHeight.value=Get.height/3;
+                  isFirstDrag.value=true;
+                },
+                child: Icon(Icons.keyboard_arrow_up_outlined, size: 30)),
           ),
         ],
-      ),
-    );
+      );
+    });
+  }
+
+  Widget _expandSection() {
+    return Builder(builder: (context) {
+      var controller = ExpandableController.of(context, required: true)!;
+      return Column(
+        children: [
+          GestureDetector(
+              onPanUpdate: (details) {
+                if(!isFirstDrag.value) return;
+                if(details.delta.dy>0){
+                  isExpanded.value=false;
+                  controller.toggle();
+                  expandableHeight.value=Get.height/6;
+                  isFirstDrag.value=false;
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  boxShadow: [
+                    BoxShadow(blurRadius: 25, color: Colors.black.withOpacity(0.2)),
+                  ],
+                ),
+                child: Container(
+                  margin: EdgeInsets.only(top: 8,bottom: 20),
+                  width: 60,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: MyColors.grey3,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              )
+
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20,right: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: MyColors.grey3,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top:8,left: 8,bottom: 5),
+                    child: Row(
+                      children: [
+                        Text("총 상품금액",style: TextStyle(color: Colors.grey),),
+                        Spacer(),
+                        Obx(() =>
+                            Padding(
+                              padding:  EdgeInsets.only(top:8,right: 8,bottom: 5),
+                              child: Text(Utils.numberFormat(
+                              number: ctr.totalPaymentPrice.value, suffix: '원',),style: MyTextStyles.f14_bold,),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 5),
+                    child: Row(children: [
+                      Text("총 배송비",style: TextStyle(color: Colors.grey)),
+                      Spacer(),
+                      Padding(
+                        padding:  EdgeInsets.only(right: 8,bottom: 5),
+                        child: Text(Utils.numberFormat(
+                            number: 0, suffix: '원'),style: MyTextStyles.f14_bold,),
+                      ),
+                    ],),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8,bottom: 10,),
+                    child: Row(
+                      children: [
+                        Text("결제 예상금액",style: MyTextStyles.f14,),
+                        Spacer(),
+                        Obx(() => Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Text(Utils.numberFormat(
+                              number: ctr.totalPaymentPrice.value, suffix: '원'),style: MyTextStyles.f14_bold,),
+                        )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   Widget _paymentButton() {
@@ -170,10 +317,9 @@ class Cart1ShoppingBasketView extends GetView {
             mSnackbar(message: '상품을 선택해주세요.');
           }
         },
-        child: Text(
-          '구매하기',
-          style: MyTextStyles.f14.copyWith(color: MyColors.white),
-        ),
+        child: Obx(() => Text("총 ${ctr.getTotalSelectedProducts().toString()}개 주문하기",
+            style: MyTextStyles.f14.copyWith(color: MyColors.white)
+        ))
       ),
     );
   }
