@@ -38,7 +38,9 @@ class RemainingPoints extends GetView {
             Spacer(),
             ElevatedButton(
               onPressed: () => PointChargeDialog(context),
-              child: Text('충전'),
+              child: Text('충전', style: TextStyle(
+                color: MyColors.black
+              ),),
             ),
           ],
         ),

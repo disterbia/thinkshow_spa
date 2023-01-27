@@ -126,8 +126,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                             : 10),
                     child: CustomButton(
                       textColor: ctr.thicknessSelected.value.name == button.name
-                          ? MyColors.white
-                          : MyColors.grey2,
+                          ? MyColors.black
+                          : MyColors.black,
                       fontSize: 14,
                       borderColor:
                           ctr.thicknessSelected.value.name == button.name
@@ -172,8 +172,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                               : 10),
                       child: CustomButton(
                         textColor: clothesSample.value.name == button.name
-                            ? MyColors.white
-                            : MyColors.grey2,
+                            ? MyColors.black
+                            : MyColors.black,
                         fontSize: 14,
                         borderColor: clothesSample.value.name == button.name
                             ? MyColors.primary
@@ -217,8 +217,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                               : 10),
                       child: CustomButton(
                         textColor: clothesSample.value.name == button.name
-                            ? MyColors.white
-                            : MyColors.grey2,
+                            ? MyColors.black
+                            : MyColors.black,
                         fontSize: 14,
                         borderColor: clothesSample.value.name == button.name
                             ? MyColors.primary
@@ -262,8 +262,8 @@ class AP_Part3View extends GetView<AP_Part3Controller> {
                               : 10),
                       child: CustomButton(
                         textColor: clothesSample.value.name == button.name
-                            ? MyColors.white
-                            : MyColors.grey2,
+                            ? MyColors.black
+                            : MyColors.black,
                         fontSize: 14,
                         borderColor: clothesSample.value.name == button.name
                             ? MyColors.primary
