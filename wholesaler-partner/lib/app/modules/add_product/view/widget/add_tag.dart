@@ -37,7 +37,7 @@ class AddTagField extends StatelessWidget {
                 onSubmitted: (value) {
                   for (int k = 0; k < tagList.length; k++) {
                     if (value == tagList[k]) {
-                      mSnackbar(message: '같은 소재는 입력이 불가능합니다.');
+                      mSnackbar(message: '같은 내용은 입력이 불가능합니다.');
                       fieldController.clear();
 
                       return;
