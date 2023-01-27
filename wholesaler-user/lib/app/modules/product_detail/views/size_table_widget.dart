@@ -282,6 +282,89 @@ class SizeTableWidget extends StatelessWidget {
             ctr.product.value.sizes![j].foot_width = '';
         }
       }
+
+      //추가2
+
+      if (ctr.product.value.sizes![k].necklace_breadth != null &&
+          ctr.product.value.sizes![k].necklace_breadth != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].necklace_breadth == null)
+            ctr.product.value.sizes![j].necklace_breadth = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].necklace_total_entry_length != null &&
+          ctr.product.value.sizes![k].necklace_total_entry_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].necklace_total_entry_length == null)
+            ctr.product.value.sizes![j].necklace_total_entry_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].earring_total_entry_length != null &&
+          ctr.product.value.sizes![k].earring_total_entry_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].earring_total_entry_length == null)
+            ctr.product.value.sizes![j].earring_total_entry_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].clock_diameter != null &&
+          ctr.product.value.sizes![k].clock_diameter != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].clock_diameter == null)
+            ctr.product.value.sizes![j].clock_diameter = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].clock_breadth != null &&
+          ctr.product.value.sizes![k].clock_breadth != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].clock_breadth == null)
+            ctr.product.value.sizes![j].clock_breadth = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].total_length != null &&
+          ctr.product.value.sizes![k].total_length != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].total_length == null)
+            ctr.product.value.sizes![j].total_length = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].total_length2 != null &&
+          ctr.product.value.sizes![k].total_length2 != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].total_length2 == null)
+            ctr.product.value.sizes![j].total_length2 = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].entrace_circum != null &&
+          ctr.product.value.sizes![k].entrace_circum != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].entrace_circum == null)
+            ctr.product.value.sizes![j].entrace_circum = '';
+        }
+      }
+
+      if (ctr.product.value.sizes![k].total_height != null &&
+          ctr.product.value.sizes![k].total_height != '') {
+        for (int j = 0; j < ctr.product.value.sizes!.length; j++) {
+          if (j == k) continue;
+          if (ctr.product.value.sizes![j].total_height == null)
+            ctr.product.value.sizes![j].total_height = '';
+        }
+      }
     }
   }
 
@@ -417,6 +500,56 @@ class SizeTableWidget extends StatelessWidget {
         DataColumn(
           label: Text(ProductSizeType.foot_width),
         ),
+//추가2
+      if (ctr.product.value.sizes!
+          .any((element) => element.necklace_breadth != null))
+        DataColumn(
+          label: Text(ProductSizeType.necklace_breadth),
+        ),
+
+      if (ctr.product.value.sizes!
+          .any((element) => element.necklace_total_entry_length != null))
+        DataColumn(
+          label: Text(ProductSizeType.necklace_total_entry_length),
+        ),
+
+      if (ctr.product.value.sizes!
+          .any((element) => element.earring_total_entry_length != null))
+        DataColumn(
+          label: Text(ProductSizeType.earring_total_entry_length),
+        ),
+
+      if (ctr.product.value.sizes!
+          .any((element) => element.clock_diameter != null))
+        DataColumn(
+          label: Text(ProductSizeType.clock_diameter),
+        ),
+
+      if (ctr.product.value.sizes!
+          .any((element) => element.clock_breadth != null))
+        DataColumn(
+          label: Text(ProductSizeType.clock_breadth),
+        ),
+      if (ctr.product.value.sizes!
+          .any((element) => element.total_length != null))
+        DataColumn(
+          label: Text(ProductSizeType.total_length),
+        ),
+      if (ctr.product.value.sizes!
+          .any((element) => element.total_length2 != null))
+        DataColumn(
+          label: Text(ProductSizeType.total_length2),
+        ),
+      if (ctr.product.value.sizes!
+          .any((element) => element.entrace_circum != null))
+        DataColumn(
+          label: Text(ProductSizeType.entrace_circum),
+        ),
+      if (ctr.product.value.sizes!
+          .any((element) => element.total_height != null))
+        DataColumn(
+          label: Text(ProductSizeType.total_height),
+        ),
     ];
   }
 
@@ -532,6 +665,44 @@ class SizeTableWidget extends StatelessWidget {
       if (size.foot_width != null)
         DataCell(
           Center(child: Text(size.foot_width.toString())),
+        ),
+
+      //추가2
+      if (size.necklace_breadth != null)
+        DataCell(
+          Center(child: Text(size.necklace_breadth.toString())),
+        ),
+      if (size.necklace_total_entry_length != null)
+        DataCell(
+          Center(child: Text(size.necklace_total_entry_length.toString())),
+        ),
+      if (size.earring_total_entry_length != null)
+        DataCell(
+          Center(child: Text(size.earring_total_entry_length.toString())),
+        ),
+      if (size.clock_diameter != null)
+        DataCell(
+          Center(child: Text(size.clock_diameter.toString())),
+        ),
+      if (size.clock_breadth != null)
+        DataCell(
+          Center(child: Text(size.clock_breadth.toString())),
+        ),
+      if (size.total_length != null)
+        DataCell(
+          Center(child: Text(size.total_length.toString())),
+        ),
+      if (size.total_length2 != null)
+        DataCell(
+          Center(child: Text(size.total_length2.toString())),
+        ),
+      if (size.entrace_circum != null)
+        DataCell(
+          Center(child: Text(size.entrace_circum.toString())),
+        ),
+      if (size.total_height != null)
+        DataCell(
+          Center(child: Text(size.total_height.toString())),
         ),
     ];
   }

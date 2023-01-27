@@ -231,6 +231,54 @@ class AP_Part2Controller extends GetxController {
               sizeList.foot_width != null) {
             textEditingController.text = sizeList.foot_width.toString();
           }
+
+
+
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.necklace_breadth.english &&
+              sizeList.necklace_breadth != null) {
+            textEditingController.text = sizeList.necklace_breadth.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.necklace_total_entry_length.english &&
+              sizeList.necklace_total_entry_length != null) {
+            textEditingController.text = sizeList.necklace_total_entry_length.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.earring_total_entry_length.english &&
+              sizeList.earring_total_entry_length != null) {
+            textEditingController.text = sizeList.earring_total_entry_length.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.clock_diameter.english &&
+              sizeList.clock_diameter != null) {
+            textEditingController.text = sizeList.clock_diameter.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.clock_breadth.english &&
+              sizeList.clock_breadth != null) {
+            textEditingController.text = sizeList.clock_breadth.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.total_length.english &&
+              sizeList.total_length != null) {
+            textEditingController.text = sizeList.total_length.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.total_length2.english &&
+              sizeList.total_length2 != null) {
+            textEditingController.text = sizeList.total_length2.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.entrace_circum.english &&
+              sizeList.entrace_circum != null) {
+            textEditingController.text = sizeList.entrace_circum.toString();
+          }
+          else if (currentSizeCategoryEnglishStr ==
+                  SizeChild.total_height.english &&
+              sizeList.total_height != null) {
+            textEditingController.text = sizeList.total_height.toString();
+          }
         }
       }
     }
