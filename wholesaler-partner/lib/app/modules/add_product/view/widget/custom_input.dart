@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -64,6 +65,9 @@ class CustomInput extends GetView<AddProductController> {
       child: SizedBox(
         height: 30,
         child: TextField(
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'^0+')),
+          ],
           onChanged: onChanged,
           controller: fieldController,
           keyboardType: keyboardType,

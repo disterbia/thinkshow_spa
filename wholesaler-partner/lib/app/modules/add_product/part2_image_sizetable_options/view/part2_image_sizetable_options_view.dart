@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/models/add_product/option.dart';
@@ -32,6 +33,24 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
             SizedBox(height: 5),
             // cloth pictures
             _clothPicture(),
+
+//여기에 바지 스커트 특정
+            ClothCategory.PANTS == addProductCtr.category.value.title
+                ? Center(
+                    child: Text(
+                      '*밴딩팬츠의 경우 허리단면 최소-최대로 표기 (ex. 40-60)',
+                      style: MyTextStyles.f11,
+                    ),
+                  )
+                : SizedBox.shrink(),
+
+            ClothCategory.SKIRTS == addProductCtr.category.value.title
+                ? Center(
+                    child: Text(
+                    '*밴딩스커트의 경우 허리단면 최소-최대로 표기 (ex. 40-60)',
+                    style: MyTextStyles.f11,
+                  ))
+                : SizedBox.shrink(),
             _sizeTable(context),
             // 옵션 단가등록
             //_unitPriceCheckbox(),
@@ -246,7 +265,7 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
                       height: 20,
                       width: 20,
                       child: Center(
-                        child: Text('SIZE'),
+                        child: Text('Size'),
                       ),
                     ),
                   ),
@@ -750,9 +769,29 @@ class AP_Part2View extends GetView<AP_Part2Controller> {
               Expanded(
                 child: Container(
                   child: TextField(
+                      onChanged: (value) {
+                        if (value.length > 1 && value.substring(0, 1) == '0') {
+                          print(value.substring(1, value.length));
+                          addProductCtr
+                              .optionsControllers[currentOptionLength - 1]
+                              .text = value.substring(1, value.length);
+                          addProductCtr
+                                  .optionsControllers[currentOptionLength - 1]
+                                  .selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset: addProductCtr
+                                      .optionsControllers[
+                                          currentOptionLength - 1]
+                                      .text
+                                      .length));
+                        }
+                      },
                       controller: addProductCtr
                           .optionsControllers[currentOptionLength - 1],
                       keyboardType: TextInputType.number,
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.deny(RegExp(r'^0+')),
+                      // ],
                       decoration: InputDecoration(
                           fillColor: MyColors.white,
                           filled: true,

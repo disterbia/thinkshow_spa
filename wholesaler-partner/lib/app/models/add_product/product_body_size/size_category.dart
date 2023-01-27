@@ -160,7 +160,8 @@ class SizeCategory {
       SizeChild.front_heel_height,
       SizeChild.back_heel_height,
       SizeChild.foot_width,
-      SizeChild.entrace_circum,
+      SizeChild.entrance_cross_length,
+      // SizeChild.entrace_circum,
       SizeChild.calf_cross_length,
       SizeChild.total_height
     ],
@@ -260,6 +261,7 @@ class SizeCategory {
       SizeChild.chest_cross_length,
       SizeChild.armhole,
       SizeChild.total_length,
+      SizeChild.weight,
     ],
   );
   static SizeCategory TSHIRT = SizeCategory(
@@ -273,7 +275,7 @@ class SizeCategory {
       SizeChild.sleeve_cross_length,
       SizeChild.total_length,
       //SizeChild.lining,
-      SizeChild.weight
+      // SizeChild.weight
     ],
   );
   static SizeCategory SHIRT = SizeCategory(
@@ -287,7 +289,7 @@ class SizeCategory {
       SizeChild.sleeve_cross_length,
       SizeChild.total_length,
       //SizeChild.lining,
-      SizeChild.weight
+      // SizeChild.weight
     ],
   );
   static SizeCategory KNITWEAR = SizeCategory(
@@ -301,7 +303,7 @@ class SizeCategory {
       SizeChild.sleeve_cross_length,
       SizeChild.total_length,
       //SizeChild.lining,
-      SizeChild.weight
+      // SizeChild.weight
     ],
   );
   static SizeCategory MTOM = SizeCategory(
@@ -315,7 +317,7 @@ class SizeCategory {
       SizeChild.sleeve_cross_length,
       SizeChild.total_length,
       //SizeChild.lining,
-      SizeChild.weight
+      // SizeChild.weight
     ],
   );
   static SizeCategory HOODIE = SizeCategory(
@@ -329,7 +331,7 @@ class SizeCategory {
       SizeChild.sleeve_cross_length,
       SizeChild.total_length,
       //SizeChild.lining,
-      SizeChild.weight
+      // SizeChild.weight
     ],
   );
   static SizeCategory BUSTIER = SizeCategory(

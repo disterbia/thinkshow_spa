@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class AddTagField extends StatelessWidget {
   final String? hintText;
@@ -34,6 +35,15 @@ class AddTagField extends StatelessWidget {
                         horizontal: 8.0, vertical: 0.0)),
                 controller: fieldController,
                 onSubmitted: (value) {
+                  for (int k = 0; k < tagList.length; k++) {
+                    if (value == tagList[k]) {
+                      mSnackbar(message: '같은 소재는 입력이 불가능합니다.');
+                      fieldController.clear();
+
+                      return;
+                    }
+                  }
+
                   tagList.add(value);
                   percentList == null
                       ? null
@@ -42,9 +52,10 @@ class AddTagField extends StatelessWidget {
 
                   materialPercentCheck!.value = 0;
                   for (int k = 0; k < percentList!.length; k++) {
-                    materialPercentCheck!.value +=
-                        int.parse(percentList![k].text);
-                    // print(ctr.materialTypePercentControllers[k].text);
+                    if (percentList![k].text.isNotEmpty) {
+                      materialPercentCheck!.value +=
+                          int.parse(percentList![k].text);
+                    }
                   }
                 },
               ),
@@ -66,8 +77,11 @@ class AddTagField extends StatelessWidget {
 
                         materialPercentCheck!.value = 0;
                         for (int k = 0; k < percentList!.length; k++) {
-                          materialPercentCheck!.value +=
-                              int.parse(percentList![k].text);
+                          if (percentList![k].text.isNotEmpty) {
+                            materialPercentCheck!.value +=
+                                int.parse(percentList![k].text);
+                          }
+
                           // print(ctr.materialTypePercentControllers[k].text);
                         }
                       },
