@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wholesaler_partner/app/modules/add_product/controller/add_product_controller.dart';
@@ -45,6 +46,9 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
             labelText: '단가',
             keyboardType: TextInputType.number,
             controller: addProductController.priceController,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'^0+')),
+            ],
             onChanged: (value) {
               if (value.isNotEmpty) {
                 String temp = value.replaceAll(RegExp(r'[^0-9]'), '');
