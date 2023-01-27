@@ -37,7 +37,8 @@ class CustomButton extends StatelessWidget {
         fontWeight: FontWeight.w600,
       ),
       primary: backgroundColor ?? MyColors.primary,
-      onPrimary: textColor ?? MyColors.white,
+      // onPrimary: textColor ?? MyColors.white,
+      onPrimary : MyColors.black,
       shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(
             Radius.circular(MyDimensions.radius),

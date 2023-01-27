@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -154,7 +156,10 @@ class AdImpressionView extends GetView {
                                       onPressed: () {
                                         ctr.isShowDetail.value = true;
                                       },
-                                      child: Text('자세히 보기'))
+                                      child: Text(
+                                        '자세히 보기',
+                                        style: TextStyle(color: Colors.black),
+                                      ))
                                   : SizedBox.shrink(),
                             ),
 

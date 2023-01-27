@@ -22,11 +22,15 @@ class Top10ProductsView extends GetView<Top10ProductsController> {
           width: double.maxFinite,
           child: ElevatedButton(
             onPressed: ctr.addProductManual,
-            child: Text('저장'),
+            child: Text(
+              '저장',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
       ),
-      appBar: CustomAppbar(isBackEnable: false, hasHomeButton: true, title: '우리매장 TOP10'),
+      appBar: CustomAppbar(
+          isBackEnable: false, hasHomeButton: true, title: '우리매장 TOP10'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(

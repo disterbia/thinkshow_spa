@@ -260,7 +260,7 @@ class Tab1DetailInfo extends GetView {
             child: Text(
           text,
           style:
-              TextStyle(color: isSelected ? MyColors.white : MyColors.primary),
+              TextStyle(color: isSelected ? MyColors.black : MyColors.black),
         )),
       ),
     );
