@@ -16,6 +16,7 @@ class HorizontalChipList {
   // ############ Cloth categories
   Widget getAllMainCat(
       {required List<String> categoryList, required Function() onTapped}) {
+
     List<ChipWidget> categoryChips = [];
     // Add ALL chip
     print(ctr.selectedMainCatIndex.value);
@@ -44,7 +45,7 @@ class HorizontalChipList {
       );
     }
 
-    ctr.selectedMainCatIndex.value = 0;
+    // ctr.selectedMainCatIndex.value = 0;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Wrap(
@@ -68,7 +69,6 @@ class HorizontalChipList {
         parentId: parentId,
         depth: 0,
         isUse: false);
-
 
     categoryChips.add(
       ChipWidget(

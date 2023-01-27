@@ -150,11 +150,14 @@ class AddProductController extends GetxController {
     // materialTypeList
     part3controller.materialTypeList.clear();
     part3controller.materialTypePercentControllers.clear();
+    part3controller.materialPercentCheck.value = 0;
     for (int i = 0; i < productModifyModel.value.materialList!.length; i++) {
       part3controller.materialTypeList
           .add(productModifyModel.value.materialList![i].name!);
       part3controller.materialTypePercentControllers.add(TextEditingController(
           text: productModifyModel.value.materialList![i].ratio.toString()));
+      part3controller.materialPercentCheck.value +=
+          productModifyModel.value.materialList![i].ratio!;
     }
 
     // keyword list

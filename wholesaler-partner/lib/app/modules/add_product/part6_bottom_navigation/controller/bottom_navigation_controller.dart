@@ -190,23 +190,18 @@ class AP_Part6Controller extends GetxController {
       if (productBodySizeModel.isSelected.value) {
         Map<String, dynamic> sizeInfo = {"size": productBodySizeModel.size};
 
-        print('productBodySizeModel.sizeCategory.children.length');
-        print(productBodySizeModel.sizeCategory.children.length);
         for (int j = 0;
             j < productBodySizeModel.sizeCategory.children.length;
             j++) {
           SizeChild sizeChild = productBodySizeModel.sizeCategory.children[j];
-          print('sizeChild');
-          print(sizeChild.english);
 
-          sizeInfo[sizeChild.english] = part2controller
-              .textEditingControllers[i.toString() + j.toString()]!.text;
-
-          print('part2controller.textEditingControllers');
-          print(part2controller
-              .textEditingControllers[i.toString() + j.toString()]!.text);
-          print('sizeInfo[sizeChild.english]');
-          print(sizeInfo[sizeChild.english]);
+          if (part2controller
+              .textEditingControllers[i.toString() + j.toString()]!
+              .text
+              .isNotEmpty) {
+            sizeInfo[sizeChild.english] = part2controller
+                .textEditingControllers[i.toString() + j.toString()]!.text;
+          }
         }
 
         sizeInfoList.add(sizeInfo);
@@ -253,10 +248,10 @@ class AP_Part6Controller extends GetxController {
           : '',
       "model_size": part4controller.modelSizeController.text,
     };
-    print('qqqqqqqqqqqqqqq');
-    print(data['option_list']);
-    print('qqqqqqqqqqqqqqq');
-    print(data['size_info_list']);
+    // print('qqqqqqqqqqqqqqq');
+    // print(data['option_list']);
+    // print('qqqqqqqqqqqqqqq');
+    // print(data['size_info_list']);
 
     bool isSuccess = false;
     isSuccess = await _apiProvider.addProduct(data: data);
