@@ -25,6 +25,8 @@ class ProductItemHorizontal extends StatelessWidget {
   late Product product;
   ProductNumber? productNumber;
   Review? review;
+  int? price;
+  int? totalPrice;
   TextStyle? titleStyle;
   ProductInquiry? inquiry;
   Function(bool)? quantityPlusMinusOnPressed;
@@ -34,6 +36,8 @@ class ProductItemHorizontal extends StatelessWidget {
     required this.product,
     this.productNumber,
     this.quantityPlusMinusOnPressed,
+    this.price,
+    this.totalPrice
   });
 
   /// Use for Review List, Review Detail Pages
@@ -71,55 +75,77 @@ class ProductItemHorizontal extends StatelessWidget {
           Get.to(() => ProductDetailView(), arguments: product.id);
         }
       },
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
+      child: Row(
+        children: [
+          Expanded(flex: 1,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Image
-                ImageBuilder(),
-                // Number Top Left
-                NumberTopLeftBuilder(),
-              ],
-            ),
-            SizedBox(width: 10),
-            Column(
+              ImageBuilder(),
+              QuantityPlusMinusBuilder(),
+            ],),
+          ),
+          Expanded(flex: 2,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Category
-                CategoryBuilder(),
+               // CategoryBuilder(),
                 // Store Name
-                StoreNameBuilder(),
+                //StoreNameBuilder(),
                 // Title
-                TitleBuilder(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: TitleBuilder())
+                  ,
+                  Container(),
+                  Icon(Icons.clear)
+                ],)
+                ,
                 // Option
-                OptionBuilder(),
+                //OptionBuilder(),
                 // Option with extra price
                 OptionExtraPriceBuilder(),
                 // Quantity plus minus buttons
-                QuantityPlusMinusBuilder(),
+                //QuantityPlusMinusBuilder(),
                 // Quantity
-                QuantityBuilder(),
+                //QuantityBuilder(),
                 // Price
-                PriceBuilder(),
+                //PriceBuilder(),
+                Row(
+                  children: [
+                    Spacer(),
+                    Column(
+                      children: [
+                        Text(
+                          Utils.numberFormat(number: price!, suffix: '원'),
+                          style: MyTextStyles.f12,
+                        ),
+                        Text(
+                          Utils.numberFormat(number: totalPrice!, suffix: '원'),
+                          style: MyTextStyles.f16,
+                        )
+                      ],
+                    ),
+                  ],
+                )
                 // Total Count
-                TotalCountBuilder(),
+              //  TotalCountBuilder(),
                 // Sold Quantity
-                SoldQuantityBuilder(),
+                //SoldQuantityBuilder(),
                 // Inquiry Text
-                InquiryBuilder(context),
+                //InquiryBuilder(context),
                 // Review Text
-                ReviewBuilder(),
+                //ReviewBuilder(),
                 // RatingType1
-                RatingType1Builder(),
+                //RatingType1Builder(),
                 // RatingType2
-                RatingType2Builder(),
+                //RatingType2Builder(),
               ],
             ),
-          ],
-        ),
+          ),
+          SizedBox(width: 10,)
+        ],
       ),
     );
   }
@@ -137,8 +163,8 @@ class ProductItemHorizontal extends StatelessWidget {
         imageUrl: product.imgUrl.contains(",")
             ? product.imgUrl.substring(0, product.imgUrl.indexOf(','))
             : product.imgUrl,
-        height: product.imgHeight ?? 145,
-        width: product.imgWidth ?? 116,
+        height: 75,
+        width: 75,
         // placeholder: (context, url) => CircularProgressIndicator(),
         errorWidget: (context, url, error) => Icon(Icons.error),
       ),
@@ -187,7 +213,7 @@ class ProductItemHorizontal extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 5),
         child: Text(
           product.title,
-          overflow: TextOverflow.ellipsis,
+          //overflow: TextOverflow.ellipsis,
           style:
               titleStyle ?? MyTextStyles.f14.copyWith(color: MyColors.black2),
         ),
@@ -221,12 +247,12 @@ class ProductItemHorizontal extends StatelessWidget {
           children: [
             Text(
               product.OLD_option!,
-              style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+              style: MyTextStyles.f14.copyWith(color: MyColors.grey4),
             ),
             SizedBox(width: 10),
             Text(
               '+${product.selectedOptionAddPrice!.toString()}',
-              style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+              style: MyTextStyles.f14.copyWith(color: MyColors.grey4),
             ),
           ],
         ),

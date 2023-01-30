@@ -76,11 +76,11 @@ class Cart1ShoppingBasketView extends GetView {
         ),
         Obx(
           ()=> ExpandableNotifier(
-            child: Positioned(
-              bottom: 0,
-              height: expandableHeight.value,
-              width: Get.width,
+            child: Align(
+            alignment: Alignment.bottomCenter,
               child: Container(
+                height: expandableHeight.value,
+                width: Get.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -226,21 +226,12 @@ class Cart1ShoppingBasketView extends GetView {
                 }
               },
               child: Container(
+                margin: EdgeInsets.only(top: 8,bottom: 20),
+                width: 60,
+                height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(blurRadius: 25, color: Colors.black.withOpacity(0.2)),
-                  ],
-                ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 8,bottom: 20),
-                  width: 60,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: MyColors.grey3,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                  color: MyColors.grey3,
+                  borderRadius: BorderRadius.circular(5),
                 ),
               )
 

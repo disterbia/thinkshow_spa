@@ -146,54 +146,39 @@ class CartItemsList extends StatelessWidget {
       showQuantityPlusMinus: product.showQuantityPlusMinus,
       cartId: product.cartId,
     );
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            isCart1Page
-                // Checkbox left of Product
-                ? Obx(
-                    () => CustomCheckbox(
-                      isChecked: product.isCheckboxSelected!.value,
-                      cartIndex: cartIndex,
-                      productIndex: productIndex,
-                      onChanged: (bool value) {
-                        product.isCheckboxSelected!.toggle();
-                        ctr.updateTotalPaymentPrice();
-                      },
-                    ),
-                  )
-                : SizedBox.shrink(),
-            isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
-            ProductItemHorizontal(
-              product: tempProduct,
-              quantityPlusMinusOnPressed: (value) =>
-                  ctr.quantityPlusMinusOnPressed(
-                value: value,
-                cartId: tempProduct.cartId!,
-                qty: tempProduct.quantity!.value,
-              ),
+        SizedBox(width: 10,),
+        isCart1Page
+            // Checkbox left of Product
+            ? Obx(
+                () => CustomCheckbox(
+                  isChecked: product.isCheckboxSelected!.value,
+                  cartIndex: cartIndex,
+                  productIndex: productIndex,
+                  onChanged: (bool value) {
+                    product.isCheckboxSelected!.toggle();
+                    ctr.updateTotalPaymentPrice();
+                  },
+                ),
+              )
+            : SizedBox.shrink(),
+        isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
+        Expanded(
+          child: ProductItemHorizontal(
+            product: tempProduct,
+            price: productPrice,
+            totalPrice: productTotalPrice,
+            quantityPlusMinusOnPressed: (value) =>
+                ctr.quantityPlusMinusOnPressed(
+              value: value,
+              cartId: tempProduct.cartId!,
+              qty: tempProduct.quantity!.value,
             ),
-            const Spacer(),
-            // Price: Right side
-            FittedBox(fit: BoxFit.fitWidth,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    Utils.numberFormat(number: productPrice, suffix: '원'),
-                    style: MyTextStyles.f12,
-                  ),
-                  Text(
-                    Utils.numberFormat(number: productTotalPrice, suffix: '원'),
-                    style: MyTextStyles.f16,
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-        SizedBox(height: 10)
+
       ],
     );
   }

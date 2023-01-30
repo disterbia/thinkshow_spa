@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:wholesaler_user/app/widgets/product/quantity_plus_minus_button_widget.dart';
 
 class QuantityPlusMinusWidget extends StatelessWidget {
@@ -25,7 +26,7 @@ class QuantityPlusMinusWidget extends StatelessWidget {
         QuantityButton(FontAwesomeIcons.minus, leftRoundBorder, (() => onTap(false))),
         Container(
           alignment: Alignment.center,
-          width: 48,
+          width: 30,
           height: 24,
           child: Text(
             quantity.toString(),
