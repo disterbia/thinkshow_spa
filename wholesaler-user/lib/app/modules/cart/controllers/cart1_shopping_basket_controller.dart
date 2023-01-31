@@ -100,13 +100,17 @@ class Cart1ShoppingBasketController extends GetxController {
     );
   }
 
-  callDeleteSelectedProductsAPI({bool isDeleteAll = false}) async {
+  callDeleteSelectedProductsAPI({bool isDeleteAll = false,bool isIcon = false, int? cartId}) async {
     List<int> cart_id_list = [];
 
     for (Cart cart in cartItems) {
       for (Product product in cart.products) {
         if (product.isCheckboxSelected!.value || isDeleteAll) {
           cart_id_list.add(product.cartId!);
+        }
+        if (isIcon) {
+          cart_id_list.add(cartId!);
+          isIcon=false;
         }
       }
     }

@@ -31,7 +31,7 @@ class ProductDetailView extends GetView {
 
   init() {
     //print("ddddddqqqqqq");
-    ctr2.init();
+    //ctr2.init();
     if (Get.arguments != null) {
       CacheProvider().addRecentlyViewedProduct(Get.arguments);
       // print('ProductDetailView > addRecentlyViewedProduct: Get.arguments ${Get.arguments}');

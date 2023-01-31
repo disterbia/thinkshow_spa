@@ -37,6 +37,13 @@ class MyTextStyles {
     fontFamily: 'SpoqaHanSansNeo-Medium',
     fontSize: 18.0,
   );
+  static const TextStyle f18_cart = TextStyle(
+    color: MyColors.black,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+    fontFamily: 'SpoqaHanSansNeo-Medium',
+    fontSize: 18.0,
+  );
   static const TextStyle f16 = TextStyle(
     color: MyColors.black,
     fontWeight: FontWeight.w400,

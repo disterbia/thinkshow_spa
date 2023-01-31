@@ -13,6 +13,8 @@ class Product {
   int id; // 제품 ID
   String title; // 제품명
   int? price; // 가격
+  int? normalPrice; //원가
+  int? priceDiscountPercent ;//할인율
   int? selectedOptionAddPrice; // 옵션 추가 가격
   int? selectedOptionId;
   String imgUrl;
@@ -56,6 +58,8 @@ class Product {
     required this.id,
     required this.title,
     this.price,
+    this.normalPrice,
+    this.priceDiscountPercent,
     required this.imgUrl,
     this.images,
     this.imagesColor,

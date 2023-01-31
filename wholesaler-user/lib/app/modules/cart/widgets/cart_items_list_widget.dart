@@ -66,7 +66,7 @@ class CartItemsList extends StatelessWidget {
                   // if cart 2 page, only show selected products
                   ...products.map(
                     (product) => _orderedProductBuilder(
-                        cartIndex, products.indexOf(product), product),
+                        cartIndex, products.indexOf(product), product,products.length),
                   ),
                 ],
               ),
@@ -128,10 +128,15 @@ class CartItemsList extends StatelessWidget {
   }
 
   Widget _orderedProductBuilder(
-      int cartIndex, int productIndex, Product product) {
+      int cartIndex, int productIndex, Product product,int length) {
     int productPrice = product.price!;
+    int normalPrice = product.normalPrice!;
+    int discountPercent = product.priceDiscountPercent!;
     int productTotalPrice = (productPrice + product.selectedOptionAddPrice!) *
         product.quantity!.value;
+    int normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
+        product.quantity!.value;
+
     // Customize our ProductItemHorizontal view to match the design.
     Product tempProduct = Product(
       id: product.id,
@@ -146,39 +151,47 @@ class CartItemsList extends StatelessWidget {
       showQuantityPlusMinus: product.showQuantityPlusMinus,
       cartId: product.cartId,
     );
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        SizedBox(width: 10,),
-        isCart1Page
-            // Checkbox left of Product
-            ? Obx(
-                () => CustomCheckbox(
-                  isChecked: product.isCheckboxSelected!.value,
-                  cartIndex: cartIndex,
-                  productIndex: productIndex,
-                  onChanged: (bool value) {
-                    product.isCheckboxSelected!.toggle();
-                    ctr.updateTotalPaymentPrice();
-                  },
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(width: 10,),
+            isCart1Page
+                // Checkbox left of Product
+                ? Obx(
+                    () => CustomCheckbox(
+                      isChecked: product.isCheckboxSelected!.value,
+                      cartIndex: cartIndex,
+                      productIndex: productIndex,
+                      onChanged: (bool value) {
+                        product.isCheckboxSelected!.toggle();
+                        ctr.updateTotalPaymentPrice();
+                      },
+                    ),
+                  )
+                : SizedBox.shrink(),
+            isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
+            Expanded(
+              child: ProductItemHorizontal(
+                product: tempProduct,
+                normalPrice: normalPrice,
+                discountPercent: discountPercent,
+                price: productPrice,
+                totalPrice: productTotalPrice,
+                normalTotalPrice:normalTotalPrice,
+                quantityPlusMinusOnPressed: (value) =>
+                    ctr.quantityPlusMinusOnPressed(
+                  value: value,
+                  cartId: tempProduct.cartId!,
+                  qty: tempProduct.quantity!.value,
                 ),
-              )
-            : SizedBox.shrink(),
-        isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
-        Expanded(
-          child: ProductItemHorizontal(
-            product: tempProduct,
-            price: productPrice,
-            totalPrice: productTotalPrice,
-            quantityPlusMinusOnPressed: (value) =>
-                ctr.quantityPlusMinusOnPressed(
-              value: value,
-              cartId: tempProduct.cartId!,
-              qty: tempProduct.quantity!.value,
+              ),
             ),
-          ),
-        ),
 
+          ],
+        ),length-1 !=productIndex ?Divider(thickness: 1,color: MyColors.grey3,):Container(),
+        SizedBox(height: 5,)
       ],
     );
   }

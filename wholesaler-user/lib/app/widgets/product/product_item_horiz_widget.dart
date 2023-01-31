@@ -14,11 +14,14 @@ import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
+import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
+import 'package:wholesaler_user/app/widgets/dialog.dart';
 import 'package:wholesaler_user/app/widgets/product/number_widget.dart';
 import 'package:wholesaler_user/app/widgets/product/quantity_plus_minus_widget.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
+import 'package:wholesaler_user/app/widgets/two_buttons.dart';
 import '../../modules/product_detail/controller/product_detail_controller.dart';
 
 class ProductItemHorizontal extends StatelessWidget {
@@ -27,6 +30,9 @@ class ProductItemHorizontal extends StatelessWidget {
   Review? review;
   int? price;
   int? totalPrice;
+  int? normalPrice;
+  int? discountPercent;
+  int? normalTotalPrice;
   TextStyle? titleStyle;
   ProductInquiry? inquiry;
   Function(bool)? quantityPlusMinusOnPressed;
@@ -37,7 +43,10 @@ class ProductItemHorizontal extends StatelessWidget {
     this.productNumber,
     this.quantityPlusMinusOnPressed,
     this.price,
-    this.totalPrice
+    this.normalPrice,
+    this.discountPercent,
+    this.totalPrice,
+    this.normalTotalPrice
   });
 
   /// Use for Review List, Review Detail Pages
@@ -81,9 +90,11 @@ class ProductItemHorizontal extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
               ImageBuilder(),
+              SizedBox(height: 10,),
               QuantityPlusMinusBuilder(),
             ],),
           ),
+
           Expanded(flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +110,22 @@ class ProductItemHorizontal extends StatelessWidget {
                     Expanded(child: TitleBuilder())
                   ,
                   Container(),
-                  Icon(Icons.clear)
+                  InkWell(
+                    onTap: (){
+                        mDialog(
+                          title: '선택삭제',
+                          subtitle: '선택하셨던 상품을 삭제하시겠습니까?',
+                          twoButtons: TwoButtons(
+                            leftBtnText: '취소',
+                            rightBtnText: '삭제',
+                            lBtnOnPressed: () {
+                              Get.back();
+                            },
+                            rBtnOnPressed: () => Get.find<Cart1ShoppingBasketController>().callDeleteSelectedProductsAPI(isIcon:true,cartId: product.cartId),
+                          ),
+                        );
+                    },
+                      child: Icon(Icons.clear))
                 ],)
                 ,
                 // Option
@@ -115,15 +141,27 @@ class ProductItemHorizontal extends StatelessWidget {
                 Row(
                   children: [
                     Spacer(),
-                    Column(
+                    Column(crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          Utils.numberFormat(number: price!, suffix: '원'),
-                          style: MyTextStyles.f12,
+                        Row(
+                          children: [
+                            Text(discountPercent.toString()+"% ",style:TextStyle(color: MyColors.primary),),
+                            Text(
+                              Utils.numberFormat(number: normalTotalPrice!, suffix: '원'),
+                              style: TextStyle(
+                                color: MyColors.grey4,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'SpoqaHanSansNeo-Medium',
+                                fontSize: 12.0,
+                                decoration: TextDecoration.lineThrough
+                              )
+                            ),
+                          ],
                         ),
                         Text(
                           Utils.numberFormat(number: totalPrice!, suffix: '원'),
-                          style: MyTextStyles.f16,
+                          style: MyTextStyles.f18_cart,
                         )
                       ],
                     ),
@@ -144,7 +182,6 @@ class ProductItemHorizontal extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 10,)
         ],
       ),
     );
@@ -159,7 +196,7 @@ class ProductItemHorizontal extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: CachedNetworkImage(
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.fitWidth,
         imageUrl: product.imgUrl.contains(",")
             ? product.imgUrl.substring(0, product.imgUrl.indexOf(','))
             : product.imgUrl,

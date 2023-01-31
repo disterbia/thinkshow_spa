@@ -47,6 +47,7 @@ class CustomCheckbox extends StatelessWidget {
         child: Checkbox(
           checkColor: Colors.white,
           side: BorderSide(width: 1,color: Colors.grey),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           activeColor: MyColors.primary,
           value: isChecked,
           //shape: CircleBorder(),

@@ -1327,6 +1327,8 @@ class uApiProvider extends GetConnect {
             title: productJSON['product_name'],
             store: tempStore,
             price: productJSON['price'] as int,
+            normalPrice:productJSON['normal_price'] as int,
+            priceDiscountPercent:productJSON['price_discount_percent'] as int,
             selectedOptionId: productJSON['product_option_id'],
             selectedOptionAddPrice: productJSON['add_price'],
             OLD_option: productJSON['option_name'],

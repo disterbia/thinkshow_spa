@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wholesaler_user/app/Constants/colors.dart';
 
 class QuantityButton extends StatelessWidget {
   final IconData iconData;
@@ -11,8 +12,8 @@ class QuantityButton extends StatelessWidget {
     return Material(
         type: MaterialType.transparency, //Makes it usable on any background color, thanks @IanSmith
         child: Ink(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
+          decoration: BoxDecoration(color: MyColors.grey3,
+            border: Border.all(color: MyColors.grey3),
             borderRadius: leftBtnBorder,
           ),
           child: InkWell(
@@ -21,7 +22,7 @@ class QuantityButton extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               child: Icon(
                 iconData,
-                size: 12,
+                size: 10,
               ),
             ),
           ),
