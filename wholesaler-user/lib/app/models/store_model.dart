@@ -12,6 +12,8 @@ class Store {
   RxBool? isBookmarked;
   int? totalProducts;
   int? totalStoreLiked;
+  RxInt? favoriteCount;
+  RxList<dynamic>? topImagePath;
 
   Store({
     required this.id,
@@ -21,5 +23,7 @@ class Store {
     this.isBookmarked,
     this.totalProducts,
     this.totalStoreLiked,
+    this.favoriteCount,
+    this.topImagePath
   });
 }

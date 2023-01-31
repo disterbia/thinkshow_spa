@@ -9,7 +9,7 @@ import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_logi
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:wholesaler_user/app/constants/functions.dart';
 
-class Page2StoreListController extends GetxController {
+class Page2StoreListController2 extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
 
   RxList<Store> stores = <Store>[].obs;
@@ -56,6 +56,7 @@ class Page2StoreListController extends GetxController {
   }
 
   Future<void> starIconPressed(Store store) async {
+    isLoading.value=true;
     if (CacheProvider().getToken().isEmpty) {
       mFuctions.userLogout();
       return;
@@ -78,5 +79,6 @@ class Page2StoreListController extends GetxController {
         mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
     }
+    isLoading.value=false;
   }
 }

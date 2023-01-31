@@ -21,9 +21,9 @@ class Cart1ShoppingBasketView extends GetView {
   RxDouble expandableHeight=(Get.height/6).obs;
   RxBool isFirstDrag = true.obs;
   RxBool isExpanded = false.obs;
-  init() {
-    ctr.init();
-    ctr.SelectAllCheckboxOnChanged(false);
+  init() async{
+    await ctr.init();
+    await ctr.SelectAllCheckboxOnChanged(false);
   }
 
   @override

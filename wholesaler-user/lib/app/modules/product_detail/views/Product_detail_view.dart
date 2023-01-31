@@ -58,7 +58,7 @@ class ProductDetailView extends GetView {
                       SliverToBoxAdapter(
                         child: Column(
                           children: [
-                            MyVars.isUserProject() ? storeInfo() : Container(),
+                            //MyVars.isUserProject() ? storeInfo() : Container(),
                             _productImages(),
                             _titleRatingPrice(),
                             SizedBox(height: 15),

@@ -247,7 +247,6 @@ class ProductItemHorizontal extends StatelessWidget {
   }
 
   TitleBuilder() {
-    print(Get.width);
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Text(

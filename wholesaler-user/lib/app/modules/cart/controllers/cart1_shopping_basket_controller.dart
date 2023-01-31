@@ -24,7 +24,7 @@ class Cart1ShoppingBasketController extends GetxController {
   RxBool isLoading = false.obs;
 
   init() async {
-    isLoading.value = true;
+    Future.delayed(Duration.zero,()=> isLoading.value = true);
 
     if (CacheProvider().getToken().isNotEmpty) {
       // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -45,7 +45,7 @@ class Cart1ShoppingBasketController extends GetxController {
     } else {
       mFuctions.userLogout();
     }
-    isLoading.value = false;
+    Future.delayed(Duration.zero,()=> isLoading.value = false);
   }
 
   /// returns total number of products in the cart
@@ -169,6 +169,7 @@ class Cart1ShoppingBasketController extends GetxController {
         }
       }
     }
+
     cart1OrdersModel.orders = orders;
 
     Cart2CheckoutModel cart2checkoutModel =

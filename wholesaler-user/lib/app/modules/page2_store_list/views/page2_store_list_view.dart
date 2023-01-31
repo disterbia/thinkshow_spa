@@ -1,20 +1,71 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
+import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
+import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/views/tabs/tab1_ranking_view.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/views/tabs/tab2_bookmarks.dart';
+import 'package:wholesaler_user/app/modules/search/views/search_page_view.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
+import 'package:wholesaler_user/app/widgets/main_appbar.dart';
 import 'package:wholesaler_user/app/widgets/simple_tab_bar.dart';
 
 class Page2StoreListView extends GetView {
-  const Page2StoreListView();
+  Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.white,
-      appBar: CustomAppbar(isBackEnable: false, title: 'store'.tr),
+      appBar:_mainAppbar(),
       body: _body(),
+    );
+  }
+
+  AppBar _mainAppbar() {
+    return MainAppbar(
+      isBackEnable: false,
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.search,
+            color: MyColors.black,
+          ),
+          onPressed: () {
+            Get.to(() => SearchPageView());
+          },
+        ),
+        Obx(
+              () => ctr2.getNumberProducts() != 0
+              ? Badge(
+            badgeColor: MyColors.primary,
+            badgeContent: Text(
+              ctr2.getNumberProducts().toString(),
+              style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
+            ),
+            toAnimate: false,
+            position: BadgePosition.topEnd(top: 5, end: 5),
+            child: IconButton(
+                onPressed: () {
+                  Get.to(() => Cart1ShoppingBasketView());
+                },
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: MyColors.black,
+                )),
+          )
+              : IconButton(
+            onPressed: () {
+              Get.to(() => Cart1ShoppingBasketView());
+            },
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              color: MyColors.black,
+            ),
+          ),
+        )
+      ],
     );
   }
 

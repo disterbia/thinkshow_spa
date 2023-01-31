@@ -672,6 +672,7 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/store/ranking-list?type=total&offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
+    print(url);
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -686,6 +687,9 @@ class uApiProvider extends GetConnect {
               : null,
           isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
           rank: i + 1,
+            topImagePath: jsonList[i]['top_image_path'] != null
+                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs:null,
+          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
         );
         stores.add(tempStore);
       }
