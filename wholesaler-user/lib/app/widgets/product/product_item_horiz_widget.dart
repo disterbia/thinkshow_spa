@@ -86,16 +86,14 @@ class ProductItemHorizontal extends StatelessWidget {
       },
       child: Row(
         children: [
-          Expanded(flex: 1,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-              ImageBuilder(),
-              SizedBox(height: 10,),
-              QuantityPlusMinusBuilder(),
-            ],),
-          ),
-
-          Expanded(flex: 2,
+          Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            ImageBuilder(),
+            SizedBox(height: 10,),
+            QuantityPlusMinusBuilder(),
+          ],),
+          SizedBox(width: 10,),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,25 +105,28 @@ class ProductItemHorizontal extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: TitleBuilder())
+                    Expanded(flex:10,child: TitleBuilder())
+
                   ,
-                  Container(),
-                  InkWell(
-                    onTap: (){
-                        mDialog(
-                          title: '선택삭제',
-                          subtitle: '선택하셨던 상품을 삭제하시겠습니까?',
-                          twoButtons: TwoButtons(
-                            leftBtnText: '취소',
-                            rightBtnText: '삭제',
-                            lBtnOnPressed: () {
-                              Get.back();
-                            },
-                            rBtnOnPressed: () => Get.find<Cart1ShoppingBasketController>().callDeleteSelectedProductsAPI(isIcon:true,cartId: product.cartId),
-                          ),
-                        );
-                    },
-                      child: Icon(Icons.clear))
+                  Spacer(),
+                  Expanded(flex: 1,
+                    child: InkWell(
+                      onTap: (){
+                          mDialog(
+                            title: '선택삭제',
+                            subtitle: '선택하셨던 상품을 삭제하시겠습니까?',
+                            twoButtons: TwoButtons(
+                              leftBtnText: '취소',
+                              rightBtnText: '삭제',
+                              lBtnOnPressed: () {
+                                Get.back();
+                              },
+                              rBtnOnPressed: () => Get.find<Cart1ShoppingBasketController>().callDeleteSelectedProductsAPI(isIcon:true,cartId: product.cartId),
+                            ),
+                          );
+                      },
+                        child: Icon(Icons.clear)),
+                  )
                 ],)
                 ,
                 // Option
@@ -182,6 +183,8 @@ class ProductItemHorizontal extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(width: 10,)
+
         ],
       ),
     );
@@ -200,8 +203,8 @@ class ProductItemHorizontal extends StatelessWidget {
         imageUrl: product.imgUrl.contains(",")
             ? product.imgUrl.substring(0, product.imgUrl.indexOf(','))
             : product.imgUrl,
-        height: 75,
-        width: 75,
+        height: 70,
+        width: 70,
         // placeholder: (context, url) => CircularProgressIndicator(),
         errorWidget: (context, url, error) => Icon(Icons.error),
       ),
@@ -244,16 +247,13 @@ class ProductItemHorizontal extends StatelessWidget {
   }
 
   TitleBuilder() {
-    return Container(
-      width: 100,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Text(
-          product.title,
-          //overflow: TextOverflow.ellipsis,
-          style:
-              titleStyle ?? MyTextStyles.f14.copyWith(color: MyColors.black2),
-        ),
+    print(Get.width);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Text(
+        product.title,
+       // overflow: TextOverflow.ellipsis,
+        style:MyTextStyles.f14,
       ),
     );
   }

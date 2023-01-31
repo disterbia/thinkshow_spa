@@ -172,7 +172,7 @@ class CartItemsList extends StatelessWidget {
                   )
                 : SizedBox.shrink(),
             isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
-            Expanded(
+            Flexible(
               child: ProductItemHorizontal(
                 product: tempProduct,
                 normalPrice: normalPrice,

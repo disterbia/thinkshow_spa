@@ -22,7 +22,7 @@ class QuantityButton extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               child: Icon(
                 iconData,
-                size: 10,
+                size: 9,
               ),
             ),
           ),
