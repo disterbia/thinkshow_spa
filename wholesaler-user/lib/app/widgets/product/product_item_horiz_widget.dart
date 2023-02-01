@@ -29,10 +29,10 @@ class ProductItemHorizontal extends StatelessWidget {
   ProductNumber? productNumber;
   Review? review;
   int? price;
-  int? totalPrice;
-  int? normalPrice;
-  int? discountPercent;
-  int? normalTotalPrice;
+  // int? totalPrice;
+  // int? normalPrice;
+  // int? discountPercent;
+  // int? normalTotalPrice;
   TextStyle? titleStyle;
   ProductInquiry? inquiry;
   Function(bool)? quantityPlusMinusOnPressed;
@@ -43,10 +43,10 @@ class ProductItemHorizontal extends StatelessWidget {
     this.productNumber,
     this.quantityPlusMinusOnPressed,
     this.price,
-    this.normalPrice,
-    this.discountPercent,
-    this.totalPrice,
-    this.normalTotalPrice
+    // this.normalPrice,
+    // this.discountPercent,
+    // this.totalPrice,
+    // this.normalTotalPrice
   });
 
   /// Use for Review List, Review Detail Pages
@@ -64,6 +64,11 @@ class ProductItemHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int normalPrice = product.normalPrice!;
+    int productTotalPrice = (product.price??price! + product.selectedOptionAddPrice!) *
+        product.quantity!.value;
+    int normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
+        product.quantity!.value;
     return GestureDetector(
       onTap: () {
         if (inquiry != null) {
@@ -146,7 +151,7 @@ class ProductItemHorizontal extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(discountPercent.toString()+"% ",style:TextStyle(color: MyColors.primary),),
+                            Text(product.priceDiscountPercent.toString()+"% ",style:TextStyle(color: MyColors.primary),),
                             Text(
                               Utils.numberFormat(number: normalTotalPrice!, suffix: '원'),
                               style: TextStyle(
@@ -161,7 +166,7 @@ class ProductItemHorizontal extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          Utils.numberFormat(number: totalPrice!, suffix: '원'),
+                          Utils.numberFormat(number: productTotalPrice!, suffix: '원'),
                           style: MyTextStyles.f18_cart,
                         )
                       ],

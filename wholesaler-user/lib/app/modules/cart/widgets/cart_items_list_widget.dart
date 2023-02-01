@@ -130,17 +130,14 @@ class CartItemsList extends StatelessWidget {
   Widget _orderedProductBuilder(
       int cartIndex, int productIndex, Product product,int length) {
     int productPrice = product.price!;
-    int normalPrice = product.normalPrice!;
-    int discountPercent = product.priceDiscountPercent!;
-    int productTotalPrice = (productPrice + product.selectedOptionAddPrice!) *
-        product.quantity!.value;
-    int normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
-        product.quantity!.value;
+
 
     // Customize our ProductItemHorizontal view to match the design.
     Product tempProduct = Product(
       id: product.id,
       title: product.title,
+      normalPrice: product.normalPrice,
+      priceDiscountPercent: product.priceDiscountPercent,
       imgUrl: product.imgUrl,
       store: Store(id: product.store.id),
       selectedOptionAddPrice: product.selectedOptionAddPrice,
@@ -175,11 +172,11 @@ class CartItemsList extends StatelessWidget {
             Flexible(
               child: ProductItemHorizontal(
                 product: tempProduct,
-                normalPrice: normalPrice,
-                discountPercent: discountPercent,
+                // normalPrice: normalPrice,
+                // discountPercent: discountPercent,
                 price: productPrice,
-                totalPrice: productTotalPrice,
-                normalTotalPrice:normalTotalPrice,
+                // totalPrice: productTotalPrice,
+                // normalTotalPrice:normalTotalPrice,
                 quantityPlusMinusOnPressed: (value) =>
                     ctr.quantityPlusMinusOnPressed(
                   value: value,
