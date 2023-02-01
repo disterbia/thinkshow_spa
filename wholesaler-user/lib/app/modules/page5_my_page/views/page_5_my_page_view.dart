@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:launch_review/launch_review.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
@@ -125,7 +125,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
           }),
           // _settingOption('버전 정보 $version', () {}),
           _versionOption('버전 정보 $version', () {
-            // LaunchReview.launch();
+            LaunchReview.launch();
           }),
           Divider(
             color: MyColors.grey1,
