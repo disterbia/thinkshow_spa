@@ -39,6 +39,7 @@ dependencies:
 #  webview_flutter: ^3.0.4
   firebase_analytics: ^10.0.7
   pull_to_refresh: ^2.0.0
+  launch_review: ^3.0.1
   wholesaler_partner:
     path: ../wholesaler-partner
 

@@ -14,6 +14,7 @@ import 'package:wholesaler_user/app/models/cart1_orders_model/cart1_orders_model
 import 'package:wholesaler_user/app/models/cart_model.dart';
 import 'package:wholesaler_user/app/models/checkout_model/checkout_model.dart';
 import 'package:wholesaler_user/app/models/faq_page_model/faq_page_model.dart';
+import 'package:wholesaler_user/app/models/inquiries_cateroies_model.dart';
 import 'package:wholesaler_user/app/models/inquiries_model.dart';
 import 'package:wholesaler_user/app/models/inquiry_model.dart';
 import 'package:wholesaler_user/app/models/order_model.dart';
@@ -705,8 +706,9 @@ class uApiProvider extends GetConnect {
               : null,
           isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
           rank: i + 1,
-            topImagePath: jsonList[i]['top_image_path'] != null
-                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs:null,
+          topImagePath: jsonList[i]['top_image_path'] != null
+              ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+              : null,
           favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
         );
         stores.add(tempStore);
@@ -974,7 +976,6 @@ class uApiProvider extends GetConnect {
             price: product['product_price'],
             normalPrice: product['normal_price'],
             priceDiscountPercent: product['price_discount_percent'],
-
           );
 
           products.add(tempProduct);
@@ -1228,7 +1229,8 @@ class uApiProvider extends GetConnect {
           OLD_option: reviewJSON['product_info']['option_name'],
           price: reviewJSON['product_info']['price'],
           normalPrice: reviewJSON['product_info']['normal_price'],
-          priceDiscountPercent: reviewJSON['product_info']['price_discount_percent'],
+          priceDiscountPercent: reviewJSON['product_info']
+              ['price_discount_percent'],
           selectedOptionAddPrice: reviewJSON['product_info']['add_price'],
           imgHeight: 62,
           imgWidth: 50,
@@ -1337,6 +1339,27 @@ class uApiProvider extends GetConnect {
     }
   }
 
+  Future<dynamic> getInquiriesCategory() async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_USER_PATH + '/inquiry/category';
+    final response = await get(url, headers: headers);
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.bodyString!);
+
+      List<InquiriesCategoiesModel> tempInquiries = [];
+      for (var inquiry in json) {
+        InquiriesCategoiesModel tempInquiry =
+            InquiriesCategoiesModel.fromJson(inquiry);
+        tempInquiries.add(tempInquiry);
+      }
+      return tempInquiries;
+    } else {
+      log('error getUserInfo: ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+    // return Future.error(response.statusText!);
+  }
+
   /// Cart 1 : Shoppint basket
   Future<List<Cart>> getCart1ShoppintBasket() async {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/carts';
@@ -1363,8 +1386,8 @@ class uApiProvider extends GetConnect {
             title: productJSON['product_name'],
             store: tempStore,
             price: productJSON['price'] as int,
-            normalPrice:productJSON['normal_price'] as int,
-            priceDiscountPercent:productJSON['price_discount_percent'] as int,
+            normalPrice: productJSON['normal_price'] as int,
+            priceDiscountPercent: productJSON['price_discount_percent'] as int,
             selectedOptionId: productJSON['product_option_id'],
             selectedOptionAddPrice: productJSON['add_price'],
             OLD_option: productJSON['option_name'],
