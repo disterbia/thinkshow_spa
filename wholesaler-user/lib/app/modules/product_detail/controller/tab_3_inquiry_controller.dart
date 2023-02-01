@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
+import 'package:wholesaler_user/app/models/inquiries_cateroies_model.dart';
 import 'package:wholesaler_user/app/models/inquiry_model.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
@@ -14,15 +15,22 @@ class Tab3InquiryController extends GetxController {
   RxList<InquiryModel> inquires = <InquiryModel>[].obs;
   int productId = -1;
 
+  RxList<InquiriesCategoiesModel> inquiresCategoiesList =
+      <InquiriesCategoiesModel>[].obs;
   Future<void> init() async {
     productId = Get.arguments;
     callInquiryAPI();
+    // getInquiryCategory();
   }
 
   callInquiryAPI() async {
     inquires.value =
         await _apiProvider.getProductInquiries(productId: productId);
   }
+
+  // getInquiryCategory() async {
+  //   inquiresCategoiesList.value = await _apiProvider.getInquiriesCategory();
+  // }
 
   Future<void> submitInquiryPressed() async {
     int productId = productDetailController.productId;

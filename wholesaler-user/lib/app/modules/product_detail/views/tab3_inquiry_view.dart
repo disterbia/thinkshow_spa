@@ -32,7 +32,8 @@ class Tab3InquiryView extends GetView {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: ctr.inquires.length,
-              separatorBuilder: (BuildContext context, int index) => SizedBox(width: 14),
+              separatorBuilder: (BuildContext context, int index) =>
+                  SizedBox(width: 14),
               itemBuilder: (BuildContext context, int index) {
                 return _expandedQuestionBox(ctr.inquires[index]);
               },
@@ -52,7 +53,7 @@ class Tab3InquiryView extends GetView {
             Get.to(() => User_LoginPageView());
             return;
           }
-          SubmitInquiryDialog();
+          Get.to(() => InquityRegisterView());
         }),
         child: Text(
           '문의하기',
@@ -63,8 +64,10 @@ class Tab3InquiryView extends GetView {
   }
 
   Widget _expandedQuestionBox(InquiryModel inquiryModel) {
-    print('_expandedQuestionBox inquiryModel isSecret: ${inquiryModel.isSecret} isMine: ${inquiryModel.isMine} content: ${inquiryModel.content}');
-    return inquiryModel.isSecret! && !inquiryModel.isMine! || !inquiryModel.isAnswer!
+    print(
+        '_expandedQuestionBox inquiryModel isSecret: ${inquiryModel.isSecret} isMine: ${inquiryModel.isMine} content: ${inquiryModel.content}');
+    return inquiryModel.isSecret! && !inquiryModel.isMine! ||
+            !inquiryModel.isAnswer!
         // secret design
         ? _secretItemorAnsweredBuilder(inquiryModel)
         // Not Secret design
@@ -161,11 +164,14 @@ class Tab3InquiryView extends GetView {
       child: Container(
           height: 30,
           width: 30,
-          decoration: BoxDecoration(color: MyColors.orange1, borderRadius: BorderRadius.all(Radius.circular(2))),
+          decoration: BoxDecoration(
+              color: MyColors.orange1,
+              borderRadius: BorderRadius.all(Radius.circular(2))),
           child: Center(
             child: Text(
               'Q',
-              style: TextStyle(fontWeight: FontWeight.w800, color: MyColors.black),
+              style:
+                  TextStyle(fontWeight: FontWeight.w800, color: MyColors.black),
             ),
           )),
     );
@@ -191,11 +197,14 @@ class Tab3InquiryView extends GetView {
       child: Container(
           height: 30,
           width: 30,
-          decoration: BoxDecoration(color: MyColors.orange2, borderRadius: BorderRadius.all(Radius.circular(2))),
+          decoration: BoxDecoration(
+              color: MyColors.orange2,
+              borderRadius: BorderRadius.all(Radius.circular(2))),
           child: Center(
             child: Text(
               'A',
-              style: TextStyle(fontWeight: FontWeight.w800, color: MyColors.white),
+              style:
+                  TextStyle(fontWeight: FontWeight.w800, color: MyColors.white),
             ),
           )),
     );
@@ -284,7 +293,8 @@ class Tab3InquiryView extends GetView {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Container(width: double.infinity, height: 2, color: MyColors.grey1),
+          child: Container(
+              width: double.infinity, height: 2, color: MyColors.grey1),
         ),
       ],
     );

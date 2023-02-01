@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/change_number/view/change_number_view.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/Constants/functions.dart';
+import 'package:wholesaler_user/app/Constants/styles.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/modules/auth/register_privacy_terms/views/register_privacy_terms_view.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
@@ -23,10 +24,10 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   Page5MyPageController ctr = Get.put(Page5MyPageController());
 
   MyPageSettingsView();
-  int myTest = 0;
+  // int myTest = 0;
   @override
   Widget build(BuildContext context) {
-    myTest = 0;
+    // myTest = 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppbar(isBackEnable: true, title: 'My_page'.tr),
@@ -35,41 +36,53 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   }
 
   Widget _body() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-              onDoubleTap: () {
-                myTest++;
-                if (myTest == 20) {
-                  Get.to(() => MyPageDown());
-                }
-              },
-              child: _userId()),
-          Divider(thickness: 6, color: MyColors.grey3),
+          // GestureDetector(
+          //     onDoubleTap: () {
+          //       myTest++;
+          //       if (myTest == 20) {
+          //         Get.to(() => MyPageDown());
+          //       }
+          //     },
+          //     child: _userId()),
+          _userId(),
           _settingOption('회원정보수정', () {
             Get.put(SignupOrEditController()).isEditing.value = true;
             Get.to(() => User_SignUpView());
           }),
-          Divider(color: MyColors.grey3),
           _settingOption('휴대폰번호 변경 ', () {
             Get.to(() => ChangeNumberView());
           }),
-          Divider(color: MyColors.grey3),
           _settingOption(
               '비밀번호 변경', () => Get.to(() => MyPageUpdatePasswordView())),
           Divider(thickness: 6, color: MyColors.grey3),
-          _switch(),
-          Divider(thickness: 6, color: MyColors.grey3),
-          _settingOption(
-              'Terms'.tr,
-              () => Get.to(() => User_RegisterPrivacyTermsView(),
-                  arguments: PrivacyOrTerms.terms)),
-          Divider(color: MyColors.grey3),
-          _settingOption(
-              'privacy_policy'.tr,
-              () => Get.to(() => User_RegisterPrivacyTermsView(),
-                  arguments: PrivacyOrTerms.privacy)),
-          Divider(color: MyColors.grey3),
-          Spacer(),
+          _settingOption('로그아웃', () => mFuctions.userLogout()),
+          GestureDetector(
+            onTap: () {
+              mDialog(
+                title: '회원탈퇴를 원하십니까?',
+                subtitle: '모든 데이터가 삭제 됩니다.',
+                twoButtons: TwoButtons(
+                  leftBtnText: 'cancel'.tr,
+                  rightBtnText: 'delete_user_account'.tr,
+                  lBtnOnPressed: () {
+                    Get.back();
+                  },
+                  rBtnOnPressed: () => ctr.deleteuserAccountBtnPressed(),
+                ),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                '회원탈퇴',
+                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+              ),
+            ),
+          ),
+          // _switch(),
+          // Divider(thickness: 6, color: MyColors.grey3),
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 20),
           //   child: CustomButton(
@@ -82,33 +95,33 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           //     width: double.infinity,
           //   ),
           // ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomButton(
-              text: '회원탈퇴',
-              fontSize: 14,
-              textColor: MyColors.black1,
-              onPressed: () {
-                mDialog(
-                  title: '회원탈퇴를 원하십니까?',
-                  subtitle: '모든 데이터가 삭제 됩니다.',
-                  twoButtons: TwoButtons(
-                    leftBtnText: 'cancel'.tr,
-                    rightBtnText: 'delete_user_account'.tr,
-                    lBtnOnPressed: () {
-                      Get.back();
-                    },
-                    rBtnOnPressed: () => ctr.deleteuserAccountBtnPressed(),
-                  ),
-                );
-              },
-              backgroundColor: MyColors.grey1,
-              borderColor: Colors.transparent,
-              width: double.infinity,
-            ),
-          ),
-          SizedBox(height: 20),
+          // SizedBox(height: 10),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: CustomButton(
+          //     text: '회원탈퇴',
+          //     fontSize: 14,
+          //     textColor: MyColors.black1,
+          //     onPressed: () {
+          //       mDialog(
+          //         title: '회원탈퇴를 원하십니까?',
+          //         subtitle: '모든 데이터가 삭제 됩니다.',
+          //         twoButtons: TwoButtons(
+          //           leftBtnText: 'cancel'.tr,
+          //           rightBtnText: 'delete_user_account'.tr,
+          //           lBtnOnPressed: () {
+          //             Get.back();
+          //           },
+          //           rBtnOnPressed: () => ctr.deleteuserAccountBtnPressed(),
+          //         ),
+          //       );
+          //     },
+          //     backgroundColor: MyColors.grey1,
+          //     borderColor: Colors.transparent,
+          //     width: double.infinity,
+          //   ),
+          // ),
+          // SizedBox(height: 20),
         ],
       );
 
@@ -117,7 +130,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
       () => ListTile(
         title: Text('event_marketing_alarm'.tr),
         trailing: Switch(
-          activeColor: MyColors.primary,
+            activeColor: MyColors.primary,
             value: ctr.user.value.isAgreeNotificaiton!.value,
             onChanged: (value) => ctr.notificationToggled(value)),
       ),
@@ -125,9 +138,17 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
   }
 
   Widget _settingOption(String title, Function() onTap) {
-    return ListTile(
+    return InkWell(
       onTap: onTap,
-      title: Text(title),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        width: double.infinity,
+        child: Text(
+          title,
+          style: MyTextStyles.f16
+              .copyWith(color: MyColors.black3, fontWeight: FontWeight.w500),
+        ),
+      ),
     );
   }
 

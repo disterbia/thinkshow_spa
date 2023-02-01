@@ -46,4 +46,24 @@ class Page4Favorite_RecentlyViewedController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  getRecentlyProducts() async {
+    isLoading.value = true;
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+    } else {
+      products.clear();
+
+      List productIds = _cacheProvider.getAllRecentlyViewedProducts();
+      // print('productIds ${productIds}');
+      if (productIds.isNotEmpty) {
+        products.value = await _apiProvider.getRecentlySeenProducts(productIds);
+      }
+      isLoading.value = false;
+    }
+  }
 }

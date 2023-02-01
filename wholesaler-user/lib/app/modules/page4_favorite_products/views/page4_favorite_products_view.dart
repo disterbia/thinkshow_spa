@@ -15,18 +15,19 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 /// [Page4FavoriteProductsView] is same view for both 찜 페이지 and 최근 본상품
 class Page4FavoriteProductsView extends GetView {
-  Page4Favorite_RecentlyViewedController ctr = Get.put(Page4Favorite_RecentlyViewedController());
-    Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
+  Page4Favorite_RecentlyViewedController ctr =
+      Get.put(Page4Favorite_RecentlyViewedController());
+  Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
   Page4FavoriteProductsView({required bool isRecentSeenProduct}) {
     ctr.isRecentSeenProduct = isRecentSeenProduct;
   }
 
   onInit() {
-   // WidgetsBinding.instance.addPostFrameCallback((_) {
-      ctr.updateProducts();
-      ctr2.init();
-   // });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    ctr.updateProducts();
+    ctr2.init();
+    // });
   }
 
   @override
@@ -35,7 +36,7 @@ class Page4FavoriteProductsView extends GetView {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: _appbar(),
-      body: Obx(()=>ctr.isLoading.value?LoadingWidget(): _body()),
+      body: Obx(() => ctr.isLoading.value ? LoadingWidget() : _body()),
     );
   }
 
@@ -74,48 +75,51 @@ class Page4FavoriteProductsView extends GetView {
   }
 
   AppBar _appbar() {
-    return CustomAppbar(isBackEnable: ctr.isRecentSeenProduct, title: ctr.isRecentSeenProduct ? '최근 본 상품' : 'favorite_products'.tr, actions: [
-      IconButton(
-        icon: Icon(
-          Icons.search,
-          color: MyColors.black,
-        ),
-        onPressed: () {
-          Get.to(() => SearchPageView());
-        },
-      ),
-      Obx(
-        () => ctr2.getNumberProducts() != 0
-            ? Badge(
-                badgeColor: MyColors.primary,
-                badgeContent: Text(
-                  ctr2.getNumberProducts().toString(),
-                  style: TextStyle(
-                      color: MyColors.black,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold),
-                ),
-                toAnimate: false,
-                position: BadgePosition.topEnd(top: 5, end: 5),
-                child: IconButton(
+    return CustomAppbar(
+        isBackEnable: ctr.isRecentSeenProduct,
+        title: ctr.isRecentSeenProduct ? '최근 본 상품' : 'favorite_products'.tr,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: MyColors.black,
+            ),
+            onPressed: () {
+              Get.to(() => SearchPageView());
+            },
+          ),
+          Obx(
+            () => ctr2.getNumberProducts() != 0
+                ? Badge(
+                    badgeColor: MyColors.primary,
+                    badgeContent: Text(
+                      ctr2.getNumberProducts().toString(),
+                      style: TextStyle(
+                          color: MyColors.black,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    toAnimate: false,
+                    position: BadgePosition.topEnd(top: 5, end: 5),
+                    child: IconButton(
+                        onPressed: () {
+                          Get.to(() => Cart1ShoppingBasketView());
+                        },
+                        icon: Icon(
+                          Icons.shopping_cart_outlined,
+                          color: MyColors.black,
+                        )),
+                  )
+                : IconButton(
                     onPressed: () {
                       Get.to(() => Cart1ShoppingBasketView());
                     },
                     icon: Icon(
                       Icons.shopping_cart_outlined,
                       color: MyColors.black,
-                    )),
-              )
-            : IconButton(
-                onPressed: () {
-                  Get.to(() => Cart1ShoppingBasketView());
-                },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: MyColors.black,
-                ),
-              ),
-      )
-    ]);
+                    ),
+                  ),
+          )
+        ]);
   }
 }
