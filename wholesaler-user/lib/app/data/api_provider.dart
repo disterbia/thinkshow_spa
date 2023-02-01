@@ -1116,6 +1116,7 @@ class uApiProvider extends GetConnect {
             : null,
         isBookmarked:
             json['store_info']['is_favorite'] == true ? true.obs : false.obs,
+        favoriteCount: (json['store_info']['favorite_count'] as int).obs,
       );
 
       // product images

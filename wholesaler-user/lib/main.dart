@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_user/app/constants/languages.dart';
 import 'package:wholesaler_user/app/constants/variables.dart';
+import 'package:wholesaler_user/app/data/dynamic_link.dart';
 import 'package:wholesaler_user/app/data/firebase_service.dart';
 import 'package:wholesaler_user/app/data/notification_service.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
@@ -24,9 +25,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   // await GetStorage.init();
   //await MyVars.initializeVariables();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+
+
 
   //print("Handling a background message: ${message.messageId}");
 }
@@ -34,6 +37,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await DynamicLink().setup();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   await MyVars.initializeVariables();

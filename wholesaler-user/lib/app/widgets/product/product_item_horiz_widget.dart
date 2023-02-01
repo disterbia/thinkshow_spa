@@ -65,10 +65,15 @@ class ProductItemHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int normalPrice = product.normalPrice!;
-    int productTotalPrice = (product.price??price! + product.selectedOptionAddPrice!) *
-        product.quantity!.value;
-    int normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
-        product.quantity!.value;
+    int productTotalPrice=0;
+    int normalTotalPrice=0;
+    if(product.quantity!=null){
+       productTotalPrice = (product.price??price! + product.selectedOptionAddPrice!) *
+          product.quantity!.value;
+       normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
+          product.quantity!.value;
+    }
+
     return GestureDetector(
       onTap: () {
         if (inquiry != null) {
@@ -86,6 +91,7 @@ class ProductItemHorizontal extends StatelessWidget {
         }
         if (product.id != -1) {
           //print("${product.id}asdfasdf");
+          Get.delete<ProductDetailController>();
           Get.to(() => ProductDetailView(), arguments: product.id);
         }
       },

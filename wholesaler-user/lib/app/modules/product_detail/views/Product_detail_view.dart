@@ -2,16 +2,20 @@
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
+import 'package:wholesaler_user/app/data/dynamic_link.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
 import 'package:wholesaler_user/app/modules/page2_store_detail/view/store_detail_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
+import 'package:wholesaler_user/app/modules/product_detail/controller/tab_2_review_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/carousel_slider_widget.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/select_option_bottom_sheet_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/tab1_detail_info_view.dart';
@@ -25,8 +29,11 @@ import 'package:wholesaler_user/app/widgets/custom_button.dart';
 class ProductDetailView extends GetView {
   ProductDetailController ctr = Get.put(ProductDetailController());
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
+  Tab2ReviewProductDetailController ctr3 =
+      Get.put(Tab2ReviewProductDetailController());
 
   ProductDetailView();
+
   List<String> tabTitles = ['상세정보', '리뷰', '문의'];
 
   init() {
@@ -62,7 +69,7 @@ class ProductDetailView extends GetView {
                             _productImages(),
                             storeInfo(),
                             Divider(),
-                            _titleRatingPrice(),
+                            _titleRatingPrice(context),
                             SizedBox(height: 15),
                           ],
                         ),
@@ -95,6 +102,12 @@ class ProductDetailView extends GetView {
   }
 
   Widget storeInfo() {
+    int favoriteCount = ctr.product.value.store.favoriteCount!.value;
+    double temp = double.parse(favoriteCount.toString());
+    String result = favoriteCount.toString();
+    if (temp > 999) {
+      result = (temp / 1000).toStringAsFixed(1) + "k";
+    }
     return GestureDetector(
       onTap: () {
         Get.to(() => StoreDetailView(storeId: ctr.product.value.store.id));
@@ -135,17 +148,35 @@ class ProductDetailView extends GetView {
           ),
           Obx(
             () => ctr.product.value.store.isBookmarked != null
-                ? IconButton(
-                    onPressed: () => ctr.storeBookmarkPressed(),
-                    icon: ctr.product.value.store.isBookmarked!.isTrue
-                        ? Icon(
-                            Icons.star,
-                            color: MyColors.primary,
-                          )
-                        : Icon(Icons.star_border, color: MyColors.primary),
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Column(
+                      children: [
+                        ctr.product.value.store.isBookmarked!.isTrue
+                            ? InkWell(
+                                onTap: () => ctr.storeBookmarkPressed(),
+                                child: Icon(
+                                  Icons.star,
+                                  color: MyColors.primary,
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () => ctr.storeBookmarkPressed(),
+                                child: Icon(Icons.star_border,
+                                    color: MyColors.primary)),
+                        Text(
+                          result,
+                          style: TextStyle(
+                            color: MyColors.grey4,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 : SizedBox.shrink(),
-          )
+          ),
         ],
       ),
     );
@@ -162,49 +193,97 @@ class ProductDetailView extends GetView {
     );
   }
 
-  Widget _titleRatingPrice() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _titleRatingPrice(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Obx(
-                () => Text(
+              child: Text(
                   ctr.product.value.title,
                   style: MyTextStyles.f16,
                 ),
-              ),
             ),
-            Obx(
-              () => ctr.product.value.totalRating != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Row(
-                        children: [
-                          Icon(Icons.star, color: MyColors.primary),
-                          Text(
-                            ctr.product.value.totalRating!.value.toString(),
-                            textAlign: TextAlign.start,
-                          )
-                        ],
-                      ),
-                    )
-                  : SizedBox.shrink(),
-            ),
+            Spacer(),
+            InkWell(onTap: () async{
+              print("-=-=-=/product_detail_view?id=${ctr.productId.toString()}");
+              Share.share(
+                await DynamicLink().getShortLink(
+                 ctr.productId.toString(),
+                ),
+              );
+            },child: Icon(Icons.share_outlined))
           ],
         ),
-        Obx(
-          () => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              Utils.numberFormat(
-                  number: ctr.product.value.price ?? 0, suffix: '원'),
-              style: MyTextStyles.f18_bold,
+         Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: ctr.product.value.totalRating==null?Text("리뷰없음"):RatingBar.builder(
+                          glow: false,
+                          itemSize: 10,
+                          ignoreGestures: true,
+                          initialRating:
+                              ctr.product.value.totalRating!.value,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          itemCount: 5,
+                          itemPadding:
+                              EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                      ),
+                      ctr.product.value.totalRating==null?Container():InkWell(
+                            onTap: () =>
+                                DefaultTabController.of(context)!.index = 1,
+                            child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
+                    ],
+                  ),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.star, color: MyColors.primary),
+                  //     Text(
+                  //       ctr.product.value.totalRating!.value.toString(),
+                  //       textAlign: TextAlign.start,
+                  //     )
+                  //   ],
+                  // ),
+                ),
+       Row(
+         children: [
+           Text("띵 할인가"),
+           Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  Utils.numberFormat(
+                      number: ctr.product.value.normalPrice ?? 0, suffix: '원'),
+                  style: MyTextStyles.f18_bold,
+                ),
+              ),
+         ],
+       ),
+        Row(
+          children: [
+            Text(Utils.numberFormat(
+                number: ctr.product.value.priceDiscountPercent ?? 0, suffix: '%')),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                Utils.numberFormat(
+                    number: ctr.product.value.price ?? 0, suffix: '원'),
+                style: MyTextStyles.f18_bold,
+              ),
             ),
-          ),
+          ],
         ),
       ],
     );
@@ -281,34 +360,37 @@ class ProductDetailView extends GetView {
                       },
                     ),
                     Obx(
-          () => ctr2.getNumberProducts() != 0
-              ? Badge(
-                  badgeColor: MyColors.primary,
-                  badgeContent: Text(
-                    ctr2.getNumberProducts().toString(),
-                    style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                  toAnimate: false,
-                  position: BadgePosition.topEnd(top: 5, end: 5),
-                  child: IconButton(
-                      onPressed: () {
-                        Get.to(() => Cart1ShoppingBasketView());
-                      },
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: MyColors.black,
-                      )),
-                )
-              : IconButton(
-                  onPressed: () {
-                    Get.to(() => Cart1ShoppingBasketView());
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart_outlined,
-                    color: MyColors.black,
-                  ),
-                ),
-        ),
+                      () => ctr2.getNumberProducts() != 0
+                          ? Badge(
+                              badgeColor: MyColors.primary,
+                              badgeContent: Text(
+                                ctr2.getNumberProducts().toString(),
+                                style: TextStyle(
+                                    color: MyColors.black,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              toAnimate: false,
+                              position: BadgePosition.topEnd(top: 5, end: 5),
+                              child: IconButton(
+                                  onPressed: () {
+                                    Get.to(() => Cart1ShoppingBasketView());
+                                  },
+                                  icon: Icon(
+                                    Icons.shopping_cart_outlined,
+                                    color: MyColors.black,
+                                  )),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                Get.to(() => Cart1ShoppingBasketView());
+                              },
+                              icon: Icon(
+                                Icons.shopping_cart_outlined,
+                                color: MyColors.black,
+                              ),
+                            ),
+                    ),
                   ],
                 )
               : SizedBox.shrink(),
@@ -317,7 +399,6 @@ class ProductDetailView extends GetView {
 
   Widget _tabs() {
     return TabBar(
-      
       indicatorColor: MyColors.primary,
       labelColor: Colors.black,
       isScrollable: false,
