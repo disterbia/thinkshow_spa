@@ -15,36 +15,59 @@ class TopUserIDUserNameSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // User ID
-            Text(
-              user.userID,
-              style: MyTextStyles.f16.copyWith(color: MyColors.black3),
-            ),
-            SizedBox(height: 5),
-            // User Name
-            Text(
-              user.userName,
-              style: MyTextStyles.f12.copyWith(color: MyColors.black2),
-            )
-          ],
-        ),
-        Spacer(),
-        // Settings Icon
-        showSettingsIcon
-            ? IconButton(
-                onPressed: () {
-                  Get.to(() => MyPageSettingsView());
-                },
-                icon: Image.asset('assets/icons/ic_settings.png', height: 20,),
-              )
-            : SizedBox.shrink(),
-      ],
+    return InkWell(
+      onTap: () {
+        Get.to(() => MyPageSettingsView());
+      },
+      child: Row(
+        mainAxisAlignment: showSettingsIcon
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: showSettingsIcon
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
+            children: [
+              // User ID
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                user.userName,
+                style: MyTextStyles.f18_bold.copyWith(
+                    color: MyColors.black2, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 5),
+
+              Row(
+                children: [
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    user.userID,
+                    style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+                  ),
+                ],
+              ),
+              // User Name
+
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+          // Spacer(),
+          // Settings Icon
+          showSettingsIcon
+              ? Image.asset(
+                  'assets/icons/ico_arrow02.png',
+                  height: 25,
+                )
+              : SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }

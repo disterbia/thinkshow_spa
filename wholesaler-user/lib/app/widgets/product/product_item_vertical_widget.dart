@@ -28,11 +28,13 @@ class ProductItemVertical extends StatelessWidget {
   final ProductNumber? productNumber;
   Function(bool?)? onCheckboxChanged;
   bool? isFavorite;
+  bool? onlyPhoto;
   ProductItemVertical({
     required this.product,
     this.productNumber,
     this.onCheckboxChanged,
     this.isFavorite,
+    this.onlyPhoto = false,
   });
 
   @override
@@ -67,27 +69,29 @@ class ProductItemVertical extends StatelessWidget {
             ),
           ),
           // The reason for using this column is to align children to the left.
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 4),
-              // Store Name
-              StoreNameBuilder(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Title
-                  TitleBuilder(),
-                  Spacer(),
-                  // Top 10 Text
-                  Top10TextBuilder(),
-                ],
-              ),
-              SizedBox(height: 6),
-              // Price
-              PriceBuilder(),
-            ],
-          ),
+          !onlyPhoto!
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 4),
+                    // Store Name
+                    StoreNameBuilder(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Title
+                        TitleBuilder(),
+                        Spacer(),
+                        // Top 10 Text
+                        Top10TextBuilder(),
+                      ],
+                    ),
+                    SizedBox(height: 6),
+                    // Price
+                    PriceBuilder(),
+                  ],
+                )
+              : SizedBox.shrink(),
         ],
       ),
     );
@@ -109,7 +113,7 @@ class ProductItemVertical extends StatelessWidget {
     return Column(
       children: [
         // we need this to ensure the image is located south of the bell icon.
-        SizedBox(height: 18),
+        // SizedBox(height: 18),
         product.hasBellIconAndBorder != null
             ? Obx(
                 () => Container(
