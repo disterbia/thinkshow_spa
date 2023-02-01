@@ -61,6 +61,8 @@ class Cart2PaymentController extends GetxController {
           OLD_option: item.productOptionName,
           isCheckboxSelected: true.obs,
           price: item.price,
+          normalPrice: item.normalPrice,
+          priceDiscountPercent: item.discountPercent,
           selectedOptionAddPrice: item.addPrice,
         );
         tempProducts.add(tempProduct);

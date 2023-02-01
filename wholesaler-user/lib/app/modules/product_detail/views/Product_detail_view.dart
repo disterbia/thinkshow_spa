@@ -60,6 +60,8 @@ class ProductDetailView extends GetView {
                           children: [
                             //MyVars.isUserProject() ? storeInfo() : Container(),
                             _productImages(),
+                            storeInfo(),
+                            Divider(),
                             _titleRatingPrice(),
                             SizedBox(height: 15),
                           ],

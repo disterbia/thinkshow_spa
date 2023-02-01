@@ -1755,6 +1755,7 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
+      print("$json");
       return Cart2CheckoutModel.fromJson(json);
     } else {
       log('error postOrderCheckout: ${response.bodyString}');
