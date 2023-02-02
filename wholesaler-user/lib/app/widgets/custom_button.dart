@@ -59,7 +59,7 @@ class CustomButton extends StatelessWidget {
             : () {
                 onPressed!();
               },
-        child: child ?? Text(text.toString()),
+        child: child ?? Text(text.toString(),style: TextStyle(color: textColor),),
         style: style,
       ),
     );

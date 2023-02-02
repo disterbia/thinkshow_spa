@@ -11,7 +11,7 @@ class ImagesCarouselSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = Get.height * 0.6;
+    double height = Get.height * 0.5;
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
@@ -27,7 +27,7 @@ class ImagesCarouselSlider extends StatelessWidget {
                 }),
             items: [
               for (String img in ctr.product.value.images!)
-                CachedNetworkImage(fit: BoxFit.fitHeight,
+                CachedNetworkImage(fit: BoxFit.fill,width: Get.width,
                   imageUrl: img,
                   placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),

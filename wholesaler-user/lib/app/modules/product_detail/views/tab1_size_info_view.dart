@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -13,15 +12,13 @@ import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_1_detail_info_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/size_table_widget.dart';
-import 'package:wholesaler_user/app/widgets/custom_button.dart';
 import 'package:wholesaler_user/app/widgets/webview_builder_flex_height.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 
-class Tab1DetailInfo extends GetView {
+class Tab4SizeInfo extends GetView {
   Tab1DetailInfoController ctr = Tab1DetailInfoController();
   ProductDetailController productDetailCtr = Get.put(ProductDetailController());
   AP_Part3Controller addProduct3Ctr = Get.put(AP_Part3Controller());
-  RxBool isMore = false.obs;
 
   // Tab1DetailInfo();
 
@@ -47,190 +44,155 @@ class Tab1DetailInfo extends GetView {
 
                 // ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Stack(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(
-                        () => Container(
-                          height: productDetailCtr
-                                      .product.value.imagesColor!.length >= 2 ? isMore.value
-                                  ? null
-                                  : Get.height * 1.2
-                              : null,
-                          child: ListView.builder(itemCount:productDetailCtr
-                              .product.value.imagesColor!.length ,
-                            itemBuilder: (context, index) {
-                              QuillEditor(
-                                controller: productDetailCtr.quillController,
-                                scrollController: ScrollController(),
-                                scrollable: true,
-                                focusNode: FocusNode(),
-                                autoFocus: true,
-                                readOnly: true,
-                                expands: false,
-                                padding: EdgeInsets.all(15),
-                                showCursor: false,
-                                enableSelectionToolbar: false,
-                                enableInteractiveSelection: false,
-                              );
-                              return Container(
-                                height: Get.height * 0.6,
-                                child: ClipRRect(borderRadius: !isMore.value && index==1 ?
-                                BorderRadius.only(bottomRight: Radius.circular(8),bottomLeft:Radius.circular(8) ):
-                                BorderRadius.all( Radius.zero),
-                                  child: CachedNetworkImage(
-                                    imageUrl: productDetailCtr
-                                        .product.value.imagesColor![index],
-                                    fit: BoxFit.fill,
-                                    placeholder: (context, url) {
-                                      return Container(
-                                        height: 300,
-                                        child: Center(
-                                            child: CircularProgressIndicator()),
-                                      );
-                                    },
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                ),
-                              );
-
-                            },
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-
-
-                          ),
-                          // ListView(
-                          //   physics: NeverScrollableScrollPhysics(),
-                          //   shrinkWrap: true,
-                          //   children: [
-                          //     for (String imagesColor in productDetailCtr
-                          //         .product.value.imagesColor!) ...[
-                          //       Container(
-                          //         height: Get.height * 0.6,
-                          //         child: CachedNetworkImage(
-                          //           imageUrl: imagesColor,
-                          //           fit: BoxFit.fill,
-                          //           placeholder: (context, url) {
-                          //             return Container(
-                          //               height: 300,
-                          //               child: Center(
-                          //                   child: CircularProgressIndicator()),
-                          //             );
-                          //           },
-                          //           errorWidget: (context, url, error) =>
-                          //               Icon(Icons.error),
-                          //         ),
-                          //       )
-                          //     ],
-                          //     QuillEditor(
-                          //       controller: productDetailCtr.quillController,
-                          //       scrollController: ScrollController(),
-                          //       scrollable: true,
-                          //       focusNode: FocusNode(),
-                          //       autoFocus: true,
-                          //       readOnly: true,
-                          //       expands: false,
-                          //       padding: EdgeInsets.all(15),
-                          //       showCursor: false,
-                          //       enableSelectionToolbar: false,
-                          //       enableInteractiveSelection: false,
-                          //     ),
-                          //   ],
-                          // ),
-                        ),
+                      SizedBox(height: 10),
+                      // Size Table
+                      SizedBox(
+                        width: double.infinity,
+                        child: Obx(() =>
+                            productDetailCtr.product.value.sizes != null
+                                ? SizeTableWidget()
+                                : Container()),
                       ),
+                      // Color
+                      // SizedBox(height: 20),
+                      Text(
+                        '색상',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
                       Obx(
-                        () =>  productDetailCtr
-                            .product.value.imagesColor!.length >= 2 ? isMore.value
-                            ? Container()
-                            : Positioned(
-                            bottom: 0,right: 0,left: 0,
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                          colors: [
-                                        Colors.white.withOpacity(1),
-                                        Colors.white.withOpacity(0)
-                                      ],
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter)),
-                                  height: 80,
-                                  width: Get.width,
-                                ),
-                               Container(
-                                            height: 60,
-                                            child: CustomButton(
-                                                width: Get.width,
-                                                onPressed: () {
-                                                  isMore.value = true;
-                                                },
-                                                backgroundColor: Colors.black,
-                                                borderColor: Colors.black,
-                                                child:Row(mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "상품정보 더보기",
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                    Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,)
-                                                  ],
-                                                )),
-                                          )
-                                    ,
-                              ]
-                            )): Container(),
-                      )
+                        () => productDetailCtr.product.value.colors != null
+                            ? colorsBuilder()
+                            : Container(),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        '소재',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => productDetailCtr.product.value.materials != null
+                            ? materialsBuilder()
+                            : Container(),
+                      ),
+                      SizedBox(height: 20),
+                      // 두께감
+                      Text(
+                        '두께감',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
+                            ? Row(
+                                children: ThickThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.thickness!),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                      SizedBox(height: 20),
+                      // 비침
+                      Text(
+                        '비침',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
+                            ? Row(
+                                children: SeethroughThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.seeThrough!),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                      // 신축성
+                      SizedBox(height: 20),
+                      Text(
+                        '신축성',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
+                            ? Row(
+                                children: FlexibilityThreeButtonBuilder(
+                                    selected: productDetailCtr.product.value
+                                        .clothDetailSpec!.flexibility!),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                      // 안감
+                      SizedBox(height: 20),
+                      Text(
+                        '안감',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => productDetailCtr.product.value.clothDetailSpec !=
+                                null
+                            ? Row(
+                                children: LiningTwoButtonBuilder(
+                                    isSelected: productDetailCtr.product.value
+                                        .clothDetailSpec!.isLining!),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                      // 의류 관리 안내
+                      SizedBox(height: 20),
+                      Text(
+                        '의류 관리 안내',
+                        style:
+                            MyTextStyles.f16.copyWith(color: MyColors.black2),
+                      ),
+                      SizedBox(height: 10),
+                      // Cloth Washing tips
+                      Obx(() =>
+                          productDetailCtr.product.value.clothCaringGuide !=
+                                  null
+                              ? clothWashTipsGrid()
+                              : SizedBox.shrink()),
+                      // 모델정보
+                      Obx(
+                        () => productDetailCtr.product.value.productModelInfo !=
+                                    null &&
+                                productDetailCtr.product.value.productModelInfo!
+                                        .modelSize !=
+                                    null
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    '모델정보',
+                                    style: MyTextStyles.f16
+                                        .copyWith(color: MyColors.black2),
+                                  ),
+                                  SizedBox(height: 10),
+                                  modelInfo(),
+                                ],
+                              )
+                            : SizedBox.shrink(),
+                      ),
+
                     ],
                   ),
-                ),
-                Obx(
-                ()=>SizedBox(height: isMore.value?0:30,)),
-                Divider(
-                  thickness: 10,
-                  color: MyColors.grey3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "이 상품과 비슷한 상품",
-                    style: MyTextStyles.f18_bold,
-                  ),
-                ),
-                Divider(
-                  thickness: 10,
-                  color: MyColors.grey3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "스토어에서 인기 있는 상품",
-                    style: MyTextStyles.f18_bold,
-                  ),
-                ),
-                // 반품교환정보
-                SizedBox(height: 50),
-                Text(
-                  '띵쇼 교환 및 반품 안내',
-                  style: MyTextStyles.f16.copyWith(color: MyColors.black2),
-                ),
-                SizedBox(height: 10),
-                Obx(
-                  () => productDetailCtr.product.value.return_exchange_info !=
-                          null
-                      ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            productDetailCtr
-                                .product.value.return_exchange_info!,
-                            style: TextStyle(color: MyColors.grey4),
-                          ),
-                        )
-                      : SizedBox.shrink(),
                 ),
               ],
             ),
@@ -252,7 +214,8 @@ class Tab1DetailInfo extends GetView {
         child: Center(
             child: Text(
           text,
-          style: TextStyle(color: isSelected ? MyColors.black : MyColors.black),
+          style:
+              TextStyle(color: isSelected ? MyColors.black : MyColors.black),
         )),
       ),
     );

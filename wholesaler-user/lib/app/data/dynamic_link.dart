@@ -3,31 +3,28 @@ import 'package:get/get.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class DynamicLink {
-  Future<bool> setup() async {
-    bool isExistDynamicLink = await _getInitialDynamicLink();
+  Future<void> setup() async {
+    await _getInitialDynamicLink();
     _addListener();
-
-    return isExistDynamicLink;
   }
 
-  Future<bool> _getInitialDynamicLink() async {
-    final String? deepLink = await getInitialLink();
+  Future<void> _getInitialDynamicLink() async {
+    String? deepLink;
+    Future.delayed(Duration(seconds: 2),()async{
+      deepLink = await getInitialLink();
+      if (deepLink != null) {
+        PendingDynamicLinkData? dynamicLinkData = await FirebaseDynamicLinks
+            .instance
+            .getDynamicLink(Uri.parse(deepLink!));
 
-    if (deepLink != null) {
-      PendingDynamicLinkData? dynamicLinkData = await FirebaseDynamicLinks
-          .instance
-          .getDynamicLink(Uri.parse(deepLink));
-
-      if (dynamicLinkData != null) {
-        _redirectScreen(dynamicLinkData);
-
-        return true;
+        if (dynamicLinkData != null) {
+          _redirectScreen(dynamicLinkData);
+        }
       }
-    }
-
-    return false;
+    });
   }
 
   void _addListener() {
@@ -36,18 +33,16 @@ class DynamicLink {
         ) {
       _redirectScreen(dynamicLinkData);
     }).onError((error) {
-
+      mSnackbar(message: "!@!@!@$error");
     });
   }
 
   void _redirectScreen(PendingDynamicLinkData dynamicLinkData) {
     String id = dynamicLinkData.link.queryParameters['id']!;
-    print("111111111$id");
     if (dynamicLinkData.link.queryParameters.containsKey('id')) {
       String id = dynamicLinkData.link.queryParameters['id']!;
-      print("111111111$id");
       Get.delete<ProductDetailController>();
-      Get.to(()=>ProductDetailView(),arguments: int.parse(id));
+      Future.delayed(Duration.zero,()=>Get.to(()=>ProductDetailView(),arguments: int.parse(id)));
     }
   }
 

@@ -19,6 +19,7 @@ import 'package:wholesaler_user/app/modules/product_detail/controller/tab_2_revi
 import 'package:wholesaler_user/app/modules/product_detail/views/carousel_slider_widget.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/select_option_bottom_sheet_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/tab1_detail_info_view.dart';
+import 'package:wholesaler_user/app/modules/product_detail/views/tab1_size_info_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/tab2_review_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/tab3_inquiry_view.dart';
 import 'package:wholesaler_user/app/modules/search/views/search_page_view.dart';
@@ -34,7 +35,7 @@ class ProductDetailView extends GetView {
 
   ProductDetailView();
 
-  List<String> tabTitles = ['상세정보', '리뷰', '문의'];
+  List<String> tabTitles = ['상세정보', '리뷰', "사이즈", '문의'];
 
   init() {
     //print("ddddddqqqqqq");
@@ -96,6 +97,7 @@ class ProductDetailView extends GetView {
       children: [
         Tab1DetailInfo(),
         Tab2ReviewView(),
+        Tab4SizeInfo(),
         Tab3InquiryView(),
       ],
     );
@@ -128,7 +130,7 @@ class ProductDetailView extends GetView {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(ctr.product.value.store.name!)
+                          Text(ctr.product.value.store.name!,style: MyTextStyles.f18_bold,)
                         ],
                       )
                     : Row(
@@ -141,7 +143,7 @@ class ProductDetailView extends GetView {
                             width: 10,
                           ),
                           Obx(() => ctr.product.value.store.name != null
-                              ? Text(ctr.product.value.store.name!)
+                              ? Text(ctr.product.value.store.name!,style: MyTextStyles.f14_bold,)
                               : SizedBox.shrink()),
                         ],
                       )),
@@ -163,7 +165,7 @@ class ProductDetailView extends GetView {
                             : InkWell(
                                 onTap: () => ctr.storeBookmarkPressed(),
                                 child: Icon(Icons.star_border,
-                                    color: MyColors.primary)),
+                                    color: MyColors.grey4)),
                         Text(
                           result,
                           style: TextStyle(
@@ -199,22 +201,25 @@ class ProductDetailView extends GetView {
       children: [
         Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  ctr.product.value.title,
-                  style: MyTextStyles.f16,
-                ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                    ctr.product.value.title+"ㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ",
+                    style: MyTextStyles.f18_bold,
+                  ),
+              ),
             ),
-            Spacer(),
             InkWell(onTap: () async{
-              print("-=-=-=/product_detail_view?id=${ctr.productId.toString()}");
               Share.share(
                 await DynamicLink().getShortLink(
                  ctr.productId.toString(),
                 ),
               );
-            },child: Icon(Icons.share_outlined))
+            },child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(Icons.share_outlined,color: MyColors.grey4,),
+            ))
           ],
         ),
          Padding(
@@ -222,9 +227,8 @@ class ProductDetailView extends GetView {
                   child: Row(
                     children: [
                       Container(
-                        child: ctr.product.value.totalRating==null?Text("리뷰없음"):RatingBar.builder(
-                          glow: false,
-                          itemSize: 10,
+                        child: ctr.product.value.totalRating==null?Container():RatingBar.builder(
+                          itemSize: 15,
                           ignoreGestures: true,
                           initialRating:
                               ctr.product.value.totalRating!.value,
@@ -258,33 +262,61 @@ class ProductDetailView extends GetView {
                   //   ],
                   // ),
                 ),
-       Row(
-         children: [
-           Text("띵 할인가"),
-           Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  Utils.numberFormat(
-                      number: ctr.product.value.normalPrice ?? 0, suffix: '원'),
-                  style: MyTextStyles.f18_bold,
-                ),
-              ),
-         ],
+       Padding(
+         padding: const EdgeInsets.only(top: 20.0,left: 10),
+         child: Row(
+           children: [
+             Text("띵 할인가 ",style: TextStyle(fontSize: 15,color: Colors.redAccent),),
+             Text(
+               Utils.numberFormat(
+                   number: ctr.product.value.normalPrice ?? 0, suffix: '원'),
+               style: TextStyle(
+                   color: MyColors.grey4,
+                   fontWeight: FontWeight.w400,
+                   fontStyle: FontStyle.normal,
+                   fontFamily: 'SpoqaHanSansNeo-Medium',
+                   fontSize: 15.0,
+                   decoration: TextDecoration.lineThrough
+               ),
+             ),
+           ],
+         ),
        ),
-        Row(
-          children: [
-            Text(Utils.numberFormat(
-                number: ctr.product.value.priceDiscountPercent ?? 0, suffix: '%')),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
+        Padding(
+          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 10),
+          child: Row(
+            children: [
+              Text(Utils.numberFormat(
+                  number: ctr.product.value.priceDiscountPercent ?? 0, suffix: '% '),
+              style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 20),),
+              Text(
                 Utils.numberFormat(
                     number: ctr.product.value.price ?? 0, suffix: '원'),
-                style: MyTextStyles.f18_bold,
+                style: MyTextStyles.f18_bold.copyWith(fontSize: 20),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        Divider(),
+        Padding(
+          padding: const EdgeInsets.only(left: 10,top: 5),
+          child: Row(children: [
+            Text("배송정보   ",style: MyTextStyles.f16.copyWith(color: MyColors.grey4),),
+            Row(
+              children: [
+                Icon(Icons.notifications,color: MyColors.primary),
+                Text("띵동배송",style:MyTextStyles.f16.copyWith(color: MyColors.primary))
+              ],
+            ),Text("   무료배송",style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
+          ],),
+        ),
+        Padding(
+          padding: const  EdgeInsets.only(left: 10,top: 5),
+          child: Row(children: [
+            Text("혜택정보   ",style: MyTextStyles.f16.copyWith(color: MyColors.grey4)),
+            Text("최대 300p 적립",style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500))
+          ],),
+        )
       ],
     );
   }
@@ -322,15 +354,17 @@ class ProductDetailView extends GetView {
                   : SizedBox.shrink(),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: CustomButton(
-                    textColor: MyColors.white,
-                    text: MyVars.isUserProject() ? '구매하기' : '수정하기',
-                    onPressed: () {
-                      MyVars.isUserProject()
-                          ? SelectOptionBottomSheet()
-                          : ctr.editProductBtnPressed();
-                    },
+                  padding: const EdgeInsets.all( 10),
+                  child: Container(height: 50,
+                    child: CustomButton(
+                      textColor: MyColors.white,
+                      text: MyVars.isUserProject() ? '구매하기' : '수정하기',
+                      onPressed: () {
+                        MyVars.isUserProject()
+                            ? SelectOptionBottomSheet()
+                            : ctr.editProductBtnPressed();
+                      },
+                    ),
                   ),
                 ),
               ),
