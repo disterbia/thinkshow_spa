@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
@@ -5,6 +7,7 @@ import 'package:wholesaler_user/app/models/product_image_model.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wholesaler_user/app/models/review_category.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/controllers/orders_inquiry_review_controller.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/order_inquiry_and_review_view.dart';
 import 'package:wholesaler_user/app/modules/page5_my_page/controllers/page5_my_page_controller.dart';
@@ -27,17 +30,31 @@ class ReviewDetailController extends GetxController {
 
   bool? isComingFromReviewListPage;
 
+  RxList<ReviewCategoryModel> reviewFitCategoryList =
+      <ReviewCategoryModel>[].obs;
+  RxList<ReviewCategoryModel> reviewQualityCategoryList =
+      <ReviewCategoryModel>[].obs;
+  RxList<ReviewCategoryModel> reviewColorCategoryList =
+      <ReviewCategoryModel>[].obs;
+
+  RxInt selectFitCategoryIndex = 0.obs;
+  RxInt selectColorCategoryIndex = 0.obs;
+  RxInt selectQualityCategoryIndex = 0.obs;
+
+  RxBool contentOK = false.obs;
+  RxBool photoOK = false.obs;
+
+  RxList<XFile> pickedImageList = <XFile>[].obs;
+  RxBool isUploadLoading = false.obs;
+
+  RxList<dynamic> urlList = <dynamic>[].obs;
+  RxList<dynamic> pathList = <dynamic>[].obs;
+
   init(
       {required Review tempSelectedReviw,
       required bool isComingFromOrderInquiryPage}) {
     this.isComingFromReviewListPage = isComingFromOrderInquiryPage;
     // customize for UI
-
-    print(tempSelectedReviw.id);
-    print(tempSelectedReviw.id);
-    print(tempSelectedReviw.id);
-    print(tempSelectedReviw.id);
-    print(tempSelectedReviw.id);
 
     price.value = tempSelectedReviw.product.price!;
     // selectedReviw = tempSelectedReviw.obs;
@@ -94,10 +111,53 @@ class ReviewDetailController extends GetxController {
     }
   }
 
+  uploadReviewImageMultiPressed() async {
+    pickedImageList.value = await ImagePicker().pickMultiImage();
+    if (pickedImageList.isNotEmpty) {
+      isUploadLoading.value = true;
+
+      List<File> temp = [];
+      for (int i = 0; i < pickedImageList.length; i++) {
+        temp.add(File(pickedImageList[i].path));
+      }
+
+      var json =
+          await _apiProvider.postUploadReviewImageMutli(pickedImage: temp);
+      urlList.value = json['url'];
+      pathList.value = json['file_path'];
+      //업로드 하고
+      photoOK.value = true;
+      isUploadLoading.value = false;
+    }
+  }
+
+  getReviewCategory() async {
+    var json = await _apiProvider.getReviewCategory();
+
+    reviewFitCategoryList.value = json['category_fit_list']
+        .map((i) => ReviewCategoryModel.fromJson(i))
+        .toList()
+        ?.cast<ReviewCategoryModel>();
+
+    reviewColorCategoryList.value = json['category_color_list']
+        .map((i) => ReviewCategoryModel.fromJson(i))
+        .toList()
+        ?.cast<ReviewCategoryModel>();
+
+    reviewQualityCategoryList.value = json['category_quality_list']
+        .map((i) => ReviewCategoryModel.fromJson(i))
+        .toList()
+        ?.cast<ReviewCategoryModel>();
+
+    reviewFitCategoryList.sort((a, b) => b.id!.compareTo(a.id!));
+    reviewColorCategoryList.sort((a, b) => b.id!.compareTo(a.id!));
+    reviewQualityCategoryList.sort((a, b) => b.id!.compareTo(a.id!));
+  }
+
   reviewEditPressed() async {
     print('reviewEditPressed');
     bool isSuccess = await _apiProvider.putReviewEdit(
-        content: contentController.text,
+        content: contentController.value.text,
         image: productImageModel,
         reviewId: selectedReviw!.value.id,
         star: selectedReviw!.value.rating);
@@ -124,13 +184,32 @@ class ReviewDetailController extends GetxController {
       return;
     }
 
+    if (contentController.text.length < 20) {
+      mSnackbar(message: '내용을 20자 이상입력해주세요.');
+      return;
+    }
+
+    String path = '';
+    if (urlList.isNotEmpty) {
+      pathList.forEach((element) {
+        path += element+',';
+      });
+    }
+
     bool isSuccess = await _apiProvider.postReviewAdd(
       orderDetailId: selectedReviw!.value.product.orderDetailId!,
-      content: contentController.text,
-      image_path:
-          productImageModel != null && productImageModel!.statusCode == 200
-              ? productImageModel!.path
-              : null,
+      content: contentController.value.text,
+      // image_path:
+      //     productImageModel != null && productImageModel!.statusCode == 200
+      //         ? productImageModel!.path
+      //         : null,
+      category_fit_id: reviewFitCategoryList[selectFitCategoryIndex.value].id!,
+      category_color_id:
+          reviewColorCategoryList[selectColorCategoryIndex.value].id!,
+      category_quality_id:
+          reviewQualityCategoryList[selectQualityCategoryIndex.value].id!,
+
+      image_path: path == '' ? null : path,
       star: selectedReviw!.value.rating,
     );
 

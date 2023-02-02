@@ -40,6 +40,7 @@ import 'package:wholesaler_user/app/widgets/phone_number_textfield/phone_number_
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart' as mDio;
 
 class uApiProvider extends GetConnect {
   Map<String, String> headers = {
@@ -865,10 +866,12 @@ class uApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/waiting-reviews';
     final response = await get(url, headers: headers);
-    log('getUserReviews response: ${response.bodyString}');
+    // log('getUserReviews response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
+      print(jsonList);
+            print(jsonList);
 
       List<OrderOrReview> orders = [];
 
@@ -1292,6 +1295,7 @@ class uApiProvider extends GetConnect {
   Future<bool> postAddInquiry(
       {required int productId,
       required String content,
+      required int cateoryId,
       required bool isSecret}) async {
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
@@ -1299,6 +1303,7 @@ class uApiProvider extends GetConnect {
 
     Map<String, dynamic> data = {
       'content': content,
+      'category_id': cateoryId,
       'is_secret': isSecret,
     };
 
@@ -1353,6 +1358,21 @@ class uApiProvider extends GetConnect {
         tempInquiries.add(tempInquiry);
       }
       return tempInquiries;
+    } else {
+      log('error getUserInfo: ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+    // return Future.error(response.statusText!);
+  }
+
+  Future<dynamic> getReviewCategory() async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_USER_PATH + '/product/review/category';
+    final response = await get(url, headers: headers);
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.bodyString!);
+
+      return json;
     } else {
       log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);
@@ -1442,6 +1462,76 @@ class uApiProvider extends GetConnect {
     }
   }
 
+  /// review detail page -> upload review image
+  Future<dynamic> postUploadReviewImageMutli(
+      {required List<File> pickedImage}) async {
+    var dio = mDio.Dio();
+
+    dio.options.headers["Authorization"] =
+        "Bearer " + CacheProvider().getToken();
+
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/product/review-image-multi';
+
+    List<File> images = [];
+    List<String> imageNames = [];
+    for (int i = 0; i < pickedImage.length; i++) {
+      File image = File(pickedImage[i].path);
+      String imageName = image.path.substring(image.path.length - 19);
+      images.add(image);
+      imageNames.add(imageName);
+      log('image: $image');
+      log('imageName: $imageName');
+    }
+    List<mDio.MultipartFile> temp = [];
+    for (int i = 0; i < images.length; i++) {
+      temp.add(await mDio.MultipartFile.fromFile(images[i].path,
+          filename: imageNames[i]));
+    }
+    mDio.FormData formData = mDio.FormData.fromMap({"image[]": temp});
+
+    final response = await dio.post(
+      url,
+      data: formData,
+    );
+
+    if (response.statusCode == 200) {
+      var json = response.data;
+      print('업로드 성공오우어어어엉');
+      return json;
+    } else if (response.statusCode == 400) {
+      mSnackbar(message: jsonDecode(response.data!)['description']);
+      return Future.error(response.statusMessage!);
+    } else {
+      mSnackbar(message: response.statusMessage!);
+      return Future.error(response.statusMessage!);
+    }
+    // File image = File(pickedImage.path);
+    // String imageName = image.path.split('/').last;
+    // FormData formData = FormData({
+    //   "image": MultipartFile(image, filename: imageName),
+    // });
+
+    // final response = await post(url, formData, headers: headers);
+
+    // print('uploadProductImage response ${response.bodyString}');
+    // if (response.statusCode == 200) {
+    //   var json = jsonDecode(response.bodyString!);
+    //   return ProductImageModel(
+    //       statusCode: response.statusCode ?? 0,
+    //       message: response.statusText ?? '',
+    //       url: json['url'],
+    //       path: json['file_path']);
+    // } else {
+    //   return ProductImageModel(
+    //       statusCode: response.statusCode ?? 0,
+    //       message: response.statusText ?? '',
+    //       url: '',
+    //       path: '');
+    // }
+  }
+
   /// review detail page -> edit review
   Future<void> postReviewEdit(
       {required int reviewId,
@@ -1464,11 +1554,15 @@ class uApiProvider extends GetConnect {
   }
 
   /// review detail page -> Add new review
-  Future<bool> postReviewAdd(
-      {required int orderDetailId,
-      required String content,
-      String? image_path,
-      required double star}) async {
+  Future<bool> postReviewAdd({
+    required int orderDetailId,
+    required String content,
+    String? image_path,
+    required double star,
+    required int category_fit_id,
+    required int category_color_id,
+    required int category_quality_id,
+  }) async {
     print(
         'postReviewAdd: orderDetailId $orderDetailId content $content image_path $image_path star $star');
     String url = mConst.API_BASE_URL +
@@ -1479,6 +1573,9 @@ class uApiProvider extends GetConnect {
       'content': content,
       'image_path': image_path,
       'star': star,
+      'category_fit_id': category_fit_id,
+      'category_color_id': category_color_id,
+      'category_quality_id': category_quality_id,
     };
 
     final response = await post(url, data, headers: headers);
