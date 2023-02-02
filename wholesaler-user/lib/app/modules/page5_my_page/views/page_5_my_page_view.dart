@@ -15,6 +15,7 @@ import 'package:wholesaler_user/app/modules/bulletin_list/views/bulletin_list_vi
 import 'package:wholesaler_user/app/modules/faq/views/faq_view.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/controllers/orders_inquiry_review_controller.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/order_inquiry_and_review_view.dart';
+import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/review_view.dart';
 import 'package:wholesaler_user/app/modules/page4_favorite_products/controllers/page4_favorite_products_controller.dart';
 import 'package:wholesaler_user/app/modules/page4_favorite_products/views/page4_favorite_products_view.dart';
 import 'package:wholesaler_user/app/modules/page5_my_page/company_intro_page/view/company_intro_view.dart';
@@ -243,10 +244,11 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
                       child: InkWell(
                         onTap: () {
                           Get.delete<OrderInquiryAndReviewController>();
-                          Get.to(
-                              () => OrderInquiryAndReviewView(
-                                  isBackEnable: true, hasHomeButton: false),
-                              arguments: true);
+                          // Get.to(
+                          //     () => OrderInquiryAndReviewView(
+                          //         isBackEnable: true, hasHomeButton: false),
+                          //     arguments: true);
+                          Get.to(() => ReviewView());
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
@@ -406,7 +408,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
         separatorBuilder: (BuildContext context, int index) =>
             SizedBox(width: 14),
         itemBuilder: (BuildContext context, int index) {
-          return SizedBox(
+          return Container(
             width: 110,
             child: Center(
               child: ProductItemVertical(
