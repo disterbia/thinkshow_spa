@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
+import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/models/review.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/controllers/review_controller.dart';
+import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/review_detail_view2.dart';
+import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
+import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 
 class ReviewView extends GetView {
@@ -36,8 +41,6 @@ class ReviewView extends GetView {
                 children: [
                   _alreadyWriteReview(),
                   _writeReview(),
-                  // _paragraphContainer(terms),
-                  // _paragraphContainer(privacy),
                 ],
               ),
             )
@@ -57,31 +60,71 @@ class ReviewView extends GetView {
               shrinkWrap: true,
               itemCount: ctr.items.length,
               itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    pruductWidget(ctr.items[index].products[0]),
-                    Divider(
-                      color: MyColors.grey1,
-                      endIndent: 15,
-                      indent: 15,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '최대 적립 300P',
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: ctr.items[index].products.length,
+                  itemBuilder: (context, index2) {
+                    return Column(
+                      children: [
+                        pruductWidget(ctr.items[index].products[index2], false),
+                        Divider(
+                          color: MyColors.grey1,
+                          endIndent: 15,
+                          indent: 15,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              // Text(
+                              //   '최대 적립 300P',
+                              //   style: MyTextStyles.f12.copyWith(
+                              //       color: MyColors.black3,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: MyColors.grey1,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Get.to(
+                                    () => ReviewDetailView(
+                                      isComingFromReviewPage: true,
+                                      isEditing: false,
+                                      selectedReviw: Review(
+                                        id: -1,
+                                        content: '',
+                                        rating: 0,
+                                        ratingType: ProductRatingType.star,
+                                        date: DateTime.now(),
+                                        createdAt: Utils.dateToString(
+                                            date: DateTime.now()),
+                                        product:
+                                            ctr.items[index].products[index2],
+                                        reviewImageUrl: '',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  '리뷰작성',
+                                  style: MyTextStyles.f12.copyWith(
+                                      color: MyColors.black3,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
                           ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('리뷰작성'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(thickness: 6, color: MyColors.grey3),
-                  ],
+                        ),
+                        Divider(thickness: 6, color: MyColors.grey3),
+                      ],
+                    );
+                  },
                 );
               },
             )
@@ -92,18 +135,44 @@ class ReviewView extends GetView {
   }
 
   Widget _writeReview() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [],
+    return Obx(
+      () => SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: ctr.myItems.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          Get.to(() =>
+                              ReviewDetailView2(review: ctr.myItems[index]));
+                        },
+                        child: pruductWidget(
+                            ctr.myItems[index].product_info!, true)),
+                    Divider(
+                      color: MyColors.grey1,
+                      endIndent: 15,
+                      indent: 15,
+                    ),
+                  ],
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget pruductWidget(Product product) {
+  Widget pruductWidget(Product product, bool showArrowIcon) {
     return Container(
       padding: EdgeInsets.all(15),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
@@ -151,12 +220,12 @@ class ReviewView extends GetView {
               ),
             ),
           ),
-          // showArrowIcon
-          //     ? Image.asset(
-          //         'assets/icons/ico_arrow03.png',
-          //         height: 18,
-          //       )
-          //     : SizedBox.shrink()
+          showArrowIcon
+              ? Image.asset(
+                  'assets/icons/ico_arrow03.png',
+                  height: 18,
+                )
+              : SizedBox.shrink()
         ],
       ),
     );

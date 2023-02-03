@@ -28,6 +28,7 @@ import 'package:wholesaler_user/app/models/product_model_info.dart';
 import 'package:wholesaler_user/app/models/product_option_model.dart';
 import 'package:wholesaler_user/app/models/product_sizes_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
+import 'package:wholesaler_user/app/models/review_mdoel2.dart';
 import 'package:wholesaler_user/app/models/search_product_auto_model.dart';
 import 'package:wholesaler_user/app/models/status_model.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
@@ -862,7 +863,7 @@ class uApiProvider extends GetConnect {
   }
 
   /// My page > review
-  Future<List<OrderOrReview>> getUserReviews() async {
+  Future<List<OrderOrReview>> getUserWaitReviews() async {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/waiting-reviews';
     final response = await get(url, headers: headers);
@@ -870,8 +871,6 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
-      print(jsonList);
-            print(jsonList);
 
       List<OrderOrReview> orders = [];
 
@@ -929,6 +928,52 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
       log('error getUserInfo: ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<dynamic> getUserAlreadyReviews() async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_USER_PATH + '/product/reviews/mine';
+    final response = await get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      print(jsonList);
+
+      // List<ReviewModel2> temp = jsonList
+      //     .map<ReviewModel2>((model) => ReviewModel2.fromJson(model))
+      //     .toList();
+
+      List<ReviewModel2> tempList = [];
+
+      for (var json in jsonList) {
+        var productJson = json['product_info'];
+        Store tempStore = Store(
+          id: json['store_id'],
+          name: json['store_name'],
+        );
+        Product tempProduct = Product(
+          id: productJson['id'],
+          title: productJson['product_name'],
+          store: tempStore,
+          price: productJson['price'],
+          normalPrice: productJson['normal_price'],
+          priceDiscountPercent: productJson['price_discount_percent'],
+          isLiked: productJson['is_favorite'] ? true.obs : false.obs,
+          imgUrl: productJson['thumbnail_image_url'],
+          hasBellIconAndBorder: (productJson['is_privilege'] as bool).obs,
+        );
+
+        ReviewModel2 temp = ReviewModel2.fromJson(json);
+        temp.product_info = tempProduct;
+        tempList.add(temp);
+      }
+
+      return tempList;
+    } else {
+      // var jsonList = jsonDecode(response.bodyString!);
+      log('error getUserAlreadyReviews: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
