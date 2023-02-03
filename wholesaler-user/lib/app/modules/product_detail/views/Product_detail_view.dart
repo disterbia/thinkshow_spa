@@ -205,7 +205,7 @@ class ProductDetailView extends GetView {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                    ctr.product.value.title+"ㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ",
+                    ctr.product.value.title,
                     style: MyTextStyles.f18_bold,
                   ),
               ),
@@ -288,11 +288,11 @@ class ProductDetailView extends GetView {
             children: [
               Text(Utils.numberFormat(
                   number: ctr.product.value.priceDiscountPercent ?? 0, suffix: '% '),
-              style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 20),),
+              style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 20,fontWeight: FontWeight.bold),),
               Text(
                 Utils.numberFormat(
                     number: ctr.product.value.price ?? 0, suffix: '원'),
-                style: MyTextStyles.f18_bold.copyWith(fontSize: 20),
+                style: MyTextStyles.f18_bold.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ],
           ),

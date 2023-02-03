@@ -9,11 +9,13 @@ import 'package:wholesaler_partner/app/modules/add_product/view/widget/cloth_was
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_1_detail_info_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/size_table_widget.dart';
 import 'package:wholesaler_user/app/widgets/custom_button.dart';
+import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget.dart';
 import 'package:wholesaler_user/app/widgets/webview_builder_flex_height.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 
@@ -201,6 +203,26 @@ class Tab1DetailInfo extends GetView {
                     style: MyTextStyles.f18_bold,
                   ),
                 ),
+                GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItemVertical(
+                      product: productDetailCtr.product.value,
+                    );
+                  },
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing:10,
+                    crossAxisCount: 3,
+                    childAspectRatio:  context.width / 3 /
+                        (MyVars.isSmallPhone()
+                            ? 300
+                            : 290),
+                    // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                  ),
+                ),
                 Divider(
                   thickness: 10,
                   color: MyColors.grey3,
@@ -211,7 +233,29 @@ class Tab1DetailInfo extends GetView {
                     "스토어에서 인기 있는 상품",
                     style: MyTextStyles.f18_bold,
                   ),
+
+                ),SizedBox(height: 10),
+                GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItemVertical(
+                      product: productDetailCtr.product.value,
+                    );
+                  },
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 10,
+                    crossAxisCount: 3,
+                    childAspectRatio:  context.width / 3 /
+                        (MyVars.isSmallPhone()
+                            ? 300
+                            : 290),
+                  // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                  ),
                 ),
+
                 // 반품교환정보
                 SizedBox(height: 50),
                 Text(

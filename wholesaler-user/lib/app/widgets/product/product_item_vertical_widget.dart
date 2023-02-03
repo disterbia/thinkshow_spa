@@ -18,6 +18,7 @@ import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/modules/page4_favorite_products/controllers/page4_favorite_products_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
+import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/product/number_widget.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
@@ -81,12 +82,11 @@ class ProductItemVertical extends StatelessWidget {
                       children: [
                         // Title
                         TitleBuilder(),
-                        Spacer(),
                         // Top 10 Text
-                        Top10TextBuilder(),
+                        //Top10TextBuilder(),
                       ],
                     ),
-                    SizedBox(height: 6),
+                    SizedBox(height: 5),
                     // Price
                     PriceBuilder(),
                   ],
@@ -249,36 +249,68 @@ class ProductItemVertical extends StatelessWidget {
 
   StoreNameBuilder() {
     if (product.store.name != null) {
-      return Text(product.store.name!);
+      return Text(product.store.name!,maxLines: 1, style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+        overflow: TextOverflow.ellipsis,);
     }
     return SizedBox.shrink();
   }
 
   TitleBuilder() {
     return Flexible(
-      flex: 100,
       child: Text(
         product.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+        style: MyTextStyles.f12.copyWith(color: MyColors.black1),
       ),
     );
   }
+
 
   PriceBuilder() {
     if (product.price != null) {
       final currencyFormat = NumberFormat("#,##0", "en_US");
       String price = currencyFormat.format(product.price);
-      return Row(
-        children: [
-          Text(
-            price,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text('원'),
-        ],
-      );
+      return Column(children: [
+        Row(
+          children: [
+            Flexible(child: Text("띵 할인가 ",style: TextStyle(fontSize: 10,color: Colors.redAccent),)),
+            Flexible(
+              child: Text(
+                Utils.numberFormat(
+                    number: product.normalPrice ?? 0),
+                style: TextStyle(
+                    color: MyColors.grey4,
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontFamily: 'SpoqaHanSansNeo-Medium',
+                    fontSize: 10.0,
+                    decoration: TextDecoration.lineThrough
+                ),
+              ),
+
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(flex: 1,
+              child: Text(Utils.numberFormat(
+                  number: product.priceDiscountPercent ?? 0, suffix: '% '),
+                style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 14,fontWeight: FontWeight.bold),),
+            ),
+            Flexible(flex: 2,
+              child: Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                Utils.numberFormat(
+                    number: product.price ?? 0,),
+                style: MyTextStyles.f18_bold.copyWith(fontSize: 14,fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ],);
     }
     return SizedBox.shrink();
   }
