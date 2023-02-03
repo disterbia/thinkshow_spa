@@ -38,11 +38,10 @@ class DynamicLink {
   }
 
   void _redirectScreen(PendingDynamicLinkData dynamicLinkData) {
-    String id = dynamicLinkData.link.queryParameters['id']!;
     if (dynamicLinkData.link.queryParameters.containsKey('id')) {
       String id = dynamicLinkData.link.queryParameters['id']!;
       Get.delete<ProductDetailController>();
-      Future.delayed(Duration.zero,()=>Get.to(()=>ProductDetailView(),arguments: int.parse(id)));
+      Future.delayed(Duration(milliseconds: 200),()=>Get.to(()=>ProductDetailView(),arguments: int.parse(id)));
     }
   }
 
