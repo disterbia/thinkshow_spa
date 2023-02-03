@@ -24,7 +24,7 @@ class OrderInquiryAndReviewController extends GetxController {
     // print('OrderInquiryAndReviewController onInit isReviewPage ${isReviewPage}');
     if (isReviewPage!) {
       // print('REVIEW PAGE');
-      items.value = await _apiProvider.getUserReviews();
+      items.value = await _apiProvider.getUserWaitReviews();
       allowCallAPI.value = false;
     } else {
       //print('ORDER INQUIRY PAGE');
