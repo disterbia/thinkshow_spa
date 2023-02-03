@@ -40,12 +40,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await DynamicLink().setup();
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   await MyVars.initializeVariables();
 
   NotificationService().init();
+  DynamicLink().setup();
 
 
   runApp(
