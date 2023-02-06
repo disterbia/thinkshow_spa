@@ -27,6 +27,16 @@ class Tab3InquiryView extends GetView {
           SizedBox(height: 20),
           MyVars.isUserProject() ? _writeInquiryButton() : SizedBox.shrink(),
           SizedBox(height: 20),
+          Divider(thickness: 5, color: MyColors.grey3),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Text(
+              '문의',
+              style: MyTextStyles.f16_bold.copyWith(color: MyColors.black2),
+            ),
+          ),
+          SizedBox(height: 20),
           Obx(
             () => ListView.separated(
               physics: NeverScrollableScrollPhysics(),
@@ -45,20 +55,46 @@ class Tab3InquiryView extends GetView {
   }
 
   Widget _writeInquiryButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: OutlinedButton(
-        onPressed: (() {
-          if (CacheProvider().getToken().isEmpty) {
-            Get.to(() => User_LoginPageView());
-            return;
-          }
-          Get.to(() => InquityRegisterView());
-        }),
-        child: Text(
-          '문의하기',
-          style: MyTextStyles.f14.copyWith(color: MyColors.black1),
-        ),
+    // return Padding(
+    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+    //   child: OutlinedButton(
+    //     onPressed: (() {
+    //       if (CacheProvider().getToken().isEmpty) {
+    //         Get.to(() => User_LoginPageView());
+    //         return;
+    //       }
+    //       Get.to(() => InquityRegisterView());
+    //     }),
+    //     child: Text(
+    //       '문의하기',
+    //       style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+    //     ),
+    //   ),
+    // );
+
+    return Container(
+      height: Get.height / 17,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        width: double.infinity,
+        child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(MyColors.grey1),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            onPressed: () {
+              if (CacheProvider().getToken().isEmpty) {
+                Get.to(() => User_LoginPageView());
+                return;
+              }
+              Get.to(() => InquityRegisterView());
+            },
+            child: Text("상품 문의하기",
+                style: MyTextStyles.f16_bold.copyWith(color: MyColors.black2))),
       ),
     );
   }
@@ -115,28 +151,15 @@ class Tab3InquiryView extends GetView {
         Row(
           children: [
             _AnswerTextBuilder(item.isAnswer!),
-            SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                thickness: 1,
-                color: MyColors.grey1,
-              ),
-            ),
+            _verticalDivider(),
             Text(
               item.writer.toString(),
-              style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+              style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
             ),
-            SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                thickness: 1,
-                width: 10,
-                color: MyColors.grey1,
-              ),
-            ),
+            _verticalDivider(),
             Text(
               item.createdAt.toString(),
-              style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+              style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
             )
           ],
         )
@@ -149,11 +172,12 @@ class Tab3InquiryView extends GetView {
       children: [
         Flexible(flex: 1, child: _questionMark()),
         Flexible(
-            flex: 4,
-            child: Text(
-              item.content.toString(),
-              style: MyTextStyles.f14.copyWith(color: MyColors.black2),
-            ))
+          flex: 4,
+          child: Text(
+            item.content.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          ),
+        )
       ],
     );
   }
@@ -178,16 +202,34 @@ class Tab3InquiryView extends GetView {
   }
 
   Widget _answer(InquiryModel item) {
-    return Row(
-      children: [
-        Flexible(flex: 1, child: _answerMark()),
-        Flexible(
-            flex: 4,
-            child: Text(
-              item.answerContent.toString(),
-              style: MyTextStyles.f16,
-            ))
-      ],
+    return Container(
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: MyColors.grey1,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            item.answerContent.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey10),
+          ),
+          Row(
+            children: [
+              Text(
+                ctr.product.store.name!,
+                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+              ),
+              // _verticalDivider(),
+              // Text(
+              //   '슬로우 엔드',
+              //   style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+              // ),
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -213,7 +255,7 @@ class Tab3InquiryView extends GetView {
   _AnswerTextBuilder(bool isAnswered) {
     return Text(
       isAnswered ? '답변완료' : '미답변',
-      style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+      style: MyTextStyles.f12.copyWith(color: MyColors.black2),
     );
   }
 
@@ -222,7 +264,7 @@ class Tab3InquiryView extends GetView {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
-          SizedBox(height: 20),
+          // SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -247,56 +289,67 @@ class Tab3InquiryView extends GetView {
               _verticalDivider(),
               Text(
                 inquiryModel.writer!,
-                style: TextStyle(color: Colors.black),
+                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
               ),
               _verticalDivider(),
               Text(
                 inquiryModel.createdAt.toString(),
-                style: TextStyle(color: Colors.black),
+                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
               )
             ],
           ),
           SizedBox(height: 20),
-          Container(width: double.infinity, height: 2, color: MyColors.grey1),
+          inquiryModel.isAnswer! ? _answer(inquiryModel) : SizedBox.shrink(),
+
+          Divider(
+            color: MyColors.grey3,
+          ),
+          // Container(width: double.infinity, height: 2, color: MyColors.grey1),
         ],
       ),
     );
   }
 
   _notSecretItemBuilder(InquiryModel inquiryModel) {
-    return Column(
-      children: [
-        Container(
-          child: Theme(
-            data: ThemeData().copyWith(dividerColor: Colors.transparent),
-            child: ExpansionTile(
-              childrenPadding: EdgeInsets.only(top: 10),
-              tilePadding: EdgeInsets.all(15),
-              title: _questionTitle(inquiryModel),
-              children: [
-                Container(
-                  color: MyColors.grey3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        _question(inquiryModel),
-                        SizedBox(height: 20),
-                        _answer(inquiryModel),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Container(
-              width: double.infinity, height: 2, color: MyColors.grey1),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Container(
+          //   child: Theme(
+          //     data: ThemeData().copyWith(dividerColor: Colors.transparent),
+          //     child: ExpansionTile(
+          //       childrenPadding: EdgeInsets.only(top: 10),
+          //       tilePadding: EdgeInsets.all(15),
+          //       title: _questionTitle(inquiryModel),
+          //       children: [
+          //         Container(
+          //           color: MyColors.grey3,
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Column(
+          //               children: [
+          //                 _question(inquiryModel),
+          //                 SizedBox(height: 20),
+          //                 _answer(inquiryModel),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          _questionTitle(inquiryModel),
+          // _question(inquiryModel),
+          SizedBox(height: 20),
+          _answer(inquiryModel),
+          Divider(
+            color: MyColors.grey3,
+          )
+        ],
+      ),
     );
   }
 }

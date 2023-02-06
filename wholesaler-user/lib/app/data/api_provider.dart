@@ -1232,6 +1232,8 @@ class uApiProvider extends GetConnect {
         return_exchange_info: json['return_exchange_info'],
         colors: colors,
         materials: materials,
+        mainCategoryId: json['category_id'],
+        subCategoryId: json['sub_category_id'],
       );
 
       return tempProduct;
@@ -1248,10 +1250,6 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/product/$productId/reviews?offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
-
-    print(url);
-    print(url);
-    print(url);
 
     log('getProductReviews response: ${response.bodyString}');
     if (response.statusCode == 200) {
@@ -1302,12 +1300,101 @@ class uApiProvider extends GetConnect {
           createdAt: reviewJSON['created_at'],
           product: tempProduct,
           isMine: reviewJSON['is_mine'],
-          reviewImageUrl: reviewJSON['review_image_url'],
+          images: reviewJSON['review_image_url']?.cast<String>(),
           writableReviewInfoModel: writableReviewInfoModel,
+          category_color_name: reviewJSON['category_color_name'],
+          category_fit_name: reviewJSON['category_fit_name'],
+          category_quality_name: reviewJSON['category_quality_name'],
         );
         tempReviews.add(tempReview);
       }
       return tempReviews;
+    } else {
+      log('error getUserInfo: ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<List<Review>> getProductReviewOnlyPhoto(
+      {required int productId, required int offset, required int limit}) async {
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/product/$productId/reviews?offset=$offset&limit=$limit&is_photo_review=Y';
+    final response = await get(url, headers: headers);
+
+    log('getProductReviews response: ${response.bodyString}');
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.bodyString!);
+
+      WritableReviewInfoModel writableReviewInfoModel =
+          WritableReviewInfoModel.fromJson(json['writable_review_info']);
+      print(
+          'writableReviewInfoModel ${writableReviewInfoModel.order_detail_id}');
+
+      // Review list
+      List<Review> tempReviews = [];
+      for (var reviewJSON in json['review_list']) {
+        print(reviewJSON['product_info']['thumbnail_image_url']);
+        print(reviewJSON['product_info']['thumbnail_image_url']);
+        print(reviewJSON['product_info']['thumbnail_image_url']);
+
+        // product
+        Product tempProduct = Product(
+          id: reviewJSON['product_info']['product_id'],
+          title: reviewJSON['product_info']['name'],
+          imgUrl: reviewJSON['product_info']['thumbnail_image_url'],
+          OLD_option: reviewJSON['product_info']['option_name'],
+          price: reviewJSON['product_info']['price'],
+          normalPrice: reviewJSON['product_info']['normal_price'],
+          priceDiscountPercent: reviewJSON['product_info']
+              ['price_discount_percent'],
+          selectedOptionAddPrice: reviewJSON['product_info']['add_price'],
+          imgHeight: 62,
+          imgWidth: 50,
+          store: Store(id: -1),
+        );
+
+        // user
+        User tempUser = User(
+          userID: "userID",
+          userName: reviewJSON['writer'],
+        );
+
+        // review
+        Review tempReview = Review(
+          id: reviewJSON['id'],
+          user: tempUser,
+          content: reviewJSON['content'],
+          rating: double.parse(reviewJSON['star'].toString()),
+          ratingType: ProductRatingType.star,
+          date: DateTime.parse(reviewJSON['created_at']),
+          createdAt: reviewJSON['created_at'],
+          product: tempProduct,
+          isMine: reviewJSON['is_mine'],
+          images: reviewJSON['review_image_url']?.cast<String>(),
+          writableReviewInfoModel: writableReviewInfoModel,
+          category_color_name: reviewJSON['category_color_name'],
+          category_fit_name: reviewJSON['category_fit_name'],
+          category_quality_name: reviewJSON['category_quality_name'],
+        );
+        tempReviews.add(tempReview);
+      }
+      return tempReviews;
+    } else {
+      log('error getUserInfo: ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<dynamic> getProductReviewInfo({required int productId}) async {
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/product/$productId/review-info';
+    final response = await get(url, headers: headers);
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.bodyString!);
+      print(json);
+      return json;
     } else {
       log('error getUserInfo: ${response.bodyString}');
       return Future.error(response.statusText!);

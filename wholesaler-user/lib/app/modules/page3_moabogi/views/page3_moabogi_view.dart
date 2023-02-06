@@ -49,7 +49,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                         onPressed: (index) => ctr.chipPressed(index)),
                     
                     _dingDongDeliveryBanner(),
-                    Divider(thickness: 6, color: MyColors.grey3),
+                    Divider(thickness: 5, color: MyColors.grey3),
                     _imageList(),
                   ],
                 ),

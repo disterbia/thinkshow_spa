@@ -121,7 +121,7 @@ class ReviewView extends GetView {
                             ],
                           ),
                         ),
-                        Divider(thickness: 6, color: MyColors.grey3),
+                        Divider(thickness: 5, color: MyColors.grey3),
                       ],
                     );
                   },

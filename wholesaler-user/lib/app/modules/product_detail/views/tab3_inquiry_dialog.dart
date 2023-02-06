@@ -96,7 +96,7 @@ class InquityRegisterView extends GetView {
           ProductInquiryView(
             product: ctr.product,
           ),
-          Divider(thickness: 6, color: MyColors.grey3),
+          Divider(thickness: 5, color: MyColors.grey3),
           SizedBox(
             height: 10,
           ),

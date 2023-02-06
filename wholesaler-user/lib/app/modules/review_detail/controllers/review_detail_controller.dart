@@ -191,9 +191,16 @@ class ReviewDetailController extends GetxController {
 
     String path = '';
     if (urlList.isNotEmpty) {
-      pathList.forEach((element) {
-        path += element+',';
-      });
+      // pathList.forEach((element) {
+      //   path += element+',';
+      // });
+      for (int i = 0; i < pathList.length; i++) {
+        if (i != pathList.length - 1) {
+          path += pathList[i] + ',';
+        } else {
+          path += pathList[i];
+        }
+      }
     }
 
     bool isSuccess = await _apiProvider.postReviewAdd(

@@ -219,7 +219,7 @@ class User_SignUpView extends GetView {
     return !ctr.isEditing.value
         ? Column(
             children: [
-              Divider(thickness: 6, color: MyColors.grey3),
+              Divider(thickness: 5, color: MyColors.grey3),
               _agreeToAll(),
               _termsAndConditions(),
               _privacyPolicy(),

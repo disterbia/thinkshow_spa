@@ -80,7 +80,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             ),
                           )
                         : Container(),
-                    Divider(thickness: 6, color: MyColors.grey3),
+                    Divider(thickness: 5, color: MyColors.grey3),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Obx(
