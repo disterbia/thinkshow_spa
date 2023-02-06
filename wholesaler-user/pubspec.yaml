@@ -53,6 +53,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/shared_images_icons/
+    - assets/diagraming/
 
 
   fonts:

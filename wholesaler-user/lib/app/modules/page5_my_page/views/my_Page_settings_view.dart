@@ -56,7 +56,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           }),
           _settingOption(
               '비밀번호 변경', () => Get.to(() => MyPageUpdatePasswordView())),
-          Divider(thickness: 6, color: MyColors.grey3),
+          Divider(thickness: 5, color: MyColors.grey3),
           _settingOption('로그아웃', () => mFuctions.userLogout()),
           GestureDetector(
             onTap: () {

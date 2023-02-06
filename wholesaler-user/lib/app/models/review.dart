@@ -20,6 +20,9 @@ class Review {
   List<String>? images;
   User? user;
   WritableReviewInfoModel? writableReviewInfoModel;
+  String? category_fit_name;
+  String? category_color_name;
+  String? category_quality_name;
 
   Review({
     required this.id,
@@ -35,5 +38,8 @@ class Review {
     this.user,
     this.writableReviewInfoModel,
     this.writer,
+    this.category_color_name,
+    this.category_fit_name,
+    this.category_quality_name,
   });
 }

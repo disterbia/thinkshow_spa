@@ -32,6 +32,8 @@ class Product {
   RxBool? isSoldout = false.obs; // 품질
   RxBool? isLiked;
   List<String>? category;
+  int? mainCategoryId;
+  int? subCategoryId;
   Store store;
   RxBool? hasBellIconAndBorder;
   RxDouble? totalRating;
@@ -71,6 +73,8 @@ class Product {
     this.isTop10,
     this.isSoldout,
     this.category,
+    this.mainCategoryId,
+    this.subCategoryId,
     required this.store,
     this.selectedOptionAddPrice,
     this.imgHeight,

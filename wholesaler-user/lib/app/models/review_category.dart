@@ -2,11 +2,13 @@ class ReviewCategoryModel {
   int? id;
   String? name;
   String? createdAt;
+  int? percent;
 
   ReviewCategoryModel({
     this.id,
     this.name,
     this.createdAt,
+    this.percent,
   });
 
   factory ReviewCategoryModel.fromJson(Map<String, dynamic> json) {

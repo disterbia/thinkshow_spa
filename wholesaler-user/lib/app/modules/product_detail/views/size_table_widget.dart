@@ -2,6 +2,8 @@ import 'package:cross_scroll/cross_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
+import 'package:wholesaler_user/app/constants/colors.dart';
+import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/product_sizes_model.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 
@@ -12,28 +14,45 @@ class SizeTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initDataCell();
-    return LayoutBuilder(
-      builder: (context, constraints) => Container(
-        // width: 200,
-        height: 170,
-        child: CrossScroll(
-          horizontalBar: CrossScrollBar(thickness: 4, hoverThickness: 4),
-          verticalBar: CrossScrollBar(thickness: 0),
-          child: DataTable(
-            columns: DataColumnBuilder(),
-            rows: <DataRow>[
-              ...ctr.product.value.sizes!.map((size) {
-                print('size');
-                print(ctr.product.value.sizes!.length);
-                //한줄이다 이건
+    // return LayoutBuilder(
+    //   builder: (context, constraints) => Container(
+    //     // width: 200,
+    //     height: 170,
+    //     child: CrossScroll(
+    //       horizontalBar: CrossScrollBar(thickness: 4, hoverThickness: 4),
+    //       verticalBar: CrossScrollBar(thickness: 0),
+    //       child: DataTable(
+    //         columns: DataColumnBuilder(),
+    // rows: <DataRow>[
+    //   ...ctr.product.value.sizes!.map((size) {
+    //     print('size');
+    //     print(ctr.product.value.sizes!.length);
+    //     //한줄이다 이건
 
-                return DataRow(
-                  cells: DataCellBuilder(size),
-                );
-              }),
-            ],
-          ),
-        ),
+    //     return DataRow(
+    //       cells: DataCellBuilder(size),
+    //     );
+    //   }),
+    // ],
+    // ),
+    //     ),
+    //   ),
+    // );
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        headingRowColor:
+            MaterialStateColor.resolveWith((states) => MyColors.grey1),
+        columnSpacing: 30,
+        columns: DataColumnBuilder(),
+        rows: <DataRow>[
+          ...ctr.product.value.sizes!.map((size) {
+            return DataRow(
+              cells: DataCellBuilder(size),
+            );
+          }),
+        ],
       ),
     );
   }
@@ -371,78 +390,127 @@ class SizeTableWidget extends StatelessWidget {
   DataColumnBuilder() {
     return <DataColumn>[
       DataColumn(
-        label: Text('Size'),
+        label: Container(
+            child: Text(
+          '사이즈',
+          style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+        )),
       ),
       if (ctr.product.value.sizes!
           .any((element) => element.shoulderCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.shoulder_cross_length),
+          label: Text(
+            ProductSizeType.shoulder_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.chestCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.chest_cross_length),
+          label: Text(
+            ProductSizeType.chest_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.armhole != null))
         DataColumn(
-          label: Text(ProductSizeType.armhole),
+          label: Text(
+            ProductSizeType.armhole,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.armStraightLength != null))
         DataColumn(
-          label: Text(ProductSizeType.arm_straight_length),
+          label: Text(
+            ProductSizeType.arm_straight_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.armCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.arm_cross_length),
+          label: Text(
+            ProductSizeType.arm_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.sleeveCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.sleeve_cross_length),
+          label: Text(
+            ProductSizeType.sleeve_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.bottomCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.bottom_cross_length),
+          label: Text(
+            ProductSizeType.bottom_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.strap != null))
         DataColumn(
-          label: Text(ProductSizeType.strap),
+          label: Text(
+            ProductSizeType.strap,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.totalEntryLength != null))
         DataColumn(
-          label: Text(ProductSizeType.total_entry_length),
+          label: Text(
+            ProductSizeType.total_entry_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.waistCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.waist_cross_length),
+          label: Text(
+            ProductSizeType.waist_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.hipCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.hip_cross_length),
+          label: Text(
+            ProductSizeType.hip_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.bottomTopCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.bottom_top_cross_length),
+          label: Text(
+            ProductSizeType.bottom_top_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.thighCrossLength != null))
         DataColumn(
-          label: Text(ProductSizeType.thigh_cross_length),
+          label: Text(
+            ProductSizeType.thigh_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.open != null))
         DataColumn(
-          label: Text(ProductSizeType.open),
+          label: Text(
+            ProductSizeType.open,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.lining != null))
         DataColumn(
-          label: Text(ProductSizeType.lining),
+          label: Text(
+            ProductSizeType.lining,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 
       //추가
@@ -453,102 +521,162 @@ class SizeTableWidget extends StatelessWidget {
         ),
       if (ctr.product.value.sizes!.any((element) => element.breadth != null))
         DataColumn(
-          label: Text(ProductSizeType.breadth),
+          label: Text(
+            ProductSizeType.breadth,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.diameter != null))
         DataColumn(
-          label: Text(ProductSizeType.diameter),
+          label: Text(
+            ProductSizeType.diameter,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.width != null))
         DataColumn(
-          label: Text(ProductSizeType.width),
+          label: Text(
+            ProductSizeType.width,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.height != null))
         DataColumn(
-          label: Text(ProductSizeType.height),
+          label: Text(
+            ProductSizeType.height,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.handle_height != null))
         DataColumn(
-          label: Text(ProductSizeType.handle_height),
+          label: Text(
+            ProductSizeType.handle_height,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.handle_length != null))
         DataColumn(
-          label: Text(ProductSizeType.handle_length),
+          label: Text(
+            ProductSizeType.handle_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.front_heel_height != null))
         DataColumn(
-          label: Text(ProductSizeType.front_heel_height),
+          label: Text(
+            ProductSizeType.front_heel_height,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.back_heel_height != null))
         DataColumn(
-          label: Text(ProductSizeType.back_heel_height),
+          label: Text(
+            ProductSizeType.back_heel_height,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.calf_cross_length != null))
         DataColumn(
-          label: Text(ProductSizeType.calf_cross_length),
+          label: Text(
+            ProductSizeType.calf_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.weight != null))
         DataColumn(
-          label: Text(ProductSizeType.weight),
+          label: Text(
+            ProductSizeType.weight,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.foot_width != null))
         DataColumn(
-          label: Text(ProductSizeType.foot_width),
+          label: Text(
+            ProductSizeType.foot_width,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 //추가2
       if (ctr.product.value.sizes!
           .any((element) => element.necklace_breadth != null))
         DataColumn(
-          label: Text(ProductSizeType.necklace_breadth),
+          label: Text(
+            ProductSizeType.necklace_breadth,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 
       if (ctr.product.value.sizes!
           .any((element) => element.necklace_total_entry_length != null))
         DataColumn(
-          label: Text(ProductSizeType.necklace_total_entry_length),
+          label: Text(
+            ProductSizeType.necklace_total_entry_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 
       if (ctr.product.value.sizes!
           .any((element) => element.earring_total_entry_length != null))
         DataColumn(
-          label: Text(ProductSizeType.earring_total_entry_length),
+          label: Text(
+            ProductSizeType.earring_total_entry_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 
       if (ctr.product.value.sizes!
           .any((element) => element.clock_diameter != null))
         DataColumn(
-          label: Text(ProductSizeType.clock_diameter),
+          label: Text(
+            ProductSizeType.clock_diameter,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
 
       if (ctr.product.value.sizes!
           .any((element) => element.clock_breadth != null))
         DataColumn(
-          label: Text(ProductSizeType.clock_breadth),
+          label: Text(
+            ProductSizeType.clock_breadth,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.total_length != null))
         DataColumn(
-          label: Text(ProductSizeType.total_length),
+          label: Text(
+            ProductSizeType.total_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.total_length2 != null))
         DataColumn(
-          label: Text(ProductSizeType.total_length2),
+          label: Text(
+            ProductSizeType.total_length2,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.entrace_circum != null))
         DataColumn(
-          label: Text(ProductSizeType.entrace_circum),
+          label: Text(
+            ProductSizeType.entrace_circum,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!
           .any((element) => element.total_height != null))
         DataColumn(
-          label: Text(ProductSizeType.total_height),
+          label: Text(
+            ProductSizeType.total_height,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
     ];
   }
@@ -556,153 +684,301 @@ class SizeTableWidget extends StatelessWidget {
   DataCellBuilder(ProductSizeModel size) {
     return <DataCell>[
       DataCell(
-        Center(child: Text('${size.size}')),
+        Center(
+            child: Text(
+          '${size.size}',
+          style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+        )),
       ),
       if (size.shoulderCrossLength != null)
         DataCell(
-          Center(child: Text(size.shoulderCrossLength.toString())),
+          Center(
+              child: Text(
+            size.shoulderCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.chestCrossLength != null)
         DataCell(
-          Center(child: Text(size.chestCrossLength.toString())),
+          Center(
+              child: Text(
+            size.chestCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.armhole != null)
         DataCell(
-          Center(child: Text(size.armhole.toString())),
+          Center(
+              child: Text(
+            size.armhole.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.armStraightLength != null)
         DataCell(
-          Center(child: Text(size.armStraightLength.toString())),
+          Center(
+              child: Text(
+            size.armStraightLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.armCrossLength != null)
         DataCell(
-          Center(child: Text(size.armCrossLength.toString())),
+          Center(
+              child: Text(
+            size.armCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.sleeveCrossLength != null)
         DataCell(
-          Center(child: Text(size.sleeveCrossLength.toString())),
+          Center(
+              child: Text(
+            size.sleeveCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.bottomCrossLength != null)
         DataCell(
-          Center(child: Text(size.bottomCrossLength.toString())),
+          Center(
+              child: Text(
+            size.bottomCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.strap != null)
         DataCell(
-          Center(child: Text(size.strap.toString())),
+          Center(
+              child: Text(
+            size.strap.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.totalEntryLength != null)
         DataCell(
-          Center(child: Text(size.totalEntryLength.toString())),
+          Center(
+              child: Text(
+            size.totalEntryLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.waistCrossLength != null)
         DataCell(
-          Center(child: Text(size.waistCrossLength.toString())),
+          Center(
+              child: Text(
+            size.waistCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.hipCrossLength != null)
         DataCell(
-          Center(child: Text(size.hipCrossLength.toString())),
+          Center(
+              child: Text(
+            size.hipCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.bottomTopCrossLength != null)
         DataCell(
-          Center(child: Text(size.bottomTopCrossLength.toString())),
+          Center(
+              child: Text(
+            size.bottomTopCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.thighCrossLength != null)
         DataCell(
-          Center(child: Text(size.thighCrossLength.toString())),
+          Center(
+              child: Text(
+            size.thighCrossLength.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.open != null)
         DataCell(
-          Center(child: Text(size.open.toString())),
+          Center(
+              child: Text(
+            size.open.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.lining != null)
         DataCell(
-          Center(child: Text(size.lining.toString())),
+          Center(
+              child: Text(
+            size.lining.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.entrance_cross_length != null)
         DataCell(
-          Center(child: Text(size.entrance_cross_length.toString())),
+          Center(
+              child: Text(
+            size.entrance_cross_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.breadth != null)
         DataCell(
-          Center(child: Text(size.breadth.toString())),
+          Center(
+              child: Text(
+            size.breadth.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.diameter != null)
         DataCell(
-          Center(child: Text(size.diameter.toString())),
+          Center(
+              child: Text(
+            size.diameter.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.width != null)
         DataCell(
-          Center(child: Text(size.width.toString())),
+          Center(
+              child: Text(
+            size.width.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.height != null)
         DataCell(
-          Center(child: Text(size.height.toString())),
+          Center(
+              child: Text(
+            size.height.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.handle_height != null)
         DataCell(
-          Center(child: Text(size.handle_height.toString())),
+          Center(
+              child: Text(
+            size.handle_height.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.handle_length != null)
         DataCell(
-          Center(child: Text(size.handle_length.toString())),
+          Center(
+              child: Text(
+            size.handle_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.front_heel_height != null)
         DataCell(
-          Center(child: Text(size.front_heel_height.toString())),
+          Center(
+              child: Text(
+            size.front_heel_height.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.back_heel_height != null)
         DataCell(
-          Center(child: Text(size.back_heel_height.toString())),
+          Center(
+              child: Text(
+            size.back_heel_height.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.calf_cross_length != null)
         DataCell(
-          Center(child: Text(size.calf_cross_length.toString())),
+          Center(
+              child: Text(
+            size.calf_cross_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.weight != null)
         DataCell(
-          Center(child: Text(size.weight.toString())),
+          Center(
+              child: Text(
+            size.weight.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.foot_width != null)
         DataCell(
-          Center(child: Text(size.foot_width.toString())),
+          Center(
+              child: Text(
+            size.foot_width.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
 
       //추가2
       if (size.necklace_breadth != null)
         DataCell(
-          Center(child: Text(size.necklace_breadth.toString())),
+          Center(
+              child: Text(
+            size.necklace_breadth.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.necklace_total_entry_length != null)
         DataCell(
-          Center(child: Text(size.necklace_total_entry_length.toString())),
+          Center(
+              child: Text(
+            size.necklace_total_entry_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.earring_total_entry_length != null)
         DataCell(
-          Center(child: Text(size.earring_total_entry_length.toString())),
+          Center(
+              child: Text(
+            size.earring_total_entry_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.clock_diameter != null)
         DataCell(
-          Center(child: Text(size.clock_diameter.toString())),
+          Center(
+              child: Text(
+            size.clock_diameter.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.clock_breadth != null)
         DataCell(
-          Center(child: Text(size.clock_breadth.toString())),
+          Center(
+              child: Text(
+            size.clock_breadth.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.total_length != null)
         DataCell(
-          Center(child: Text(size.total_length.toString())),
+          Center(
+              child: Text(
+            size.total_length.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.total_length2 != null)
         DataCell(
-          Center(child: Text(size.total_length2.toString())),
+          Center(
+              child: Text(
+            size.total_length2.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.entrace_circum != null)
         DataCell(
-          Center(child: Text(size.entrace_circum.toString())),
+          Center(
+              child: Text(
+            size.entrace_circum.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
       if (size.total_height != null)
         DataCell(
-          Center(child: Text(size.total_height.toString())),
+          Center(
+              child: Text(
+            size.total_height.toString(),
+            style: MyTextStyles.f14.copyWith(color: MyColors.black2),
+          )),
         ),
     ];
   }

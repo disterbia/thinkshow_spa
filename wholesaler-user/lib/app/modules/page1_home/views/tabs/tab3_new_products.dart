@@ -41,7 +41,7 @@ class Tab3NewProductsView extends GetView<Tab3NewProductsController> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: CarousalProductHorizontalViewNew(),
                         ),
-                        Divider(thickness: 6, color: MyColors.grey3),
+                        Divider(thickness: 5, color: MyColors.grey3),
                       ],
                     ):Container()
              ,

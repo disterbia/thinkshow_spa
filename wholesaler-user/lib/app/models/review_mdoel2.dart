@@ -12,10 +12,15 @@ class ReviewModel2 {
   int? category_color_id;
   int? category_quality_id;
   String? content;
-  String? image_file_path;
+  List<String>? image_file_path;
   int? star;
   String? created_at;
   Product? product_info;
+
+  String? category_fit_name;
+  String? category_color_name;
+  String? category_quality_name;
+  String? select_option_name;
 
   ReviewModel2({
     this.id,
@@ -33,6 +38,10 @@ class ReviewModel2 {
     this.star,
     this.created_at,
     this.product_info,
+    this.category_fit_name,
+    this.category_color_name,
+    this.category_quality_name,
+    this.select_option_name,
   });
 
   factory ReviewModel2.fromJson(Map<String, dynamic> json) {
@@ -48,10 +57,16 @@ class ReviewModel2 {
       category_color_id: json['category_color_id'] as int,
       category_quality_id: json['category_quality_id'] as int,
       content: json['content'] as String,
-      image_file_path: json['image_file_path'] as String,
+      image_file_path: json['image_file_path'] != null
+          ? json['image_file_path']?.cast<String>() as List<String>
+          : null,
       star: json['star'] as int,
       created_at: json['created_at'] as String,
       // product_info: json['product_info'] as Product,
+      category_fit_name: json['category_fit_name'] as String,
+      category_color_name: json['category_color_name'] as String,
+      category_quality_name: json['category_quality_name'] as String,
+      select_option_name: json['select_option_name'] as String,
     );
   }
 }

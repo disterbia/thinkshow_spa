@@ -64,7 +64,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
           _userIdUsername(),
           _topThreeVerticalBoxs(),
           SizedBox(height: 25),
-          Divider(thickness: 6, color: MyColors.grey3),
+          Divider(thickness: 5, color: MyColors.grey3),
           ctr2.products.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
