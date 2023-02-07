@@ -14,7 +14,7 @@ class Page2StoreListController extends GetxController {
 
   RxList<Store> stores = <Store>[].obs;
   RxBool isLoading = false.obs;
-
+  ScrollController scrollController = ScrollController();
   Future<void> getRankedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
 
@@ -73,9 +73,9 @@ class Page2StoreListController extends GetxController {
 
     if (isSuccess) {
       if (store.isBookmarked!.value) {
-        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+        //mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
       } else {
-        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+        // mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
     }
   }

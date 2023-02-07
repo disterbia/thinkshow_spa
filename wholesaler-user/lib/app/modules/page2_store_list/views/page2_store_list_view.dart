@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
+import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shopping_controller.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/views/tabs/tab1_ranking_view.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/views/tabs/tab2_bookmarks.dart';
 import 'package:wholesaler_user/app/modules/search/views/search_page_view.dart';
@@ -13,6 +14,7 @@ import 'package:wholesaler_user/app/widgets/simple_tab_bar.dart';
 
 class Page2StoreListView extends GetView {
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
+  Page2StoreListController ctr = Get.put(Page2StoreListController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,9 @@ class Page2StoreListView extends GetView {
       backgroundColor: MyColors.white,
       appBar:_mainAppbar(),
       body: _body(),
+      floatingActionButton: FloatingActionButton(backgroundColor: Colors.white,child: Icon(Icons.arrow_upward_rounded),onPressed: (){
+        ctr.scrollController.jumpTo(0);
+      }),
     );
   }
 
@@ -89,7 +94,7 @@ class Page2StoreListView extends GetView {
               Tab2BookmarksView(),
             ],
           ),
-        )
+        ),
       ],
     );
   }
