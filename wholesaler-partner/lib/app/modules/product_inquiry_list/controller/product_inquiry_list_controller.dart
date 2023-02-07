@@ -41,6 +41,7 @@ class ProductInquiryListController extends GetxController {
               title: element.productInfo!.name.toString(),
               imgUrl: element.productInfo!.thumbnailImageUrl.toString(),
               store: Store(id: 888888),
+              normalPrice: 0
             ),
             question: element.content.toString(),
             date: DateFormat("yyyy-MM-dd").parse(element.createdAt.toString()),

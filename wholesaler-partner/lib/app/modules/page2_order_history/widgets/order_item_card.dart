@@ -26,7 +26,11 @@ class OrderItemCard extends StatelessWidget {
               style: MyTextStyles.f14.copyWith(color: MyColors.black3),
             ),
             SizedBox(height: 5),
-            ProductItemHorizontal(product: ctr.products[index]),
+            ProductItemHorizontal(
+              product: ctr.products[index],
+              showClose: false,
+              showPrice: false,
+            ),
           ],
         );
       },

@@ -13,7 +13,10 @@ class ProductInquiryListView extends GetView<ProductInquiryListController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: CustomAppbar(isBackEnable: true, hasHomeButton: true, title: 'product_inquiry'.tr),
+        appBar: CustomAppbar(
+            isBackEnable: true,
+            hasHomeButton: true,
+            title: 'product_inquiry'.tr),
         body: ctr.isLoading.value
             ? LoadingWidget()
             : Padding(
@@ -30,7 +33,12 @@ class ProductInquiryListView extends GetView<ProductInquiryListController> {
                             spacing: 10,
                             runSpacing: 10,
                             children: [
-                              for (ProductInquiry inquiry in ctr.inquiries) ProductItemHorizontal.inquiry(inquiry: inquiry),
+                              for (ProductInquiry inquiry in ctr.inquiries)
+                                ProductItemHorizontal.inquiry(
+                                  inquiry: inquiry,
+                                  showClose: false,
+                                  showPrice: false,
+                                ),
                             ],
                           ),
                         ],

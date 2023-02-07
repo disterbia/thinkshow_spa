@@ -35,13 +35,16 @@ class AdImpressionController extends GetxController {
     startDateController.text = DateFormat('yyyy-MM-dd').format(now);
     endDateController.text = DateFormat('yyyy-MM-dd').format(secondDate);
 
-    await getImpressionInformation(startDateController.text, endDateController.text, chosenTagName.value);
+    await getImpressionInformation(
+        startDateController.text, endDateController.text, chosenTagName.value);
   }
 
-  Future<void> getImpressionInformation(String startDate, String endDate, String tag) async {
+  Future<void> getImpressionInformation(
+      String startDate, String endDate, String tag) async {
     isLoading.value = true;
 
-    dynamic response = await _apiProvider.getImpressionsInformation(startDate, endDate, tag);
+    dynamic response =
+        await _apiProvider.getImpressionsInformation(startDate, endDate, tag);
     impressionItems.clear();
     List<ImpressionProductModel> productItems = [];
     _getImpressionData(response);
@@ -52,13 +55,18 @@ class AdImpressionController extends GetxController {
   }
 
   void _getImpressionData(response) {
-    impression.value = response['main_statistic_info']['ads_exposure_count'].toString();
-    clicks.value = response['main_statistic_info']['ads_click_count'].toString();
+    impression.value =
+        response['main_statistic_info']['ads_exposure_count'].toString();
+    clicks.value =
+        response['main_statistic_info']['ads_click_count'].toString();
     clickRate.value = response['main_statistic_info']['click_rate'].toString();
-    favoriteCount.value = response['main_statistic_info']['ads_favorite_count'].toString();
-    totalCost.value = response['main_statistic_info']['ads_total_cost'].toString();
+    favoriteCount.value =
+        response['main_statistic_info']['ads_favorite_count'].toString();
+    totalCost.value =
+        response['main_statistic_info']['ads_total_cost'].toString();
     orderRate.value = response['main_statistic_info']['order_rate'].toString();
-    orderCount.value = response['main_statistic_info']['ads_order_count'].toString();
+    orderCount.value =
+        response['main_statistic_info']['ads_order_count'].toString();
   }
 
   void _getItemData(dynamicList, List<ImpressionProductModel> productItems) {
@@ -74,26 +82,35 @@ class AdImpressionController extends GetxController {
             clickRate: productList[j]['click_rate'],
             orderRate: productList[j]['order_rate'],
             productInformation: Product(
-              category: [productList[j]['product_info']['main_category_name'], productList[j]['product_info']['sub_category_name']],
+              category: [
+                productList[j]['product_info']['main_category_name'],
+                productList[j]['product_info']['sub_category_name']
+              ],
               price: productList[j]['product_info']['price'],
               title: productList[j]['product_info']['name'],
               id: productList[j]['product_info']['id'],
               imgUrl: productList[j]['product_info']['thumbnail_image_url'],
               store: Store(id: -1),
+              normalPrice: 0,
             ),
           ),
         );
       }
-      impressionItems.add(ImpressionItemModel(date: dynamicList[i]['date'], cost: dynamicList[i]['cost_info_text'], products: productItems));
+      impressionItems.add(ImpressionItemModel(
+          date: dynamicList[i]['date'],
+          cost: dynamicList[i]['cost_info_text'],
+          products: productItems));
     }
   }
 
   categoryTagChanged(int index) async {
     chosenTagName.value = tags[index];
-    await getImpressionInformation(startDateController.text, endDateController.text, chosenTagName.value);
+    await getImpressionInformation(
+        startDateController.text, endDateController.text, chosenTagName.value);
   }
 
   dateRangeSubmitted() async {
-    await getImpressionInformation(startDateController.text, endDateController.text, chosenTagName.value);
+    await getImpressionInformation(
+        startDateController.text, endDateController.text, chosenTagName.value);
   }
 }

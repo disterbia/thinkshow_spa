@@ -38,13 +38,12 @@ class CartItemsList extends StatelessWidget {
             // Cart 2: show selected products only
             products = cartItems[cartIndex]
                 .products
-                .where(
-                    (tempProduct) => tempProduct.isCheckboxSelected == true)
+                .where((tempProduct) => tempProduct.isCheckboxSelected == true)
                 .toList();
           }
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 10,left: 15,right: 15),
+            padding: const EdgeInsets.only(bottom: 10, left: 15, right: 15),
             child: Card(
               elevation: 0,
               color: Colors.white,
@@ -58,15 +57,16 @@ class CartItemsList extends StatelessWidget {
                   // show store only if it contains products
                   products.length > 0
                       ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0,bottom: 0,left: 10),
-                        child: _store(cartItems[cartIndex].store),
-                      )
+                          padding: const EdgeInsets.only(
+                              top: 10.0, bottom: 0, left: 10),
+                          child: _store(cartItems[cartIndex].store),
+                        )
                       : SizedBox.shrink(),
                   Divider(),
                   // if cart 2 page, only show selected products
                   ...products.map(
-                    (product) => _orderedProductBuilder(
-                        cartIndex, products.indexOf(product), product,products.length),
+                    (product) => _orderedProductBuilder(cartIndex,
+                        products.indexOf(product), product, products.length),
                   ),
                 ],
               ),
@@ -86,51 +86,50 @@ class CartItemsList extends StatelessWidget {
 
   Widget _store(Store store) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => StoreDetailView(storeId: store.id));
-      },
-      child: Row(
-        children: [
-          Text(
-            store.name ?? '',
-            style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
-          ),
-        ],
-      )
-      // Row(
-      //   children: [
-      //     ClipRRect(
-      //       borderRadius: BorderRadius.circular(50),
-      //       child: store.imgUrl != null
-      //           ? CachedNetworkImage(
-      //               imageUrl: store.imgUrl!.value,
-      //               width: 35,
-      //               height: 35,
-      //               fit: BoxFit.fill,
-      //               // placeholder: (context, url) => CircularProgressIndicator(),
-      //               errorWidget: (context, url, error) => Icon(Icons.error),
-      //             )
-      //           : Image.asset(
-      //               store.imgAssetUrl,
-      //               width: 35,
-      //             ),
-      //     ),
-      //     SizedBox(
-      //       width: 10,
-      //     ),
-      //     Text(
-      //       store.name ?? '',
-      //       style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
-      //     )
-      //   ],
-      // ),
-    );
+        onTap: () {
+          Get.to(() => StoreDetailView(storeId: store.id));
+        },
+        child: Row(
+          children: [
+            Text(
+              store.name ?? '',
+              style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+            ),
+          ],
+        )
+        // Row(
+        //   children: [
+        //     ClipRRect(
+        //       borderRadius: BorderRadius.circular(50),
+        //       child: store.imgUrl != null
+        //           ? CachedNetworkImage(
+        //               imageUrl: store.imgUrl!.value,
+        //               width: 35,
+        //               height: 35,
+        //               fit: BoxFit.fill,
+        //               // placeholder: (context, url) => CircularProgressIndicator(),
+        //               errorWidget: (context, url, error) => Icon(Icons.error),
+        //             )
+        //           : Image.asset(
+        //               store.imgAssetUrl,
+        //               width: 35,
+        //             ),
+        //     ),
+        //     SizedBox(
+        //       width: 10,
+        //     ),
+        //     Text(
+        //       store.name ?? '',
+        //       style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+        //     )
+        //   ],
+        // ),
+        );
   }
 
   Widget _orderedProductBuilder(
-      int cartIndex, int productIndex, Product product,int length) {
+      int cartIndex, int productIndex, Product product, int length) {
     int productPrice = product.price!;
-
 
     // Customize our ProductItemHorizontal view to match the design.
     Product tempProduct = Product(
@@ -153,7 +152,9 @@ class CartItemsList extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             isCart1Page
                 // Checkbox left of Product
                 ? Obx(
@@ -171,6 +172,8 @@ class CartItemsList extends StatelessWidget {
             isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
             Flexible(
               child: ProductItemHorizontal(
+                showClose: true,
+                showPrice: true,
                 product: tempProduct,
                 // normalPrice: normalPrice,
                 // discountPercent: discountPercent,
@@ -185,10 +188,17 @@ class CartItemsList extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
-        ),length-1 !=productIndex ?Divider(thickness: 1,color: MyColors.grey3,):Container(),
-        SizedBox(height: 5,)
+        ),
+        length - 1 != productIndex
+            ? Divider(
+                thickness: 1,
+                color: MyColors.grey3,
+              )
+            : Container(),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }

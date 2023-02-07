@@ -40,15 +40,21 @@ class AdItemList extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: adList.adProducts.length,
-            separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+            separatorBuilder: (BuildContext context, int index) =>
+                SizedBox(height: 10),
             itemBuilder: (BuildContext context, int index) {
               return Row(
                 children: [
-                  ProductItemHorizontal(product: adList.adProducts[index]),
+                  ProductItemHorizontal(
+                    product: adList.adProducts[index],
+                    showClose: false,
+                    showPrice: false,
+                  ),
                   Spacer(),
                   // Delte icon
                   IconButton(
-                    onPressed: () => ctr.deleteAdProductBtnPressed(adIndex, index),
+                    onPressed: () =>
+                        ctr.deleteAdProductBtnPressed(adIndex, index),
                     icon: Icon(Icons.delete_outline_rounded),
                   ),
                 ],

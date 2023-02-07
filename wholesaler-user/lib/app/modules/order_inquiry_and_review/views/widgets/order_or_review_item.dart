@@ -32,14 +32,17 @@ class OrderOrReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         // _informationBox(),
         // SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
-          child: ProductItemHorizontal(product: item.products[productId]),
+          child: ProductItemHorizontal(
+            product: item.products[productId],
+            showClose: false,
+            showPrice: true,
+          ),
         ),
         SizedBox(height: 10),
         // Delivery Status: 배달 상태

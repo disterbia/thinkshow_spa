@@ -24,6 +24,8 @@ class AdListTile extends StatelessWidget {
         children: [
           ProductItemHorizontal(
             product: currentProduct.productInformation,
+            showClose: false,
+            showPrice: false,
           ),
           SizedBox(height: 10),
           Container(

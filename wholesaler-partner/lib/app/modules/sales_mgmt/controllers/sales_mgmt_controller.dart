@@ -6,7 +6,8 @@ import 'package:wholesaler_user/app/models/store_model.dart';
 
 import '../../../data/api_provider.dart';
 
-class SalesMgmtController extends GetxController with GetSingleTickerProviderStateMixin {
+class SalesMgmtController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   RxBool isLoading = false.obs;
   final pApiProvider _apiProvider = pApiProvider();
   String countOfProducts = '';
@@ -17,7 +18,8 @@ class SalesMgmtController extends GetxController with GetSingleTickerProviderSta
     Tab(text: 'number_of_orders'.tr),
   ];
   RxList<Product> products = <Product>[].obs;
-  late TabController productTabController = TabController(length: 4, vsync: this, animationDuration: Duration.zero);
+  late TabController productTabController =
+      TabController(length: 4, vsync: this, animationDuration: Duration.zero);
 
   // Rx<ScrollController> scrollController = ScrollController().obs;
   // int offset = 0;
@@ -86,6 +88,7 @@ class SalesMgmtController extends GetxController with GetSingleTickerProviderSta
             imgUrl: ''.obs,
             rank: 1,
           ),
+          normalPrice: 0,
         );
 
         products.add(productData);

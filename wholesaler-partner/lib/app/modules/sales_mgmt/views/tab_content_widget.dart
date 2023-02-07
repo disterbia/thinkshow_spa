@@ -71,6 +71,8 @@ class SalesMgmtContentTabWidget extends GetView {
                                       ? MyColors.numberColors[index]
                                       : MyColors.numberColors[0],
                             ),
+                            showClose: false,
+                            showPrice: false,
                           ),
                         );
                       },

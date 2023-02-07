@@ -25,6 +25,8 @@ class Top10Item extends StatelessWidget {
             child: ProductItemHorizontal(
               product: product,
               productNumber: ProductNumber(number: index + 1, backgroundColor: MyColors.numberColors[index]),
+              showClose: false,
+              showPrice: false,
             ),
           ),
           // reorderToTop

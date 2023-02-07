@@ -88,6 +88,7 @@ class Top10ProductsController extends GetxController {
             imgHeight: 100,
             imgWidth: 80,
             imgUrl: element.thumbnailImageUrl!,
+            normalPrice: 0,
             store: Store(
               id: element.storeId!,
               name: null,

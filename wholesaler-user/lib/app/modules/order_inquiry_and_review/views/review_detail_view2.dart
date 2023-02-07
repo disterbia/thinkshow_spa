@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
 import 'package:wholesaler_user/app/models/review_mdoel2.dart';
@@ -257,7 +258,9 @@ class ReviewDetailView2 extends GetView {
     return InkWell(
       onTap: () {
         //
-        Get.to(() => ProductDetailView(), arguments: product.id);
+        if (MyVars.isUserProject()) {
+          Get.to(() => ProductDetailView(), arguments: product.id);
+        }
       },
       child: Container(
         padding: EdgeInsets.all(15),
