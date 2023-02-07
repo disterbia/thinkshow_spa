@@ -55,12 +55,15 @@ class Tab1DetailInfo extends GetView {
                       Obx(
                         () => Container(
                           height: productDetailCtr
-                                      .product.value.imagesColor!.length >= 2 ? isMore.value
+                                      .product.value.imagesColor!.length >=
+                                  2
+                              ? isMore.value
                                   ? null
                                   : Get.height * 1.2
                               : null,
-                          child: ListView.builder(itemCount:productDetailCtr
-                              .product.value.imagesColor!.length ,
+                          child: ListView.builder(
+                            itemCount: productDetailCtr
+                                .product.value.imagesColor!.length,
                             itemBuilder: (context, index) {
                               QuillEditor(
                                 controller: productDetailCtr.quillController,
@@ -77,9 +80,12 @@ class Tab1DetailInfo extends GetView {
                               );
                               return Container(
                                 height: Get.height * 0.6,
-                                child: ClipRRect(borderRadius: !isMore.value && index==1 ?
-                                BorderRadius.only(bottomRight: Radius.circular(8),bottomLeft:Radius.circular(8) ):
-                                BorderRadius.all( Radius.zero),
+                                child: ClipRRect(
+                                  borderRadius: !isMore.value && index == 1
+                                      ? BorderRadius.only(
+                                          bottomRight: Radius.circular(8),
+                                          bottomLeft: Radius.circular(8))
+                                      : BorderRadius.all(Radius.zero),
                                   child: CachedNetworkImage(
                                     imageUrl: productDetailCtr
                                         .product.value.imagesColor![index],
@@ -96,12 +102,9 @@ class Tab1DetailInfo extends GetView {
                                   ),
                                 ),
                               );
-
                             },
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-
-
                           ),
                           // ListView(
                           //   physics: NeverScrollableScrollPhysics(),
@@ -144,54 +147,63 @@ class Tab1DetailInfo extends GetView {
                         ),
                       ),
                       Obx(
-                        () =>  productDetailCtr
-                            .product.value.imagesColor!.length >= 2 ? isMore.value
-                            ? Container()
-                            : Positioned(
-                            bottom: 0,right: 0,left: 0,
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                          colors: [
-                                        Colors.white.withOpacity(1),
-                                        Colors.white.withOpacity(0)
-                                      ],
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter)),
-                                  height: 80,
-                                  width: Get.width,
-                                ),
-                               Container(
-                                            height: 60,
-                                            child: CustomButton(
-                                                width: Get.width,
-                                                onPressed: () {
-                                                  isMore.value = true;
-                                                },
-                                                backgroundColor: Colors.black,
-                                                borderColor: Colors.black,
-                                                child:Row(mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "상품정보 더보기",
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                    Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,)
-                                                  ],
-                                                )),
-                                          )
-                                    ,
-                              ]
-                            )): Container(),
+                        () => productDetailCtr
+                                    .product.value.imagesColor!.length >=
+                                2
+                            ? isMore.value
+                                ? Container()
+                                : Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    left: 0,
+                                    child: Column(children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                colors: [
+                                              Colors.white.withOpacity(1),
+                                              Colors.white.withOpacity(0)
+                                            ],
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter)),
+                                        height: 80,
+                                        width: Get.width,
+                                      ),
+                                      Container(
+                                        height: 60,
+                                        child: CustomButton(
+                                            width: Get.width,
+                                            onPressed: () {
+                                              isMore.value = true;
+                                            },
+                                            backgroundColor: Colors.black,
+                                            borderColor: Colors.black,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "상품정보 더보기",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_outlined,
+                                                  color: Colors.white,
+                                                )
+                                              ],
+                                            )),
+                                      ),
+                                    ]))
+                            : Container(),
                       )
                     ],
                   ),
                 ),
-                Obx(
-                ()=>SizedBox(height: isMore.value?0:30,)),
+                Obx(() => SizedBox(
+                      height: isMore.value ? 0 : 30,
+                    )),
                 Divider(
                   thickness: 10,
                   color: MyColors.grey3,
@@ -214,12 +226,10 @@ class Tab1DetailInfo extends GetView {
                     );
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing:10,
+                    crossAxisSpacing: 10,
                     crossAxisCount: 3,
-                    childAspectRatio:  context.width / 3 /
-                        (MyVars.isSmallPhone()
-                            ? 300
-                            : 290),
+                    childAspectRatio:
+                        context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
                     // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                   ),
                 ),
@@ -233,8 +243,8 @@ class Tab1DetailInfo extends GetView {
                     "스토어에서 인기 있는 상품",
                     style: MyTextStyles.f18_bold,
                   ),
-
-                ),SizedBox(height: 10),
+                ),
+                SizedBox(height: 10),
                 GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   primary: false,
@@ -248,26 +258,27 @@ class Tab1DetailInfo extends GetView {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 10,
                     crossAxisCount: 3,
-                    childAspectRatio:  context.width / 3 /
-                        (MyVars.isSmallPhone()
-                            ? 300
-                            : 290),
-                  // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                    childAspectRatio:
+                        context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
+                    // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                   ),
                 ),
 
                 // 반품교환정보
                 SizedBox(height: 50),
-                Text(
-                  '띵쇼 교환 및 반품 안내',
-                  style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    '띵쇼 교환 및 반품 안내',
+                    style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+                  ),
                 ),
                 SizedBox(height: 10),
                 Obx(
                   () => productDetailCtr.product.value.return_exchange_info !=
                           null
                       ? Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(10.0),
                           child: Text(
                             productDetailCtr
                                 .product.value.return_exchange_info!,

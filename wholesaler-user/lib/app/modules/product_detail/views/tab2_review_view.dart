@@ -15,6 +15,7 @@ import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_logi
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/review_detail_view2.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_2_review_controller.dart';
+import 'package:wholesaler_user/app/modules/product_detail/views/product_review_list_view.dart';
 import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/custom_button.dart';
@@ -76,7 +77,12 @@ class Tab2ReviewView extends GetView {
                                 .copyWith(color: MyColors.black2),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => ProductReviewListView(), arguments: {
+                                'isPhoto': false,
+                                'productId': Get.arguments,
+                              });
+                            },
                             child: Row(
                               children: [
                                 Text(
@@ -130,12 +136,150 @@ class Tab2ReviewView extends GetView {
               SizedBox(
                 height: 20,
               ),
+              Divider(
+                color: MyColors.grey3,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               //포토리뷰 자리
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Divider(
-                  color: MyColors.grey3,
-                ),
+
+              ctr.reviewInfoModel.value.review_photo_count != 0 &&
+                      ctr.reviewInfoModel.value.review_photo_count != null
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '포토리뷰 ${Utils.numberFormat(number: ctr.reviewInfoModel.value.review_photo_count!)}개',
+                            style: MyTextStyles.f16_bold
+                                .copyWith(color: MyColors.black2),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ctr.photoReviews.length > 0
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            ctr.photoReviews[0].images![0],
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.fill,
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Container(
+                                        width: 80,
+                                        height: 80,
+                                        color: MyColors.grey1,
+                                      ),
+                                    ),
+                              ctr.photoReviews.length > 1
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            ctr.photoReviews[1].images![0],
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.fill,
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Container(
+                                        width: 80,
+                                        height: 80,
+                                        color: MyColors.grey1,
+                                      ),
+                                    ),
+                              ctr.photoReviews.length > 2
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            ctr.photoReviews[2].images![0],
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.fill,
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Container(
+                                        width: 80,
+                                        height: 80,
+                                        color: MyColors.grey1,
+                                      ),
+                                    ),
+                              //더보기
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => ProductReviewListView(),
+                                      arguments: {
+                                        'isPhoto': true,
+                                        'productId': Get.arguments
+                                      });
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    color: MyColors.grey10,
+                                    width: 80,
+                                    height: 80,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_rounded,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                        Text(
+                                          '더보기',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // ListView.builder(
+                          //   scrollDirection: Axis.horizontal,
+                          //   itemCount: ctr.photoReviews.length,
+                          //   itemBuilder: (context, index) {
+
+                          //   },
+                          // )
+                        ],
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              SizedBox(
+                height: 20,
+              ),
+              Divider(
+                color: MyColors.grey3,
               ),
               for (int i = 0; i < ctr.reviews.length; i++) ...[
                 Column(
