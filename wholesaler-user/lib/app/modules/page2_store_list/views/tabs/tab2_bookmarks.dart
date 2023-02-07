@@ -131,12 +131,12 @@ class Tab2BookmarksView extends StatelessWidget {
   }
 
   Widget _starBuilder(Store store) {
-    // int favoriteCount = store.favoriteCount!.value;
-    // double temp = double.parse(favoriteCount.toString());
-    // String result = favoriteCount.toString();
-    // if (temp > 999) {
-    //   result = (temp / 1000).toStringAsFixed(1) + "k";
-    // }
+    int favoriteCount = store.favoriteCount!.value;
+    double temp = double.parse(favoriteCount.toString());
+    String result = favoriteCount.toString();
+    if (temp > 999) {
+      result = (temp / 1000).toStringAsFixed(1) + "k";
+    }
     return InkWell(
       onTap: () async {
         store.isBookmarked!.toggle();
@@ -151,14 +151,14 @@ class Tab2BookmarksView extends StatelessWidget {
               store.isBookmarked!.isTrue ? Icons.star : Icons.star_border,
               color: MyColors.primary,
             ),
-            // Text(
-            //   result,
-            //   style: TextStyle(
-            //     color: MyColors.grey4,
-            //     fontSize: 12,
-            //     fontWeight: FontWeight.w700,
-            //   ),
-            // )
+            Text(
+              result,
+              style: TextStyle(
+                color: MyColors.grey4,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            )
 
           ],
         ),

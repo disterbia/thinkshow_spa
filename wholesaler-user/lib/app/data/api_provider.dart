@@ -742,6 +742,7 @@ class uApiProvider extends GetConnect {
               ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
               : null,
           isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
           rank: i + 1,
         );
         stores.add(tempStore);
