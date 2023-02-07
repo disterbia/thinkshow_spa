@@ -16,6 +16,7 @@ class Page2OrderHistoryView extends GetView {
   init() {
     ctr.init();
   }
+
   @override
   Widget build(BuildContext context) {
     init();
@@ -39,20 +40,26 @@ class Page2OrderHistoryView extends GetView {
                       children: [
                         Text(
                           '주문금액',
-                          style: MyTextStyles.f18.copyWith(color: MyColors.black3),
+                          style:
+                              MyTextStyles.f18.copyWith(color: MyColors.black3),
                         ),
                         SizedBox(width: 10),
                         ctr.products.isEmpty
                             ? Text('')
                             : Text(
-                                Utils.numberFormat(number: ctr.totalAmount.value),
-                                style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+                                Utils.numberFormat(
+                                    number: ctr.totalAmount.value),
+                                style: MyTextStyles.f18_bold
+                                    .copyWith(color: MyColors.black3),
                               ),
                       ],
                     ),
                     SizedBox(height: 20),
                     ctr.products.isEmpty
-                        ? Center(child: Text('목록이 비어 있습니다', style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3)))
+                        ? Center(
+                            child: Text('목록이 비어 있습니다',
+                                style: MyTextStyles.f18_bold
+                                    .copyWith(color: MyColors.black3)))
                         : ListView(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -63,18 +70,25 @@ class Page2OrderHistoryView extends GetView {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         ctr.products[index].createdAt!,
-                                        style: MyTextStyles.f14.copyWith(color: MyColors.black3),
+                                        style: MyTextStyles.f14
+                                            .copyWith(color: MyColors.black3),
                                       ),
                                       SizedBox(height: 5),
-                                      ProductItemHorizontal(product: ctr.products[index]),
+                                      ProductItemHorizontal(
+                                        product: ctr.products[index],
+                                        showClose: false,
+                                        showPrice: false,
+                                      ),
                                     ],
                                   );
                                 },
-                                separatorBuilder: (BuildContext context, int index) {
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
                                   return SizedBox(height: 10);
                                 },
                               ),

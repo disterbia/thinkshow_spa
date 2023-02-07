@@ -29,21 +29,22 @@ class Page2OrderHistoryController extends GetxController {
   int offset = 0;
   RxBool allowCallAPI = true.obs;
 
-  void init() async{
+  void init() async {
     print('PartnerHomeController init');
-   // WidgetsBinding.instance.addPostFrameCallback((_) async{
-      // isShowSplashScreen.value = false;
-      isLoading.value=true;
+    // WidgetsBinding.instance.addPostFrameCallback((_) async{
+    // isShowSplashScreen.value = false;
+    isLoading.value = true;
     var date = DateTime.now();
     var prevMonth = DateTime(date.year, date.month - 3, date.day);
     startDateController = TextEditingController(
         text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
     endDateController =
         TextEditingController(text: DateFormat('yyyy-MM-dd').format(prevMonth));
-      await getOrders(isScrolling: false);
-      isLoading.value=false;
-   // });
+    await getOrders(isScrolling: false);
+    isLoading.value = false;
+    // });
   }
+
   @override
   void onInit() async {
     super.onInit();
@@ -66,8 +67,8 @@ class Page2OrderHistoryController extends GetxController {
   }
 
   Future<void> getOrders({required bool isScrolling}) async {
-    if (isScrolling == false){
-      offset=0;
+    if (isScrolling == false) {
+      offset = 0;
       products.clear();
     }
     OrderResponse response = await apiProvider.getOrders(
@@ -76,28 +77,27 @@ class Page2OrderHistoryController extends GetxController {
         offset: offset,
         limit: mConst.limit);
 
-
     for (var element in response.orders!) {
       products.add(
         Product(
-          id: element.productId!,
-          title: element.productName.toString(),
-          price: element.productPrice,
-          OLD_option: element.productOptionName,
-          quantity: element.orderQty!.obs,
-          imgHeight: 100,
-          imgWidth: 80,
-          imgUrl: element.productThumbnailUrl.toString(),
-          store: Store(id: 1),
-          createdAt: element.createdAt,
-        ),
+            id: element.productId!,
+            title: element.productName.toString(),
+            price: element.productPrice,
+            OLD_option: element.productOptionName,
+            quantity: element.orderQty!.obs,
+            imgHeight: 100,
+            imgWidth: 80,
+            imgUrl: element.productThumbnailUrl.toString(),
+            store: Store(id: 1),
+            createdAt: element.createdAt,
+            normalPrice: 0,
+            selectedOptionAddPrice: element.productAddPrice),
       );
     }
     totalAmount.value = response.totalAmount ?? 0;
     if (response.orders!.length < mConst.limit) {
       allowCallAPI.value = false;
-    }
-    else{
+    } else {
       allowCallAPI.value = true;
     }
   }

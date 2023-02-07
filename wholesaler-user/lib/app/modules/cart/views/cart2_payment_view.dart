@@ -40,11 +40,8 @@ class Cart2PaymentView extends GetView {
           SizedBox(height: 15),
           Obx(
             () => ctr.cartItems.length > 0
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: CartItemsList(
-                        isCart1Page: false, cartItems: ctr.cartItems),
-                  )
+                ? CartItemsList(
+                    isCart1Page: false, cartItems: ctr.cartItems)
                 : SizedBox.shrink(),
           ),
           Divider(thickness: 10, color: MyColors.grey3),

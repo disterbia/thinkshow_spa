@@ -14,7 +14,10 @@ import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/models/review.dart';
+import 'package:wholesaler_user/app/models/review_mdoel2.dart';
+import 'package:wholesaler_user/app/models/review_model.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
+import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/review_detail_view2.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
 import 'package:wholesaler_user/app/widgets/dialog.dart';
@@ -36,6 +39,8 @@ class ProductItemHorizontal extends StatelessWidget {
   TextStyle? titleStyle;
   ProductInquiry? inquiry;
   Function(bool)? quantityPlusMinusOnPressed;
+  late bool showClose;
+  late bool showPrice;
 
   /// Ues for all pages except *Review pages*
   ProductItemHorizontal({
@@ -43,6 +48,9 @@ class ProductItemHorizontal extends StatelessWidget {
     this.productNumber,
     this.quantityPlusMinusOnPressed,
     this.price,
+    required this.showClose,
+    required this.showPrice,
+
     // this.normalPrice,
     // this.discountPercent,
     // this.totalPrice,
@@ -50,27 +58,45 @@ class ProductItemHorizontal extends StatelessWidget {
   });
 
   /// Use for Review List, Review Detail Pages
-  ProductItemHorizontal.review({required Review review, titleStyle}) {
+  ProductItemHorizontal.review(
+      {required Review review,
+      required bool showClose,
+      required bool showPrice,
+      titleStyle}) {
     this.product = review.product;
     this.review = review;
     this.titleStyle = titleStyle;
+    this.showClose = showClose;
+    this.showPrice = showPrice;
   }
 
   /// Use for Review List, Review Detail Pages
-  ProductItemHorizontal.inquiry({required ProductInquiry inquiry}) {
+  ProductItemHorizontal.inquiry({
+    required ProductInquiry inquiry,
+    required bool showClose,
+    required bool showPrice,
+  }) {
     this.product = inquiry.product;
     this.inquiry = inquiry;
+    this.showClose = showClose;
+    this.showPrice = showPrice;
   }
 
   @override
   Widget build(BuildContext context) {
     int normalPrice = product.normalPrice!;
-    int productTotalPrice=0;
-    int normalTotalPrice=0;
-    if(product.quantity!=null){
-       productTotalPrice = (product.price??price! + product.selectedOptionAddPrice!) *
-          product.quantity!.value;
-       normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
+    int productTotalPrice = 0;
+    int normalTotalPrice = 0;
+    if (product.quantity != null) {
+      if (product.price != null) {
+        productTotalPrice = (product.price! + product.selectedOptionAddPrice!) *
+            product.quantity!.value;
+      } else {
+        productTotalPrice = (price! + product.selectedOptionAddPrice!) *
+            product.quantity!.value;
+      }
+
+      normalTotalPrice = (normalPrice + product.selectedOptionAddPrice!) *
           product.quantity!.value;
     }
 
@@ -83,10 +109,25 @@ class ProductItemHorizontal extends StatelessWidget {
 
         if (review != null) {
           log('review != null great');
-          Get.to(() => ReviewDetailView(
-                selectedReviw: review!,
-                isComingFromReviewPage: true,
-              ));
+          // Get.to(() => ReviewDetailView(
+          //       selectedReviw: review!,
+          //       isComingFromReviewPage: true,
+          //     ));
+
+          Get.to(
+            () => ReviewDetailView2(
+              review: ReviewModel2(
+                image_file_path: review!.images,
+                product_info: review!.product,
+                content: review!.content,
+                select_option_name: review!.product.OLD_option,
+                category_fit_name: review!.category_fit_name,
+                category_color_name: review!.category_color_name,
+                category_quality_name: review!.category_quality_name,
+                star: review!.rating.toInt(),
+              ),
+            ),
+          );
           return;
         }
         if (product.id != -1) {
@@ -97,49 +138,60 @@ class ProductItemHorizontal extends StatelessWidget {
       },
       child: Row(
         children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            ImageBuilder(),
-            SizedBox(height: 10,),
-            QuantityPlusMinusBuilder(),
-          ],),
-          SizedBox(width: 10,),
+              ImageBuilder(),
+              SizedBox(
+                height: 10,
+              ),
+              QuantityPlusMinusBuilder(),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Category
-               // CategoryBuilder(),
+                // CategoryBuilder(),
                 // Store Name
                 //StoreNameBuilder(),
                 // Title
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(flex:10,child: TitleBuilder())
-
-                  ,
-                  Spacer(),
-                  Expanded(flex: 1,
-                    child: InkWell(
-                      onTap: (){
-                          mDialog(
-                            title: '선택삭제',
-                            subtitle: '선택하셨던 상품을 삭제하시겠습니까?',
-                            twoButtons: TwoButtons(
-                              leftBtnText: '취소',
-                              rightBtnText: '삭제',
-                              lBtnOnPressed: () {
-                                Get.back();
-                              },
-                              rBtnOnPressed: () => Get.find<Cart1ShoppingBasketController>().callDeleteSelectedProductsAPI(isIcon:true,cartId: product.cartId),
-                            ),
-                          );
-                      },
-                        child: Icon(Icons.clear)),
-                  )
-                ],)
-                ,
+                    Expanded(flex: 10, child: TitleBuilder()),
+                    Spacer(),
+                    showClose
+                        ? Expanded(
+                            flex: 1,
+                            child: InkWell(
+                                onTap: () {
+                                  mDialog(
+                                    title: '선택삭제',
+                                    subtitle: '선택하셨던 상품을 삭제하시겠습니까?',
+                                    twoButtons: TwoButtons(
+                                      leftBtnText: '취소',
+                                      rightBtnText: '삭제',
+                                      lBtnOnPressed: () {
+                                        Get.back();
+                                      },
+                                      rBtnOnPressed: () => Get.find<
+                                              Cart1ShoppingBasketController>()
+                                          .callDeleteSelectedProductsAPI(
+                                              isIcon: true,
+                                              cartId: product.cartId),
+                                    ),
+                                  );
+                                },
+                                child: Icon(Icons.clear)),
+                          )
+                        : SizedBox.shrink()
+                  ],
+                ),
                 // Option
                 //OptionBuilder(),
                 // Option with extra price
@@ -150,37 +202,46 @@ class ProductItemHorizontal extends StatelessWidget {
                 //QuantityBuilder(),
                 // Price
                 //PriceBuilder(),
-                Row(
-                  children: [
-                    Spacer(),
-                    Column(crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Text(product.priceDiscountPercent.toString()+"% ",style:TextStyle(color: MyColors.primary),),
-                            Text(
-                              Utils.numberFormat(number: normalTotalPrice!, suffix: '원'),
-                              style: TextStyle(
-                                color: MyColors.grey4,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontFamily: 'SpoqaHanSansNeo-Medium',
-                                fontSize: 12.0,
-                                decoration: TextDecoration.lineThrough
+                showPrice
+                    ? Row(
+                        children: [
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    product.priceDiscountPercent.toString() +
+                                        "% ",
+                                    style: TextStyle(color: MyColors.primary),
+                                  ),
+                                  Text(
+                                      Utils.numberFormat(
+                                          number: normalTotalPrice,
+                                          suffix: '원'),
+                                      style: TextStyle(
+                                          color: MyColors.grey4,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                          fontFamily: 'SpoqaHanSansNeo-Medium',
+                                          fontSize: 12.0,
+                                          decoration:
+                                              TextDecoration.lineThrough)),
+                                ],
+                              ),
+                              Text(
+                                Utils.numberFormat(
+                                    number: productTotalPrice, suffix: '원'),
+                                style: MyTextStyles.f18_cart,
                               )
-                            ),
-                          ],
-                        ),
-                        Text(
-                          Utils.numberFormat(number: productTotalPrice!, suffix: '원'),
-                          style: MyTextStyles.f18_cart,
-                        )
-                      ],
-                    ),
-                  ],
-                )
+                            ],
+                          ),
+                        ],
+                      )
+                    : SizedBox.shrink()
                 // Total Count
-              //  TotalCountBuilder(),
+                //  TotalCountBuilder(),
                 // Sold Quantity
                 //SoldQuantityBuilder(),
                 // Inquiry Text
@@ -194,8 +255,9 @@ class ProductItemHorizontal extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 10,)
-
+          SizedBox(
+            width: 10,
+          )
         ],
       ),
     );
@@ -262,8 +324,8 @@ class ProductItemHorizontal extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 5),
       child: Text(
         product.title,
-       // overflow: TextOverflow.ellipsis,
-        style:MyTextStyles.f14,
+        // overflow: TextOverflow.ellipsis,
+        style: MyTextStyles.f14,
       ),
     );
   }

@@ -12,7 +12,8 @@ import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget
 import 'package:wholesaler_user/app/widgets/text_button.dart';
 
 class ProductInquiryDetailView extends GetView<ProductInquiryDetailController> {
-  ProductInquiryDetailController ctr = Get.put(ProductInquiryDetailController());
+  ProductInquiryDetailController ctr =
+      Get.put(ProductInquiryDetailController());
   ProductInquiry inquiry;
 
   ProductInquiryDetailView(this.inquiry);
@@ -20,7 +21,8 @@ class ProductInquiryDetailView extends GetView<ProductInquiryDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(isBackEnable: true, hasHomeButton: true, title: '상품 문의'),
+      appBar:
+          CustomAppbar(isBackEnable: true, hasHomeButton: true, title: '상품 문의'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -29,7 +31,7 @@ class ProductInquiryDetailView extends GetView<ProductInquiryDetailController> {
             SizedBox(height: 20),
             ClipRRect(
               child: CachedNetworkImage(
-                imageUrl: inquiry.product.imgUrl,
+                imageUrl: inquiry.product.imgUrl.split(',')[0],
                 fit: BoxFit.cover,
                 height: inquiry.product.imgHeight,
                 width: inquiry.product.imgWidth,

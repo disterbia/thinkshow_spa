@@ -6,7 +6,10 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/review.dart';
+import 'package:wholesaler_user/app/models/review_mdoel2.dart';
+import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/review_detail_view2.dart';
 import 'package:wholesaler_user/app/modules/review_detail/views/review_detail_view.dart';
 import 'package:wholesaler_user/app/modules/review_list/controllers/review_list_controller.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
@@ -30,12 +33,32 @@ class ReviewListView extends GetView<ReviewListController> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
-                      Get.to(() => ReviewDetailView(
-                            selectedReviw: ctr.reviews[index],
-                            isComingFromReviewPage: T,
-                          ));
+                      // Get.to(() => ReviewDetailView(
+                      //       selectedReviw: ctr.reviews[index],
+                      //       isComingFromReviewPage: T,
+                      //     ));
+                      Get.to(
+                        () => ReviewDetailView2(
+                          review: ReviewModel2(
+                            image_file_path: ctr.reviews[index].images,
+                            product_info: ctr.reviews[index].product,
+                            content: ctr.reviews[index].content,
+                            select_option_name:
+                                ctr.reviews[index].product.OLD_option,
+                            category_fit_name:
+                                ctr.reviews[index].category_fit_name,
+                            category_color_name:
+                                ctr.reviews[index].category_color_name,
+                            category_quality_name:
+                                ctr.reviews[index].category_quality_name,
+                            star: ctr.reviews[index].rating.toInt(),
+                          ),
+                        ),
+                      );
                     },
                     child: ProductItemHorizontal.review(
+                      showClose: false,
+                      showPrice: false,
                       review: ctr.reviews[index],
                       titleStyle:
                           MyTextStyles.f14.copyWith(color: MyColors.black1),
