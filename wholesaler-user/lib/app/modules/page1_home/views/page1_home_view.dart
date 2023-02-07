@@ -5,6 +5,7 @@ import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/tab1_user_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab1_home.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab2_best.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab3_new_products.dart';
@@ -17,6 +18,8 @@ import 'package:wholesaler_user/app/widgets/simple_tab_bar.dart';
 class Page1HomeView extends GetView<Page1HomeController> {
   Page1HomeController ctr = Get.put(Page1HomeController());
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
+  Tab1UserHomeController ctr3 = Get.put(Tab1UserHomeController());
+
   Page1HomeView();
 
   init() {
@@ -31,6 +34,12 @@ class Page1HomeView extends GetView<Page1HomeController> {
       appBar: _mainAppbar(),
       backgroundColor: MyColors.white,
       body: _floatTabBar(),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
+          child: Icon(Icons.arrow_upward_rounded),
+          onPressed: () {
+            ctr3.scrollController.value.jumpTo(0);
+          }),
     );
   }
 
@@ -74,7 +83,10 @@ class Page1HomeView extends GetView<Page1HomeController> {
                   badgeColor: MyColors.primary,
                   badgeContent: Text(
                     ctr2.getNumberProducts().toString(),
-                    style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: MyColors.black,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
                   ),
                   toAnimate: false,
                   position: BadgePosition.topEnd(top: 5, end: 5),

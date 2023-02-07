@@ -79,7 +79,18 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                               ],
                             ),
                           )
-                        : Container(),
+                        : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text("관리자가 설정한 기획전 제목",style: MyTextStyles.f16_bold.copyWith(color: Colors.black),),
+                          ),
+                          CarousalProductHorizontalView(),
+                        ],
+                      ),
+                    ),
                     Divider(thickness: 5, color: MyColors.grey3),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),

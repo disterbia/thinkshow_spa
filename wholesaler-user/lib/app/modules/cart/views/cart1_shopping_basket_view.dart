@@ -213,85 +213,85 @@ class Cart1ShoppingBasketView extends GetView {
   Widget _expandSection() {
     return Builder(builder: (context) {
       var controller = ExpandableController.of(context, required: true)!;
-      return Column(
-        children: [
-          GestureDetector(
-              onPanUpdate: (details) {
-                if(!isFirstDrag.value) return;
-                if(details.delta.dy>0){
-                  isExpanded.value=false;
-                  controller.toggle();
-                  expandableHeight.value=Get.height/6;
-                  isFirstDrag.value=false;
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 8,bottom: 20),
-                width: 60,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: MyColors.grey3,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              )
-
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20,right: 20),
-            child: Container(
+      return GestureDetector(
+          onPanUpdate: (details) {
+            if(!isFirstDrag.value) return;
+            if(details.delta.dy>0){
+              print(details.delta.dy);
+              isExpanded.value=false;
+              controller.toggle();
+              expandableHeight.value=Get.height/6;
+              isFirstDrag.value=false;
+            }
+          },
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 8,bottom: 20),
+              width: 60,
+              height: 5,
               decoration: BoxDecoration(
                 color: MyColors.grey3,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top:8,left: 8,bottom: 5),
-                    child: Row(
-                      children: [
-                        Text("총 상품금액",style: TextStyle(color: Colors.grey),),
-                        Spacer(),
-                        Obx(() =>
-                            Padding(
-                              padding:  EdgeInsets.only(top:8,right: 8,bottom: 5),
-                              child: Text(Utils.numberFormat(
-                              number: ctr.totalPaymentPrice.value, suffix: '원',),style: MyTextStyles.f14_bold,),
-                            )),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8,bottom: 5),
-                    child: Row(children: [
-                      Text("총 배송비",style: TextStyle(color: Colors.grey)),
-                      Spacer(),
-                      Padding(
-                        padding:  EdgeInsets.only(right: 8,bottom: 5),
-                        child: Text(Utils.numberFormat(
-                            number: 0, suffix: '원'),style: MyTextStyles.f14_bold,),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: MyColors.grey3,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top:8,left: 8,bottom: 5),
+                      child: Row(
+                        children: [
+                          Text("총 상품금액",style: TextStyle(color: Colors.grey),),
+                          Spacer(),
+                          Obx(() =>
+                              Padding(
+                                padding:  EdgeInsets.only(top:8,right: 8,bottom: 5),
+                                child: Text(Utils.numberFormat(
+                                number: ctr.totalPaymentPrice.value, suffix: '원',),style: MyTextStyles.f14_bold,),
+                              )),
+                        ],
                       ),
-                    ],),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8,bottom: 10,),
-                    child: Row(
-                      children: [
-                        Text("결제 예상금액",style: MyTextStyles.f14,),
-                        Spacer(),
-                        Obx(() => Padding(
-                          padding: EdgeInsets.only(right: 8),
-                          child: Text(Utils.numberFormat(
-                              number: ctr.totalPaymentPrice.value, suffix: '원'),style: MyTextStyles.f14_bold,),
-                        )),
-                      ],
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8,bottom: 5),
+                      child: Row(children: [
+                        Text("총 배송비",style: TextStyle(color: Colors.grey)),
+                        Spacer(),
+                        Padding(
+                          padding:  EdgeInsets.only(right: 8,bottom: 5),
+                          child: Text(Utils.numberFormat(
+                              number: 0, suffix: '원'),style: MyTextStyles.f14_bold,),
+                        ),
+                      ],),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8,bottom: 10,),
+                      child: Row(
+                        children: [
+                          Text("결제 예상금액",style: MyTextStyles.f14,),
+                          Spacer(),
+                          Obx(() => Padding(
+                            padding: EdgeInsets.only(right: 8),
+                            child: Text(Utils.numberFormat(
+                                number: ctr.totalPaymentPrice.value, suffix: '원'),style: MyTextStyles.f14_bold,),
+                          )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
