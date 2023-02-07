@@ -130,7 +130,10 @@ class ProductDetailView extends GetView {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(ctr.product.value.store.name!,style: MyTextStyles.f18_bold,)
+                          Text(
+                            ctr.product.value.store.name!,
+                            style: MyTextStyles.f18_bold,
+                          )
                         ],
                       )
                     : Row(
@@ -143,7 +146,10 @@ class ProductDetailView extends GetView {
                             width: 10,
                           ),
                           Obx(() => ctr.product.value.store.name != null
-                              ? Text(ctr.product.value.store.name!,style: MyTextStyles.f14_bold,)
+                              ? Text(
+                                  ctr.product.value.store.name!,
+                                  style: MyTextStyles.f14_bold,
+                                )
                               : SizedBox.shrink()),
                         ],
                       )),
@@ -205,117 +211,148 @@ class ProductDetailView extends GetView {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                    ctr.product.value.title,
-                    style: MyTextStyles.f18_bold,
-                  ),
+                  ctr.product.value.title,
+                  style: MyTextStyles.f18_bold,
+                ),
               ),
             ),
-            InkWell(onTap: () async{
-              Share.share(
-                await DynamicLink().getShortLink(
-                 ctr.productId.toString(),
-                ),
-              );
-            },child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(Icons.share_outlined,color: MyColors.grey4,),
-            ))
+            InkWell(
+                onTap: () async {
+                  Share.share(
+                    await DynamicLink().getShortLink(
+                      ctr.productId.toString(),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(
+                    Icons.share_outlined,
+                    color: MyColors.grey4,
+                  ),
+                ))
           ],
         ),
-         Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Row(
-                    children: [
-                      Container(
-                        child: ctr.product.value.totalRating==null?Container():RatingBar.builder(
-                          itemSize: 15,
-                          ignoreGestures: true,
-                          initialRating:
-                              ctr.product.value.totalRating!.value,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          itemCount: 5,
-                          itemPadding:
-                              EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        ),
-                      ),
-                      ctr.product.value.totalRating==null?Container():InkWell(
-                            onTap: () =>
-                                DefaultTabController.of(context)!.index = 1,
-                            child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
-                    ],
-                  ),
-                  // Row(
-                  //   children: [
-                  //     Icon(Icons.star, color: MyColors.primary),
-                  //     Text(
-                  //       ctr.product.value.totalRating!.value.toString(),
-                  //       textAlign: TextAlign.start,
-                  //     )
-                  //   ],
-                  // ),
-                ),
-       Padding(
-         padding: const EdgeInsets.only(top: 20.0,left: 10),
-         child: Row(
-           children: [
-             Text("띵 할인가 ",style: TextStyle(fontSize: 15,color: Colors.redAccent),),
-             Text(
-               Utils.numberFormat(
-                   number: ctr.product.value.normalPrice ?? 0, suffix: '원'),
-               style: TextStyle(
-                   color: MyColors.grey4,
-                   fontWeight: FontWeight.w400,
-                   fontStyle: FontStyle.normal,
-                   fontFamily: 'SpoqaHanSansNeo-Medium',
-                   fontSize: 15.0,
-                   decoration: TextDecoration.lineThrough
-               ),
-             ),
-           ],
-         ),
-       ),
         Padding(
-          padding: const EdgeInsets.only(left: 10,top: 5,bottom: 10),
+          padding: const EdgeInsets.only(left: 5),
           child: Row(
             children: [
-              Text(Utils.numberFormat(
-                  number: ctr.product.value.priceDiscountPercent ?? 0, suffix: '% '),
-              style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 20,fontWeight: FontWeight.bold),),
+              Container(
+                child: ctr.product.value.totalRating == null
+                    ? Container()
+                    : RatingBar.builder(
+                        itemSize: 17,
+                        ignoreGestures: true,
+                        initialRating: ctr.product.value.totalRating!.value,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        itemCount: 5,
+                        // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              ctr.product.value.totalRating == null
+                  ? Container()
+                  : InkWell(
+                      onTap: () => DefaultTabController.of(context)!.index = 1,
+                      child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
+            ],
+          ),
+          // Row(
+          //   children: [
+          //     Icon(Icons.star, color: MyColors.primary),
+          //     Text(
+          //       ctr.product.value.totalRating!.value.toString(),
+          //       textAlign: TextAlign.start,
+          //     )
+          //   ],
+          // ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20.0, left: 10),
+          child: Row(
+            children: [
+              Text(
+                "띵 할인가 ",
+                style: TextStyle(fontSize: 15, color: Colors.redAccent),
+              ),
+              Text(
+                Utils.numberFormat(
+                    number: ctr.product.value.normalPrice ?? 0, suffix: '원'),
+                style: TextStyle(
+                    color: MyColors.grey4,
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    fontFamily: 'SpoqaHanSansNeo-Medium',
+                    fontSize: 15.0,
+                    decoration: TextDecoration.lineThrough),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, top: 5, bottom: 10),
+          child: Row(
+            children: [
+              Text(
+                Utils.numberFormat(
+                    number: ctr.product.value.priceDiscountPercent ?? 0,
+                    suffix: '% '),
+                style: MyTextStyles.f18_bold.copyWith(
+                    color: MyColors.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
               Text(
                 Utils.numberFormat(
                     number: ctr.product.value.price ?? 0, suffix: '원'),
-                style: MyTextStyles.f18_bold.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+                style: MyTextStyles.f18_bold
+                    .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),
         ),
         Divider(),
         Padding(
-          padding: const EdgeInsets.only(left: 10,top: 5),
-          child: Row(children: [
-            Text("배송정보   ",style: MyTextStyles.f16.copyWith(color: MyColors.grey4),),
-            Row(
-              children: [
-                Icon(Icons.notifications,color: MyColors.primary),
-                Text("띵동배송",style:MyTextStyles.f16.copyWith(color: MyColors.primary))
-              ],
-            ),Text("   무료배송",style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
-          ],),
+          padding: const EdgeInsets.only(left: 10, top: 5),
+          child: Row(
+            children: [
+              Text(
+                "배송정보   ",
+                style: MyTextStyles.f16.copyWith(color: MyColors.grey4),
+              ),
+              Row(
+                children: [
+                  Icon(Icons.notifications, color: MyColors.primary),
+                  Text("띵동배송",
+                      style: MyTextStyles.f16.copyWith(color: MyColors.primary))
+                ],
+              ),
+              Text("   무료배송",
+                  style:
+                      MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
+            ],
+          ),
         ),
         Padding(
-          padding: const  EdgeInsets.only(left: 10,top: 5),
-          child: Row(children: [
-            Text("혜택정보   ",style: MyTextStyles.f16.copyWith(color: MyColors.grey4)),
-            Text("최대 300p 적립",style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500))
-          ],),
+          padding: const EdgeInsets.only(left: 10, top: 5),
+          child: Row(
+            children: [
+              Text("혜택정보   ",
+                  style: MyTextStyles.f16.copyWith(color: MyColors.grey4)),
+              Text("최대 300p 적립",
+                  style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500))
+            ],
+          ),
         )
       ],
     );
@@ -354,8 +391,9 @@ class ProductDetailView extends GetView {
                   : SizedBox.shrink(),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all( 10),
-                  child: Container(height: 50,
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 50,
                     child: CustomButton(
                       textColor: MyColors.white,
                       text: MyVars.isUserProject() ? '구매하기' : '수정하기',

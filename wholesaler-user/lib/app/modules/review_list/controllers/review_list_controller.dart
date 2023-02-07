@@ -33,7 +33,7 @@ class ReviewListController extends GetxController {
             id: dynamicList[i]['id'],
             writer: dynamicList[i]['writer'],
             createdAt: dynamicList[i]['created_at'],
-            reviewImageUrl: dynamicList[i]['review_image_url'],
+            reviewImageUrl: dynamicList[i]['review_image_url']?.cast<String>(),
             content: dynamicList[i]['content'],
             rating: double.parse(dynamicList[i]['star'].toString()),
             ratingType: ProductRatingType.star,
@@ -45,12 +45,15 @@ class ReviewListController extends GetxController {
                 id: dynamicList[i]['id'],
                 imgUrl: dynamicList[i]['product_info']['thumbnail_image_url'],
                 price: dynamicList[i]['product_info']['price'],
+                normalPrice: dynamicList[i]['product_info']['normal_price'],
+                priceDiscountPercent: 0,
                 quantity: (dynamicList[i]['product_info']['qty'] as int).obs,
-                selectedOptionAddPrice: dynamicList[i]['product_info']['add_price'])));
+                selectedOptionAddPrice: dynamicList[i]['product_info']
+                    ['add_price'])));
       }
 
       isLoading.value = false;
-     // print('hello world ${reviews}');
+      // print('hello world ${reviews}');
     });
   }
 }
