@@ -31,7 +31,7 @@ class ProductDetailView extends GetView {
   ProductDetailController ctr = Get.put(ProductDetailController());
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
   Tab2ReviewProductDetailController ctr3 =
-      Get.put(Tab2ReviewProductDetailController());
+  Get.put(Tab2ReviewProductDetailController());
 
   ProductDetailView();
 
@@ -50,42 +50,63 @@ class ProductDetailView extends GetView {
   Widget build(BuildContext context) {
     init();
     return Obx(
-      () => DefaultTabController(
+          () => DefaultTabController(
         // animationDuration: Duration.zero,
         length: tabTitles.length,
         child: Scaffold(
           bottomNavigationBar: User_BottomNavbar(),
           backgroundColor: MyColors.white,
           appBar: _appbar(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: Column(mainAxisAlignment: MainAxisAlignment.end,
+            children:[
+              FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.arrow_upward_rounded,color: Colors.grey,),
+                  onPressed: () {
+                    ctr.arrowsController.jumpTo(ctr.arrowsController.position.minScrollExtent);
+                  }),
+              SizedBox(height: 10,),
+              FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.arrow_downward_rounded,color: Colors.grey),
+                  onPressed: () {
+                    ctr.arrowsController.jumpTo(ctr.arrowsController.position.maxScrollExtent);
+                  }),
+            ],),
+
           body: ctr.isLoading.value
               ? LoadingWidget()
-              : NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    return [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          children: [
-                            //MyVars.isUserProject() ? storeInfo() : Container(),
-                            _productImages(),
-                            storeInfo(),
-                            Divider(),
-                            _titleRatingPrice(context),
-                            SizedBox(height: 15),
-                          ],
-                        ),
-                      ),
-                      SliverAppBar(
-                        automaticallyImplyLeading: false,
-                        pinned: true,
-                        elevation: 0,
-                        backgroundColor: Colors.white,
-                        title: _tabs(),
-                      ),
-                    ];
-                  },
-                  body: tabViewBody(),
+              : NestedScrollView(controller: ctr.arrowsController,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      //MyVars.isUserProject() ? storeInfo() : Container(),
+                      _productImages(),
+                      storeInfo(),
+                      Divider(),
+                      _titleRatingPrice(context),
+                      SizedBox(height: 15),
+                      _tabs(),
+                    ],
+                  ),
                 ),
+                // SliverAppBar(
+                //   automaticallyImplyLeading: false,
+                //    pinned: true,
+                //   elevation: 0,
+                //   backgroundColor: Colors.white,
+                //   title: _tabs(),
+                // ),
+              ];
+            },
+            body: tabViewBody(),
+          ),
         ),
       ),
     );
@@ -118,71 +139,71 @@ class ProductDetailView extends GetView {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(
-            () => Padding(
+                () => Padding(
                 padding: const EdgeInsets.all(15),
                 child: ctr.product.value.store.imgUrl != null
                     ? Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                ctr.product.value.store.imgUrl!.value),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            ctr.product.value.store.name!,
-                            style: MyTextStyles.f18_bold,
-                          )
-                        ],
-                      )
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          ctr.product.value.store.imgUrl!.value),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      ctr.product.value.store.name!,
+                      style: MyTextStyles.f18_bold,
+                    )
+                  ],
+                )
                     : Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_store.png',
-                            width: 40,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Obx(() => ctr.product.value.store.name != null
-                              ? Text(
-                                  ctr.product.value.store.name!,
-                                  style: MyTextStyles.f14_bold,
-                                )
-                              : SizedBox.shrink()),
-                        ],
-                      )),
+                  children: [
+                    Image.asset(
+                      'assets/icons/ic_store.png',
+                      width: 40,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Obx(() => ctr.product.value.store.name != null
+                        ? Text(
+                      ctr.product.value.store.name!,
+                      style: MyTextStyles.f14_bold,
+                    )
+                        : SizedBox.shrink()),
+                  ],
+                )),
           ),
           Obx(
-            () => ctr.product.value.store.isBookmarked != null
+                () => ctr.product.value.store.isBookmarked != null
                 ? Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Column(
-                      children: [
-                        ctr.product.value.store.isBookmarked!.isTrue
-                            ? InkWell(
-                                onTap: () => ctr.storeBookmarkPressed(),
-                                child: Icon(
-                                  Icons.star,
-                                  color: MyColors.primary,
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () => ctr.storeBookmarkPressed(),
-                                child: Icon(Icons.star_border,
-                                    color: MyColors.grey4)),
-                        Text(
-                          result,
-                          style: TextStyle(
-                            color: MyColors.grey4,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Column(
+                children: [
+                  ctr.product.value.store.isBookmarked!.isTrue
+                      ? InkWell(
+                    onTap: () => ctr.storeBookmarkPressed(),
+                    child: Icon(
+                      Icons.star,
+                      color: MyColors.primary,
                     ),
                   )
+                      : InkWell(
+                      onTap: () => ctr.storeBookmarkPressed(),
+                      child: Icon(Icons.star_border,
+                          color: MyColors.grey4)),
+                  Text(
+                    result,
+                    style: TextStyle(
+                      color: MyColors.grey4,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )
+                ],
+              ),
+            )
                 : SizedBox.shrink(),
           ),
         ],
@@ -194,7 +215,7 @@ class ProductDetailView extends GetView {
     // double height = Get.width * 4 / 3;
     return Container(
       child: Obx(
-        () => ctr.product.value.images!.isNotEmpty
+            () => ctr.product.value.images!.isNotEmpty
             ? ImagesCarouselSlider()
             : SizedBox.shrink(),
       ),
@@ -241,21 +262,21 @@ class ProductDetailView extends GetView {
                 child: ctr.product.value.totalRating == null
                     ? Container()
                     : RatingBar.builder(
-                        itemSize: 17,
-                        ignoreGestures: true,
-                        initialRating: ctr.product.value.totalRating!.value,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        itemCount: 5,
-                        // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
+                  itemSize: 17,
+                  ignoreGestures: true,
+                  initialRating: ctr.product.value.totalRating!.value,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
               ),
               SizedBox(
                 width: 5,
@@ -263,8 +284,8 @@ class ProductDetailView extends GetView {
               ctr.product.value.totalRating == null
                   ? Container()
                   : InkWell(
-                      onTap: () => DefaultTabController.of(context)!.index = 1,
-                      child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
+                  onTap: () => DefaultTabController.of(context)!.index = 1,
+                  child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
             ],
           ),
           // Row(
@@ -339,7 +360,7 @@ class ProductDetailView extends GetView {
               ),
               Text("   무료배송",
                   style:
-                      MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
+                  MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -367,27 +388,27 @@ class ProductDetailView extends GetView {
             children: [
               MyVars.isUserProject()
                   ? Obx(
-                      () => ctr.product.value.isLiked != null
-                          ? IconButton(
-                              onPressed: () => ctr.likeBtnPressed(
-                                  newValue: !ctr.product.value.isLiked!.value),
-                              icon: ctr.product.value.isLiked!.isTrue
-                                  ? Icon(
-                                      Icons.favorite,
-                                      color: MyColors.primary,
-                                    )
-                                  : Icon(
-                                      Icons.favorite_border,
-                                      color: MyColors.primary,
-                                    ),
-                            )
-                          : IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite_border,
-                                color: MyColors.primary,
-                              )),
-                    )
+                    () => ctr.product.value.isLiked != null
+                    ? IconButton(
+                  onPressed: () => ctr.likeBtnPressed(
+                      newValue: !ctr.product.value.isLiked!.value),
+                  icon: ctr.product.value.isLiked!.isTrue
+                      ? Icon(
+                    Icons.favorite,
+                    color: MyColors.primary,
+                  )
+                      : Icon(
+                    Icons.favorite_border,
+                    color: MyColors.primary,
+                  ),
+                )
+                    : IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: MyColors.primary,
+                    )),
+              )
                   : SizedBox.shrink(),
               Expanded(
                 child: Padding(
@@ -421,50 +442,50 @@ class ProductDetailView extends GetView {
         actions: [
           MyVars.isUserProject()
               ? Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.search,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: MyColors.black,
+                ),
+                onPressed: () {
+                  Get.to(SearchPageView());
+                },
+              ),
+              Obx(
+                    () => ctr2.getNumberProducts() != 0
+                    ? Badge(
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    ctr2.getNumberProducts().toString(),
+                    style: TextStyle(
                         color: MyColors.black,
-                      ),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
                       onPressed: () {
-                        Get.to(SearchPageView());
+                        Get.to(() => Cart1ShoppingBasketView());
                       },
-                    ),
-                    Obx(
-                      () => ctr2.getNumberProducts() != 0
-                          ? Badge(
-                              badgeColor: MyColors.primary,
-                              badgeContent: Text(
-                                ctr2.getNumberProducts().toString(),
-                                style: TextStyle(
-                                    color: MyColors.black,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              toAnimate: false,
-                              position: BadgePosition.topEnd(top: 5, end: 5),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Get.to(() => Cart1ShoppingBasketView());
-                                  },
-                                  icon: Icon(
-                                    Icons.shopping_cart_outlined,
-                                    color: MyColors.black,
-                                  )),
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                Get.to(() => Cart1ShoppingBasketView());
-                              },
-                              icon: Icon(
-                                Icons.shopping_cart_outlined,
-                                color: MyColors.black,
-                              ),
-                            ),
-                    ),
-                  ],
+                      icon: Icon(
+                        Icons.shopping_cart_outlined,
+                        color: MyColors.black,
+                      )),
                 )
+                    : IconButton(
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
+              ),
+            ],
+          )
               : SizedBox.shrink(),
         ]);
   }

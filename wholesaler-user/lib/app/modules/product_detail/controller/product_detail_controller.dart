@@ -38,6 +38,7 @@ class ProductDetailController extends GetxController {
 
   // size table widget
   ScrollController arrowsController = ScrollController();
+  ScrollController arrowsController2 = ScrollController();
   RxBool isLoading = false.obs;
 
   late QuillController quillController;
