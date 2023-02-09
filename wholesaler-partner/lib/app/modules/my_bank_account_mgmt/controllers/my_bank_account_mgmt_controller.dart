@@ -44,9 +44,9 @@ class MyBankAccountMgmtController extends GetxController {
     apiProvider.getAccountInfo().then((StatusModel response) {
       if (response.statusCode == 200) {
         var json = jsonDecode(response.data.toString());
-        accountName.value = json['account_name'] ?? '은행을 선택해주세요.';
-        accountOwnerName.value = json['account_owner_name'] ?? '예금주를 입력해주세요.'; //holder name
-        accountNumber.value = json['account_number'] ?? '계좌번호를 입력해주세요.';
+        accountName.value = json['account_name'] ?? '은행을 선택해 주세요.';
+        accountOwnerName.value = json['account_owner_name'] ?? '예금주를 입력해 주세요.'; //holder name
+        accountNumber.value = json['account_number'] ?? '계좌번호를 입력해 주세요.';
       } else {
         mSnackbar(message: response.message);
       }

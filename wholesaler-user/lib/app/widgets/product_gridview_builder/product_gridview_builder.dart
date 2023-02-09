@@ -33,37 +33,37 @@ class ProductGridViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     double columnWidth = context.width / crossAxisCount;
     return Obx(() => Column(
-          children: [
-            GridView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: products.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ProductItemVertical(
-                  product: products[index],
-                  productNumber: productNumbers != null ? productNumbers![index > 9 ? 9 : index] : null,
-                  onCheckboxChanged: (newValue) {
-                    products[index].isChecked!.toggle();
-                    showBottomNavbar!();
-                    addProductsId!(products[index].id);
-                  },
-                );
+      children: [
+        GridView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: products.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ProductItemVertical(
+              product: products[index],
+              productNumber: productNumbers != null ? productNumbers![index > 9 ? 9 : index] : null,
+              onCheckboxChanged: (newValue) {
+                products[index].isChecked!.toggle();
+                showBottomNavbar!();
+                addProductsId!(products[index].id);
               },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 10,
-                crossAxisCount: crossAxisCount,
-                childAspectRatio: columnWidth /
-                    (MyVars.isSmallPhone()
-                        ? (productHeight + 10)
-                        : productHeight), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
-              ),
-            ),
-            Obx(() => isShowLoadingCircle.isTrue
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : SizedBox.shrink()),
-          ],
-        ));
+            );
+          },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 10,
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: columnWidth /
+                (MyVars.isSmallPhone()
+                    ? (productHeight + 10)
+                    : productHeight), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+          ),
+        ),
+        Obx(() => isShowLoadingCircle.isTrue
+            ? Center(
+          child: CircularProgressIndicator(),
+        )
+            : SizedBox.shrink()),
+      ],
+    ));
   }
 }

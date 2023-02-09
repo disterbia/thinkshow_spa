@@ -133,7 +133,7 @@ class AP_Part1Controller extends GetxController
   Future<void> updateImageBtnPressed() async {
     pickedImage2.value = await ImagePicker().pickMultiImage();
 
-    if (pickedImage2.length + imagePath2.length < 30) {
+    if (pickedImage2.length + imagePath2.length <= 30) {
       updateImage();
     } else {
       return mSnackbar(message: "상세이미지는 30장 이상 업로드 할 수 없습니다.");

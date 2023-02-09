@@ -157,7 +157,7 @@ class Tab1AdStatusView extends GetView {
                       textColor: MyColors.black2,
                       fontSize: 12,
                       onPressed: () => ctr.addOrEditAdProductsBtnPressed(exposureAdIndex),
-                      text: '상품을 등록해주세요',
+                      text: '상품을 등록해 주세요',
                     ),
                   ),
                 ],
@@ -182,7 +182,7 @@ class Tab1AdStatusView extends GetView {
     );
 
     // for (var i = 0; i < ctr.exposureAds.length; i++) {
-    //   // If no products submitted, Show 상품을 등록해주세요 Button
+    //   // If no products submitted, Show 상품을 등록해 주세요 Button
     //   if (ctr.exposureAds[i].adProducts.isEmpty) {
     //     return Column(
     //       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -197,7 +197,7 @@ class Tab1AdStatusView extends GetView {
     //             Get.put(ProductMgmtController()).applicationId = ctr.exposureAds[i].id;
     //             Get.to(()=>ProductMgmtView(isRegisterProductPage: true));
     //           },
-    //           text: '상품을 등록해주세요',
+    //           text: '상품을 등록해 주세요',
     //         ),
     //       ],
     //     );

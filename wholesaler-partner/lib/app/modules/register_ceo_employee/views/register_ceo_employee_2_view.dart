@@ -84,7 +84,7 @@ class RegisterCeoEmployeePage2View extends GetView {
         // Building - 건물
         AddressDropDown(
           title: 'building'.tr,
-          hint: '건물을 선택해주세요.',
+          hint: '건물을 선택해 주세요.',
           addresses: ctr.buildings,
           selected: ctr.selectedBuilding,
           onChanged: (selectedBuilding) => ctr.buildingDropdownChanged(selectedBuilding!),
@@ -93,7 +93,7 @@ class RegisterCeoEmployeePage2View extends GetView {
         // Building floor - 건물 층
         AddressDropDown(
           title: 'building_floor'.tr,
-          hint: '층을 선택해주세요.',
+          hint: '층을 선택해 주세요.',
           addresses: ctr.floors,
           selected: ctr.selectedFloor,
           onChanged: (selectedFloor) => ctr.floorDropdownChanged(selectedFloor!),
@@ -103,7 +103,7 @@ class RegisterCeoEmployeePage2View extends GetView {
         // // Appartment Number - 호수
         AddressDropDown(
           title: 'appartment_number'.tr,
-          hint: '호수를 선택해주세요.',
+          hint: '호수를 선택해 주세요.',
           addresses: ctr.units,
           selected: ctr.selectedUnit,
           onChanged: (selectedUnit) => ctr.unitDropdownChanged(selectedUnit!),

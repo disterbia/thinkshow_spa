@@ -106,7 +106,7 @@ class PaymentView extends GetView {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Obx(
-                                  () => Text(ctr.month.value + '월 ' + '정산 금액'),
+                                  () => Text(ctr.month.value + '월 ' + '정산금액'),
                                 ),
                                 SizedBox(height: 4),
                                 Text('${ctr.sumAmount}원'),

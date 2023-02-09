@@ -83,7 +83,7 @@ class RegisterCeoEmployee3Controller extends GetxController {
       return;
     }
     if (passwordCtr.text.length < 8) {
-      mSnackbar(message: '비밀번호 8자 이상 입력해주세요.');
+      mSnackbar(message: '비밀번호 8자 이상 입력해 주세요.');
       return;
     }
     if (passwordVerifyCtr.text.isEmpty) {

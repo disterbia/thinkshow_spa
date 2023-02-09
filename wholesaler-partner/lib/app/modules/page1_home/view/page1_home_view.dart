@@ -295,7 +295,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
                         );
                       },
                     )
-                  : Center(child: Text('제품을 등록해주세요.')),
+                  : Center(child: Text('제품을 등록해 주세요.')),
             ),
           ),
         ),

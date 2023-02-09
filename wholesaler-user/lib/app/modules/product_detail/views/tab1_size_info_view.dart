@@ -85,12 +85,7 @@ class Tab4SizeInfo extends GetView {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctr.clothWashToggleInitilize();
     });
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 1,
-            (context, index) => Column(
+    return  Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Webview
@@ -679,11 +674,7 @@ class Tab4SizeInfo extends GetView {
                   ),
                 ),
               ],
-            ),
-          ),
-        ),
-      ],
-    );
+            );
   }
 
   Widget _clothPicture() {

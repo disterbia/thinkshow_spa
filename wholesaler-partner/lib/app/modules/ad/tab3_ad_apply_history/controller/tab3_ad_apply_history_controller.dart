@@ -52,7 +52,7 @@ class Tab3AdApplicationHistoryController extends GetxController {
   adBudgetBtnPressed(int advertisement_application_id, String amount) async {
     // check if amount is empty
     if (amount.isEmpty) {
-      mSnackbar(message: '예산을 입력해주세요.');
+      mSnackbar(message: '예산을 입력해 주세요.');
       return;
     }
 

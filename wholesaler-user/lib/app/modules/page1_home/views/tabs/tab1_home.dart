@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -20,13 +21,16 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab1HomeView extends GetView<Tab1UserHomeController> {
   Tab1UserHomeController ctr = Get.put(Tab1UserHomeController());
+
   //  Page1HomeController page1HomeCtr = Get.put(Page1HomeController());
   CarousalProductHorizontalController recommendedProductCtr =
       Get.put(CarousalProductHorizontalController());
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-
+  RxInt current1=0.obs;
+  RxInt current2=0.obs;
+  RxInt current3=0.obs;
   init() {
     ctr.init();
     //Get.delete<CarousalProductHorizontalController>();
@@ -75,22 +79,27 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             child: Column(
                               children: [
                                 _recommendedItemsTitle(),
-                                CarousalProductHorizontalView(),
+                                //CarousalProductHorizontalView(),
                               ],
                             ),
                           )
                         : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text("관리자가 설정한 기획전 제목",style: MyTextStyles.f16_bold.copyWith(color: Colors.black),),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "관리자가 설정한 기획전 제목",
+                                    style: MyTextStyles.f16_bold
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                ),
+                                CarousalProductHorizontalView(),
+                              ],
+                            ),
                           ),
-                          CarousalProductHorizontalView(),
-                        ],
-                      ),
-                    ),
                     Divider(thickness: 5, color: MyColors.grey3),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
@@ -107,13 +116,78 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
+                      //api 여러번 호출하는거 밖에 방법이 없다.
                       child: ProductGridViewBuilder(
-                        crossAxisCount: 3,
-                        productHeight: 280,
-                        products: ctr.products,
-                        isShowLoadingCircle: ctr.allowCallAPI,
-                      ),
+                          crossAxisCount: 2,
+                          productHeight: 360,
+                          products: ctr.products,
+                          isShowLoadingCircle: false.obs
+                          // isShowLoadingCircle: ctr.allowCallAPI,
+                          ),
                     ),
+                    carouselSlide(),
+                    dotIndicator(current1.value),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                    //   child: ProductGridViewBuilder(
+                    //       isHome: true,
+                    //       count: 8,
+                    //       productIndex: 6,
+                    //       crossAxisCount: 2,
+                    //       productHeight: 360,
+                    //       products: ctr.products,
+                    //       isShowLoadingCircle: false.obs
+                    //     // isShowLoadingCircle: ctr.allowCallAPI,
+                    //   ),
+                    // ),
+                    // carouselSlide(),
+                    // dotIndicator(),
+                    // Container(color: Colors.red,height: 100,),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                    //   child: ProductGridViewBuilder(
+                    //       isHome: true,
+                    //       count: 4,
+                    //       productIndex: 14,
+                    //       crossAxisCount: 2,
+                    //       productHeight: 360,
+                    //       products: ctr.products,
+                    //       isShowLoadingCircle: false.obs
+                    //     // isShowLoadingCircle: ctr.allowCallAPI,
+                    //   ),
+                    // ),
+                    // carouselSlide(),
+                    // dotIndicator(),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                    //   child: ProductGridViewBuilder(
+                    //       isHome: true,
+                    //       count: 12,
+                    //       productIndex: 18,
+                    //       crossAxisCount: 2,
+                    //       productHeight: 360,
+                    //       products: ctr.products,
+                    //       isShowLoadingCircle: false.obs
+                    //     // isShowLoadingCircle: ctr.allowCallAPI,
+                    //   ),
+                    // ),
+                    // carouselSlide(),
+                    // dotIndicator(),
+                    // Padding(
+                    //   padding:const EdgeInsets.symmetric(horizontal: 15),
+                    //   child: ProductGridViewBuilder(
+                    //       isHome: true,
+                    //       count: ctr.products.length-30,
+                    //       productIndex: 30,
+                    //       crossAxisCount: 2,
+                    //       productHeight: 360,
+                    //       products: ctr.products,
+                    //       isShowLoadingCircle: false.obs
+                    //     // isShowLoadingCircle: ctr.allowCallAPI,
+                    //   ),
+                    // ),
+
+
                   ],
                 ),
               ),
@@ -135,6 +209,134 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
   //     ),
   //   );
   // }
+  Widget carouselSlide(){
+    return
+      CarouselSlider(
+          items: carouselRow(),
+          options: CarouselOptions(
+            height: 100,
+            viewportFraction: 1,
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (index, reason) {
+              current1.value=index;
+            },
+          ));
+  }
+  Widget dotIndicator(int current){
+    return    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      for (var i = 0; i < 5; i++)
+        Container(
+          width: 8.0,
+          height: 8.0,
+          margin: EdgeInsets.symmetric(
+              vertical: 10.0, horizontal: 2.0),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: current == i
+                  ? Color.fromRGBO(0, 0, 0, 0.9)
+                  : Color.fromRGBO(0, 0, 0, 0.4)),
+        ),
+    ]);
+  }
+  List<Widget> carouselRow() {
+    return [
+      Row(
+        children: [
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.blue,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.blue,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.blue,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.blue,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.blue,
+          ),
+          Container(
+            height: 100,
+            width: Get.width / 4,
+            color: Colors.red,
+          ),
+        ],
+      ),
+    ];
+  }
 
   Widget _recommendedItemsTitle() {
     return Padding(

@@ -41,7 +41,7 @@ class RegisterCeoEmployeePage3View extends GetView {
                       children: [
                         CustomField(
                             fieldLabel: '회사명',
-                            fieldText: '상호명을 입력해주세요.',
+                            fieldText: '상호명을 입력해 주세요.',
                             fieldController: ctr.companyNameCtr),
                         SizedBox(height: 16),
                       ],
@@ -53,7 +53,7 @@ class RegisterCeoEmployeePage3View extends GetView {
                   fieldLabel: registerCeoEmployeeCtr.isEmployee.isFalse
                       ? '대표자 이름'
                       : '직원 이름',
-                  fieldText: '성함을 입력해주세요.',
+                  fieldText: '성함을 입력해 주세요.',
                   fieldController: ctr.ceoNameCtr),
 
               SizedBox(height: 16),
@@ -77,7 +77,7 @@ class RegisterCeoEmployeePage3View extends GetView {
 
               CustomField(
                 fieldLabel: 'password'.tr,
-                fieldText: '비밀번호를 입력해주세요.',
+                fieldText: '비밀번호를 입력해 주세요.',
                 fieldController: ctr.passwordCtr,
                 isObscureText: true,
               ),
@@ -86,7 +86,7 @@ class RegisterCeoEmployeePage3View extends GetView {
               // Password verify
               CustomField(
                 fieldLabel: 'password_verify'.tr,
-                fieldText: '비밀번호를 한번 더 입력해주세요.',
+                fieldText: '비밀번호를 한번 더 입력해 주세요.',
                 fieldController: ctr.passwordVerifyCtr,
                 isObscureText: true,
               ),

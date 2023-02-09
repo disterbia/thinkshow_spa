@@ -14,15 +14,15 @@ class MyBankAccountMgmtView extends GetView<MyBankAccountMgmtController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Scaffold(
+      return Scaffold(resizeToAvoidBottomInset: false,
         appBar: CustomAppbar(isBackEnable: true, hasHomeButton: false, title: '내 계좌번호 등록'),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ctr.isLoading.value
                 ? LoadingWidget()
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                : ListView(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 22),
                       // Bank Name: 은행선택
@@ -42,12 +42,12 @@ class MyBankAccountMgmtView extends GetView<MyBankAccountMgmtController> {
 
                       SizedBox(height: 16),
                       // Bank Account Number: 계좌번호 입력
-                      CustomField(
+                      CustomField(isTextKeyboard: true,
                         fieldLabel: 'account_number'.tr,
                         fieldText: ctr.accountNumber.value,
                         fieldController: ctr.accountController,
                       ),
-                      Spacer(),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomButton(

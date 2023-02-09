@@ -33,276 +33,274 @@ class Tab2ReviewView extends GetView {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // if (ctr.reviews.isNotEmpty &&
-              //     ctr.reviews.first.writableReviewInfoModel!.is_writable!)
-              //   _addReviewButton(),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // if (ctr.reviews.isNotEmpty &&
+            //     ctr.reviews.first.writableReviewInfoModel!.is_writable!)
+            //   _addReviewButton(),
 
-              SizedBox(
-                height: 20,
-              ),
+            SizedBox(
+              height: 20,
+            ),
 
-              ctr.reviewInfoModel.value.avg_star != null
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _mainRateBar(ctr.reviewInfoModel.value.avg_star!),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(ctr.reviewInfoModel.value.avg_star!.toString(),
-                            style: MyTextStyles.f16_bold.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: MyColors.black2))
-                      ],
-                    )
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 20,
-              ),
-
-              ctr.reviewInfoModel.value.review_total_count != 0 &&
-                      ctr.reviewInfoModel.value.review_total_count != null
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '리뷰 ${Utils.numberFormat(number: ctr.reviewInfoModel.value.review_total_count!)}개',
-                            style: MyTextStyles.f16_bold
-                                .copyWith(color: MyColors.black2),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => ProductReviewListView(), arguments: {
-                                'isPhoto': false,
-                                'productId': Get.arguments,
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                Text(
-                                  '전체보기',
-                                  style: MyTextStyles.f14
-                                      .copyWith(color: MyColors.black2),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Image.asset('assets/icons/ico_arrow01.png',
-                                    height: 15),
-                              ],
-                            ),
-                          )
-                        ],
+            ctr.reviewInfoModel.value.avg_star != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _mainRateBar(ctr.reviewInfoModel.value.avg_star!),
+                      SizedBox(
+                        width: 5,
                       ),
-                    )
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 20,
-              ),
-              ctr.reviewInfoModel.value.reviewCategoryModel!['fit_info'] != null
-                  ? _progressWidget(
-                      '착용감',
-                      ctr.reviewInfoModel.value
-                          .reviewCategoryModel!['fit_info']!)
-                  : SizedBox.shrink(),
+                      Text(ctr.reviewInfoModel.value.avg_star!.toString(),
+                          style: MyTextStyles.f16_bold.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: MyColors.black2))
+                    ],
+                  )
+                : SizedBox.shrink(),
+            SizedBox(
+              height: 20,
+            ),
 
-              SizedBox(
-                height: 10,
-              ),
-              ctr.reviewInfoModel.value.reviewCategoryModel!['color_info'] !=
-                      null
-                  ? _progressWidget(
-                      '색감',
-                      ctr.reviewInfoModel.value
-                          .reviewCategoryModel!['color_info']!)
-                  : SizedBox.shrink(),
-
-              SizedBox(
-                height: 10,
-              ),
-              ctr.reviewInfoModel.value.reviewCategoryModel!['quality_info'] !=
-                      null
-                  ? _progressWidget(
-                      '퀄리티',
-                      ctr.reviewInfoModel.value
-                          .reviewCategoryModel!['quality_info']!)
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 20,
-              ),
-              Divider(
-                color: MyColors.grey3,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              //포토리뷰 자리
-
-              ctr.reviewInfoModel.value.review_photo_count != 0 &&
-                      ctr.reviewInfoModel.value.review_photo_count != null
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '포토리뷰 ${Utils.numberFormat(number: ctr.reviewInfoModel.value.review_photo_count!)}개',
-                            style: MyTextStyles.f16_bold
-                                .copyWith(color: MyColors.black2),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ctr.reviewInfoModel.value.review_total_count != 0 &&
+                    ctr.reviewInfoModel.value.review_total_count != null
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '리뷰 ${Utils.numberFormat(number: ctr.reviewInfoModel.value.review_total_count!)}개',
+                          style: MyTextStyles.f16_bold
+                              .copyWith(color: MyColors.black2),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => ProductReviewListView(), arguments: {
+                              'isPhoto': false,
+                              'productId': Get.arguments,
+                            });
+                          },
+                          child: Row(
                             children: [
-                              ctr.photoReviews.length > 0
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            ctr.photoReviews[0].images![0],
-                                        width: 80,
-                                        height: 80,
-                                        fit: BoxFit.fill,
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
-                                    )
-                                  : ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Container(
-                                        width: 80,
-                                        height: 80,
-                                        color: MyColors.grey1,
-                                      ),
+                              Text(
+                                '전체보기',
+                                style: MyTextStyles.f14
+                                    .copyWith(color: MyColors.black2),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Image.asset('assets/icons/ico_arrow01.png',
+                                  height: 15),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : SizedBox.shrink(),
+            SizedBox(
+              height: 20,
+            ),
+            ctr.reviewInfoModel.value.reviewCategoryModel!['fit_info'] != null
+                ? _progressWidget(
+                    '착용감',
+                    ctr.reviewInfoModel.value
+                        .reviewCategoryModel!['fit_info']!)
+                : SizedBox.shrink(),
+
+            SizedBox(
+              height: 10,
+            ),
+            ctr.reviewInfoModel.value.reviewCategoryModel!['color_info'] !=
+                    null
+                ? _progressWidget(
+                    '색감',
+                    ctr.reviewInfoModel.value
+                        .reviewCategoryModel!['color_info']!)
+                : SizedBox.shrink(),
+
+            SizedBox(
+              height: 10,
+            ),
+            ctr.reviewInfoModel.value.reviewCategoryModel!['quality_info'] !=
+                    null
+                ? _progressWidget(
+                    '퀄리티',
+                    ctr.reviewInfoModel.value
+                        .reviewCategoryModel!['quality_info']!)
+                : SizedBox.shrink(),
+            SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: MyColors.grey3,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            //포토리뷰 자리
+
+            ctr.reviewInfoModel.value.review_photo_count != 0 &&
+                    ctr.reviewInfoModel.value.review_photo_count != null
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '포토리뷰 ${Utils.numberFormat(number: ctr.reviewInfoModel.value.review_photo_count!)}개',
+                          style: MyTextStyles.f16_bold
+                              .copyWith(color: MyColors.black2),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ctr.photoReviews.length > 0
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          ctr.photoReviews[0].images![0],
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
-                              ctr.photoReviews.length > 1
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            ctr.photoReviews[1].images![0],
-                                        width: 80,
-                                        height: 80,
-                                        fit: BoxFit.fill,
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
-                                    )
-                                  : ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Container(
-                                        width: 80,
-                                        height: 80,
-                                        color: MyColors.grey1,
-                                      ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Container(
+                                      width: 80,
+                                      height: 80,
+                                      color: MyColors.grey1,
                                     ),
-                              ctr.photoReviews.length > 2
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            ctr.photoReviews[2].images![0],
-                                        width: 80,
-                                        height: 80,
-                                        fit: BoxFit.fill,
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
-                                    )
-                                  : ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Container(
-                                        width: 80,
-                                        height: 80,
-                                        color: MyColors.grey1,
-                                      ),
+                                  ),
+                            ctr.photoReviews.length > 1
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          ctr.photoReviews[1].images![0],
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
-                              //더보기
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => ProductReviewListView(),
-                                      arguments: {
-                                        'isPhoto': true,
-                                        'productId': Get.arguments
-                                      });
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    color: MyColors.grey10,
-                                    width: 80,
-                                    height: 80,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_rounded,
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Container(
+                                      width: 80,
+                                      height: 80,
+                                      color: MyColors.grey1,
+                                    ),
+                                  ),
+                            ctr.photoReviews.length > 2
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          ctr.photoReviews[2].images![0],
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Container(
+                                      width: 80,
+                                      height: 80,
+                                      color: MyColors.grey1,
+                                    ),
+                                  ),
+                            //더보기
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => ProductReviewListView(),
+                                    arguments: {
+                                      'isPhoto': true,
+                                      'productId': Get.arguments
+                                    });
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  color: MyColors.grey10,
+                                  width: 80,
+                                  height: 80,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add_rounded,
+                                        color: Colors.white,
+                                        size: 15,
+                                      ),
+                                      Text(
+                                        '더보기',
+                                        style: TextStyle(
+                                          fontSize: 13,
                                           color: Colors.white,
-                                          size: 15,
                                         ),
-                                        Text(
-                                          '더보기',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          // ListView.builder(
-                          //   scrollDirection: Axis.horizontal,
-                          //   itemCount: ctr.photoReviews.length,
-                          //   itemBuilder: (context, index) {
+                            ),
+                          ],
+                        ),
+                        // ListView.builder(
+                        //   scrollDirection: Axis.horizontal,
+                        //   itemCount: ctr.photoReviews.length,
+                        //   itemBuilder: (context, index) {
 
-                          //   },
-                          // )
-                        ],
-                      ),
-                    )
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 20,
-              ),
-              Divider(
-                color: MyColors.grey3,
-              ),
-              for (int i = 0; i < ctr.reviews.length; i++) ...[
-                Column(
-                  children: [
-                    _reviewItemBuilder(ctr.reviews[i], i),
-                    Divider(
-                      thickness: 5,
-                      color: MyColors.grey3,
+                        //   },
+                        // )
+                      ],
                     ),
-                  ],
-                ),
-              ],
-              if (ctr.reviews.isEmpty) SizedBox.shrink(),
-              // Padding(
-              //   padding: const EdgeInsets.all(20),
-              //   child: Center(child: Text('아직 등록된 리뷰가 없습니다')),
-              // ),
-
-              SizedBox(
-                height: 20,
-              )
+                  )
+                : SizedBox.shrink(),
+            SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: MyColors.grey3,
+            ),
+            for (int i = 0; i < ctr.reviews.length; i++) ...[
+              Column(
+                children: [
+                  _reviewItemBuilder(ctr.reviews[i], i),
+                  Divider(
+                    thickness: 5,
+                    color: MyColors.grey3,
+                  ),
+                ],
+              ),
             ],
-          ),
+            if (ctr.reviews.isEmpty) SizedBox.shrink(),
+            // Padding(
+            //   padding: const EdgeInsets.all(20),
+            //   child: Center(child: Text('아직 등록된 리뷰가 없습니다')),
+            // ),
+
+            SizedBox(
+              height: 20,
+            )
+          ],
         );
       },
     );

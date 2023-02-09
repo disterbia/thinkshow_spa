@@ -35,10 +35,9 @@ class ProductDetailController extends GetxController {
           price: 0,
           selectedOptionAddPrice: 0)
       .obs;
-
+  RxList<Product> products = <Product>[].obs;
   // size table widget
   ScrollController arrowsController = ScrollController();
-  ScrollController arrowsController2 = ScrollController();
   RxBool isLoading = false.obs;
 
   late QuillController quillController;
@@ -55,6 +54,11 @@ class ProductDetailController extends GetxController {
       return;
     }
     product.value = await _apiProvider.getProductDetail(productId: productId);
+    products.value = await _apiProvider.getSimilarCat(
+        offset: 0,
+        limit: 3,
+        productId: productId!,
+        sort: "latest");
     // print(product.value.content);
     if(product.value.content != null){
       quillController = QuillController(
@@ -72,6 +76,15 @@ class ProductDetailController extends GetxController {
     isLoading.value = false;
   }
 
+  void sameProdcuts(index) async {
+    isLoading.value = true;
+    products.value = await _apiProvider.getProductsWithCat(
+        offset: 0,
+        limit: 3,
+        categoryId: index,
+        sort: "latest");
+    isLoading.value = false;
+  }
   void UpdateTotalPrice() {
     print('UpdateTotalPrice');
     int addPrice = selectedOptionIndex.value != -1

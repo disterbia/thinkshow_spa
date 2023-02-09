@@ -47,7 +47,7 @@ class RegisterCeoEmployeePage4View
 
               CustomField(
                 fieldLabel: 'phone_number'.tr,
-                fieldText: '휴대폰 번호를 입력해주세요.',
+                fieldText: '휴대폰 번호를 입력해 주세요.',
                 fieldController: ctr.phoneNumCtr,
                 onTap: () {
                   ctr.requestVerifyPhonePressed();
@@ -65,7 +65,7 @@ class RegisterCeoEmployeePage4View
 
               CustomField(
                 fieldLabel: 'input_verification_num'.tr,
-                fieldText: '인증번호를 입력해주세요.',
+                fieldText: '인증번호를 입력해 주세요.',
                 fieldController: ctr.phoneNumVerifyCtr,
                 isTextKeyboard: true,
                 onTap: () {

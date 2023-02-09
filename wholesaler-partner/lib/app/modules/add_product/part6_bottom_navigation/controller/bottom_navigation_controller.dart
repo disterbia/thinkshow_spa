@@ -63,7 +63,7 @@ class AP_Part6Controller extends GetxController {
       String addPrice = addProductController.optionsControllers[i].text;
       if (addPrice.isEmpty) {
         Get.back();
-        mSnackbar(message: '옵션 추가 금액을 입력해주세요.');
+        mSnackbar(message: '옵션 추가 금액을 입력해 주세요.');
         return;
       }
       addProductController.options[i].addPrice = addPrice;
@@ -75,7 +75,7 @@ class AP_Part6Controller extends GetxController {
         String addPrice = addProductController.optionsControllers[i].text;
         if (addPrice.isEmpty) {
           Get.back();
-          mSnackbar(message: '옵션 추가 금액을 입력해주세요.');
+          mSnackbar(message: '옵션 추가 금액을 입력해 주세요.');
           return;
         }
         addProductController.options[i].addPrice = addPrice;
@@ -87,7 +87,7 @@ class AP_Part6Controller extends GetxController {
     }
 
     List<MaterialModel> materialList = [];
-    materialList.clear();
+
     for (int i = 0; i < part3controller.materialTypeList.length; i++) {
       materialList.add(MaterialModel(
           name: part3controller.materialTypeList[i],
@@ -96,6 +96,7 @@ class AP_Part6Controller extends GetxController {
 
     for (int i = 0; i < part3controller.materialTypeList.length; i++) {
       if (part3controller.materialTypePercentControllers[i].text.isEmpty) {
+        Get.back();
         mSnackbar(message: "혼용률 입력하세요.");
         return;
       }
@@ -113,6 +114,11 @@ class AP_Part6Controller extends GetxController {
     }
 
     print(tempPercent);
+    if(part3controller.materialTypeList.isEmpty) {
+      Get.back();
+      mSnackbar(message: "소재 입력하세요.");
+      return;
+    }
     if (tempisPercent && tempPercent < 100) {
       Get.back();
       mSnackbar(message: '혼용률 총합이 100% 미만입니다.');
@@ -133,43 +139,43 @@ class AP_Part6Controller extends GetxController {
 
     if (addProductController.colorsList.isEmpty) {
       Get.back();
-      mSnackbar(message: '색상을 추가해주세요.');
+      mSnackbar(message: '색상을 추가해 주세요.');
       return;
     }
 
     if (productName.isEmpty) {
       Get.back();
-      mSnackbar(message: '상품명을 입력해주세요.');
+      mSnackbar(message: '상품명을 입력해 주세요.');
       return;
     }
 
     if (imagePath1.isEmpty) {
       Get.back();
-      mSnackbar(message: '대표 이미지를 선택해주세요.');
+      mSnackbar(message: '대표 이미지를 선택해 주세요.');
       return;
     }
 
     if (imagePath2.isEmpty) {
       Get.back();
-      mSnackbar(message: '상세 이미지를 선택해주세요.');
+      mSnackbar(message: '상세 이미지를 선택해 주세요.');
       return;
     }
 
     // if (imagePath3.isEmpty) {
     //   Get.back();
-    //   mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
+    //   mSnackbar(message: '디테일 컷 이미지를 선택해 주세요.');
     //   return;
     // }
 
     if (price.isEmpty) {
       Get.back();
-      mSnackbar(message: '상품 가격을 입력해주세요.');
+      mSnackbar(message: '상품 가격을 입력해 주세요.');
       return;
     }
 
     if (country.isEmpty) {
       Get.back();
-      mSnackbar(message: '제조국가를 선택해주세요.');
+      mSnackbar(message: '제조국가를 선택해 주세요.');
       return;
     }
 
@@ -211,7 +217,7 @@ class AP_Part6Controller extends GetxController {
     if (sizeInfoList.isEmpty) {
       isLoading.value = false;
       Get.back();
-      mSnackbar(message: '사이즈 선택해주세요.');
+      mSnackbar(message: '사이즈 선택해 주세요.');
       return;
     }
     Map<String, dynamic> data = {
@@ -327,7 +333,7 @@ class AP_Part6Controller extends GetxController {
       String addPrice = addProductController.optionsControllers[i].text;
       if (addPrice.isEmpty) {
         Get.back();
-        mSnackbar(message: '옵션 추가 금액을 입력해주세요.');
+        mSnackbar(message: '옵션 추가 금액을 입력해 주세요.');
         return;
       }
       addProductController.options[i].addPrice = addPrice;
@@ -339,7 +345,7 @@ class AP_Part6Controller extends GetxController {
         String addPrice = addProductController.optionsControllers[i].text;
         if (addPrice.isEmpty) {
           Get.back();
-          mSnackbar(message: '옵션 추가 금액을 입력해주세요.');
+          mSnackbar(message: '옵션 추가 금액을 입력해 주세요.');
           return;
         }
         addProductController.options[i].addPrice = addPrice;
@@ -376,7 +382,11 @@ class AP_Part6Controller extends GetxController {
       }
     }
 
-    print(tempPercent);
+    if(part3controller.materialTypeList.isEmpty) {
+      Get.back();
+      mSnackbar(message: "소재 입력하세요.");
+      return;
+    }
     if (tempisPercent && tempPercent < 100) {
       Get.back();
       mSnackbar(message: '혼용률 총합이 100% 미만입니다.');
@@ -397,7 +407,7 @@ class AP_Part6Controller extends GetxController {
 
     if (addProductController.colorsList.isEmpty) {
       Get.back();
-      mSnackbar(message: '색상을 추가해주세요.');
+      mSnackbar(message: '색상을 추가해 주세요.');
       return;
     }
 
@@ -409,37 +419,37 @@ class AP_Part6Controller extends GetxController {
 
     if (productName.isEmpty) {
       Get.back();
-      mSnackbar(message: '상품명을 입력해주세요.');
+      mSnackbar(message: '상품명을 입력해 주세요.');
       return;
     }
 
     if (imagePath1.isEmpty) {
       Get.back();
-      mSnackbar(message: '대표 이미지를 선택해주세요.');
+      mSnackbar(message: '대표 이미지를 선택해 주세요.');
       return;
     }
 
     if (imagePath2.isEmpty) {
       Get.back();
-      mSnackbar(message: '상세 이미지를 선택해주세요.');
+      mSnackbar(message: '상세 이미지를 선택해 주세요.');
       return;
     }
 
     // if (imagePath3.isEmpty) {
     //   Get.back();
-    //   mSnackbar(message: '디테일 컷 이미지를 선택해주세요.');
+    //   mSnackbar(message: '디테일 컷 이미지를 선택해 주세요.');
     //   return;
     // }
 
     if (price.isEmpty) {
       Get.back();
-      mSnackbar(message: '상품 가격을 입력해주세요.');
+      mSnackbar(message: '상품 가격을 입력해 주세요.');
       return;
     }
 
     if (country.isEmpty) {
       Get.back();
-      mSnackbar(message: '제조국가를 선택해주세요.');
+      mSnackbar(message: '제조국가를 선택해 주세요.');
       return;
     }
 
@@ -472,7 +482,7 @@ class AP_Part6Controller extends GetxController {
 
     if (sizeInfoList.isEmpty) {
       Get.back();
-      mSnackbar(message: '사이즈 선택해주세요.');
+      mSnackbar(message: '사이즈 선택해 주세요.');
       return;
     }
 

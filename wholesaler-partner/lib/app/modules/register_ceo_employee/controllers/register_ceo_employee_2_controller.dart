@@ -59,15 +59,15 @@ class RegisterCeoEmployee2Controller extends GetxController {
 
   void nextBtnPressed() {
     if (selectedBuilding.value.id == 0) {
-      mSnackbar(message: '건물을 선택해주세요.');
+      mSnackbar(message: '건물을 선택해 주세요.');
       return;
     }
     if (selectedFloor.value.id == 0) {
-      mSnackbar(message: '층을 선택해주세요.'.tr);
+      mSnackbar(message: '층을 선택해 주세요.'.tr);
       return;
     }
     if (selectedUnit.value.id == 0) {
-      mSnackbar(message: '호수를 선택해주세요'.tr);
+      mSnackbar(message: '호수를 선택해 주세요'.tr);
       return;
     }
     Get.to(() => RegisterCeoEmployeePage3View());
@@ -75,7 +75,7 @@ class RegisterCeoEmployee2Controller extends GetxController {
 
   searchPressed(String searchValue) async {
     if (searchValue.isEmpty) {
-      mSnackbar(message: '상호명을 입력해주세요.');
+      mSnackbar(message: '상호명을 입력해 주세요.');
       return;
     }
     storeLocations.value = await apiProvider.getSearchStoreName(searchValue);

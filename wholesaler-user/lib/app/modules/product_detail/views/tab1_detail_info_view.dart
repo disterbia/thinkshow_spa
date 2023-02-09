@@ -32,12 +32,7 @@ class Tab1DetailInfo extends GetView {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctr.clothWashToggleInitilize();
     });
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 1,
-            (context, index) => Column(
+    return  Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Webview
@@ -208,51 +203,54 @@ class Tab1DetailInfo extends GetView {
                   thickness: 10,
                   color: MyColors.grey3,
                 ),
-                Padding(
+                productDetailCtr.products.length>=3?Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
                     "이 상품과 비슷한 상품",
                     style: MyTextStyles.f18_bold,
                   ),
-                ),
-                GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ProductItemVertical(
-                      product: productDetailCtr.product.value,
-                    );
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    childAspectRatio:
-                        context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
-                    // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                ):Container(),
+                productDetailCtr.products.length>=3? Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProductItemVertical(
+                        product: productDetailCtr.products[index],
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      childAspectRatio:
+                          context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
+                      // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                    ),
                   ),
-                ),
+                ):Container(),
                 Divider(
                   thickness: 10,
                   color: MyColors.grey3,
                 ),
-                Padding(
+                productDetailCtr.products.length>=3?Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
                     "스토어에서 인기 있는 상품",
                     style: MyTextStyles.f18_bold,
                   ),
-                ),
+                ):Container(),
                 SizedBox(height: 10),
-                GridView.builder(
+                productDetailCtr.products.length>=3?GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
                   itemCount: 3,
                   itemBuilder: (BuildContext context, int index) {
                     return ProductItemVertical(
-                      product: productDetailCtr.product.value,
+                      product: productDetailCtr.products[index]
                     );
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -262,8 +260,7 @@ class Tab1DetailInfo extends GetView {
                         context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
                     // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                   ),
-                ),
-
+                ):Container(),
                 // 반품교환정보
                 SizedBox(height: 50),
                 Padding(
@@ -288,11 +285,7 @@ class Tab1DetailInfo extends GetView {
                       : SizedBox.shrink(),
                 ),
               ],
-            ),
-          ),
-        ),
-      ],
-    );
+            );
   }
 
   Widget EnableButton(String text, bool isSelected) {

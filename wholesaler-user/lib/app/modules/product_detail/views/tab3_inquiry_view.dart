@@ -20,37 +20,35 @@ class Tab3InquiryView extends GetView {
   @override
   Widget build(BuildContext context) {
     init();
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 20),
-          MyVars.isUserProject() ? _writeInquiryButton() : SizedBox.shrink(),
-          SizedBox(height: 20),
-          Divider(thickness: 5, color: MyColors.grey3),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              '문의',
-              style: MyTextStyles.f16_bold.copyWith(color: MyColors.black2),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 20),
+        MyVars.isUserProject() ? _writeInquiryButton() : SizedBox.shrink(),
+        SizedBox(height: 20),
+        Divider(thickness: 5, color: MyColors.grey3),
+        SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
+            '문의',
+            style: MyTextStyles.f16_bold.copyWith(color: MyColors.black2),
           ),
-          SizedBox(height: 20),
-          Obx(
-            () => ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: ctr.inquires.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  SizedBox(width: 14),
-              itemBuilder: (BuildContext context, int index) {
-                return _expandedQuestionBox(ctr.inquires[index]);
-              },
-            ),
+        ),
+        SizedBox(height: 20),
+        Obx(
+          () => ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: ctr.inquires.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                SizedBox(width: 14),
+            itemBuilder: (BuildContext context, int index) {
+              return _expandedQuestionBox(ctr.inquires[index]);
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -48,7 +48,7 @@ class ImageSliderView extends GetView<ImageSliderController> {
             onPageChanged: (index, reason) {
               ctr.mainSliderIndex.value = index;
             },
-            autoPlay: false,
+            autoPlay: true,autoPlayInterval: Duration(seconds: 3),
             enlargeCenterPage: true,
             viewportFraction: 0.999,
           ),

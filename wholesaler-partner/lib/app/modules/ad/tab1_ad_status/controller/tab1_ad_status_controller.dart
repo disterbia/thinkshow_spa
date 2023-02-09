@@ -89,7 +89,7 @@ class Tab1AdStatusController extends GetxController {
     }
   }
 
-  // 상품을 등록해주세요 button pressed
+  // 상품을 등록해 주세요 button pressed
   addOrEditAdProductsBtnPressed(int exposureAdIndex) {
     Get.put(ProductMgmtController()).isBottomNavbar.value = true;
     Get.put(ProductMgmtController()).applicationId =

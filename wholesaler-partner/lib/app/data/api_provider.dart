@@ -1254,7 +1254,7 @@ class pApiProvider extends GetConnect {
     } else {
       print('${response.body} ');
       if (response.statusCode == 400) {
-        mSnackbar(message: '인증번호를 다시 확인해주세요.');
+        mSnackbar(message: '인증번호를 다시 확인해 주세요.');
       } else {
         mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       }

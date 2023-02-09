@@ -100,7 +100,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '직원관리 화면 하단에 직원신청을 승인해주세요',
+                        '직원관리 화면 하단에 직원신청을 승인해 주세요',
                         style: TextStyle(fontSize: 15),
                       ),
                       SizedBox(height: 3),
