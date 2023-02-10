@@ -32,7 +32,7 @@ class ProductGridViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double columnWidth = context.width / crossAxisCount;
-    return Obx(() => Column(
+    return Obx(() => products.isEmpty?Container():Column(
       children: [
         GridView.builder(
           primary: false,

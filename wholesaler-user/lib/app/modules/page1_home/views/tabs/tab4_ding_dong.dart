@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab4_ding_dong_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
@@ -12,6 +13,7 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab4DingDongView extends GetView<Tab4DingDongController> {
   Tab4DingDongController ctr = Get.put(Tab4DingDongController());
+  Page1HomeController ctr2 = Get.put(Page1HomeController());
   Tab4DingDongView();
 
   init(){

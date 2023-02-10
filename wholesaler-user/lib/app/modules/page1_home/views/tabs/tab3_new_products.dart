@@ -5,6 +5,7 @@ import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab3_new_products_controller.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller_new.dart';
@@ -14,12 +15,14 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab3NewProductsView extends GetView<Tab3NewProductsController> {
   Tab3NewProductsController ctr = Get.put(Tab3NewProductsController());
+  Page1HomeController ctr2 = Get.put(Page1HomeController());
   CarousalProductHorizontalControllerNew newRecommendedProductCtr = Get.put(CarousalProductHorizontalControllerNew());
 
   Tab3NewProductsView();
 
   init() {
     ctr.init();
+    ctr2.tabBarIndex.value=2;
     //Get.delete<CarousalProductHorizontalControllerNew>();
     newRecommendedProductCtr.init();
   }

@@ -280,6 +280,56 @@ class uApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+  Future<String> getBeltImage() async {
+    String url =
+        mConst.API_BASE_URL + mConst.API_USER_PATH + "/belt-exhibitions/1";
+    final response = await get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.bodyString!);
+
+      return json["banner_img_url"];
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<Map<String,dynamic>> getExhibitProducts(int index) async {
+    String apiPath = '/home-exhibitions/$index';
+
+    String url = mConst.API_BASE_URL + mConst.API_USER_PATH + apiPath;
+    final response = await get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      List<Product> products = [];
+
+      String title = jsonList["title"];
+      for (var json in  jsonList['products']) {
+        Store tempStore = Store(
+          id: json['store_id'],
+          name: json['store_name'],
+        );
+
+        Product tempProduct = Product(
+          id: json['id'],
+          title: json['product_name'],
+          store: tempStore,
+          price: json['price'],
+          normalPrice: json['normal_price'],
+          priceDiscountPercent: json['price_discount_percent'],
+          isLiked: json['is_favorite'] ? true.obs : false.obs,
+          imgUrl: json['thumbnail_image_url'],
+          hasBellIconAndBorder: (json['is_privilege'] as bool).obs,
+        );
+
+        products.add(tempProduct);
+      }
+      return {"products":products,"title":title};
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
 
   Future<List<Product>> getAdProducts(UserHomeTabs currentTab) async {
     String apiPath = '';

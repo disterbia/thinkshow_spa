@@ -1,15 +1,19 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
+import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab1_user_home_controller.dart';
+import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/controller/carousal_product_horizontal_controller.dart';
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/view/carousal_product_horizontal_view.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
@@ -17,10 +21,12 @@ import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/controller/image_slider_controller.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/view/image_slider_view.dart';
+import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget.dart';
 import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gridview_builder.dart';
 
 class Tab1HomeView extends GetView<Tab1UserHomeController> {
   Tab1UserHomeController ctr = Get.put(Tab1UserHomeController());
+  Page1HomeController ctr2 = Get.put(Page1HomeController());
 
   //  Page1HomeController page1HomeCtr = Get.put(Page1HomeController());
   CarousalProductHorizontalController recommendedProductCtr =
@@ -28,9 +34,6 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  RxInt current1=0.obs;
-  RxInt current2=0.obs;
-  RxInt current3=0.obs;
   init() {
     ctr.init();
     //Get.delete<CarousalProductHorizontalController>();
@@ -73,13 +76,13 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                     //   child: _dingdongBanner(),
                     // ),
                     // SizedBox(height: 20),
-                    recommendedProductCtr.products.length != 0
+                    recommendedProductCtr.adProducts.length != 0
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
                               children: [
                                 _recommendedItemsTitle(),
-                                //CarousalProductHorizontalView(),
+                                CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController1,0),
                               ],
                             ),
                           )
@@ -91,12 +94,12 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    "관리자가 설정한 기획전 제목",
+                                    recommendedProductCtr.exhibitTitle1.value,
                                     style: MyTextStyles.f16_bold
                                         .copyWith(color: Colors.black),
                                   ),
                                 ),
-                                CarousalProductHorizontalView(),
+                                CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController1,1),
                               ],
                             ),
                           ),
@@ -113,79 +116,104 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             }),
                       ),
                     ),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      //api 여러번 호출하는거 밖에 방법이 없다.
-                      child: ProductGridViewBuilder(
-                          crossAxisCount: 2,
-                          productHeight: 360,
-                          products: ctr.products,
-                          isShowLoadingCircle: false.obs
-                          // isShowLoadingCircle: ctr.allowCallAPI,
+                    ctr.isLoading.value?Container(height: 200,child: LoadingWidget()):Container(
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight: 360,
+                              products: ctr.products1,
+                              isShowLoadingCircle: false.obs
+                            // isShowLoadingCircle: ctr.allowCallAPI,
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                recommendedProductCtr.exhibitTitle2.value,
+                                style: MyTextStyles.f16_bold
+                                    .copyWith(color: Colors.black),
+                              ),
+                              CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController2,2)
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight: 360,
+                              products: ctr.products2,
+                              isShowLoadingCircle: false.obs
+                            // isShowLoadingCircle: ctr.allowCallAPI,
+                          ),
+                        ),
+                        Padding(
+                          padding:const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                recommendedProductCtr.exhibitTitle3.value,
+                                style: MyTextStyles.f16_bold
+                                    .copyWith(color: Colors.black),
+                              ),
+                              CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController3,3)
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight: 360,
+                              products: ctr.products3,
+                              isShowLoadingCircle: false.obs
+                            // isShowLoadingCircle: ctr.allowCallAPI,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(height: 120,child: CachedNetworkImage(imageUrl: recommendedProductCtr.beltImage.value,fit: BoxFit.fill),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight: 360,
+                              products: ctr.products4,
+                              isShowLoadingCircle: false.obs
+                            // isShowLoadingCircle: ctr.allowCallAPI,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                recommendedProductCtr.exhibitTitle4.value,
+                                style: MyTextStyles.f16_bold
+                                    .copyWith(color: Colors.black),
+                              ),
+                              CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController4,4)
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding:const EdgeInsets.symmetric(horizontal: 15),
+                          child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight: 360,
+                              products: ctr.products5,
+                              isShowLoadingCircle: false.obs
+                            // isShowLoadingCircle: ctr.allowCallAPI,
+                          ),
+                        ),
+
+                      ],),
                     ),
-                    carouselSlide(),
-                    dotIndicator(current1.value),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: ProductGridViewBuilder(
-                    //       isHome: true,
-                    //       count: 8,
-                    //       productIndex: 6,
-                    //       crossAxisCount: 2,
-                    //       productHeight: 360,
-                    //       products: ctr.products,
-                    //       isShowLoadingCircle: false.obs
-                    //     // isShowLoadingCircle: ctr.allowCallAPI,
-                    //   ),
-                    // ),
-                    // carouselSlide(),
-                    // dotIndicator(),
-                    // Container(color: Colors.red,height: 100,),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: ProductGridViewBuilder(
-                    //       isHome: true,
-                    //       count: 4,
-                    //       productIndex: 14,
-                    //       crossAxisCount: 2,
-                    //       productHeight: 360,
-                    //       products: ctr.products,
-                    //       isShowLoadingCircle: false.obs
-                    //     // isShowLoadingCircle: ctr.allowCallAPI,
-                    //   ),
-                    // ),
-                    // carouselSlide(),
-                    // dotIndicator(),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: ProductGridViewBuilder(
-                    //       isHome: true,
-                    //       count: 12,
-                    //       productIndex: 18,
-                    //       crossAxisCount: 2,
-                    //       productHeight: 360,
-                    //       products: ctr.products,
-                    //       isShowLoadingCircle: false.obs
-                    //     // isShowLoadingCircle: ctr.allowCallAPI,
-                    //   ),
-                    // ),
-                    // carouselSlide(),
-                    // dotIndicator(),
-                    // Padding(
-                    //   padding:const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: ProductGridViewBuilder(
-                    //       isHome: true,
-                    //       count: ctr.products.length-30,
-                    //       productIndex: 30,
-                    //       crossAxisCount: 2,
-                    //       productHeight: 360,
-                    //       products: ctr.products,
-                    //       isShowLoadingCircle: false.obs
-                    //     // isShowLoadingCircle: ctr.allowCallAPI,
-                    //   ),
-                    // ),
 
 
                   ],
@@ -209,74 +237,93 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
   //     ),
   //   );
   // }
-  Widget carouselSlide(){
+  Widget carouselSlide(List<Product> products,RxInt current){
     return
-      CarouselSlider(
-          items: carouselRow(),
-          options: CarouselOptions(
-            height: 100,
-            viewportFraction: 1,
-            scrollDirection: Axis.horizontal,
-            onPageChanged: (index, reason) {
-              current1.value=index;
-            },
-          ));
+      Obx(
+          ()=> CarouselSlider(
+            carouselController: recommendedProductCtr.indicatorSliderController1,
+          items: [
+            for (Product product in products)
+              GestureDetector(
+                onTap: () => Get.to(() => ProductDetailView(), arguments: product.id),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: ProductItemVertical(
+                    product: product,
+                  ),
+                ),
+              )
+          ],
+            options: CarouselOptions(
+              pageSnapping: true,
+              height: 240,
+              viewportFraction: 1,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (index, reason) {
+                recommendedProductCtr.sliderIndex1.value=index;
+              },
+            )),
+      );
   }
   Widget dotIndicator(int current){
-    return    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+    return    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       for (var i = 0; i < 5; i++)
         Container(
-          width: 8.0,
-          height: 8.0,
-          margin: EdgeInsets.symmetric(
-              vertical: 10.0, horizontal: 2.0),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: current == i
-                  ? Color.fromRGBO(0, 0, 0, 0.9)
-                  : Color.fromRGBO(0, 0, 0, 0.4)),
+          width: 10.0,
+          height: 10.0,
+          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: MyColors.primary.withOpacity(current== i ? 0.9 : 0.4)),
         ),
     ]);
   }
   List<Widget> carouselRow() {
     return [
-      Row(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-        ],
+      Container(
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 280,
+                width: Get.width / 4,
+                color: Colors.blue,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 280,
+                width: Get.width / 4,
+                color: Colors.blue,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 280,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
       ),
-      Row(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-        ],
+      Container(
+        child: Row(
+          children: [
+            Container(
+              height: 100,
+              width: Get.width / 4,
+              color: Colors.red,
+            ),
+            Container(
+              height: 100,
+              width: Get.width / 4,
+              color: Colors.blue,
+            ),
+            Container(
+              height: 100,
+              width: Get.width / 4,
+              color: Colors.red,
+            ),
+          ],
+        ),
       ),
       Row(
         children: [

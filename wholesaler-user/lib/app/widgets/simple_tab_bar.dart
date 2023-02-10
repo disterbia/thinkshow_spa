@@ -4,6 +4,7 @@ import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/modules/main/controllers/user_main_controller.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 
 class SimpleTabBar extends StatefulWidget {
@@ -30,11 +31,15 @@ class SimpleTabBar extends StatefulWidget {
 class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  Page1HomeController ctr = Get.put(Page1HomeController());
   UserMainController c = Get.find<UserMainController>();
 
   @override
   void initState() {
     _tabController = TabController(length: widget.tabBarViews!.length, vsync: this, initialIndex: widget.initialIndex);
+    _tabController!.addListener((){
+      ctr.tabBarIndex.value=_tabController!.index;
+    });
     super.initState();
   }
 

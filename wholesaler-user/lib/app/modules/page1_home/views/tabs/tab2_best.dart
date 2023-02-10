@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/models/product_number_model.dart';
+import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab2_best_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
@@ -11,12 +12,14 @@ import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gri
 
 class Tab2BestView extends GetView<Tab2BestController> {
   Tab2BestController ctr = Get.put(Tab2BestController());
+  Page1HomeController ctr2 = Get.put(Page1HomeController());
   Tab2BestView();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       ()=> ctr.isLoading.value?LoadingWidget():SingleChildScrollView(
+        controller: ctr.scrollController.value,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
