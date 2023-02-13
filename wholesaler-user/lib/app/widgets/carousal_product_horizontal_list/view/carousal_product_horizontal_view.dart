@@ -83,15 +83,21 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
           List<Widget> temp = [];
           for(var j = 0; j<productLength%3;j++){
             temp.add(productList[productList.length-j-1]);
-          }
+            if(productLength%3==1) {
+            temp.add(Expanded(child: Container()));
+            temp.add(Expanded(child: Container()));
+            }else if(j==1&&productLength%3==2){
+              temp.add(Expanded(child: Container()));
+            }
+        }
           rowList.add(temp);
         }
     }
 
     RxList<Widget> result=<Widget>[].obs;
 
-    for(var i=0;i<rowList.length;i++){
-     result.add(Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children:rowList[i]));
+    for(var rowProduct in rowList){
+      result.add(Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children:rowProduct));
     }
 
     return Column(children: [
