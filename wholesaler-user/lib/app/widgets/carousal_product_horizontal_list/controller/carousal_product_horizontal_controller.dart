@@ -62,10 +62,10 @@ Future<void> init() async {
   adProducts.value = await _apiProvider.getAdProducts(UserHomeTabs.home);
   beltImage.value = await _apiProvider.getBeltImage();
 
-  exhibitProducts1.value = result1["products"] as List<Product>;;
-  exhibitProducts2.value = result2["products"] as List<Product>;;
-  exhibitProducts3.value = result3["products"] as List<Product>;;
-  exhibitProducts4.value =result4["products"] as List<Product>;;
+  exhibitProducts1.value = result1["products"] as List<Product>;
+  exhibitProducts2.value = result2["products"] as List<Product>;
+  exhibitProducts3.value = result3["products"] as List<Product>;
+  exhibitProducts4.value =result4["products"] as List<Product>;
 
   exhibitTitle1.value= result1["title"] as String;
   exhibitTitle2.value=result2["title"] as String;

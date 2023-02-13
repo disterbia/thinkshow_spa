@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -70,15 +71,16 @@ class Page2StoreListController2 extends GetxController {
       return;
     }
     log('store id ${store.id}');
-    bool isSuccess = await _apiProvider.putAddStoreFavorite(storeId: store.id);
+    String response = await _apiProvider.putAddStoreFavorite(storeId: store.id);
+    Map<String,dynamic> json =jsonDecode(response);
 
-    if (isSuccess) {
+
       if (store.isBookmarked!.value) {
         mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
       } else {
         mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
-    }
+
     isLoading.value=false;
   }
 }

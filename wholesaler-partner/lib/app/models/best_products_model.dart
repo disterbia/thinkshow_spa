@@ -8,7 +8,9 @@ class BestProductsModel {
       this.price, 
       this.thumbnailImageUrl, 
       this.mainCategoryId, 
-      this.subCategoryId, 
+      this.subCategoryId,
+    this.normalPrice,
+    this.disCountPercent,
       this.isSoldOut, 
       this.isPrivilege, 
       this.isAdvertisement, 
@@ -21,6 +23,8 @@ class BestProductsModel {
     isFavorite = json['is_favorite'];
     productName = json['product_name'];
     price = json['price'];
+    normalPrice = json['normal_price'];
+    disCountPercent = json['price_discount_percent'];
     thumbnailImageUrl = json['thumbnail_image_url'];
     mainCategoryId = json['main_category_id'];
     subCategoryId = json['sub_category_id'];
@@ -35,6 +39,8 @@ class BestProductsModel {
   bool? isFavorite;
   String? productName;
   int? price;
+  int? normalPrice;
+  int? disCountPercent;
   String? thumbnailImageUrl;
   int? mainCategoryId;
   int? subCategoryId;
@@ -48,6 +54,8 @@ BestProductsModel copyWith({  int? id,
   bool? isFavorite,
   String? productName,
   int? price,
+  int? normalPrice,
+  int? disCountPercent,
   String? thumbnailImageUrl,
   int? mainCategoryId,
   int? subCategoryId,
@@ -61,6 +69,8 @@ BestProductsModel copyWith({  int? id,
   isFavorite: isFavorite ?? this.isFavorite,
   productName: productName ?? this.productName,
   price: price ?? this.price,
+  normalPrice: this.normalPrice,
+  disCountPercent: this.disCountPercent,
   thumbnailImageUrl: thumbnailImageUrl ?? this.thumbnailImageUrl,
   mainCategoryId: mainCategoryId ?? this.mainCategoryId,
   subCategoryId: subCategoryId ?? this.subCategoryId,

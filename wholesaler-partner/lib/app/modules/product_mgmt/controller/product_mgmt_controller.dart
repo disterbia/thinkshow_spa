@@ -117,6 +117,8 @@ class ProductMgmtController extends GetxController {
         id: raw[i]['id'],
         title: raw[i]['product_name'],
         price: raw[i]['price'],
+        normalPrice: raw[i]['normal_price'],
+        priceDiscountPercent: raw[i]['price_discount_percent'],
         imgUrl: raw[i]['thumbnail_image_url'],
         isTop10: (raw[i]['is_top_10'] as bool).obs,
         store: Store(id: -1),

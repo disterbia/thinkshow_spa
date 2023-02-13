@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,6 +37,7 @@ class StoreDetailController extends GetxController {
   List<String> apiSoftItems = ['latest', 'popular', 'review'];
   List<String> dropdownItems = ['최신순', '인기순', '리뷰순'];
   RxInt selectedDropdownIndex = 0.obs;
+  RxBool isLoading = false.obs;
 
   @override
   onInit() async {
@@ -50,6 +53,7 @@ class StoreDetailController extends GetxController {
   }
 
   init() async {
+    isLoading.value=true;
     mainStoreModel.value =
         await _apiProvider.getStoreDetailMainInfo(storeId.value);
     // Dingdong Products
@@ -60,6 +64,7 @@ class StoreDetailController extends GetxController {
 
     // products
     updateProducts(isScrolling: false);
+    isLoading.value=false;
   }
 
   Future<void> starIconPressed() async {
@@ -76,15 +81,16 @@ class StoreDetailController extends GetxController {
       return;
     }
 
-    bool isSuccess = await _apiProvider.putAddStoreFavorite(
-        storeId: mainStoreModel.value.storeId!);
-    if (isSuccess) {
+    String response = await _apiProvider.putAddStoreFavorite(
+        storeId: mainStoreModel.value.storeId!) ;
+    Map<String,dynamic> json =jsonDecode(response);
+
       if (mainStoreModel.value.isFavorite!.value) {
         mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
       } else {
         mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
-    }
+
   }
 
   privilateProductsNotEmpty() {

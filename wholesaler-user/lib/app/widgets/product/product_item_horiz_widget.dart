@@ -84,7 +84,7 @@ class ProductItemHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int normalPrice = product.normalPrice!;
+    int normalPrice = product.normalPrice??0;
     int productTotalPrice = 0;
     int normalTotalPrice = 0;
     if (product.quantity != null) {

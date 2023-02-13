@@ -14,6 +14,7 @@ class Store {
   int? totalStoreLiked;
   RxInt? favoriteCount;
   RxList<dynamic>? topImagePath;
+  List<dynamic>? categories;
 
   Store({
     required this.id,
@@ -24,6 +25,7 @@ class Store {
     this.totalProducts,
     this.totalStoreLiked,
     this.favoriteCount,
-    this.topImagePath
+    this.topImagePath,
+    this.categories
   });
 }

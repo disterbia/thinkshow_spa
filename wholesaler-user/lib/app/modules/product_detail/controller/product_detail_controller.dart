@@ -35,7 +35,8 @@ class ProductDetailController extends GetxController {
           price: 0,
           selectedOptionAddPrice: 0)
       .obs;
-  RxList<Product> products = <Product>[].obs;
+  RxList<Product> sameProducts = <Product>[].obs;
+  RxList<Product> bestProducts = <Product>[].obs;
   // size table widget
   ScrollController arrowsController = ScrollController();
   RxBool isLoading = false.obs;
@@ -54,11 +55,13 @@ class ProductDetailController extends GetxController {
       return;
     }
     product.value = await _apiProvider.getProductDetail(productId: productId);
-    products.value = await _apiProvider.getSimilarCat(
+    sameProducts.value = await _apiProvider.getSimilarCat(
         offset: 0,
         limit: 3,
         productId: productId!,
         sort: "latest");
+    bestProducts.value = await _apiProvider.getTop10Products(storeId: product.value.store.id);
+
     // print(product.value.content);
     if(product.value.content != null){
       quillController = QuillController(
@@ -76,15 +79,15 @@ class ProductDetailController extends GetxController {
     isLoading.value = false;
   }
 
-  void sameProdcuts(index) async {
-    isLoading.value = true;
-    products.value = await _apiProvider.getProductsWithCat(
-        offset: 0,
-        limit: 3,
-        categoryId: index,
-        sort: "latest");
-    isLoading.value = false;
-  }
+  // void sameProdcuts(index) async {
+  //   isLoading.value = true;
+  //   sameProducts.value = await _apiProvider.getProductsWithCat(
+  //       offset: 0,
+  //       limit: 3,
+  //       categoryId: index,
+  //       sort: "latest");
+  //   isLoading.value = false;
+  // }
   void UpdateTotalPrice() {
     print('UpdateTotalPrice');
     int addPrice = selectedOptionIndex.value != -1
@@ -147,15 +150,15 @@ class ProductDetailController extends GetxController {
     }
 
     product.value.store.isBookmarked!.toggle();
-    bool isSuccess =
-        await _apiProvider.putAddStoreFavorite(storeId: product.value.store.id);
-    if (isSuccess) {
+    String response = await _apiProvider.putAddStoreFavorite(storeId: product.value.store.id); ;
+    Map<String,dynamic> json =jsonDecode(response);
+
       if (product.value.store.isBookmarked!.value) {
         mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
       } else {
         mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
-    }
+
   }
 
   likeBtnPressed({required bool newValue}) async {

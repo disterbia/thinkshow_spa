@@ -29,6 +29,8 @@ class Tab1DetailInfo extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    bool bestIsMore3= productDetailCtr.bestProducts.length>=3;
+    bool sameIsMore3=productDetailCtr.sameProducts.length>=3;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctr.clothWashToggleInitilize();
     });
@@ -60,19 +62,6 @@ class Tab1DetailInfo extends GetView {
                             itemCount: productDetailCtr
                                 .product.value.imagesColor!.length,
                             itemBuilder: (context, index) {
-                              QuillEditor(
-                                controller: productDetailCtr.quillController,
-                                scrollController: ScrollController(),
-                                scrollable: true,
-                                focusNode: FocusNode(),
-                                autoFocus: true,
-                                readOnly: true,
-                                expands: false,
-                                padding: EdgeInsets.all(15),
-                                showCursor: false,
-                                enableSelectionToolbar: false,
-                                enableInteractiveSelection: false,
-                              );
                               return Container(
                                 height: Get.height * 0.6,
                                 child: ClipRRect(
@@ -196,22 +185,36 @@ class Tab1DetailInfo extends GetView {
                     ],
                   ),
                 ),
-                Obx(() => SizedBox(
-                      height: isMore.value ? 0 : 30,
-                    )),
+                  QuillEditor(
+                  controller: productDetailCtr.quillController,
+                  scrollController: ScrollController(),
+                  scrollable: true,
+                  focusNode: FocusNode(),
+                  autoFocus: true,
+                  readOnly: true,
+                  expands: false,
+                  padding: EdgeInsets.all(15),
+                  showCursor: false,
+                  enableSelectionToolbar: false,
+                  enableInteractiveSelection: false,
+                  ),
+                // Obx(() => SizedBox(
+                //       height: isMore.value ? 0 : 30,
+                //     )),
                 Divider(
                   thickness: 10,
                   color: MyColors.grey3,
                 ),
-                productDetailCtr.products.length>=3?Padding(
-                  padding: const EdgeInsets.all(10.0),
+                SizedBox(height: 20,),
+                sameIsMore3?Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     "이 상품과 비슷한 상품",
                     style: MyTextStyles.f18_bold,
                   ),
                 ):Container(),
-                productDetailCtr.products.length>=3? Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                sameIsMore3? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     primary: false,
@@ -219,7 +222,7 @@ class Tab1DetailInfo extends GetView {
                     itemCount: 3,
                     itemBuilder: (BuildContext context, int index) {
                       return ProductItemVertical(
-                        product: productDetailCtr.products[index],
+                        product: productDetailCtr.sameProducts[index],
                       );
                     },
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -231,38 +234,44 @@ class Tab1DetailInfo extends GetView {
                     ),
                   ),
                 ):Container(),
-                Divider(
+                sameIsMore3?Divider(
                   thickness: 10,
                   color: MyColors.grey3,
-                ),
-                productDetailCtr.products.length>=3?Padding(
-                  padding: const EdgeInsets.all(10.0),
+                ):Container(),
+                sameIsMore3?SizedBox(height: 20,):Container(),
+                bestIsMore3?Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     "스토어에서 인기 있는 상품",
                     style: MyTextStyles.f18_bold,
                   ),
                 ):Container(),
-                SizedBox(height: 10),
-                productDetailCtr.products.length>=3?GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ProductItemVertical(
-                      product: productDetailCtr.products[index]
-                    );
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    childAspectRatio:
-                        context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
-                    // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                bestIsMore3?Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProductItemVertical(
+                        product: productDetailCtr.bestProducts[index]
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      childAspectRatio:
+                          context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
+                      // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                    ),
                   ),
                 ):Container(),
                 // 반품교환정보
-                SizedBox(height: 50),
+                bestIsMore3?Divider(
+                  thickness: 10,
+                  color: MyColors.grey3,
+                ):Container(),
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
@@ -270,7 +279,6 @@ class Tab1DetailInfo extends GetView {
                     style: MyTextStyles.f16.copyWith(color: MyColors.black2),
                   ),
                 ),
-                SizedBox(height: 10),
                 Obx(
                   () => productDetailCtr.product.value.return_exchange_info !=
                           null

@@ -12,7 +12,8 @@ import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shoppin
 class Tab1RankingView extends StatelessWidget {
   Page2StoreListController ctr = Get.put(Page2StoreListController());
   String? prevPage = "rank";
-  final RxList<bool> _selected =<bool>[true, false].obs;
+  final RxList<bool> _selected = <bool>[true, false].obs;
+
   @override
   Widget build(BuildContext context) {
     ctr.getRankedStoreData();
@@ -20,43 +21,47 @@ class Tab1RankingView extends StatelessWidget {
       () => ctr.isLoading.value
           ? LoadingWidget()
           : SingleChildScrollView(
-        controller: ctr.scrollController,
-            child: Column(
-              children: [
-                Align(alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: ToggleButtons(
-                      //direction: vertical ? Axis.vertical : Axis.horizontal,
-                      onPressed: (int index) {
-                        // The button that is tapped is set to true, and the others to false.
-                        for (int i = 0; i < _selected.length; i++) {
-                          _selected[i] = i == index;
-                        }
-                      },
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                      selectedColor: Colors.white,
-                      fillColor: MyColors.primary,
-                      color: Colors.grey,
-                      constraints: const BoxConstraints(
-                        minHeight: 25.0,
-                        minWidth:25.0,
+              controller: ctr.scrollController,
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: ToggleButtons(
+                        //direction: vertical ? Axis.vertical : Axis.horizontal,
+                        onPressed: (int index) {
+                          if (index == 0) ctr.getMostStoreData();
+                          if (index == 1) ctr.getRankedStoreData();
+                          // The button that is tapped is set to true, and the others to false.
+                          for (int i = 0; i < _selected.length; i++) {
+                            _selected[i] = i == index;
+                          }
+                        },
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        selectedColor: Colors.white,
+                        fillColor: MyColors.primary,
+                        color: Colors.grey,
+                        constraints: const BoxConstraints(
+                          minHeight: 25.0,
+                          minWidth: 25.0,
+                        ),
+                        isSelected: _selected,
+                        children: [Text(" 추천순 "), Text(" 인기순 ")],
                       ),
-                      isSelected: _selected,
-                      children: [Text(" 추천순 "),Text(" 인기순 ")],
                     ),
                   ),
-                ),
-                ListView.builder(
-                    itemCount: ctr.stores.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return _storeList(ctr.stores[index], context);
-                    }),
-              ],
+                  ListView.builder(
+                      itemCount: ctr.stores.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return _storeList(ctr.stores[index], context);
+                      }),
+                ],
+              ),
             ),
-          ),
     );
   }
 
@@ -97,17 +102,22 @@ class Tab1RankingView extends StatelessWidget {
               ),
               Builder(builder: (context) {
                 if (store.topImagePath!.length < 4) return Container();
-                return Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                return Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
                       Expanded(
                           child: ClipRRect(
-                            child: CachedNetworkImage(
-                        fit: BoxFit.fitHeight,
-                        imageUrl: store.topImagePath![0],
-                        height: 100,
-                      ),borderRadius: BorderRadius.only(topLeft: Radius.circular(4),bottomLeft: Radius.circular(4)),
-                          )),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.fitHeight,
+                          imageUrl: store.topImagePath![0],
+                          height: 100,
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4)),
+                      )),
                       SizedBox(width: 2),
                       Expanded(
                           child: CachedNetworkImage(
@@ -125,13 +135,14 @@ class Tab1RankingView extends StatelessWidget {
                       SizedBox(width: 2),
                       Expanded(
                           child: ClipRRect(
-                            child: CachedNetworkImage(
-                        fit: BoxFit.fitHeight,
-                        imageUrl: store.topImagePath![3],
-                        height: 100,
-                      ),
-                              borderRadius: BorderRadius.only(topRight: Radius.circular(4),bottomRight: Radius.circular(4)))),
-
+                              child: CachedNetworkImage(
+                                fit: BoxFit.fitHeight,
+                                imageUrl: store.topImagePath![3],
+                                height: 100,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(4),
+                                  bottomRight: Radius.circular(4)))),
                     ],
                   ),
                 );
@@ -189,9 +200,31 @@ class Tab1RankingView extends StatelessWidget {
   }
 
   Widget _storeName(Store store) {
-    return Text(
-      store.name!,
-      style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+    List<String> categoris =
+        (store.categories!).map((item) => item as String).toList();
+    String category = "";
+    for (var i = 0; i < categoris.length; i++) {
+      if (i == categoris.length - 1)
+        category = category + categoris[i];
+      else
+        category = category + categoris[i] + "·";
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          store.name!,
+          style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          categoris.isEmpty ? "스토어 정보 없음" : category,
+          style: MyTextStyles.f12.copyWith(color: Colors.grey),
+        ),
+      ],
     );
   }
 
@@ -204,20 +237,24 @@ class Tab1RankingView extends StatelessWidget {
 
   void showModal(Store store, BuildContext context) {
     // changeSystemColor(Colors.pink);
-    showModalBottomSheet(backgroundColor: Colors.transparent,
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         context: context,
         builder: (context) {
-          return Container( height: Get.height / 3,decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+          return Container(
+            height: Get.height / 3,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
             ),
-          ),
-            child: Scaffold(backgroundColor: Colors.transparent,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
               body: Container(
                 child: Column(
                   children: [
@@ -232,7 +269,8 @@ class Tab1RankingView extends StatelessWidget {
                     ),
                     Text(
                       "${store.name}와 비슷한 스토어",
-                      style: MyTextStyles.f16_bold.copyWith(color: Colors.black),
+                      style:
+                          MyTextStyles.f16_bold.copyWith(color: Colors.black),
                     ),
                     SizedBox(
                       height: 20,
@@ -245,52 +283,121 @@ class Tab1RankingView extends StatelessWidget {
                             width: 10,
                           ),
                           Expanded(
-                            child: Stack(
-                              children: [
-                                Container(height: 120 ,decoration: BoxDecoration(
-                                color: Colors.grey,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
-                                  ),
-                                ),),
-                                Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(100)
-                                      ),
-                                      width: 40,
-                                      height: 40,
-                                    ))
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => StoreDetailView(
+                                  storeId: ctr.sameId[0],
+                                  prevPage: prevPage,
+                                ));
+                              },
+                              child: Container(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                                child: ClipRRect(
+                                                  child:  ctr.mainImage[0] == ""
+                                                      ? Image.asset(
+                                                        "assets/icons/ic_store.png",
+                                                      )
+                                                      :CachedNetworkImage(
+                                                    imageUrl: ctr.mainImage[0],
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10.0),
+                                                      topRight:
+                                                          Radius.circular(10.0)),
+                                                ),
+                                              ),
+                                        height: 120),
+                                    Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          child: Center(
+                                                  child: CircleAvatar(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(2),
+                                                    child: ClipOval(
+                                                      child: ctr.subImage[0] == ""
+                                                          ? Image.asset(
+                                                        "assets/icons/ic_store.png",
+                                                      ):CachedNetworkImage(
+                                                        imageUrl: ctr.subImage[0],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  radius: 50,
+                                                    backgroundColor: Colors.white,
+                                                )),
+                                          width: 50,
+                                          height: 50,
+                                        ))
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: Stack(
-                              children: [
-                                Container(height: 120 ,decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
-                                  ),
-                                )),
-                                Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(100)
-                                      ),
-                                      width: 40,
-                                      height: 40,
-                                    ))
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => StoreDetailView(
+                                  storeId: ctr.sameId[1],
+                                  prevPage: prevPage,
+                                ));
+                              },
+                              child: Container(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                        child: Center(
+                                                child: ClipRRect(
+                                                  child:  ctr.mainImage[1] == ""
+                                                      ? Image.asset(
+                                                    "assets/icons/ic_store.png",
+                                                  )
+                                                      :CachedNetworkImage(
+                                                    imageUrl: ctr.mainImage[1],
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10.0),
+                                                      topRight:
+                                                          Radius.circular(10.0)),
+                                                ),
+                                              ),
+                                        height: 120),
+                                    Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          child:Center(
+                                              child: CircleAvatar(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(2),
+                                                  child:  ctr.subImage[1] == ""
+                                                      ? Image.asset(
+                                                    "assets/icons/ic_store.png",
+                                                  )
+                                                      : ClipOval(
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: ctr.subImage[1],
+                                                    ),
+                                                  ),
+                                                ),
+                                                radius: 50,
+                                                backgroundColor: Colors.white,
+                                              )),
+                                          width: 50,
+                                          height: 50,
+                                        ))
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -316,14 +423,15 @@ class Tab1RankingView extends StatelessWidget {
   Widget _starBuilder(Store store, BuildContext context) {
     int favoriteCount = store.favoriteCount!.value;
     double temp = double.parse(favoriteCount.toString());
-    String result = favoriteCount.toString();
+   String result = favoriteCount.toString();
     if (temp > 999) {
       result = (temp / 1000).toStringAsFixed(1) + "k";
     }
     return InkWell(
-      onTap: () {
+      onTap: () async {
         store.isBookmarked!.toggle();
-        if( store.isBookmarked!.value) {
+        await ctr.starIconPressed(store);
+        if (store.isBookmarked!.value) {
           showModal(store, context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.black,
@@ -336,7 +444,7 @@ class Tab1RankingView extends StatelessWidget {
             duration: Duration(seconds: 1),
           ));
         }
-        ctr.starIconPressed(store);
+
       },
       child: Obx(
         () => Column(

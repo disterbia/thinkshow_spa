@@ -25,18 +25,20 @@ class Tab2BookmarksView extends StatelessWidget {
             ctr.stores.length == 0
                 ? Container(
               child: Column(children: [
-                Text(
-                  "!느낌표이미지!",
-                ),
-                Text("아직 즐겨찾기를 한 스토어가 없어요"),
-                Text("랭킹에서 즐겨찾기를 해보세요"),
+                SizedBox(height: 20,),
+                Image.asset("assets/images/mark.png",height: 70),
+                SizedBox(height: 10,),
+                Text("아직 즐겨찾기를 한 스토어가 없어요",style: TextStyle(color: Colors.grey),),
+                SizedBox(height: 5,),
+                Text("랭킹에서 즐겨찾기를 해보세요",style: TextStyle(color: Colors.grey)),
+                SizedBox(height: 20,),
                 InkWell(
                     onTap: () => Get.find<UserMainController>().changeTabIndex(1),
                     child: Container(
                         width: Get.width * 0.6,
                         color: MyColors.grey3,
                         height: 50,
-                        child: Center(child: Text("스토어 구경하러 가기"))))
+                        child: Center(child: Text("스토어 구경하러 가기",style: TextStyle(color: Colors.grey)))))
               ]),
             )
                 : ListView.builder(
@@ -124,9 +126,25 @@ class Tab2BookmarksView extends StatelessWidget {
   }
 
   Widget _storeName(Store store) {
-    return Text(
-      store.name!,
-      style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+    List<String> categoris =(store.categories!).map((item) => item as String).toList();
+    String category="";
+    for(var i =0; i<categoris.length;i++){
+      if(i==categoris.length-1) category=category+categoris[i];
+      else category=category+categoris[i]+"·";
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          store.name!,
+          style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+        ),
+        SizedBox(height: 5,),
+        Text(
+          categoris.isEmpty?"스토어 정보 없음":category,
+          style: MyTextStyles.f12.copyWith(color: Colors.grey),
+        ),
+      ],
     );
   }
 

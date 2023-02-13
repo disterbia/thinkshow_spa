@@ -11,7 +11,7 @@ class NumberWidget extends StatelessWidget {
     return Container(
       height: 24,
       width: 20,
-      margin: EdgeInsets.only(top: 20, left: 2),
+      margin: EdgeInsets.only(top: 0, left: 0),
       decoration: BoxDecoration(
         color: productNumber.backgroundColor,
         borderRadius: BorderRadius.all(Radius.circular(4)),

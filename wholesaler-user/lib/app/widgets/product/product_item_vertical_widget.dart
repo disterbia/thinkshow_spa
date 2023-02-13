@@ -54,8 +54,6 @@ class ProductItemVertical extends StatelessWidget {
             alignment: Alignment.center,
             child: Stack(
               children: [
-                // Top left bell icon
-                GoldenBorderBellIconBuilder(),
                 // Image
                 ImageBuilder(),
                 // Checkbox
@@ -66,6 +64,8 @@ class ProductItemVertical extends StatelessWidget {
                 LikeIconBuilder(),
                 // isSoldout
                 SoldOutBuilder(),
+                // Top left bell icon
+                GoldenBorderBellIconBuilder(),
               ],
             ),
           ),
@@ -161,7 +161,7 @@ class ProductItemVertical extends StatelessWidget {
     if (product.isChecked != null) {
       // print('inside CheckboxBuilder');
       return Container(
-        margin: EdgeInsets.only(left: 5, top: 20),
+        margin: EdgeInsets.only(left: 2, top: 2),
         height: 20,
         width: 20,
         child: Obx(
@@ -358,7 +358,7 @@ class ProductItemVertical extends StatelessWidget {
                     ),
                     child: Icon(
                       Icons.notifications,
-                      color: Colors.white,
+                      color: MyColors.white,
                       size: 14,
                     ),
                   )

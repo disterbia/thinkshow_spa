@@ -76,7 +76,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                     //   child: _dingdongBanner(),
                     // ),
                     // SizedBox(height: 20),
-                    recommendedProductCtr.adProducts.length != 0
+                    recommendedProductCtr.adProducts.isNotEmpty
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
@@ -86,7 +86,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                               ],
                             ),
                           )
-                        : Padding(
+                        : recommendedProductCtr.exhibitProducts1.isNotEmpty?Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +102,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                 CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController1,1),
                               ],
                             ),
-                          ),
+                          ):Container(),
                     Divider(thickness: 5, color: MyColors.grey3),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
@@ -128,7 +128,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             // isShowLoadingCircle: ctr.allowCallAPI,
                           ),
                         ),
-                        Padding(
+                        recommendedProductCtr.exhibitProducts2.isNotEmpty?Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -140,7 +140,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                               CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController2,2)
                             ],
                           ),
-                        ),
+                        ):Container(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: ProductGridViewBuilder(
@@ -151,7 +151,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             // isShowLoadingCircle: ctr.allowCallAPI,
                           ),
                         ),
-                        Padding(
+                        recommendedProductCtr.exhibitProducts3.isNotEmpty? Padding(
                           padding:const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -163,7 +163,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                               CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController3,3)
                             ],
                           ),
-                        ),
+                        ):Container(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: ProductGridViewBuilder(
@@ -174,10 +174,10 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             // isShowLoadingCircle: ctr.allowCallAPI,
                           ),
                         ),
-                        Padding(
+                        recommendedProductCtr.beltImage.value!=""?Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Container(height: 120,child: CachedNetworkImage(imageUrl: recommendedProductCtr.beltImage.value,fit: BoxFit.fill),),
-                        ),
+                        ):Container(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: ProductGridViewBuilder(
@@ -188,7 +188,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                             // isShowLoadingCircle: ctr.allowCallAPI,
                           ),
                         ),
-                        Padding(
+                        recommendedProductCtr.exhibitProducts4.isNotEmpty?Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -200,7 +200,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                               CarousalProductHorizontalView(recommendedProductCtr.indicatorSliderController4,4)
                             ],
                           ),
-                        ),
+                        ):Container(),
                         Padding(
                           padding:const EdgeInsets.symmetric(horizontal: 15),
                           child: ProductGridViewBuilder(
@@ -264,125 +264,6 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
               },
             )),
       );
-  }
-  Widget dotIndicator(int current){
-    return    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-      for (var i = 0; i < 5; i++)
-        Container(
-          width: 10.0,
-          height: 10.0,
-          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-          decoration: BoxDecoration(shape: BoxShape.circle, color: MyColors.primary.withOpacity(current== i ? 0.9 : 0.4)),
-        ),
-    ]);
-  }
-  List<Widget> carouselRow() {
-    return [
-      Container(
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                height: 280,
-                width: Get.width / 4,
-                color: Colors.blue,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 280,
-                width: Get.width / 4,
-                color: Colors.blue,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 280,
-                color: Colors.red,
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        child: Row(
-          children: [
-            Container(
-              height: 100,
-              width: Get.width / 4,
-              color: Colors.red,
-            ),
-            Container(
-              height: 100,
-              width: Get.width / 4,
-              color: Colors.blue,
-            ),
-            Container(
-              height: 100,
-              width: Get.width / 4,
-              color: Colors.red,
-            ),
-          ],
-        ),
-      ),
-      Row(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-        ],
-      ),
-      Row(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-        ],
-      ),
-      Row(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 100,
-            width: Get.width / 4,
-            color: Colors.red,
-          ),
-        ],
-      ),
-    ];
   }
 
   Widget _recommendedItemsTitle() {

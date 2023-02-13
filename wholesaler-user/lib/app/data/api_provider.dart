@@ -288,7 +288,7 @@ class uApiProvider extends GetConnect {
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
-      return json["banner_img_url"];
+      return json["banner_img_url"]??"";
     } else {
       return Future.error(response.statusText!);
     }
@@ -815,6 +815,7 @@ class uApiProvider extends GetConnect {
               ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
               : null,
           favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+            categories:jsonList[i]["categories"]
         );
         stores.add(tempStore);
       }
@@ -826,6 +827,45 @@ class uApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+  Future<List<Store>> getMostStoreData(
+      {required int offset, required int limit}) async {
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/store/recommend-list?type=total&offset=$offset&limit=$limit';
+    final response = await get(url, headers: headers);
+    print(url);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      List<Store> stores = [];
+
+      for (int i = 0; i < jsonList.length; i++) {
+        Store tempStore = Store(
+          id: jsonList[i]['store_id'],
+          name: jsonList[i]['store_name'],
+          imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+              ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+              : null,
+          isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+          rank: i + 1,
+          topImagePath: jsonList[i]['top_image_path'] != null
+              ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+              : null,
+          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+          categories: jsonList[i]["categories"]
+        );
+        stores.add(tempStore);
+      }
+
+      return stores;
+    } else {
+      // var jsonList = jsonDecode(response.bodyString!);
+
+      return Future.error(response.statusText!);
+    }
+  }
+
+
 
   /// Store Page
   Future<List<Store>> getStorebookmarked() async {
@@ -847,6 +887,7 @@ class uApiProvider extends GetConnect {
           isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
           favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
           rank: i + 1,
+          categories: jsonList[i]["categories"]
         );
         stores.add(tempStore);
       }
@@ -861,7 +902,7 @@ class uApiProvider extends GetConnect {
   }
 
   /// Store Page
-  Future<bool> putAddStoreFavorite({required int storeId}) async {
+  Future<String> putAddStoreFavorite({required int storeId}) async {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/store/$storeId/favorite';
     final response = await put(url, 'empty_body', headers: headers);
@@ -869,7 +910,7 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       log('response ${response.bodyString}');
-      return true;
+      return response.bodyString!;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
       log('error:' + jsonList.toString());
@@ -1270,6 +1311,7 @@ class uApiProvider extends GetConnect {
         isBookmarked:
             json['store_info']['is_favorite'] == true ? true.obs : false.obs,
         favoriteCount: (json['store_info']['favorite_count'] as int).obs,
+          categories: json['store_info']['categories']
       );
 
       // product images
@@ -1324,7 +1366,7 @@ class uApiProvider extends GetConnect {
             ? double.parse(json['review_score'].toString()).obs
             : null,
         options: options,
-        hasBellIconAndBorder: json['is_privilege'],
+        hasBellIconAndBorder: json['is_privilege'] ? true.obs : false.obs,
         content: (json['content'] as String).obs,
         sizes: sizes,
         isLiked: json['is_favorite'] == true ? true.obs : false.obs,

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ class Page2StoreListController extends GetxController {
   RxList<Store> stores = <Store>[].obs;
   RxBool isLoading = false.obs;
   ScrollController scrollController = ScrollController();
+  RxList<String> mainImage=<String>[].obs;
+  RxList<String> subImage=<String>[].obs;
+  RxList<int> sameId=<int>[].obs;
   Future<void> getRankedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
 
@@ -29,6 +33,21 @@ class Page2StoreListController extends GetxController {
     }
     Future.delayed(Duration.zero, () =>  isLoading.value = false);
   }
+  Future<void> getMostStoreData() async {
+    Future.delayed(Duration.zero, () => isLoading.value = true);
+
+    bool result = await uApiProvider().chekToken();
+
+    if (!result) {
+      print('logout');
+      mSnackbar(message: '로그인 세션이 만료되었습니다.');
+      mFuctions.userLogout();
+    } else {
+      stores.value = await _apiProvider.getMostStoreData(offset: 0, limit: 80);
+    }
+    Future.delayed(Duration.zero, () =>  isLoading.value = false);
+  }
+
 
   Future<void> getBookmarkedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
@@ -69,14 +88,34 @@ class Page2StoreListController extends GetxController {
       return;
     }
     log('store id ${store.id}');
-    bool isSuccess = await _apiProvider.putAddStoreFavorite(storeId: store.id);
 
-    if (isSuccess) {
+    String response = await _apiProvider.putAddStoreFavorite(storeId: store.id);
+
+    Map<String,dynamic> json =jsonDecode(response);
+       mainImage.clear();
+      subImage.clear();
+      sameId.clear();
       if (store.isBookmarked!.value) {
+        for(var imgUrl in json["similar_store_list"]){
+          String? mainImageTemp = imgUrl["store_main_image_url"];
+          String? subImageTemp = imgUrl["store_thumbnail_image_url"];
+          sameId.add(imgUrl["store_id"]);
+          if(mainImageTemp!=null){
+            mainImage.add(imgUrl["store_main_image_url"]);
+          }else {
+            mainImage.add("");
+          }
+          if(subImageTemp!=null){
+            subImage.add(imgUrl["store_thumbnail_image_url"]);
+          }else{
+            subImage.add("");
+          }
+
+        }
         //mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
       } else {
-        // mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+         mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
       }
-    }
+
   }
 }

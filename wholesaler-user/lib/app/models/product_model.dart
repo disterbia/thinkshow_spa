@@ -31,6 +31,7 @@ class Product {
   RxBool? isChecked;
   RxBool? isSoldout = false.obs; // 품질
   RxBool? isLiked;
+  bool? isPrivilege;
   List<String>? category;
   int? mainCategoryId;
   int? subCategoryId;
@@ -61,6 +62,7 @@ class Product {
     required this.title,
     this.price,
     this.normalPrice,
+    this.isPrivilege,
     this.priceDiscountPercent,
     required this.imgUrl,
     this.images,

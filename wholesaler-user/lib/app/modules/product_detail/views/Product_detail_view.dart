@@ -159,6 +159,12 @@ class ProductDetailView extends GetView {
   }
 
   Widget storeInfo() {
+    List<String> categoris =(ctr.product.value.store.categories!).map((item) => item as String).toList();
+    String category="";
+    for(var i =0; i<categoris.length;i++){
+      if(i==categoris.length-1) category=category+categoris[i];
+      else category=category+categoris[i]+"·";
+    }
     int favoriteCount = ctr.product.value.store.favoriteCount!.value;
     double temp = double.parse(favoriteCount.toString());
     String result = favoriteCount.toString();
@@ -185,9 +191,15 @@ class ProductDetailView extends GetView {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            ctr.product.value.store.name!,
-                            style: MyTextStyles.f18_bold,
+                          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                ctr.product.value.store.name!,
+                                style: MyTextStyles.f14_bold,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(categoris.isNotEmpty?category:"스토어 정보 없음",style: MyTextStyles.f12.copyWith(color: Colors.grey))
+                            ],
                           )
                         ],
                       )
@@ -201,10 +213,16 @@ class ProductDetailView extends GetView {
                             width: 10,
                           ),
                           Obx(() => ctr.product.value.store.name != null
-                              ? Text(
-                                  ctr.product.value.store.name!,
-                                  style: MyTextStyles.f14_bold,
-                                )
+                              ? Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      ctr.product.value.store.name!,
+                                      style: MyTextStyles.f14_bold,
+                                    ),
+                                  SizedBox(height: 5,),
+                                  Text(categoris.isNotEmpty?category:"스토어 정보 없음",style: MyTextStyles.f12.copyWith(color: Colors.grey))
+                                ],
+                              )
                               : SizedBox.shrink()),
                         ],
                       )),
@@ -267,7 +285,7 @@ class ProductDetailView extends GetView {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   ctr.product.value.title,
-                  style: MyTextStyles.f18_bold,
+                  style: MyTextStyles.f16_bold.copyWith(color: Colors.black),
                 ),
               ),
             ),
@@ -385,14 +403,15 @@ class ProductDetailView extends GetView {
                 "배송정보   ",
                 style: MyTextStyles.f16.copyWith(color: MyColors.grey4),
               ),
-              Row(
+              ctr.product.value.hasBellIconAndBorder!.value ? Row(
                 children: [
                   Icon(Icons.notifications, color: MyColors.primary),
-                  Text("띵동배송",
-                      style: MyTextStyles.f16.copyWith(color: MyColors.primary))
+               Text("띵동배송",
+                      style: MyTextStyles.f16.copyWith(color: MyColors.primary)),
                 ],
-              ),
-              Text("   무료배송",
+              ):Container(),
+              ctr.product.value.hasBellIconAndBorder!.value ?SizedBox(width: 10,):Container(),
+              Text("무료배송",
                   style:
                       MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
             ],

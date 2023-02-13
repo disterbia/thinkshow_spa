@@ -133,6 +133,8 @@ class PartnerHomeController extends GetxController {
         title: bestProduct.productName!,
         store: tempStore,
         price: bestProduct.price,
+        normalPrice: bestProduct.normalPrice,
+        priceDiscountPercent: bestProduct.disCountPercent,
         isLiked: true.obs,
         imgUrl: bestProduct.thumbnailImageUrl!,
       );
@@ -164,6 +166,8 @@ class PartnerHomeController extends GetxController {
         title: raw[i]['product_name'],
         store: tempStore,
         price: raw[i]['price'],
+        normalPrice: raw[i]['normal_price'],
+        priceDiscountPercent: raw[i]['price_discount_percent'],
         isLiked: raw[i]['is_favorite'] ? true.obs : false.obs,
         imgUrl: raw[i]['thumbnail_image_url'],
       );
