@@ -35,7 +35,6 @@ class Tab4DingDongController extends GetxController {
 
  Future<void> init() async{
     offset=0;
-    allowCallAPI.value = true;
    isLoading.value= true;
    products.value = await _apiProvider.getDingdongProductPopular(offset: 0, limit: mConst.limit);
    // scrollController.value.addListener(() {
@@ -67,7 +66,7 @@ class Tab4DingDongController extends GetxController {
   addDataToList() async {
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
-      print(offset);
+      print("offset");
       tempProducts = await _apiProvider.getDingdongProductPopular(offset: offset, limit: mConst.limit);
     } else {
       print('index > 0 , show categories');

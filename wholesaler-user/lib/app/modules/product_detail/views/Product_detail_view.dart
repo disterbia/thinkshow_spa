@@ -539,7 +539,7 @@ class ProductDetailView extends GetView {
                               badgeContent: Text(
                                 ctr2.getNumberProducts().toString(),
                                 style: TextStyle(
-                                    color: MyColors.black,
+                                    color: MyColors.white,
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -549,8 +549,10 @@ class ProductDetailView extends GetView {
                                   onPressed: () {
                                     Get.to(() => Cart1ShoppingBasketView());
                                   },
-                                  icon: Icon(
-                                    Icons.shopping_cart_outlined,
+                                  icon: ImageIcon(
+                                    AssetImage('assets/icons/top_cart.png'),
+                                    size: 21,
+                                    // Icons.shopping_cart_outlined,
                                     color: MyColors.black,
                                   )),
                             )
@@ -558,8 +560,10 @@ class ProductDetailView extends GetView {
                               onPressed: () {
                                 Get.to(() => Cart1ShoppingBasketView());
                               },
-                              icon: Icon(
-                                Icons.shopping_cart_outlined,
+                              icon: ImageIcon(
+                                AssetImage('assets/icons/top_cart.png'),
+                                size: 21,
+                                // Icons.shopping_cart_outlined,
                                 color: MyColors.black,
                               ),
                             ),

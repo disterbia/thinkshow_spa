@@ -33,6 +33,7 @@ class ProductDetailController extends GetxController with GetSingleTickerProvide
           images: [],
           quantity: 1.obs,
           price: 0,
+          keyword: [],
           selectedOptionAddPrice: 0)
       .obs;
   RxList<Product> sameProducts = <Product>[].obs;
@@ -41,11 +42,34 @@ class ProductDetailController extends GetxController with GetSingleTickerProvide
   ScrollController arrowsController = ScrollController();
   RxBool isLoading = false.obs;
 
-  late QuillController quillController;
+  QuillController? quillController;
   
   List<String> tabTitles = ['상세정보', '리뷰', "사이즈", '문의'];
   late TabController tabController;
 
+  Future<void> tempInit() async{
+    isLoading.value=true;
+    product.value = await _apiProvider.getProductDetail(productId: productId);
+    sameProducts.value = await _apiProvider.getSimilarCat(
+        offset: 0, limit: 3, productId: productId!, sort: "latest");
+    bestProducts.value =
+    await _apiProvider.getTop10Products(storeId: product.value.store.id);
+
+    // print(product.value.content);
+    if (product.value.content != null) {
+      quillController = QuillController(
+          document: Document.fromJson(jsonDecode(product.value.content!.value)),
+          selection: TextSelection.collapsed(offset: 0));
+    } else {
+      quillController = QuillController.basic();
+    }
+
+    if (product.value.quantity == null) {
+      product.value.quantity = 1.obs;
+    }
+    totalPrice.value = product.value.price!;
+    isLoading.value = false;
+  }
   @override
   Future<void> onInit() async {
     super.onInit();

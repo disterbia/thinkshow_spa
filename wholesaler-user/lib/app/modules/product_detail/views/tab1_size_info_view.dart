@@ -656,6 +656,7 @@ class Tab4SizeInfo extends GetView {
                           }
                         },
                       ),
+                      FittingMaterialColorSizeWidget("제조국", productDetailCtr.product.value.country!),
 
                       Divider(),
 

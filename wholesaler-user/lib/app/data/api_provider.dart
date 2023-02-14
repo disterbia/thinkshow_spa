@@ -1379,6 +1379,8 @@ class uApiProvider extends GetConnect {
         materials: materials,
         mainCategoryId: json['category_id'],
         subCategoryId: json['sub_category_id'],
+        country:json["country"],
+        keyword:json["keyword"]
       );
 
       return tempProduct;

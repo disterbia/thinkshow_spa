@@ -13,6 +13,7 @@ import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/product_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/controller/tab_1_detail_info_controller.dart';
+import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/size_table_widget.dart';
 import 'package:wholesaler_user/app/widgets/custom_button.dart';
 import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget.dart';
@@ -31,6 +32,13 @@ class Tab1DetailInfo extends GetView {
   Widget build(BuildContext context) {
     bool bestIsMore3= productDetailCtr.bestProducts.length>=3;
     bool sameIsMore3=productDetailCtr.sameProducts.length>=3;
+    List<String> keywords = (productDetailCtr.product.value.keyword!)
+        .map((item) => item as String)
+        .toList();
+    String keyword = "";
+    for (var i = 0; i < keywords.length; i++) {
+      keyword = keyword + "#"+keywords[i]+" ";
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctr.clothWashToggleInitilize();
     });
@@ -90,44 +98,6 @@ class Tab1DetailInfo extends GetView {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                           ),
-                          // ListView(
-                          //   physics: NeverScrollableScrollPhysics(),
-                          //   shrinkWrap: true,
-                          //   children: [
-                          //     for (String imagesColor in productDetailCtr
-                          //         .product.value.imagesColor!) ...[
-                          //       Container(
-                          //         height: Get.height * 0.6,
-                          //         child: CachedNetworkImage(
-                          //           imageUrl: imagesColor,
-                          //           fit: BoxFit.fill,
-                          //           placeholder: (context, url) {
-                          //             return Container(
-                          //               height: 300,
-                          //               child: Center(
-                          //                   child: CircularProgressIndicator()),
-                          //             );
-                          //           },
-                          //           errorWidget: (context, url, error) =>
-                          //               Icon(Icons.error),
-                          //         ),
-                          //       )
-                          //     ],
-                          //     QuillEditor(
-                          //       controller: productDetailCtr.quillController,
-                          //       scrollController: ScrollController(),
-                          //       scrollable: true,
-                          //       focusNode: FocusNode(),
-                          //       autoFocus: true,
-                          //       readOnly: true,
-                          //       expands: false,
-                          //       padding: EdgeInsets.all(15),
-                          //       showCursor: false,
-                          //       enableSelectionToolbar: false,
-                          //       enableInteractiveSelection: false,
-                          //     ),
-                          //   ],
-                          // ),
                         ),
                       ),
                       Obx(
@@ -186,7 +156,7 @@ class Tab1DetailInfo extends GetView {
                   ),
                 ),
                   QuillEditor(
-                  controller: productDetailCtr.quillController,
+                  controller: productDetailCtr.quillController!,
                   scrollController: ScrollController(),
                   scrollable: true,
                   focusNode: FocusNode(),
@@ -198,6 +168,11 @@ class Tab1DetailInfo extends GetView {
                   enableSelectionToolbar: false,
                   enableInteractiveSelection: false,
                   ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(keyword),
+                ),
+                SizedBox(height: 10,),
                 // Obx(() => SizedBox(
                 //       height: isMore.value ? 0 : 30,
                 //     )),

@@ -56,11 +56,15 @@ class Product {
   int? orderDetailId;
   String? delivery_invoice_number;
   String? delivery_company_name;
+  String? country;
+  List<dynamic>? keyword;
 
   Product({
     required this.id,
     required this.title,
     this.price,
+    this.country,
+    this.keyword,
     this.normalPrice,
     this.isPrivilege,
     this.priceDiscountPercent,

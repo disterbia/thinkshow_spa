@@ -28,8 +28,7 @@ class Tab1UserHomeController extends GetxController {
     scrollController.value.addListener(() {
       // print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
-              scrollController.value.position.maxScrollExtent &&
-          allowCallAPI.isTrue) {
+              scrollController.value.position.maxScrollExtent ) {
         offset += mConst.limit;
         addDataToList();
       }
