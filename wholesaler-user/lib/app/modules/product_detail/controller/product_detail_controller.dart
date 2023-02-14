@@ -15,7 +15,7 @@ import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_vie
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:wholesaler_user/app/constants/functions.dart';
 
-class ProductDetailController extends GetxController {
+class ProductDetailController extends GetxController with GetSingleTickerProviderStateMixin{
   uApiProvider _apiProvider = uApiProvider();
   int productId = -1;
 
@@ -42,10 +42,16 @@ class ProductDetailController extends GetxController {
   RxBool isLoading = false.obs;
 
   late QuillController quillController;
+  
+  List<String> tabTitles = ['상세정보', '리뷰', "사이즈", '문의'];
+  late TabController tabController;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    tabController = TabController(vsync: this, length: tabTitles.length);
+
     isLoading.value = true;
     productId = Get.arguments;
     print('productId $productId');
@@ -56,19 +62,16 @@ class ProductDetailController extends GetxController {
     }
     product.value = await _apiProvider.getProductDetail(productId: productId);
     sameProducts.value = await _apiProvider.getSimilarCat(
-        offset: 0,
-        limit: 3,
-        productId: productId!,
-        sort: "latest");
-    bestProducts.value = await _apiProvider.getTop10Products(storeId: product.value.store.id);
+        offset: 0, limit: 3, productId: productId!, sort: "latest");
+    bestProducts.value =
+        await _apiProvider.getTop10Products(storeId: product.value.store.id);
 
     // print(product.value.content);
-    if(product.value.content != null){
+    if (product.value.content != null) {
       quillController = QuillController(
-        document: Document.fromJson(jsonDecode(product.value.content!.value)),
-        selection: TextSelection.collapsed(offset: 0));
-    }
-    else{
+          document: Document.fromJson(jsonDecode(product.value.content!.value)),
+          selection: TextSelection.collapsed(offset: 0));
+    } else {
       quillController = QuillController.basic();
     }
 
@@ -150,15 +153,16 @@ class ProductDetailController extends GetxController {
     }
 
     product.value.store.isBookmarked!.toggle();
-    String response = await _apiProvider.putAddStoreFavorite(storeId: product.value.store.id); ;
-    Map<String,dynamic> json =jsonDecode(response);
+    String response =
+        await _apiProvider.putAddStoreFavorite(storeId: product.value.store.id);
+    ;
+    Map<String, dynamic> json = jsonDecode(response);
 
-      if (product.value.store.isBookmarked!.value) {
-        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
-      } else {
-        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
-      }
-
+    if (product.value.store.isBookmarked!.value) {
+      mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+    } else {
+      mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+    }
   }
 
   likeBtnPressed({required bool newValue}) async {

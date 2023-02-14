@@ -12,16 +12,14 @@ import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
-
-
 class Cart1ShoppingBasketView extends GetView {
   Cart1ShoppingBasketController ctr = Get.put(Cart1ShoppingBasketController());
 
   Cart1ShoppingBasketView();
-  RxDouble expandableHeight=(Get.height/6).obs;
+  RxDouble expandableHeight = (Get.height / 6).obs;
   RxBool isFirstDrag = true.obs;
   RxBool isExpanded = false.obs;
-  init() async{
+  init() async {
     await ctr.init();
     await ctr.SelectAllCheckboxOnChanged(false);
   }
@@ -65,9 +63,13 @@ class Cart1ShoppingBasketView extends GetView {
                   : SizedBox.shrink()),
               // Cart
               SizedBox(height: 15),
-              CartItemsList(isCart1Page: true, cartItems: ctr.cartItems),
+              CartItemsList(
+                isCart1Page: true,
+                cartItems: ctr.cartItems,
+                showClose: true,
+              ),
               Obx(
-                ()=> Container(
+                () => Container(
                   height: expandableHeight.value,
                 ),
               )
@@ -75,9 +77,9 @@ class Cart1ShoppingBasketView extends GetView {
           ),
         ),
         Obx(
-          ()=> ExpandableNotifier(
+          () => ExpandableNotifier(
             child: Align(
-            alignment: Alignment.bottomCenter,
+              alignment: Alignment.bottomCenter,
               child: Container(
                 height: expandableHeight.value,
                 width: Get.width,
@@ -93,13 +95,17 @@ class Cart1ShoppingBasketView extends GetView {
                   children: [
                     Expanded(
                       child: Container(
-                        child: isExpanded.value ? _expandSection() : _collaspeSection()
-                        // Expandable(
-                        //     collapsed: _collaspeSection(), expanded: _expandSection()),
-                      ),
+                          child: isExpanded.value
+                              ? _expandSection()
+                              : _collaspeSection()
+                          // Expandable(
+                          //     collapsed: _collaspeSection(), expanded: _expandSection()),
+                          ),
                     ),
-                    Container(height:Get.height/15,child: _paymentButton()),
-                    SizedBox(height: 10,)
+                    Container(height: Get.height / 15, child: _paymentButton()),
+                    SizedBox(
+                      height: 10,
+                    )
                   ],
                 ),
               ),
@@ -179,29 +185,36 @@ class Cart1ShoppingBasketView extends GetView {
 
   Widget _collaspeSection() {
     return Builder(builder: (context) {
-      var controller = ExpandableController.of(context, required: true,)!;
+      var controller = ExpandableController.of(
+        context,
+        required: true,
+      )!;
       return Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom:10,left: 20,top: 20),
-            child: Text("결제 예상금액",style: MyTextStyles.f14,),
+            padding: const EdgeInsets.only(bottom: 10, left: 20, top: 20),
+            child: Text(
+              "결제 예상금액",
+              style: MyTextStyles.f14,
+            ),
           ),
           Spacer(),
           Obx(() => Padding(
-            padding: const EdgeInsets.only(bottom:10,top: 20),
-            child: Text(Utils.numberFormat(
-                number: ctr.totalPaymentPrice.value, suffix: '원'),
-              style: MyTextStyles.f14_bold,
-            ),
-          )),
+                padding: const EdgeInsets.only(bottom: 10, top: 20),
+                child: Text(
+                  Utils.numberFormat(
+                      number: ctr.totalPaymentPrice.value, suffix: '원'),
+                  style: MyTextStyles.f14_bold,
+                ),
+              )),
           Padding(
-            padding: EdgeInsets.only(bottom:10,top: 15,right: 20),
+            padding: EdgeInsets.only(bottom: 10, top: 15, right: 20),
             child: InkWell(
                 onTap: () {
-                  isExpanded.value=true;
+                  isExpanded.value = true;
                   controller.toggle();
-                  expandableHeight.value=Get.height/3;
-                  isFirstDrag.value=true;
+                  expandableHeight.value = Get.height / 3;
+                  isFirstDrag.value = true;
                 },
                 child: Icon(Icons.keyboard_arrow_up_outlined, size: 30)),
           ),
@@ -214,20 +227,22 @@ class Cart1ShoppingBasketView extends GetView {
     return Builder(builder: (context) {
       var controller = ExpandableController.of(context, required: true)!;
       return GestureDetector(
-          onPanUpdate: (details) {
-            if(!isFirstDrag.value) return;
-            if(details.delta.dy>0.2){
-              isExpanded.value=false;
-              controller.toggle();
-              expandableHeight.value=Get.height/6;
-              isFirstDrag.value=false;
-            }
-          },
-        child: Container(width: double.infinity,color: Colors.white,
+        onPanUpdate: (details) {
+          if (!isFirstDrag.value) return;
+          if (details.delta.dy > 0.2) {
+            isExpanded.value = false;
+            controller.toggle();
+            expandableHeight.value = Get.height / 6;
+            isFirstDrag.value = false;
+          }
+        },
+        child: Container(
+          width: double.infinity,
+          color: Colors.white,
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 8,bottom: 20),
+                margin: EdgeInsets.only(top: 8, bottom: 20),
                 width: 60,
                 height: 5,
                 decoration: BoxDecoration(
@@ -236,7 +251,7 @@ class Cart1ShoppingBasketView extends GetView {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: MyColors.grey3,
@@ -245,44 +260,67 @@ class Cart1ShoppingBasketView extends GetView {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top:8,left: 8,bottom: 5),
+                        padding:
+                            const EdgeInsets.only(top: 8, left: 8, bottom: 5),
                         child: Row(
                           children: [
-                            Text("총 상품금액",style: TextStyle(color: Colors.grey),),
+                            Text(
+                              "총 상품금액",
+                              style: TextStyle(color: Colors.grey),
+                            ),
                             Spacer(),
-                            Obx(() =>
-                                Padding(
-                                  padding:  EdgeInsets.only(top:8,right: 8,bottom: 5),
-                                  child: Text(Utils.numberFormat(
-                                  number: ctr.totalPaymentPrice.value, suffix: '원',),style: MyTextStyles.f14_bold,),
+                            Obx(() => Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 8, right: 8, bottom: 5),
+                                  child: Text(
+                                    Utils.numberFormat(
+                                      number: ctr.totalPaymentPrice.value,
+                                      suffix: '원',
+                                    ),
+                                    style: MyTextStyles.f14_bold,
+                                  ),
                                 )),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8,bottom: 5),
-                        child: Row(children: [
-                          Text("총 배송비",style: TextStyle(color: Colors.grey)),
-                          Spacer(),
-                          Padding(
-                            padding:  EdgeInsets.only(right: 8,bottom: 5),
-                            child: Text(Utils.numberFormat(
-                                number: 0, suffix: '원'),style: MyTextStyles.f14_bold,),
-                          ),
-                        ],),
+                        padding: const EdgeInsets.only(left: 8, bottom: 5),
+                        child: Row(
+                          children: [
+                            Text("총 배송비", style: TextStyle(color: Colors.grey)),
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsets.only(right: 8, bottom: 5),
+                              child: Text(
+                                Utils.numberFormat(number: 0, suffix: '원'),
+                                style: MyTextStyles.f14_bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Divider(),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8,bottom: 10,),
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          bottom: 10,
+                        ),
                         child: Row(
                           children: [
-                            Text("결제 예상금액",style: MyTextStyles.f14,),
+                            Text(
+                              "결제 예상금액",
+                              style: MyTextStyles.f14,
+                            ),
                             Spacer(),
                             Obx(() => Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Text(Utils.numberFormat(
-                                  number: ctr.totalPaymentPrice.value, suffix: '원'),style: MyTextStyles.f14_bold,),
-                            )),
+                                  padding: EdgeInsets.only(right: 8),
+                                  child: Text(
+                                    Utils.numberFormat(
+                                        number: ctr.totalPaymentPrice.value,
+                                        suffix: '원'),
+                                    style: MyTextStyles.f14_bold,
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -302,17 +340,16 @@ class Cart1ShoppingBasketView extends GetView {
       padding: EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () async {
-          if (ctr.getTotalSelectedProducts() != 0) {
-            await ctr.postOrderCheckout();
-          } else {
-            mSnackbar(message: '상품을 선택해주세요.');
-          }
-        },
-        child: Obx(() => Text("총 ${ctr.getTotalSelectedProducts().toString()}개 주문하기",
-            style: MyTextStyles.f14.copyWith(color: MyColors.white)
-        ))
-      ),
+          onPressed: () async {
+            if (ctr.getTotalSelectedProducts() != 0) {
+              await ctr.postOrderCheckout();
+            } else {
+              mSnackbar(message: '상품을 선택해주세요.');
+            }
+          },
+          child: Obx(() => Text(
+              "총 ${ctr.getTotalSelectedProducts().toString()}개 주문하기",
+              style: MyTextStyles.f14.copyWith(color: MyColors.white)))),
     );
   }
 }

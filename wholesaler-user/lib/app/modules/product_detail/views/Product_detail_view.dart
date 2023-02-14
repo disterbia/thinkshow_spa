@@ -33,7 +33,7 @@ class ProductDetailView extends GetView {
   Tab2ReviewProductDetailController ctr3 =
       Get.put(Tab2ReviewProductDetailController());
 
-   RxInt tabIndex=0.obs;
+  RxInt tabIndex = 0.obs;
 
   ProductDetailView();
 
@@ -51,97 +51,94 @@ class ProductDetailView extends GetView {
   @override
   Widget build(BuildContext context) {
     init();
+
     return Obx(
-      () => DefaultTabController(
-        // animationDuration: Duration.zero,
-        length: tabTitles.length,
-        child: Scaffold(
-          bottomNavigationBar: User_BottomNavbar(),
-          backgroundColor: MyColors.white,
-          appBar: _appbar(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.arrow_upward_rounded,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    ctr.arrowsController
-                        .jumpTo(ctr.arrowsController.position.minScrollExtent);
-                  }),
-              SizedBox(
-                height: 10,
-              ),
-              FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.arrow_downward_rounded, color: Colors.grey),
-                  onPressed: () {
-                    ctr.arrowsController
-                        .jumpTo(ctr.arrowsController.position.maxScrollExtent);
-                  }),
-            ],
-          ),
-          body: ctr.isLoading.value
-              ? LoadingWidget()
-              : Obx(
-            ()
-            {print(tabIndex);
-                    return SingleChildScrollView(
-                      controller: ctr.arrowsController,
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          //MyVars.isUserProject() ? storeInfo() : Container(),
-                          _productImages(),
-                          storeInfo(),
-                          Divider(),
-                          _titleRatingPrice(context),
-                          SizedBox(height: 15),
-                          TabBar(
-                            onTap: (index) {
-                              print(tabIndex);
-                              tabIndex.value = index;
-                            },
-                            indicatorColor: MyColors.primary,
-                            labelColor: Colors.black,
-                            isScrollable: false,
-                            tabs: [
-                              ...tabTitles.map((title) => Tab(text: title)),
-                            ],
-                          ),
-                          Builder(builder: (_) {
-                              if (tabIndex.value == 0) {
-                                return Tab1DetailInfo(); //1st custom tabBarView
-                              } else if (tabIndex.value == 1) {
-                                return Tab2ReviewView(); //2nd tabView
-                              } else if (tabIndex.value == 2) {
-                                return Tab4SizeInfo(); //3rd tabView
-                              } else {
-                                return Tab3InquiryView();
-                              }
-                            }),
-
-                        ],
-                      ),
-
-                      // SliverAppBar(
-                      //   automaticallyImplyLeading: false,
-                      //    pinned: true,
-                      //   elevation: 0,
-                      //   backgroundColor: Colors.white,
-                      //   title: _tabs(),
-                      // ),
-                    );
-                  },
-              ),
+      () => Scaffold(
+        bottomNavigationBar: User_BottomNavbar(),
+        backgroundColor: MyColors.white,
+        appBar: _appbar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.arrow_upward_rounded,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  ctr.arrowsController
+                      .jumpTo(ctr.arrowsController.position.minScrollExtent);
+                }),
+            SizedBox(
+              height: 10,
+            ),
+            FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.arrow_downward_rounded, color: Colors.grey),
+                onPressed: () {
+                  ctr.arrowsController
+                      .jumpTo(ctr.arrowsController.position.maxScrollExtent);
+                }),
+          ],
         ),
+        body: ctr.isLoading.value
+            ? LoadingWidget()
+            : Obx(
+                () {
+                  print(tabIndex);
+                  return SingleChildScrollView(
+                    controller: ctr.arrowsController,
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        //MyVars.isUserProject() ? storeInfo() : Container(),
+                        _productImages(),
+                        storeInfo(),
+                        Divider(),
+                        _titleRatingPrice(context),
+                        SizedBox(height: 15),
+                        TabBar(
+                          controller: ctr.tabController,
+                          onTap: (index) {
+                            print(tabIndex);
+                            tabIndex.value = index;
+                          },
+                          indicatorColor: MyColors.primary,
+                          labelColor: Colors.black,
+                          isScrollable: false,
+                          tabs: [
+                            ...tabTitles.map((title) => Tab(text: title)),
+                          ],
+                        ),
+                        Builder(builder: (_) {
+                          if (tabIndex.value == 0) {
+                            return Tab1DetailInfo(); //1st custom tabBarView
+                          } else if (tabIndex.value == 1) {
+                            return Tab2ReviewView(); //2nd tabView
+                          } else if (tabIndex.value == 2) {
+                            return Tab4SizeInfo(); //3rd tabView
+                          } else {
+                            return Tab3InquiryView();
+                          }
+                        }),
+                      ],
+                    ),
+
+                    // SliverAppBar(
+                    //   automaticallyImplyLeading: false,
+                    //    pinned: true,
+                    //   elevation: 0,
+                    //   backgroundColor: Colors.white,
+                    //   title: _tabs(),
+                    // ),
+                  );
+                },
+              ),
       ),
     );
   }
@@ -159,11 +156,15 @@ class ProductDetailView extends GetView {
   }
 
   Widget storeInfo() {
-    List<String> categoris =(ctr.product.value.store.categories!).map((item) => item as String).toList();
-    String category="";
-    for(var i =0; i<categoris.length;i++){
-      if(i==categoris.length-1) category=category+categoris[i];
-      else category=category+categoris[i]+"·";
+    List<String> categoris = (ctr.product.value.store.categories!)
+        .map((item) => item as String)
+        .toList();
+    String category = "";
+    for (var i = 0; i < categoris.length; i++) {
+      if (i == categoris.length - 1)
+        category = category + categoris[i];
+      else
+        category = category + categoris[i] + "·";
     }
     int favoriteCount = ctr.product.value.store.favoriteCount!.value;
     double temp = double.parse(favoriteCount.toString());
@@ -191,14 +192,21 @@ class ProductDetailView extends GetView {
                           SizedBox(
                             width: 10,
                           ),
-                          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 ctr.product.value.store.name!,
                                 style: MyTextStyles.f14_bold,
                               ),
-                              SizedBox(height: 5,),
-                              Text(categoris.isNotEmpty?category:"스토어 정보 없음",style: MyTextStyles.f12.copyWith(color: Colors.grey))
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                  categoris.isNotEmpty ? category : "스토어 정보 없음",
+                                  style: MyTextStyles.f12
+                                      .copyWith(color: Colors.grey))
                             ],
                           )
                         ],
@@ -213,16 +221,25 @@ class ProductDetailView extends GetView {
                             width: 10,
                           ),
                           Obx(() => ctr.product.value.store.name != null
-                              ? Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
                                       ctr.product.value.store.name!,
                                       style: MyTextStyles.f14_bold,
                                     ),
-                                  SizedBox(height: 5,),
-                                  Text(categoris.isNotEmpty?category:"스토어 정보 없음",style: MyTextStyles.f12.copyWith(color: Colors.grey))
-                                ],
-                              )
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                        categoris.isNotEmpty
+                                            ? category
+                                            : "스토어 정보 없음",
+                                        style: MyTextStyles.f12
+                                            .copyWith(color: Colors.grey))
+                                  ],
+                                )
                               : SizedBox.shrink()),
                         ],
                       )),
@@ -336,7 +353,10 @@ class ProductDetailView extends GetView {
               ctr.product.value.totalRating == null
                   ? Container()
                   : InkWell(
-                      onTap: () => DefaultTabController.of(context)!.index = 1,
+                      onTap: () {
+                        ctr.tabController.animateTo(1);
+                        tabIndex.value = 1;
+                      },
                       child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
             ],
           ),
@@ -403,14 +423,21 @@ class ProductDetailView extends GetView {
                 "배송정보   ",
                 style: MyTextStyles.f16.copyWith(color: MyColors.grey4),
               ),
-              ctr.product.value.hasBellIconAndBorder!.value ? Row(
-                children: [
-                  Icon(Icons.notifications, color: MyColors.primary),
-               Text("띵동배송",
-                      style: MyTextStyles.f16.copyWith(color: MyColors.primary)),
-                ],
-              ):Container(),
-              ctr.product.value.hasBellIconAndBorder!.value ?SizedBox(width: 10,):Container(),
+              ctr.product.value.hasBellIconAndBorder!.value
+                  ? Row(
+                      children: [
+                        Icon(Icons.notifications, color: MyColors.primary),
+                        Text("띵동배송",
+                            style: MyTextStyles.f16
+                                .copyWith(color: MyColors.primary)),
+                      ],
+                    )
+                  : Container(),
+              ctr.product.value.hasBellIconAndBorder!.value
+                  ? SizedBox(
+                      width: 10,
+                    )
+                  : Container(),
               Text("무료배송",
                   style:
                       MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
@@ -544,7 +571,8 @@ class ProductDetailView extends GetView {
   }
 
   Widget _tabs() {
-    return TabBar(onTap: (index)=>tabIndex.value=index,
+    return TabBar(
+      onTap: (index) => tabIndex.value = index,
       indicatorColor: MyColors.primary,
       labelColor: Colors.black,
       isScrollable: false,
