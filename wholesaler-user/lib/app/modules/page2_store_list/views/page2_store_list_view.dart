@@ -20,11 +20,14 @@ class Page2StoreListView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.white,
-      appBar:_mainAppbar(),
+      appBar: _mainAppbar(),
       body: _body(),
-      floatingActionButton: FloatingActionButton(backgroundColor: Colors.white,child: Icon(Icons.arrow_upward_rounded),onPressed: (){
-        ctr.scrollController.jumpTo(0);
-      }),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
+          child: Icon(Icons.arrow_upward_rounded),
+          onPressed: () {
+            ctr.scrollController.jumpTo(0);
+          }),
     );
   }
 
@@ -42,33 +45,41 @@ class Page2StoreListView extends GetView {
           },
         ),
         Obx(
-              () => ctr2.getNumberProducts() != 0
+          () => ctr2.getNumberProducts() != 0
               ? Badge(
-            badgeColor: MyColors.primary,
-            badgeContent: Text(
-              ctr2.getNumberProducts().toString(),
-              style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
-            ),
-            toAnimate: false,
-            position: BadgePosition.topEnd(top: 5, end: 5),
-            child: IconButton(
-                onPressed: () {
-                  Get.to(() => Cart1ShoppingBasketView());
-                },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: MyColors.black,
-                )),
-          )
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    ctr2.getNumberProducts().toString(),
+                    style: TextStyle(
+                        color: MyColors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.to(() => Cart1ShoppingBasketView());
+                    },
+                    icon: ImageIcon(
+                      AssetImage('assets/icons/top_cart.png'),
+                      size: 21,
+                      // Icons.shopping_cart_outlined,
+                      color: MyColors.black,
+                    ),
+                  ),
+                )
               : IconButton(
-            onPressed: () {
-              Get.to(() => Cart1ShoppingBasketView());
-            },
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-              color: MyColors.black,
-            ),
-          ),
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
         )
       ],
     );

@@ -67,46 +67,57 @@ class ExhibitionProductsView extends GetView {
       );
 
   AppBar _appbar() {
-    return CustomAppbar(isBackEnable: true, title: 'Exhibition_product'.tr, actions: [
-      IconButton(
-        icon: Icon(
-          Icons.search,
-          color: MyColors.black,
-        ),
-        onPressed: () {
-          Get.to(() => SearchPageView());
-        },
-      ),
-      Obx(
-          () => ctr2.getNumberProducts() != 0
-              ? Badge(
-                  badgeColor: MyColors.primary,
-                  badgeContent: Text(
-                    ctr2.getNumberProducts().toString(),
-                    style: TextStyle(color: MyColors.black, fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                  toAnimate: false,
-                  position: BadgePosition.topEnd(top: 5, end: 5),
-                  child: IconButton(
+    return CustomAppbar(
+        isBackEnable: true,
+        title: 'Exhibition_product'.tr,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: MyColors.black,
+            ),
+            onPressed: () {
+              Get.to(() => SearchPageView());
+            },
+          ),
+          Obx(
+            () => ctr2.getNumberProducts() != 0
+                ? Badge(
+                    badgeColor: MyColors.primary,
+                    badgeContent: Text(
+                      ctr2.getNumberProducts().toString(),
+                      style: TextStyle(
+                          color: MyColors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    toAnimate: false,
+                    position: BadgePosition.topEnd(top: 5, end: 5),
+                    child: IconButton(
                       onPressed: () {
                         Get.to(() => Cart1ShoppingBasketView());
                       },
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
+                      icon: ImageIcon(
+                        AssetImage('assets/icons/top_cart.png'),
+                        size: 21,
+                        // Icons.shopping_cart_outlined,
                         color: MyColors.black,
-                      )),
-                )
-              : IconButton(
-                  onPressed: () {
-                    Get.to(() => Cart1ShoppingBasketView());
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart_outlined,
-                    color: MyColors.black,
+                      ),
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      Get.to(() => Cart1ShoppingBasketView());
+                    },
+                    icon: ImageIcon(
+                      AssetImage('assets/icons/top_cart.png'),
+                      size: 21,
+                      // Icons.shopping_cart_outlined,
+                      color: MyColors.black,
+                    ),
                   ),
-                ),
-        )
-    ]);
+          )
+        ]);
   }
 
   loadWithDelay() {}

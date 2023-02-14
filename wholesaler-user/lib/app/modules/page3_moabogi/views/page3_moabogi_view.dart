@@ -44,10 +44,8 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 20),
-
                     HorizontalChipList().getIconTextList(
                         onPressed: (index) => ctr.chipPressed(index)),
-                    
                     _dingDongDeliveryBanner(),
                     Divider(thickness: 5, color: MyColors.grey3),
                     _imageList(),
@@ -151,27 +149,32 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                 badgeContent: Text(
                   ctr2.getNumberProducts().toString(),
                   style: TextStyle(
-                      color: MyColors.black,
+                      color: MyColors.white,
                       fontSize: 11,
                       fontWeight: FontWeight.bold),
                 ),
                 toAnimate: false,
                 position: BadgePosition.topEnd(top: 5, end: 5),
                 child: IconButton(
-                    onPressed: () {
-                      Get.to(() => Cart1ShoppingBasketView());
-                    },
-                    icon: Icon(
-                      Icons.shopping_cart_outlined,
-                      color: MyColors.black,
-                    )),
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
               )
             : IconButton(
                 onPressed: () {
                   Get.to(() => Cart1ShoppingBasketView());
                 },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
+                icon: ImageIcon(
+                  AssetImage('assets/icons/top_cart.png'),
+                  size: 21,
+                  // Icons.shopping_cart_outlined,
                   color: MyColors.black,
                 ),
               ),

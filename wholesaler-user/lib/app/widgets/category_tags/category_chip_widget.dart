@@ -7,17 +7,23 @@ class ChipWidget extends StatelessWidget {
   String title;
   void Function() onTap;
   bool isSelected;
-  ChipWidget({required this.title, required this.onTap, required this.isSelected});
+  ChipWidget(
+      {required this.title, required this.onTap, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Chip(
-        backgroundColor: isSelected ? MyColors.primary : MyColors.grey1,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: isSelected ? MyColors.primary : MyColors.grey1,
+                width: 1),
+            borderRadius: BorderRadius.circular(10)),
+        backgroundColor: isSelected ? MyColors.primary : MyColors.white,
         label: Text(
           title,
-          style: TextStyle(color: isSelected ? Colors.black : MyColors.black),
+          style: TextStyle(color: isSelected ? Colors.white : MyColors.black),
         ),
       ),
     );
