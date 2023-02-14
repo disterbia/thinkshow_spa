@@ -44,7 +44,7 @@ class ProductItemVertical extends StatelessWidget {
       onTap: (() {
         //print('inside ProductItemVertical: ' + product.id.toString());
         Get.delete<ProductDetailController>();
-        Get.to(() => ProductDetailView(), arguments: product.id);
+        Get.to(() => ProductDetailView(), arguments: product.id, preventDuplicates: false);
       }),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

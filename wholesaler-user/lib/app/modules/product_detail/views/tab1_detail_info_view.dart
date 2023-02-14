@@ -39,9 +39,9 @@ class Tab1DetailInfo extends GetView {
     for (var i = 0; i < keywords.length; i++) {
       keyword = keyword + "#"+keywords[i]+" ";
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ctr.clothWashToggleInitilize();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ctr.clothWashToggleInitilize();
+    // });
     return  Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -70,6 +70,53 @@ class Tab1DetailInfo extends GetView {
                             itemCount: productDetailCtr
                                 .product.value.imagesColor!.length,
                             itemBuilder: (context, index) {
+                              if(index==productDetailCtr
+                                  .product.value.imagesColor!.length-1)
+                                return Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                Container(
+                                height: Get.height * 0.6,
+                                  child: ClipRRect(
+                                    borderRadius: !isMore.value && index == 1
+                                        ? BorderRadius.only(
+                                        bottomRight: Radius.circular(8),
+                                        bottomLeft: Radius.circular(8))
+                                        : BorderRadius.all(Radius.zero),
+                                    child: CachedNetworkImage(
+                                      imageUrl: productDetailCtr
+                                          .product.value.imagesColor![index],
+                                      fit: BoxFit.fill,
+                                      placeholder: (context, url) {
+                                        return Container(
+                                          height: 300,
+                                          child: Center(
+                                              child: CircularProgressIndicator()),
+                                        );
+                                      },
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                  ),
+                                ),
+                                    QuillEditor(
+                                      controller: productDetailCtr.quillController!,
+                                      scrollController: ScrollController(),
+                                      scrollable: true,
+                                      focusNode: FocusNode(),
+                                      autoFocus: true,
+                                      readOnly: true,
+                                      expands: false,
+                                      padding: EdgeInsets.all(15),
+                                      showCursor: false,
+                                      enableSelectionToolbar: false,
+                                      enableInteractiveSelection: false,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10.0),
+                                      child: Text(keyword),
+                                    ),
+                                  ],
+                                );
                               return Container(
                                 height: Get.height * 0.6,
                                 child: ClipRRect(
@@ -154,23 +201,6 @@ class Tab1DetailInfo extends GetView {
                       )
                     ],
                   ),
-                ),
-                  QuillEditor(
-                  controller: productDetailCtr.quillController!,
-                  scrollController: ScrollController(),
-                  scrollable: true,
-                  focusNode: FocusNode(),
-                  autoFocus: true,
-                  readOnly: true,
-                  expands: false,
-                  padding: EdgeInsets.all(15),
-                  showCursor: false,
-                  enableSelectionToolbar: false,
-                  enableInteractiveSelection: false,
-                  ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Text(keyword),
                 ),
                 SizedBox(height: 10,),
                 // Obx(() => SizedBox(

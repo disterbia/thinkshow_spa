@@ -26,11 +26,11 @@ class ImageSliderView extends GetView<ImageSliderController> {
           items: [
             for (ImageBannerModel image in ctr.imageBannerModel)
               GestureDetector(
-                onTap: () {
-                  if (currentPage != CurrentPage.dingDongPage) {
-                    Get.to(() => ExhibitionProductsView(), arguments: {'imageId': image.id});
-                  }
-                },
+                // onTap: () {
+                //   if (currentPage != CurrentPage.dingDongPage) {
+                //     Get.to(() => ExhibitionProductsView(), arguments: {'imageId': image.id});
+                //   }
+                // },
                 child: Container(
                   width: Get.width,
                   child: CachedNetworkImage(

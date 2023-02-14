@@ -77,6 +77,8 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
     int productLengthFloor=(productList.length/3).floor();
     int productLength =productList.length;
 
+
+
     for(var i =0; i<productLengthFloor;i++){
         rowList.add(productList.sublist(i*3,(i+1)*3));
         if(i == productLengthFloor-1 && productLength%3 != 0){
@@ -95,7 +97,15 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
     }
 
     RxList<Widget> result=<Widget>[].obs;
-
+    if(productList.length<=3){
+      if(productLength%3==1) {
+        productList.add(Expanded(child: Container()));
+        productList.add(Expanded(child: Container()));
+      }else if(productLength%3==2){
+        productList.add(Expanded(child: Container()));
+      }
+      result.add(Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children:productList));
+    }else
     for(var rowProduct in rowList){
       result.add(Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children:rowProduct));
     }
