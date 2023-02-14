@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/register_ceo_employee/controllers/register_ceo_employee_4_controller.dart';
+import 'package:wholesaler_partner/app/modules/sign_up/phone_number_phone_verify2.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/modules/auth/register_privacy_terms/views/register_privacy_terms_view.dart';
@@ -18,7 +19,6 @@ class RegisterCeoEmployeePage4View
 
   RegisterCeoEmployee1Controller registerCeoEmployeeCtr =
       Get.put(RegisterCeoEmployee1Controller());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,36 +45,8 @@ class RegisterCeoEmployeePage4View
               SizedBox(height: 79),
               // Phone Number - 핸드폰 번호
 
-              CustomField(
-                fieldLabel: 'phone_number'.tr,
-                fieldText: '휴대폰 번호를 입력해 주세요.',
-                fieldController: ctr.phoneNumCtr,
-                onTap: () {
-                  ctr.requestVerifyPhonePressed();
-                },
-                isTextKeyboard: true,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-                ],
-                buttonText: 'verify'.tr,
-                fontSize: 12,
-              ),
-
-              SizedBox(height: 16),
-              // Verification number - 인증번호 입력
-
-              CustomField(
-                fieldLabel: 'input_verification_num'.tr,
-                fieldText: '인증번호를 입력해 주세요.',
-                fieldController: ctr.phoneNumVerifyCtr,
-                isTextKeyboard: true,
-                onTap: () {
-                  ctr.verifyPhonePressed();
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-                ],
-                buttonText: 'ok'.tr,
+              PhoneNumberPhoneVerify2(
+                spaceBetween: 15,
               ),
 
               SizedBox(height: 15),

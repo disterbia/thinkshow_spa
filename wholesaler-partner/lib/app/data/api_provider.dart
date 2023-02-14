@@ -78,7 +78,7 @@ class pApiProvider extends GetConnect {
         phoneNumber;
     final response = await post(url, '');
     if (response.statusCode == 200) {
-      mSnackbar(message: 'sent_verification_number'.tr);
+      mSnackbar(message: "인증번호를 발송했습니다.");
 
       var json = jsonDecode(response.bodyString!);
       return json['certifi_id'];
@@ -109,15 +109,15 @@ class pApiProvider extends GetConnect {
 
     final response = await put(url, body);
     if (response.statusCode == 200) {
-      mSnackbar(message: 'phone_verification_finished'.tr);
+      mSnackbar(message: "휴대폰 인증이 완료되었습니다");
       return true;
       // return json['certifi_id'];
     }
     if (response.statusCode == 400) {
-      // mSnackbar(message: jsonDecode(response.bodyString!)['description']);
+       mSnackbar(message: "인증번호가 틀렸습니다.");
       return Future.error(response.statusText!);
     } else {
-      mSnackbar(message: 'phone_verification_failed'.tr);
+      mSnackbar(message: "휴대폰 인증 실패. 다시 인증하세요.");
       return false;
     }
   }

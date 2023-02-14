@@ -15,7 +15,7 @@ class ChangeNumberView extends StatelessWidget {
     ctr.phoneNumberPhoneVerifyController.numberVerifyController.text = "";
     return Scaffold(
       appBar: CustomAppbar(isBackEnable: true, title: '휴대폰번호 변경'),
-      body: _body(),
+      body: _body(),resizeToAvoidBottomInset: false,
     );
   }
 

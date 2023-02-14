@@ -38,11 +38,11 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconTextContainer(title: 'install_app'.tr, icon: Icons.alarm),
-                  IconTextContainer(title: '회원가입\n직원선택', icon: Icons.person_add_alt),
-                  IconTextContainer(title: '매장선택', icon: Icons.store),
-                  IconTextContainer(title: '선택', icon: Icons.copy),
-                  IconTextContainer(title: '대표자\n직원승인', icon: Icons.people_sharp),
+                  Expanded(child: IconTextContainer(title: 'install_app'.tr, icon: Icons.alarm)),
+                  Expanded(child: IconTextContainer(title: '회원가입\n직원선택', icon: Icons.person_add_alt)),
+                  Expanded(child: IconTextContainer(title: '매장선택', icon: Icons.store)),
+                  Expanded(child: IconTextContainer(title: '선택', icon: Icons.copy)),
+                  Expanded(child: IconTextContainer(title: '대표자\n직원승인', icon: Icons.people_sharp)),
                 ],
               ),
               SizedBox(height: 40),
@@ -51,9 +51,11 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                 children: [
                   NumberWidget2('1'),
                   SizedBox(width: spaceBetweenNumberText),
-                  Text(
-                    '직원이 띵쇼마켓 앱을 설치합니다.',
-                    style: TextStyle(fontSize: 15),
+                  Expanded(
+                    child: Text(
+                      '직원이 띵쇼마켓 앱을 설치합니다.',
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                 ],
               ),
@@ -62,9 +64,11 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                 children: [
                   NumberWidget2('2'),
                   SizedBox(width: spaceBetweenNumberText),
-                  Text(
-                    '직원을 선택하여 가입합니다.',
-                    style: TextStyle(fontSize: 16),
+                  Expanded(
+                    child: Text(
+                      '직원을 선택하여 가입합니다.',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ],
               ),
@@ -74,19 +78,21 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                 children: [
                   NumberWidget2('3'),
                   SizedBox(width: spaceBetweenNumberText),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '우리 매장을 검색하고 선택, 가입합니다.',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      SizedBox(height: 3),
-                      Text(
-                        '건물, 층, 호수 검색',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '우리 매장을 검색하고 선택, 가입합니다.',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          '건물, 층, 호수 검색',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -96,19 +102,21 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                 children: [
                   NumberWidget2('4'),
                   SizedBox(width: spaceBetweenNumberText),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '직원관리 화면 하단에 직원신청을 승인해 주세요',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      SizedBox(height: 3),
-                      Text(
-                        '직원은 최대 3명까지 승인이 가능합니다.',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '직원관리 화면 하단에 직원신청을 승인해 주세요',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          '직원은 최대 3명까지 승인이 가능합니다.',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -208,7 +216,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
     DialogWidget(
         context,
         Text(
-          '승인 / 거부?',
+          '승인 하시겠습니까?',
           style: TextStyle(fontSize: 16),
         ), buttons: Obx(() {
       return TwoButtons(
