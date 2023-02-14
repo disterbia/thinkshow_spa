@@ -105,7 +105,7 @@ class ProductItemVertical extends StatelessWidget {
     );
     return BoxDecoration(
       borderRadius: imageBorderRadius,
-      border: Border.all(color: MyColors.accentColor, width: 2),
+      // border: Border.all(color: MyColors.accentColor, width: 2),
     );
   }
 
@@ -160,18 +160,14 @@ class ProductItemVertical extends StatelessWidget {
   CheckboxBuilder() {
     if (product.isChecked != null) {
       // print('inside CheckboxBuilder');
-      return Positioned(
-        top: 2,
-        right: 3,
-        child: Container(
-          // margin: EdgeInsets.only(left: 2, top: 2),
-          height: 25,
-          width: 25,
-          child: Obx(
-            () => Checkbox(
-              value: product.isChecked!.value,
-              onChanged: onCheckboxChanged,
-            ),
+      return Container(
+        margin: EdgeInsets.only(left: 2, top: 2),
+        height: 25,
+        width: 25,
+        child: Obx(
+          () => Checkbox(
+            value: product.isChecked!.value,
+            onChanged: onCheckboxChanged,
           ),
         ),
       );
@@ -365,22 +361,30 @@ class ProductItemVertical extends StatelessWidget {
     return product.hasBellIconAndBorder != null
         ? Obx(
             () => product.hasBellIconAndBorder!.isTrue
-                ? Container(
-                    width: 24,
-                    height: 23,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4),
-                        topRight: Radius.circular(4),
-                      ),
-                      color: MyColors.accentColor,
+                ? Positioned(
+                  bottom: 12,
+                  left: 6,
+                  child: Image.asset(
+                      'assets/icons/ico_dingdong.png',
+                      height: 20,
                     ),
-                    child: Icon(
-                      Icons.notifications,
-                      color: MyColors.white,
-                      size: 14,
-                    ),
-                  )
+                )
+                // Container(
+                //     width: 24,
+                //     height: 23,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.only(
+                //         topLeft: Radius.circular(4),
+                //         topRight: Radius.circular(4),
+                //       ),
+                //       color: MyColors.accentColor,
+                //     ),
+                //     child: Icon(
+                //       Icons.notifications,
+                //       color: MyColors.white,
+                //       size: 14,
+                //     ),
+                //   )
                 : SizedBox.shrink(),
           )
         : SizedBox.shrink();

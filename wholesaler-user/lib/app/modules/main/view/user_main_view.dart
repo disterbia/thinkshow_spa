@@ -37,16 +37,16 @@ class UserMainView extends GetView<UserMainController> {
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
             items: <BottomNavigationBarItem>[
-              ItemBuilder('home'.tr, 'assets/icons/ic_home.png',
-                  'assets/icons/ic_home_grey.png', 0),
-              ItemBuilder('store'.tr, 'assets/icons/ic_store.png',
-                  'assets/icons/ic_store_grey.png', 1),
-              ItemBuilder('See_all'.tr, 'assets/icons/ic_moabogi.png',
-                  'assets/icons/ic_moabogi_grey.png', 2),
-              ItemBuilder('liked'.tr, 'assets/icons/ic_heart_empty.png',
-                  'assets/icons/ic_heart_empty_grey.png', 3),
-              ItemBuilder('My_page'.tr, 'assets/icons/ic_my_page.png',
-                  'assets/icons/ic_my_page_grey.png', 4),
+              ItemBuilder('home'.tr, 'assets/icons/menu01_on.png',
+                  'assets/icons/menu01_off.png', 0),
+              ItemBuilder('store'.tr, 'assets/icons/menu02_on.png',
+                  'assets/icons/menu02_off.png', 1),
+              ItemBuilder('See_all'.tr, 'assets/icons/menu03_on.png',
+                  'assets/icons/menu03_off.png', 2),
+              ItemBuilder('liked'.tr, 'assets/icons/menu04_on.png',
+                  'assets/icons/menu04_off.png', 3),
+              ItemBuilder('My_page'.tr, 'assets/icons/menu05_on.png',
+                  'assets/icons/menu05_off.png', 4),
             ],
             currentIndex: ctr.tabIndex.value,
             onTap: ctr.changeTabIndex,
@@ -65,11 +65,11 @@ class UserMainView extends GetView<UserMainController> {
       icon: ctr.tabIndex.value == itemIndex
           ? Image.asset(
               imgSelected,
-              width: 24,
+              width: 22,
             )
           : Image.asset(
               imgNotSelected,
-              width: 24,
+              width: 22,
             ),
       label: label,
     );

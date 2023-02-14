@@ -22,7 +22,8 @@ import 'package:wholesaler_user/app/widgets/simple_tab_bar.dart';
 
 class Page1HomeView extends GetView<Page1HomeController> {
   Page1HomeController ctr = Get.put(Page1HomeController());
-  Cart1ShoppingBasketController cartCtr = Get.put(Cart1ShoppingBasketController());
+  Cart1ShoppingBasketController cartCtr =
+      Get.put(Cart1ShoppingBasketController());
   Tab1UserHomeController ctr0 = Get.put(Tab1UserHomeController());
   Tab2BestController ctr1 = Get.put(Tab2BestController());
   Tab3NewProductsController ctr2 = Get.put(Tab3NewProductsController());
@@ -47,14 +48,18 @@ class Page1HomeView extends GetView<Page1HomeController> {
           backgroundColor: Colors.white,
           child: Icon(Icons.arrow_upward_rounded),
           onPressed: () {
-            int index=ctr.tabBarIndex.value;
-            switch (index){
-            case 0:  return ctr0.scrollController.value.jumpTo(0);
-              case 1:  return ctr1.scrollController.value.jumpTo(0);
-              case 2:  return ctr2.scrollController.value.jumpTo(0);
-              case 3:  return ctr3.scrollController.value.jumpTo(0);
-              case 4:  return ctr4.scrollController.value.jumpTo(0);
-
+            int index = ctr.tabBarIndex.value;
+            switch (index) {
+              case 0:
+                return ctr0.scrollController.value.jumpTo(0);
+              case 1:
+                return ctr1.scrollController.value.jumpTo(0);
+              case 2:
+                return ctr2.scrollController.value.jumpTo(0);
+              case 3:
+                return ctr3.scrollController.value.jumpTo(0);
+              case 4:
+                return ctr4.scrollController.value.jumpTo(0);
             }
           }),
     );
@@ -62,7 +67,7 @@ class Page1HomeView extends GetView<Page1HomeController> {
 
   Widget _floatTabBar() {
     return SimpleTabBar(
-      initialIndex:0,
+      initialIndex: 0,
       borderColor: MyColors.white,
       tabs: [
         Tab(text: 'home'.tr),
@@ -101,7 +106,7 @@ class Page1HomeView extends GetView<Page1HomeController> {
                   badgeContent: Text(
                     cartCtr.getNumberProducts().toString(),
                     style: TextStyle(
-                        color: MyColors.black,
+                        color: MyColors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),
@@ -110,9 +115,13 @@ class Page1HomeView extends GetView<Page1HomeController> {
                   child: IconButton(
                       onPressed: () {
                         Get.to(() => Cart1ShoppingBasketView());
+
                       },
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
+                      icon: ImageIcon(
+                        AssetImage('assets/icons/top_cart.png'),
+                        size: 21,
+
+                        // Icons.shopping_cart_outlined,
                         color: MyColors.black,
                       )),
                 )
@@ -120,8 +129,10 @@ class Page1HomeView extends GetView<Page1HomeController> {
                   onPressed: () {
                     Get.to(() => Cart1ShoppingBasketView());
                   },
-                  icon: Icon(
-                    Icons.shopping_cart_outlined,
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
                     color: MyColors.black,
                   ),
                 ),
