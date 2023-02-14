@@ -18,7 +18,11 @@ class CartItemsList extends StatelessWidget {
   Cart1ShoppingBasketController ctr = Get.put(Cart1ShoppingBasketController());
   bool isCart1Page;
   List<Cart> cartItems;
-  CartItemsList({required this.isCart1Page, required this.cartItems});
+  bool showClose = true;
+  CartItemsList(
+      {required this.isCart1Page,
+      required this.cartItems,
+      required this.showClose});
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +176,7 @@ class CartItemsList extends StatelessWidget {
             isCart1Page ? SizedBox(width: 10) : SizedBox.shrink(),
             Flexible(
               child: ProductItemHorizontal(
-                showClose: true,
+                showClose: showClose,
                 showPrice: true,
                 product: tempProduct,
                 // normalPrice: normalPrice,

@@ -41,7 +41,10 @@ class Cart2PaymentView extends GetView {
           Obx(
             () => ctr.cartItems.length > 0
                 ? CartItemsList(
-                    isCart1Page: false, cartItems: ctr.cartItems)
+                    isCart1Page: false,
+                    cartItems: ctr.cartItems,
+                    showClose: false,
+                  )
                 : SizedBox.shrink(),
           ),
           Divider(thickness: 10, color: MyColors.grey3),
@@ -106,35 +109,35 @@ class Cart2PaymentView extends GetView {
                     controller: ctr.requestController,
                     labelText: '요청사항을 입력해주세요.',
                   ),
-                  Divider(color: MyColors.grey3, thickness: 1, height: 40),
+                  // Divider(color: MyColors.grey3, thickness: 1, height: 40),
                   // 적립금
-                  Row(
-                    children: [
-                      _titleBuilder('적립금'),
-                      Spacer(),
-                      Obx(
-                        () => Text(
-                          '사용가능 ' +
-                              Utils.numberFormat(
-                                  number: ctr.cart2checkoutModel.value.userInfo!
-                                      .point.value,
-                                  suffix: 'P'),
-                          style:
-                              MyTextStyles.f12.copyWith(color: MyColors.grey2),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 6),
-                  CustomField(
-                      fieldText: '0 원',
-                      fieldController: ctr.pointController,
-                      isTextKeyboard: true,
-                      buttonText: '사용',
-                      onTap: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        ctr.usePointBtnPressed();
-                      }),
+                  // Row(
+                  //   children: [
+                  //     _titleBuilder('적립금'),
+                  //     Spacer(),
+                  //     Obx(
+                  //       () => Text(
+                  //         '사용가능 ' +
+                  //             Utils.numberFormat(
+                  //                 number: ctr.cart2checkoutModel.value.userInfo!
+                  //                     .point.value,
+                  //                 suffix: 'P'),
+                  //         style:
+                  //             MyTextStyles.f12.copyWith(color: MyColors.grey2),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(height: 6),
+                  // CustomField(
+                  //     fieldText: '0 원',
+                  //     fieldController: ctr.pointController,
+                  //     isTextKeyboard: true,
+                  //     buttonText: '사용',
+                  //     onTap: () {
+                  //       FocusManager.instance.primaryFocus?.unfocus();
+                  //       ctr.usePointBtnPressed();
+                  //     }),
                   SizedBox(height: 20),
                   // 결제정보
                   _titleBuilder('결제정보'),
