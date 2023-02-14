@@ -34,10 +34,11 @@ class ProductMgmtView extends GetView {
   init() {
     ctr.init();
   }
+
   @override
   Widget build(BuildContext context) {
     init();
-    ctr.isBottomNavbar.value=false;
+    ctr.isBottomNavbar.value = false;
     return WillPopScope(
         child: Scaffold(
           bottomNavigationBar: Obx(
@@ -58,77 +59,81 @@ class ProductMgmtView extends GetView {
               hasHomeButton: true,
               title: '상품관리'),
           body: Obx(
-            ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
-              controller: ctr.scrollController.value,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    // Sort Drop down is not implemented
-                    // Obx(
-                    //   () => SortDropDown(
-                    //     items: [SortProductDropDownItem.latest, SortProductDropDownItem.bySales],
-                    //     selectedItem: ctr.selectedSortProductDropDownItem.value,
-                    //     onPressed: (selectedItem) => ctr.sortDropDownChanged(selectedItem),
-                    //   ),
-                    // ),
-                    SizedBox(height: 10),
-                    ctr.products.length ==0 ?Container() :_selectAllCheckBox(),
-                    SizedBox(height: 10),
-                    SearchField(
-                      controller: ctr.searchController,
-                      hint: '상품명 검색',
-                      onSubmitted: (searchText) =>
-                          ctr.searchBtnPressed(searchText),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            Get.to(() => ProductMgmtFilterView());
-                          },
-                          icon: Image.asset(
-                            'assets/icons/ic_filter.png',
-                            width: 24,
-                            height: 24,
+            () => ctr.isLoading.value
+                ? LoadingWidget()
+                : SingleChildScrollView(
+                    controller: ctr.scrollController.value,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          // Sort Drop down is not implemented
+                          // Obx(
+                          //   () => SortDropDown(
+                          //     items: [SortProductDropDownItem.latest, SortProductDropDownItem.bySales],
+                          //     selectedItem: ctr.selectedSortProductDropDownItem.value,
+                          //     onPressed: (selectedItem) => ctr.sortDropDownChanged(selectedItem),
+                          //   ),
+                          // ),
+                          SizedBox(height: 10),
+                          ctr.products.length == 0
+                              ? Container()
+                              : _selectAllCheckBox(),
+                          SizedBox(height: 10),
+                          SearchField(
+                            controller: ctr.searchController,
+                            hint: '상품명 검색',
+                            onSubmitted: (searchText) =>
+                                ctr.searchBtnPressed(searchText),
                           ),
-                        )
-                      ],
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  Get.to(() => ProductMgmtFilterView());
+                                },
+                                icon: Image.asset(
+                                  'assets/icons/ic_filter.png',
+                                  width: 24,
+                                  height: 24,
+                                ),
+                              )
+                            ],
+                          ),
+                          ProductGridViewBuilder(
+                            crossAxisCount: 3,
+                            productHeight: 260,
+                            products: ctr.products,
+                            addProductsId: (int id) {
+                              var temp = ctr.productsId;
+                              if (temp.contains(id)) {
+                                for (var i = 0; i < temp.length; i++) {
+                                  if (temp[i] == id) ctr.productsId.removeAt(i);
+                                }
+                              } else {
+                                ctr.productsId.add(id);
+                                print(ctr.productsId);
+                              }
+                            },
+                            showBottomNavbar: () {
+                              // show bottom navigation bar if at least one checkbox is checked
+                              bool isAtleastOneCheckboxChecked = ctr.products
+                                  .any((product) => product.isChecked!.isTrue);
+                              ctr.isBottomNavbar.value =
+                                  isAtleastOneCheckboxChecked;
+                            },
+                            isShowLoadingCircle: ctr.allowCallAPI,
+                            //ctr.allowCallAPI,
+                          ),
+                          SizedBox(
+                            height: 30,
+                          )
+                        ],
+                      ),
                     ),
-                    ProductGridViewBuilder(
-                      crossAxisCount: 3,
-                      productHeight: 260,
-                      products: ctr.products,
-                      addProductsId: (int id) {
-                        var temp =ctr.productsId;
-                        if(temp.contains(id)) {
-                          for (var i = 0; i < temp.length; i++) {
-                            if (temp[i] == id) ctr.productsId.removeAt(i);
-                          }
-                        }else {
-                          ctr.productsId.add(id);
-                          print(ctr.productsId);
-                        }
-
-                      },
-                      showBottomNavbar: () {
-                        // show bottom navigation bar if at least one checkbox is checked
-                        bool isAtleastOneCheckboxChecked = ctr.products
-                            .any((product) => product.isChecked!.isTrue);
-                        ctr.isBottomNavbar.value = isAtleastOneCheckboxChecked;
-                      },
-                      isShowLoadingCircle: ctr.allowCallAPI,
-                      //ctr.allowCallAPI,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    )
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
         ),
         onWillPop: () async {

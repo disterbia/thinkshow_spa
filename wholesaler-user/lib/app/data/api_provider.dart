@@ -280,6 +280,7 @@ class uApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+
   Future<String> getBeltImage() async {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + "/belt-exhibitions/1";
@@ -288,13 +289,13 @@ class uApiProvider extends GetConnect {
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
-      return json["banner_img_url"]??"";
+      return json["banner_img_url"] ?? "";
     } else {
       return Future.error(response.statusText!);
     }
   }
 
-  Future<Map<String,dynamic>> getExhibitProducts(int index) async {
+  Future<Map<String, dynamic>> getExhibitProducts(int index) async {
     String apiPath = '/home-exhibitions/$index';
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + apiPath;
@@ -305,7 +306,7 @@ class uApiProvider extends GetConnect {
       List<Product> products = [];
 
       String title = jsonList["title"];
-      for (var json in  jsonList['products']) {
+      for (var json in jsonList['products']) {
         Store tempStore = Store(
           id: json['store_id'],
           name: json['store_name'],
@@ -325,7 +326,7 @@ class uApiProvider extends GetConnect {
 
         products.add(tempProduct);
       }
-      return {"products":products,"title":title};
+      return {"products": products, "title": title};
     } else {
       return Future.error(response.statusText!);
     }
@@ -405,7 +406,8 @@ class uApiProvider extends GetConnect {
         Product tempProduct = Product(
           id: json['id'],
           title: json['product_name'],
-          store: tempStore,imgHeight: 230,
+          store: tempStore,
+          imgHeight: 230,
           price: json['price'],
           normalPrice: json['normal_price'],
           priceDiscountPercent: json['price_discount_percent'],
@@ -458,7 +460,8 @@ class uApiProvider extends GetConnect {
         Product tempProduct = Product(
           id: json['id'],
           title: json['product_name'],
-          store: tempStore,imgHeight: 230,
+          store: tempStore,
+          imgHeight: 230,
           price: json['price'],
           normalPrice: json['normal_price'],
           priceDiscountPercent: json['price_discount_percent'],
@@ -477,10 +480,10 @@ class uApiProvider extends GetConnect {
 
   Future<List<Product>> getSimilarCat(
       {required int productId,
-        required int offset,
-        required int limit,
-        int? storeId,
-        String? sort}) async {
+      required int offset,
+      required int limit,
+      int? storeId,
+      String? sort}) async {
     print('getProductsWithCat> cat id: $productId');
     print('getProductsWithCat> offset: $offset');
     print('getProductsWithCat> limit: $limit');
@@ -804,19 +807,18 @@ class uApiProvider extends GetConnect {
 
       for (int i = 0; i < jsonList.length; i++) {
         Store tempStore = Store(
-          id: jsonList[i]['store_id'],
-          name: jsonList[i]['store_name'],
-          imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
-              ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
-              : null,
-          isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
-          rank: i + 1,
-          topImagePath: jsonList[i]['top_image_path'] != null
-              ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
-              : null,
-          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
-            categories:jsonList[i]["categories"]
-        );
+            id: jsonList[i]['store_id'],
+            name: jsonList[i]['store_name'],
+            imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+                ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+                : null,
+            isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+            rank: i + 1,
+            topImagePath: jsonList[i]['top_image_path'] != null
+                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+                : null,
+            favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+            categories: jsonList[i]["categories"]);
         stores.add(tempStore);
       }
 
@@ -827,6 +829,7 @@ class uApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+
   Future<List<Store>> getMostStoreData(
       {required int offset, required int limit}) async {
     String url = mConst.API_BASE_URL +
@@ -841,19 +844,18 @@ class uApiProvider extends GetConnect {
 
       for (int i = 0; i < jsonList.length; i++) {
         Store tempStore = Store(
-          id: jsonList[i]['store_id'],
-          name: jsonList[i]['store_name'],
-          imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
-              ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
-              : null,
-          isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
-          rank: i + 1,
-          topImagePath: jsonList[i]['top_image_path'] != null
-              ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
-              : null,
-          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
-          categories: jsonList[i]["categories"]
-        );
+            id: jsonList[i]['store_id'],
+            name: jsonList[i]['store_name'],
+            imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+                ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+                : null,
+            isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+            rank: i + 1,
+            topImagePath: jsonList[i]['top_image_path'] != null
+                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+                : null,
+            favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+            categories: jsonList[i]["categories"]);
         stores.add(tempStore);
       }
 
@@ -864,8 +866,6 @@ class uApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
-
-
 
   /// Store Page
   Future<List<Store>> getStorebookmarked() async {
@@ -879,16 +879,15 @@ class uApiProvider extends GetConnect {
 
       for (int i = 0; i < jsonList.length; i++) {
         Store tempStore = Store(
-          id: jsonList[i]['store_id'],
-          name: jsonList[i]['store_name'],
-          imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
-              ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
-              : null,
-          isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
-          favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
-          rank: i + 1,
-          categories: jsonList[i]["categories"]
-        );
+            id: jsonList[i]['store_id'],
+            name: jsonList[i]['store_name'],
+            imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+                ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+                : null,
+            isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+            favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+            rank: i + 1,
+            categories: jsonList[i]["categories"]);
         stores.add(tempStore);
       }
       log('getStorebookmarked ${stores.length}');
@@ -1303,16 +1302,15 @@ class uApiProvider extends GetConnect {
       // debugPrint(json.toString());
       // Store info
       Store tempStore = Store(
-        id: json['store_info']['id'],
-        name: json['store_info']['name'],
-        imgUrl: json['store_info']['thumbnail_image_url'] != null
-            ? (json['store_info']['thumbnail_image_url'] as String).obs
-            : null,
-        isBookmarked:
-            json['store_info']['is_favorite'] == true ? true.obs : false.obs,
-        favoriteCount: (json['store_info']['favorite_count'] as int).obs,
-          categories: json['store_info']['categories']
-      );
+          id: json['store_info']['id'],
+          name: json['store_info']['name'],
+          imgUrl: json['store_info']['thumbnail_image_url'] != null
+              ? (json['store_info']['thumbnail_image_url'] as String).obs
+              : null,
+          isBookmarked:
+              json['store_info']['is_favorite'] == true ? true.obs : false.obs,
+          favoriteCount: (json['store_info']['favorite_count'] as int).obs,
+          categories: json['store_info']['categories']);
 
       // product images
       List<String> images = [];
@@ -1360,8 +1358,9 @@ class uApiProvider extends GetConnect {
         images: images,
         imagesColor: imagesColor,
         price: json['price'],
-        normalPrice: json['normal_price'],
-        priceDiscountPercent: json['price_discount_percent'],
+        normalPrice: MyVars.isUserProject() ? json['normal_price'] : 0,
+        priceDiscountPercent:
+            MyVars.isUserProject() ? json['price_discount_percent'] : 0,
         totalRating: json['review_score'] != null
             ? double.parse(json['review_score'].toString()).obs
             : null,

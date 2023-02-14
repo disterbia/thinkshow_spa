@@ -7,6 +7,7 @@ import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/models/best_products_model.dart';
 import 'package:wholesaler_partner/app/models/bulletin_model.dart';
 import 'package:wholesaler_user/app/Constants/constants.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/product_image_model.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
@@ -61,7 +62,6 @@ class PartnerHomeController extends GetxController {
         if (scrollController.value.position.pixels ==
                 scrollController.value.position.maxScrollExtent &&
             allowCallAPI.isTrue) {
-
           offset += mConst.limit;
           callGetProductsAPI(
               searchContent: searchController.text,
@@ -133,8 +133,9 @@ class PartnerHomeController extends GetxController {
         title: bestProduct.productName!,
         store: tempStore,
         price: bestProduct.price,
-        normalPrice: bestProduct.normalPrice,
-        priceDiscountPercent: bestProduct.disCountPercent,
+        normalPrice: MyVars.isUserProject() ? bestProduct.normalPrice : 0,
+        priceDiscountPercent:
+            MyVars.isUserProject() ? bestProduct.disCountPercent : 0,
         isLiked: true.obs,
         imgUrl: bestProduct.thumbnailImageUrl!,
       );
@@ -166,8 +167,9 @@ class PartnerHomeController extends GetxController {
         title: raw[i]['product_name'],
         store: tempStore,
         price: raw[i]['price'],
-        normalPrice: raw[i]['normal_price'],
-        priceDiscountPercent: raw[i]['price_discount_percent'],
+        normalPrice: MyVars.isUserProject() ? raw[i]['normal_price'] : 0,
+        priceDiscountPercent:
+            MyVars.isUserProject() ? raw[i]['price_discount_percent'] : 0,
         isLiked: raw[i]['is_favorite'] ? true.obs : false.obs,
         imgUrl: raw[i]['thumbnail_image_url'],
       );
