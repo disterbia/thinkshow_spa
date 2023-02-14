@@ -336,7 +336,7 @@ class ProductItemVertical extends StatelessWidget {
             () => product.isSoldout!.isTrue
                 ? Positioned(
                     right: 0,
-                    top: 18,
+                    top: 0,
                     child: Container(
                       height: 24,
                       width: 60,

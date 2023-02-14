@@ -115,7 +115,7 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
         ()=>CarouselSlider(
             carouselController: carouselController,
             options: CarouselOptions(
-                enableInfiniteScroll: true,padEnds: false,
+                enableInfiniteScroll: false,padEnds: false,
                 height: 240,
                 autoPlay: false,
                 viewportFraction: 1,
