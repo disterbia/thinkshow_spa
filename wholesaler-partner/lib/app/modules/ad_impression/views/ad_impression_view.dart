@@ -23,7 +23,13 @@ class AdImpressionView extends GetView {
         body: SingleChildScrollView(
           child: Obx(
             () => ctr.isLoading.value
-                ? LoadingWidget()
+                ? Container(
+                    height: Get.height -
+                        CustomAppbar(isBackEnable: true, title: '쇼핑에드')
+                            .preferredSize
+                            .height,
+                    alignment: Alignment.center,
+                    child: LoadingWidget())
                 : Column(
                     children: [
                       SizedBox(height: 20),

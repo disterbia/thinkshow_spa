@@ -517,7 +517,10 @@ class SizeTableWidget extends StatelessWidget {
       if (ctr.product.value.sizes!
           .any((element) => element.entrance_cross_length != null))
         DataColumn(
-          label: Text(ProductSizeType.entrance_cross_length),
+          label: Text(
+            ProductSizeType.entrance_cross_length,
+            style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          ),
         ),
       if (ctr.product.value.sizes!.any((element) => element.breadth != null))
         DataColumn(

@@ -160,14 +160,18 @@ class ProductItemVertical extends StatelessWidget {
   CheckboxBuilder() {
     if (product.isChecked != null) {
       // print('inside CheckboxBuilder');
-      return Container(
-        margin: EdgeInsets.only(left: 2, top: 2),
-        height: 20,
-        width: 20,
-        child: Obx(
-          () => Checkbox(
-            value: product.isChecked!.value,
-            onChanged: onCheckboxChanged,
+      return Positioned(
+        top: 2,
+        right: 3,
+        child: Container(
+          // margin: EdgeInsets.only(left: 2, top: 2),
+          height: 25,
+          width: 25,
+          child: Obx(
+            () => Checkbox(
+              value: product.isChecked!.value,
+              onChanged: onCheckboxChanged,
+            ),
           ),
         ),
       );
@@ -249,8 +253,12 @@ class ProductItemVertical extends StatelessWidget {
 
   StoreNameBuilder() {
     if (product.store.name != null) {
-      return Text(product.store.name!,maxLines: 1, style: MyTextStyles.f14.copyWith(color: MyColors.black1),
-        overflow: TextOverflow.ellipsis,);
+      return Text(
+        product.store.name!,
+        maxLines: 1,
+        style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+        overflow: TextOverflow.ellipsis,
+      );
     }
     return SizedBox.shrink();
   }
@@ -266,51 +274,62 @@ class ProductItemVertical extends StatelessWidget {
     );
   }
 
-
   PriceBuilder() {
     if (product.price != null) {
       final currencyFormat = NumberFormat("#,##0", "en_US");
       String price = currencyFormat.format(product.price);
-      return Column(children: [
-        Row(
-          children: [
-            Flexible(child: Text("띵 할인가 ",style: TextStyle(fontSize: 10,color: Colors.redAccent),)),
-            Flexible(
-              child: Text(
-                Utils.numberFormat(
-                    number: product.normalPrice ?? 0),
-                style: TextStyle(
-                    color: MyColors.grey4,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'SpoqaHanSansNeo-Medium',
-                    fontSize: 10.0,
-                    decoration: TextDecoration.lineThrough
+      return Column(
+        children: [
+          Row(
+            children: [
+              Flexible(
+                  child: Text(
+                "띵 할인가 ",
+                style: TextStyle(fontSize: 10, color: Colors.redAccent),
+              )),
+              Flexible(
+                child: Text(
+                  Utils.numberFormat(number: product.normalPrice ?? 0),
+                  style: TextStyle(
+                      color: MyColors.grey4,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontFamily: 'SpoqaHanSansNeo-Medium',
+                      fontSize: 10.0,
+                      decoration: TextDecoration.lineThrough),
                 ),
               ),
-
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Flexible(flex: 1,
-              child: Text(Utils.numberFormat(
-                  number: product.priceDiscountPercent ?? 0, suffix: '% '),
-                style: MyTextStyles.f18_bold.copyWith(color: MyColors.primary,fontSize: 14,fontWeight: FontWeight.bold),),
-            ),
-            Flexible(flex: 2,
-              child: Text(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                Utils.numberFormat(
-                    number: product.price ?? 0,),
-                style: MyTextStyles.f18_bold.copyWith(fontSize: 14,fontWeight: FontWeight.bold),
+            ],
+          ),
+          Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Text(
+                  Utils.numberFormat(
+                      number: product.priceDiscountPercent ?? 0, suffix: '% '),
+                  style: MyTextStyles.f18_bold.copyWith(
+                      color: MyColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],);
+              Flexible(
+                flex: 2,
+                child: Text(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  Utils.numberFormat(
+                    number: product.price ?? 0,
+                  ),
+                  style: MyTextStyles.f18_bold
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
     }
     return SizedBox.shrink();
   }

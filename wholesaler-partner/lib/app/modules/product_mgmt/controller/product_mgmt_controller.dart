@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/data/api_provider.dart';
 import 'package:wholesaler_partner/app/modules/ad/tab1_ad_status/controller/tab1_ad_status_controller.dart';
 import 'package:wholesaler_user/app/Constants/constants.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/status_model.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
@@ -99,9 +100,7 @@ class ProductMgmtController extends GetxController {
       offset = 0;
       products.clear();
     }
-    print("aaaaaaa$startDate");
-    print("bbbbbb$endDate");
-    print("cccccc$clothCatIds");
+
     dynamic raw = await _apiProvider.getProducts(
         searchContent: searchController.text,
         startDate: startDate,
@@ -109,16 +108,16 @@ class ProductMgmtController extends GetxController {
         clothCatIds: clothCatIds,
         offset: offset,
         limit: mConst.limit);
-    print(products.length);
-    print(raw.length);
+
     for (int i = 0; i < raw.length; i++) {
       print(raw.length);
       Product tempProduct = Product(
         id: raw[i]['id'],
         title: raw[i]['product_name'],
         price: raw[i]['price'],
-        normalPrice: raw[i]['normal_price'],
-        priceDiscountPercent: raw[i]['price_discount_percent'],
+        normalPrice: MyVars.isUserProject() ? raw[i]['normal_price'] : 0,
+        priceDiscountPercent:
+            MyVars.isUserProject() ? raw[i]['price_discount_percent'] : 0,
         imgUrl: raw[i]['thumbnail_image_url'],
         isTop10: (raw[i]['is_top_10'] as bool).obs,
         store: Store(id: -1),

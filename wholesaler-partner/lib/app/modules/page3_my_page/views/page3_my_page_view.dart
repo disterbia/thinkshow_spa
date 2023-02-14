@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,55 +55,55 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
     return Obx(() {
       return ctr.isLoading.value
           ? LoadingWidget()
-      : SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
+          : SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _headerStore(),
-                  SizedBox(height: 14),
-                  // Like, Total products, manage my info
-                  _threeButtons(),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        _headerStore(),
+                        SizedBox(height: 14),
+                        // Like, Total products, manage my info
+                        _threeButtons(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 6,
+                    child: const DecoratedBox(
+                      decoration: BoxDecoration(color: MyColors.grey3),
+                    ),
+                  ),
+                  _itemList1(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 6,
+                    child: const DecoratedBox(
+                      decoration: BoxDecoration(color: MyColors.grey3),
+                    ),
+                  ),
+                  _itemList2(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 6,
+                    child: const DecoratedBox(
+                      decoration: BoxDecoration(color: MyColors.grey3),
+                    ),
+                  ),
+                  _itemList3(),
+                  SizedBox(height: 18),
+                  _kakaoChannel(),
+                  SizedBox(height: 22),
+                  _logoutButton(),
+                  SizedBox(height: 22),
+                  _withdrawButton(),
+                  SizedBox(height: 67),
                 ],
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 6,
-              child: const DecoratedBox(
-                decoration: BoxDecoration(color: MyColors.grey3),
-              ),
-            ),
-            _itemList1(),
-            SizedBox(
-              width: double.infinity,
-              height: 6,
-              child: const DecoratedBox(
-                decoration: BoxDecoration(color: MyColors.grey3),
-              ),
-            ),
-            _itemList2(),
-            SizedBox(
-              width: double.infinity,
-              height: 6,
-              child: const DecoratedBox(
-                decoration: BoxDecoration(color: MyColors.grey3),
-              ),
-            ),
-            _itemList3(),
-            SizedBox(height: 18),
-            _kakaoChannel(),
-            SizedBox(height: 22),
-            _logoutButton(),
-            SizedBox(height: 22),
-            _withdrawButton(),
-            SizedBox(height: 67),
-          ],
-        ),
-      );
+            );
     });
   }
 
@@ -252,7 +250,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
                   MyPageItem(
                     title: '상호수정',
                     onPressed: () {
-                      Get.to(()=>BusinessInfo());
+                      Get.to(() => BusinessInfo());
                     },
                   ),
                   Divider(),
@@ -364,9 +362,6 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
             await Get.off(() => User_LoginPageView());
             print("============${CacheProvider().getUserID()}");
             //Get.offAllNamed('/login');
-
-
-
           },
           child: Text(
             'logout'.tr,

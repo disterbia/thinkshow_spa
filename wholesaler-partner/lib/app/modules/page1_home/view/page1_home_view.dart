@@ -220,7 +220,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
       children: [
         // 띵동배송
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [
               Text(
@@ -249,7 +249,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
       children: [
         // 우리매장 베스트
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [
               Text(
@@ -268,7 +268,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: SizedBox(
             height: 240,
             child: Obx(
@@ -308,7 +308,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
         Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [
               Text(
@@ -328,7 +328,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
         ),
         SizedBox(height: 13),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [
               Text(
@@ -364,7 +364,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
   _productList() {
     return // 전체상품
         Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
           Row(
@@ -412,7 +412,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [
               Text(
