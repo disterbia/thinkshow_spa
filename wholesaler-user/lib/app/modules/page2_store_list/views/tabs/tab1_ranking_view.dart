@@ -424,7 +424,7 @@ class Tab1RankingView extends StatelessWidget {
   Widget _starBuilder(Store store, BuildContext context) {
     double temp = double.parse(store.favoriteCount!.value.toString());
    RxString result = store.favoriteCount!.value.toString().obs;
-    if (temp > 999) {
+    if (temp >= 1000) {
       result.value = (temp / 1000).toStringAsFixed(1) + "k";
     }
     return InkWell(
@@ -434,6 +434,9 @@ class Tab1RankingView extends StatelessWidget {
         if (store.isBookmarked!.value) {
           store.favoriteCount!.value+=1;
           result.value= (store.favoriteCount!.value).toString();
+          if (temp >= 1000) {
+            result.value = (temp / 1000).toStringAsFixed(1) + "k";
+          }
           showModal(store, context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.black,
@@ -448,6 +451,9 @@ class Tab1RankingView extends StatelessWidget {
         }else{
           store.favoriteCount!.value-=1;
           result.value= (store.favoriteCount!.value).toString();
+          if (temp >= 1000) {
+            result.value = (temp / 1000).toStringAsFixed(1) + "k";
+          }
         }
 
       },

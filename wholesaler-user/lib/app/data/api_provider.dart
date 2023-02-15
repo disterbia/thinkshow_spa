@@ -909,7 +909,7 @@ class uApiProvider extends GetConnect {
             topImagePath: jsonList[i]['top_image_path'] != null
                 ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
                 : null,
-            favoriteCount: (jsonList[i]['favorite_count'] as int).obs,
+            favoriteCount: ((jsonList[i]['favorite_count']??0 )as int).obs,
             categories: jsonList[i]["categories"]);
         stores.add(tempStore);
       }
