@@ -42,7 +42,7 @@ class Tab2BookmarksView extends StatelessWidget {
               ]),
             )
                 : ListView.builder(
-                    itemCount: ctr.stores.length,
+                    itemCount: ctr.stores.length,controller: ctr.scrollController,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       print(ctr.stores[index].topImagePath);

@@ -22,6 +22,7 @@ class ProductCategoryPageController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 0;
   RxBool allowCallAPI = true.obs;
+  RxBool isLoading = false.obs;
 
   @override
   onInit() async {
@@ -37,12 +38,13 @@ class ProductCategoryPageController extends GetxController {
     super.onInit();
   }
 
-  init() async {
+  Future<void> init(int index) async {
+    isLoading.value=true;
     // print('inside ProductCategoryPageView > init > selectedMainCatIndex $selectedMainCatIndex');
-    title = ClothCategory.getTitleAt(selectedMainCatIndex);
-    selectedCatIndex.value = selectedMainCatIndex + 1;
+    title = ClothCategory.getTitleAt(index);
+    selectedCatIndex.value = index + 1;
 
-    products.value = await apiProvider.getProductsWithCat(
+    products.value = await apiProvider.getProductsWithCat2(
         offset: offset,
         limit: mConst.limit,
         categoryId: selectedCatIndex.value,
@@ -51,6 +53,7 @@ class ProductCategoryPageController extends GetxController {
     if (products.length < mConst.limit) {
       allowCallAPI.value = false;
     }
+    isLoading.value=false;
   }
 
   subCatChipPressed(ClothCategoryModel selectedSubcat) async {
@@ -61,7 +64,7 @@ class ProductCategoryPageController extends GetxController {
     products.clear();
     offset = 0;
     allowCallAPI.value = true;
-    products.value = await apiProvider.getProductsWithCat(
+    products.value = await apiProvider.getProductsWithCat2(
         offset: offset,
         limit: mConst.limit,
         categoryId: selectedCatIndex.value,
@@ -73,8 +76,9 @@ class ProductCategoryPageController extends GetxController {
   }
 
   updateProducts({required bool isScrolling}) async {
+    isLoading.value=true;
     List<Product> tempProducts = [];
-    tempProducts = await apiProvider.getProductsWithCat(
+    tempProducts = await apiProvider.getProductsWithCat2(
         offset: offset,
         limit: mConst.limit,
         categoryId: selectedCatIndex.value,
@@ -89,5 +93,6 @@ class ProductCategoryPageController extends GetxController {
     if (tempProducts.length == 0) {
       allowCallAPI.value = false;
     }
+    isLoading.value=true;
   }
 }

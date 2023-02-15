@@ -478,6 +478,61 @@ class uApiProvider extends GetConnect {
     }
   }
 
+
+  Future<List<Product>> getProductsWithCat2(
+      {required int categoryId,
+        required int offset,
+        required int limit,
+        int? storeId,
+        String? sort}) async {
+    print('getProductsWithCat> cat id: $categoryId');
+    print('getProductsWithCat> offset: $offset');
+    print('getProductsWithCat> limit: $limit');
+    print('getProductsWithCat> sort: $sort');
+
+    String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
+    String sortStr = sort != null ? '&sort=$sort' : '';
+
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/category/$categoryId/products?offset=$offset&limit=$limit' +
+        storeIdStr +
+        sortStr;
+    print('getProductsWithCat> url: $url');
+
+    final response = await get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      List<Product> products = [];
+
+      for (var json in jsonList) {
+        Store tempStore = Store(
+          id: json['store_id'],
+          name: json['store_name'],
+        );
+
+        Product tempProduct = Product(
+          id: json['id'],
+          title: json['product_name'],
+          store: tempStore,
+          imgHeight: 145,
+          price: json['price'],
+          normalPrice: json['normal_price'],
+          priceDiscountPercent: json['price_discount_percent'],
+          isLiked: json['is_favorite'] ? true.obs : false.obs,
+          imgUrl: json['thumbnail_image_url'],
+          hasBellIconAndBorder: (json['is_privilege'] as bool).obs,
+        );
+        products.add(tempProduct);
+      }
+      return products;
+    } else {
+      log('error getProducts : ${response.bodyString}');
+      return Future.error(response.statusText!);
+    }
+  }
+
   Future<List<Product>> getSimilarCat(
       {required int productId,
       required int offset,
@@ -2194,7 +2249,7 @@ class uApiProvider extends GetConnect {
       return Cart2CheckoutModel.fromJson(json);
     } else {
       log('error postOrderCheckout: ${response.bodyString}');
-      mSnackbar(message: '오류: ${response.bodyString!}');
+      mSnackbar(message: '옵션의 재고수량이 부족합니다.');
       return Future.error(response.statusText!);
     }
   }

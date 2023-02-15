@@ -11,9 +11,11 @@ class mOptionDropDownButton extends StatelessWidget {
 
   final String label;
   final List<ProductOptionModel> options;
+  final bool isPrivilege;
   mOptionDropDownButton({
     required this.label,
     required this.options,
+    required this.isPrivilege,
   });
 
   @override
@@ -43,7 +45,7 @@ class mOptionDropDownButton extends StatelessWidget {
         frontText = '   (+${Utils.numberFormat(number: option.add_price!)})';
       }
 
-      if (option.is_sold_out! == true) {
+      if ((option.is_sold_out! == true||option.stock_qty==0)&&isPrivilege) {
         frontText = '   품절';
       }
 
@@ -51,7 +53,7 @@ class mOptionDropDownButton extends StatelessWidget {
         value: option,
         child: Text(
           option.name! + frontText,
-          style: option.is_sold_out! ? TextStyle(color: MyColors.grey2) : null,
+          style: (option.is_sold_out! == true||option.stock_qty==0)&&isPrivilege? TextStyle(color: MyColors.grey2) : null,
         ),
       );
     }).toList();

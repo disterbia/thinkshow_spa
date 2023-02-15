@@ -39,6 +39,7 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
     _tabController = TabController(length: widget.tabBarViews!.length, vsync: this, initialIndex: widget.initialIndex);
     _tabController!.addListener((){
       ctr.tabBarIndex.value=_tabController!.index;
+      ctr.storeIndex.value=_tabController!.index;
     });
     super.initState();
   }

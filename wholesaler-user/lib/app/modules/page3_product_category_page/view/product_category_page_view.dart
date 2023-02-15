@@ -2,6 +2,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/modules/cart/views/cart1_shopping_basket_view.dart';
 import 'package:wholesaler_user/app/modules/page3_product_category_page/controller/product_category_page_controller.dart';
@@ -17,12 +18,13 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
   ProductCategoryPageController ctr = Get.put(ProductCategoryPageController());
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
 
-  ProductCategoryPageView(selectedMainCatIndex) {
-    ctr.selectedMainCatIndex = selectedMainCatIndex;
+  int index;
+  ProductCategoryPageView(this.index) {
+    // ctr.selectedMainCatIndex = selectedMainCatIndex;
   }
 
   init() async {
-    ctr.init();
+    await ctr.init(index);
     ctr2.init();
   }
 
@@ -88,37 +90,37 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
   }
 
   Widget _body() {
-    return SingleChildScrollView(
-      controller: ctr.scrollController.value,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 5),
-          Obx(
-            () => Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: HorizontalChipList().getAllSubcat(
-                parentId: ctr.selectedMainCatIndex + 1,
-                subCatList: ClothCategory.getAllSubcatTitles(
-                    mainCatIndex: ctr.selectedMainCatIndex + 1),
-                onTapped: (selectedSubcat) =>
-                    ctr.subCatChipPressed(selectedSubcat),
+    return Obx(
+      ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+        controller: ctr.scrollController.value,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 5),
+           // Padding(
+           //      padding: const EdgeInsets.only(left: 15),
+           //      child: HorizontalChipList().getAllSubcat(
+           //        parentId: index + 1,
+           //        subCatList: ClothCategory.getAllSubcatTitles(
+           //            mainCatIndex: index + 1),
+           //        onTapped: (selectedSubcat) =>
+           //            ctr.subCatChipPressed(selectedSubcat),
+           //      ),
+           //    ),
+            SizedBox(height: 5),
+            dropdownBuilder(),
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ProductGridViewBuilder(
+                crossAxisCount: 3,
+                productHeight: 280,
+                products: ctr.products,
+                isShowLoadingCircle: ctr.allowCallAPI,
               ),
             ),
-          ),
-          SizedBox(height: 5),
-          dropdownBuilder(),
-          SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ProductGridViewBuilder(
-              crossAxisCount: 3,
-              productHeight: 280,
-              products: ctr.products,
-              isShowLoadingCircle: ctr.allowCallAPI,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

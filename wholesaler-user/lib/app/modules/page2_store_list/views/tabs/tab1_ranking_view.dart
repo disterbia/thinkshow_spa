@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -421,17 +422,18 @@ class Tab1RankingView extends StatelessWidget {
   }
 
   Widget _starBuilder(Store store, BuildContext context) {
-    int favoriteCount = store.favoriteCount!.value;
-    double temp = double.parse(favoriteCount.toString());
-   String result = favoriteCount.toString();
+    double temp = double.parse(store.favoriteCount!.value.toString());
+   RxString result = store.favoriteCount!.value.toString().obs;
     if (temp > 999) {
-      result = (temp / 1000).toStringAsFixed(1) + "k";
+      result.value = (temp / 1000).toStringAsFixed(1) + "k";
     }
     return InkWell(
       onTap: () async {
         store.isBookmarked!.toggle();
         await ctr.starIconPressed(store);
         if (store.isBookmarked!.value) {
+          store.favoriteCount!.value+=1;
+          result.value= (store.favoriteCount!.value).toString();
           showModal(store, context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.black,
@@ -443,6 +445,9 @@ class Tab1RankingView extends StatelessWidget {
             padding: EdgeInsets.only(top: 10, bottom: 10, left: 20),
             duration: Duration(seconds: 1),
           ));
+        }else{
+          store.favoriteCount!.value-=1;
+          result.value= (store.favoriteCount!.value).toString();
         }
 
       },
@@ -455,7 +460,7 @@ class Tab1RankingView extends StatelessWidget {
               color: MyColors.primary,
             ),
             Text(
-              result,
+              result.value,
               style: TextStyle(
                 color: MyColors.grey4,
                 fontSize: 12,

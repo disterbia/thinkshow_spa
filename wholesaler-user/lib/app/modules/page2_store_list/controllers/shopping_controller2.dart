@@ -15,6 +15,7 @@ class Page2StoreListController2 extends GetxController {
 
   RxList<Store> stores = <Store>[].obs;
   RxBool isLoading = false.obs;
+  ScrollController scrollController = ScrollController();
 
   Future<void> getRankedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
@@ -32,8 +33,7 @@ class Page2StoreListController2 extends GetxController {
   }
 
   Future<void> getBookmarkedStoreData() async {
-    Future.delayed(Duration.zero, () => isLoading.value = true);
-
+    isLoading.value = true;
     bool result = await uApiProvider().chekToken();
 
     if (!result) {
@@ -53,7 +53,7 @@ class Page2StoreListController2 extends GetxController {
     //   stores.value = await _apiProvider.getStorebookmarked();
     // }
 
-    Future.delayed(Duration.zero, () => isLoading.value = false);
+    isLoading.value = false;
   }
 
   Future<void> starIconPressed(Store store) async {

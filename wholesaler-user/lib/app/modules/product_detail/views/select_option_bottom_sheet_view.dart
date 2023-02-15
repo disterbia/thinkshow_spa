@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/Constants/styles.dart';
 import 'package:wholesaler_user/app/modules/cart/controllers/cart1_shopping_basket_controller.dart';
@@ -38,6 +39,7 @@ Future<dynamic> SelectOptionBottomSheet() {
                     child: mOptionDropDownButton(
                       label: '옵션을 선택해주세요',
                       options: ctr.product.value.options!,
+                        isPrivilege:ctr.product.value.isPrivilege!
                     ),
                   ),
                 ),
