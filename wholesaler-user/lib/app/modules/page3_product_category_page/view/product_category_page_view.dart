@@ -97,16 +97,16 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 5),
-           // Padding(
-           //      padding: const EdgeInsets.only(left: 15),
-           //      child: HorizontalChipList().getAllSubcat(
-           //        parentId: index + 1,
-           //        subCatList: ClothCategory.getAllSubcatTitles(
-           //            mainCatIndex: index + 1),
-           //        onTapped: (selectedSubcat) =>
-           //            ctr.subCatChipPressed(selectedSubcat),
-           //      ),
-           //    ),
+           Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: HorizontalChipList().getAllSubcat(
+                  parentId: index + 1,
+                  subCatList: ClothCategory.getAllSubcatTitles(
+                      mainCatIndex: index + 1),
+                  onTapped: (selectedSubcat) =>
+                      ctr.subCatChipPressed(selectedSubcat),
+                ),
+              ),
             SizedBox(height: 5),
             dropdownBuilder(),
             SizedBox(height: 5),
