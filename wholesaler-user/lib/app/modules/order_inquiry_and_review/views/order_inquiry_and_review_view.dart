@@ -6,6 +6,7 @@ import 'package:wholesaler_user/app/modules/order_inquiry_and_review/controllers
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/widgets/order_item_listview.dart';
 import 'package:wholesaler_user/app/modules/order_inquiry_and_review/views/widgets/order_top_detail_widget.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags6.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 
 /// 주문조회 or 리뷰
@@ -31,7 +32,7 @@ class OrderInquiryAndReviewView extends GetView {
                 : Obx(
                     () => Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: HorizontalChipList().getAllMainCat(
+                      child: HorizontalChipList6().getAllMainCat(
                         categoryList: ["3개월"],
                         onTapped: () => ctr.periodChipPressed(),
                       ),

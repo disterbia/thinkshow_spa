@@ -7,6 +7,7 @@ import 'package:wholesaler_user/app/models/product_number_model.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab2_best_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags2.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/product_gridview_builder/product_gridview_builder.dart';
 
@@ -25,7 +26,7 @@ class Tab2BestView extends GetView<Tab2BestController> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Obx(() => HorizontalChipList().getAllMainCat(
+              child: Obx(() => HorizontalChipList2().getAllMainCat(
                   categoryList:
                       ClothCategory.getAllMainCat().map((e) => e.name).toList(),
                   onTapped: () async{

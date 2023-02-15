@@ -5,10 +5,11 @@ import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/models/order_model.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller6.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class OrderInquiryAndReviewController extends GetxController {
-  CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  CategoryTagController6 categoryTagCtr = Get.put(CategoryTagController6());
   uApiProvider _apiProvider = uApiProvider();
   bool? isReviewPage;
 

@@ -8,10 +8,11 @@ import 'package:wholesaler_user/app/models/cloth_category_model.dart';
 import 'package:wholesaler_user/app/modules/page3_product_category_page/view/product_category_page_view.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_chip_widget.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller1.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 
-class HorizontalChipList {
-  CategoryTagController ctr = Get.put(CategoryTagController());
+class HorizontalChipList1 {
+  CategoryTagController1 ctr = Get.put(CategoryTagController1());
 
   // ############ Cloth categories
   Widget getAllMainCat(

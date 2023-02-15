@@ -5,10 +5,11 @@ import 'package:wholesaler_user/app/Constants/constants.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller1.dart';
 
 /// Warning Don't confuse [Tab1Home] with [Page1Home]. Inside Page1 we have tab1 with the name Home
 class Tab1UserHomeController extends GetxController {
-  CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  CategoryTagController1 categoryTagCtr = Get.put(CategoryTagController1());
 
   uApiProvider _apiProvider = uApiProvider();
   RxList<Product> products1 = <Product>[].obs;
@@ -17,7 +18,6 @@ class Tab1UserHomeController extends GetxController {
   RxList<Product> products4 = <Product>[].obs;
   RxList<Product> products5 = <Product>[].obs;
   
-
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 30;
   RxBool allowCallAPI = true.obs;
