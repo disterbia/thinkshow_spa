@@ -66,7 +66,7 @@ class Tab1DetailInfo extends GetView {
                                   ? null
                                   : Get.height * 1.2
                               : null,
-                          child: ListView.builder(
+                          child: ListView.separated(separatorBuilder: (context, index) => SizedBox(height: 2,),
                             itemCount: productDetailCtr
                                 .product.value.imagesColor!.length,
                             itemBuilder: (context, index) {

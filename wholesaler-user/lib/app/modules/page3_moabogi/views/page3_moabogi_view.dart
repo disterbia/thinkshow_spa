@@ -114,10 +114,10 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
               SizedBox(height: 20),
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
-              // onTap: () {
-              //   Get.to(() => ExhibitionProductsView(),
-              //       arguments: {'imageId': ctr.imageBanners[index].id});
-              // },
+              onTap: () {
+                Get.to(() => ExhibitionProductsView(),
+                    arguments: {'imageId': ctr.imageBanners[index].id});
+              },
               child: CachedNetworkImage(
                 imageUrl: ctr.imageBanners[index].banner_img_url,
                 width: Get.width,

@@ -252,7 +252,7 @@ class ProductItemVertical extends StatelessWidget {
       return Text(
         product.store.name!,
         maxLines: 1,
-        style: MyTextStyles.f14.copyWith(color: MyColors.black1),
+        style: MyTextStyles.f14.copyWith(color:Colors.black),
         overflow: TextOverflow.ellipsis,
       );
     }
@@ -300,7 +300,7 @@ class ProductItemVertical extends StatelessWidget {
           Row(
             children: [
               Flexible(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   Utils.numberFormat(
                       number: product.priceDiscountPercent ?? 0, suffix: '% '),
@@ -311,7 +311,7 @@ class ProductItemVertical extends StatelessWidget {
                 ),
               ),
               Flexible(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

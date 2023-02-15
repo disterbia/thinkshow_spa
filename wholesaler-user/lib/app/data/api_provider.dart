@@ -832,8 +832,6 @@ class uApiProvider extends GetConnect {
           priceDiscountPercent: json['price_discount_percent'],
           isLiked: json['is_favorite'] ? true.obs : false.obs,
           imgUrl: json['thumbnail_image_url'],
-          imgHeight: 145,
-          imgWidth: 116,
           hasBellIconAndBorder: (json['is_privilege'] as bool).obs,
         );
         products.add(tempProduct);

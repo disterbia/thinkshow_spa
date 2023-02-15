@@ -27,44 +27,51 @@ class ExhibitionProductsView extends GetView {
     );
   }
 
-  Widget _body() => SingleChildScrollView(
-        child: Column(
-          children: [
-            Obx(
-              () => ctr.bannerPicture != ''
-                  ? CachedNetworkImage(
-                      imageUrl: ctr.bannerPicture.value,
-                      fadeInDuration: Duration(milliseconds: 0),
-                      fadeOutDuration: Duration(milliseconds: 0),
-                      placeholderFadeInDuration: Duration(milliseconds: 0),
-                      width: Get.width,
-                      fit: BoxFit.fitWidth,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )
-                  : LoadingWidget(),
-            ),
-            SizedBox(height: 15),
-            Obx(
-              () => Center(
-                child: Text(
-                  ctr.title.value,
-                  style: MyTextStyles.f16.copyWith(color: MyColors.black2),
+  Widget _body() => Obx(
+      ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+          child: Column(
+            children: [
+              // Obx(
+              //   () => ctr.bannerPicture != ''
+              //       ? CachedNetworkImage(
+              //           imageUrl: ctr.bannerPicture.value,
+              //           fadeInDuration: Duration(milliseconds: 0),
+              //           fadeOutDuration: Duration(milliseconds: 0),
+              //           placeholderFadeInDuration: Duration(milliseconds: 0),
+              //           width: Get.width,
+              //           fit: BoxFit.fitWidth,
+              //           errorWidget: (context, url, error) => Icon(Icons.error),
+              //         )
+              //       : LoadingWidget(),
+              // ),
+               Container(color: MyColors.primary,height: 50,
+                 child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        ctr.title.value,
+                        style: MyTextStyles.f16_bold.copyWith(color: Colors.white)
+                      ),
+                    ),
+                  ),
+               ),
+              ctr.products.isEmpty?Text(
+                  "상품 없음",
+                  style: MyTextStyles.f16_bold,
+              ):Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: ProductGridViewBuilder(
+                  crossAxisCount: 3,
+                  productHeight: 280,
+                  products: ctr.products,
+                  isShowLoadingCircle: false.obs,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ProductGridViewBuilder(
-                crossAxisCount: 3,
-                productHeight: 280,
-                products: ctr.products,
-                isShowLoadingCircle: false.obs,
-              ),
-            ),
-            SizedBox(height: 50),
-          ],
+              SizedBox(height: 50),
+            ],
+          ),
         ),
-      );
+  );
 
   AppBar _appbar() {
     return CustomAppbar(

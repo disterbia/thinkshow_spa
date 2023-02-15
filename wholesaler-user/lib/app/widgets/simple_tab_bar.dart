@@ -10,7 +10,7 @@ import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controlle
 class SimpleTabBar extends StatefulWidget {
   final Key? key;
   final List<Widget>? tabBarViews;
-  final List<Tab>? tabs;
+  final List<Widget>? tabs;
   final Color? borderColor;
   final int initialIndex;
 
@@ -77,6 +77,7 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
               labelColor: MyColors.black,
               unselectedLabelColor: MyColors.black,
               tabs: widget.tabs!,
+              labelPadding: EdgeInsets.zero,
             ),
           ),
           Expanded(

@@ -113,7 +113,7 @@ class HorizontalChipList {
     return Container(
       alignment: Alignment.center,
       width: screenWidth,
-      height: 150,
+      height: Get.height/5,
       // child: ListView.builder(
       //     scrollDirection: Axis.horizontal,
       //     physics: NeverScrollableScrollPhysics(),
@@ -159,18 +159,19 @@ class HorizontalChipList {
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-                color: Color(0xFFFFF1DA),
-                borderRadius: BorderRadius.circular(15)),
-            child: Image.asset(
-              clothCategory.icon,
-              height: height,
-              width: width,
-              fit: BoxFit.fill,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: Color(0xFFFFF1DA),
+                  borderRadius: BorderRadius.circular(15)),
+              child: Image.asset(
+                clothCategory.icon,
+                // height: height,
+                // width: width,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(height: 5),
@@ -178,6 +179,7 @@ class HorizontalChipList {
             clothCategory.title,
             style: MyTextStyles.f12.copyWith(color: MyColors.black1),
           ),
+          SizedBox(height: 5),
         ],
       ),
     );

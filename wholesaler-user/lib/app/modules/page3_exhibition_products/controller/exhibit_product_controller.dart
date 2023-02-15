@@ -9,6 +9,7 @@ class ExhibitionProductsController extends GetxController {
   pApiProvider _apiProvider = pApiProvider();
   int imageId = 0;
   RxList<Product> products = <Product>[].obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -18,17 +19,16 @@ class ExhibitionProductsController extends GetxController {
   }
 
   Future<void> getExhibitInformation(int imageId) async {
+    isLoading.value=true;
     await _apiProvider.getExhibitDetails(imageId.toString()).then((response) {
     //  print(' ressssssssssss ${response}');
       if (response['detail_img_url'] != null) {
         bannerPicture.value = (response['detail_img_url'] as String);
       } else {
         bannerPicture.value = (response['banner_img_url'] as String);
-        ;
       }
       dynamic dynamicList = response['products'];
 
-      Future.delayed(Duration(milliseconds: 1500), () {
         title.value = response['title'];
 
         for (var i = 0; i < dynamicList.length; i++) {
@@ -39,9 +39,12 @@ class ExhibitionProductsController extends GetxController {
               price: dynamicList[i]['price'],
               title: dynamicList[i]['product_name'],
               imgUrl: dynamicList[i]['thumbnail_image_url'],
+              normalPrice: dynamicList[i]['normal_price'],
+              priceDiscountPercent: dynamicList[i]['price_discount_percent'],
               store: Store(id: dynamicList[i]['store_id'])));
         }
-      });
+
     });
+    isLoading.value=false;
   }
 }

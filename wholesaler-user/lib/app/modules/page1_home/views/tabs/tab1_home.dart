@@ -11,6 +11,7 @@ import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
+import 'package:wholesaler_user/app/modules/main/controllers/user_main_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_controller.dart';
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab1_user_home_controller.dart';
 import 'package:wholesaler_user/app/modules/product_detail/views/Product_detail_view.dart';
@@ -238,15 +239,18 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                 recommendedProductCtr.beltImage.value != ""
                                     ? Padding(
                                         padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          height: 120,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: CachedNetworkImage(
-                                                imageUrl: recommendedProductCtr
-                                                    .beltImage.value,
-                                                fit: BoxFit.fill),
+                                        child: InkWell(
+                                          onTap: ()=>Get.find<UserMainController>().changeTabIndex(2),
+                                          child: Container(
+                                            height: 120,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: CachedNetworkImage(
+                                                  imageUrl: recommendedProductCtr
+                                                      .beltImage.value,
+                                                  fit: BoxFit.fill),
+                                            ),
                                           ),
                                         ),
                                       )
