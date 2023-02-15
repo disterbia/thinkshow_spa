@@ -26,28 +26,31 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
       return Scaffold(
         // appBar: CustomAppbar(isBackEnable: true, title: ''),
         backgroundColor: MyColors.white,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  _logo(),
-                  _userField(),
-                  _passwordField(),
-                  ctr.isLoading.value ? LoadingWidget() : _loginButton(),
-                  _findId_findPassword(),
-                  _signUpButton(),
-                  SizedBox(height: 20),
-                  Obx(
-                    () => Column(
-                      children: [
-                        Text('버전: ${ctr.appVersion}', style: MyTextStyles.f11),
-                        Text('빌드: ${ctr.appBuild}', style: MyTextStyles.f11),
-                      ],
+        body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    _logo(),
+                    _userField(),
+                    _passwordField(),
+                    ctr.isLoading.value ? LoadingWidget() : _loginButton(),
+                    _findId_findPassword(),
+                    _signUpButton(),
+                    SizedBox(height: 20),
+                    Obx(
+                      () => Column(
+                        children: [
+                          Text('버전: ${ctr.appVersion}', style: MyTextStyles.f11),
+                          Text('빌드: ${ctr.appBuild}', style: MyTextStyles.f11),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

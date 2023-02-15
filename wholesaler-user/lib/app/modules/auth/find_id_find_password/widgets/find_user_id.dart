@@ -20,6 +20,9 @@ class Tab1FindUserIdView extends GetView<User_FindID_FindPasswordController> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             PhoneNumberPhoneVerify(
               spaceBetween: 10,
             ),

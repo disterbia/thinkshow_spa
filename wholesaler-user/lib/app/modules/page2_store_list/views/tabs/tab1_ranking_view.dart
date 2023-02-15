@@ -28,7 +28,7 @@ class Tab1RankingView extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
+                      padding: const EdgeInsets.only(right: 10.0, top: 10),
                       child: ToggleButtons(
                         //direction: vertical ? Axis.vertical : Axis.horizontal,
                         onPressed: (int index) {

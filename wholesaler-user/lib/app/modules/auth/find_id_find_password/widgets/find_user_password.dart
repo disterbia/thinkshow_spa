@@ -34,6 +34,9 @@ class Tab2FindUserPasswordView
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
+              SizedBox(
+                height: 10,
+              ),
               CustomField(
                   fieldLabel: '아이디',
                   fieldText: '아이디 입력해주세요',

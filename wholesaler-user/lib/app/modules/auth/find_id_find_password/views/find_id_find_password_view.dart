@@ -20,7 +20,9 @@ class User_FindID_FindPasswordView extends GetView<User_FindID_FindPasswordContr
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(isBackEnable: true, title: '계정 찾기'),
-      body: _userIdBody(),
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: _userIdBody()),
     );
   }
 

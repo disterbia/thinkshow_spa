@@ -78,6 +78,20 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                     //   child: _dingdongBanner(),
                     // ),
                     // SizedBox(height: 20),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 15, top: 10, right: 15),
+                      child: Obx(() {
+                        return HorizontalChipList1().getAllMainCat(
+                            categoryList: ClothCategory.getAllMainCat()
+                                .map((e) => e.name)
+                                .toList(),
+                            onTapped: () {
+                              ctr.updateProducts();
+                            });
+                      }),
+                    ),
+
                     recommendedProductCtr.adProducts.isNotEmpty
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -99,7 +113,11 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 20,
+                                          left: 10,
+                                          right: 10,
+                                          bottom: 5),
                                       child: Text(
                                         recommendedProductCtr
                                             .exhibitTitle1.value,
@@ -115,19 +133,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                 ),
                               )
                             : Container(),
-                    Divider(thickness: 5, color: MyColors.grey3),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Obx(() {
-                        return HorizontalChipList1().getAllMainCat(
-                            categoryList: ClothCategory.getAllMainCat()
-                                .map((e) => e.name)
-                                .toList(),
-                            onTapped: () {
-                              ctr.updateProducts();
-                            });
-                      }),
-                    ),
+                    // Divider(thickness: 5, color: MyColors.grey3),
                     ctr.isLoading.value
                         ? Container(height: 200, child: LoadingWidget())
                         : Container(
@@ -148,17 +154,25 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                         .exhibitProducts2.isNotEmpty
                                     ? Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
+                                          horizontal: 10,
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              recommendedProductCtr
-                                                  .exhibitTitle2.value,
-                                              style: MyTextStyles.f16_bold
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20,
+                                                  left: 5,
+                                                  right: 5,
+                                                  bottom: 5),
+                                              child: Text(
+                                                recommendedProductCtr
+                                                    .exhibitTitle2.value,
+                                                style: MyTextStyles.f16_bold
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
                                             ),
                                             CarousalProductHorizontalView(
                                                 recommendedProductCtr
@@ -188,12 +202,19 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              recommendedProductCtr
-                                                  .exhibitTitle3.value,
-                                              style: MyTextStyles.f16_bold
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20,
+                                                  left: 5,
+                                                  right: 5,
+                                                  bottom: 5),
+                                              child: Text(
+                                                recommendedProductCtr
+                                                    .exhibitTitle3.value,
+                                                style: MyTextStyles.f16_bold
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
                                             ),
                                             CarousalProductHorizontalView(
                                                 recommendedProductCtr
@@ -250,12 +271,19 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              recommendedProductCtr
-                                                  .exhibitTitle4.value,
-                                              style: MyTextStyles.f16_bold
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20,
+                                                  left: 5,
+                                                  right: 5,
+                                                  bottom: 5),
+                                              child: Text(
+                                                recommendedProductCtr
+                                                    .exhibitTitle4.value,
+                                                style: MyTextStyles.f16_bold
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
                                             ),
                                             CarousalProductHorizontalView(
                                                 recommendedProductCtr

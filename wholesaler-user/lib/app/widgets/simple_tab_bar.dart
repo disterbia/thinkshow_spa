@@ -52,34 +52,31 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
         }
         return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
+          Container(
+            decoration: BoxDecoration(
+              color: MyColors.white,
+              border: Border(
+                bottom: BorderSide(color: MyColors.grey1),
+              ),
+            ),
+            height: 45,
+            child: TabBar(onTap: (index) {
+              if (index == 3)
+                categoryTagCtr.isDingDongTab.value = true;
+              else
+                categoryTagCtr.isDingDongTab.value = false;
+            },
+              labelStyle: MyTextStyles.f14.copyWith(color: MyColors.subTitle),
+              controller: _tabController,
+              indicator: BoxDecoration(
                 color: MyColors.white,
                 border: Border(
-                  bottom: BorderSide(color: MyColors.grey2),
+                  bottom: BorderSide(width: 3, color: MyColors.black),
                 ),
               ),
-              height: 45,
-              child: TabBar(onTap: (index) {
-                if (index == 3)
-                  categoryTagCtr.isDingDongTab.value = true;
-                else
-                  categoryTagCtr.isDingDongTab.value = false;
-              },
-                labelStyle: MyTextStyles.f14.copyWith(color: MyColors.subTitle),
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  color: MyColors.white,
-                  border: Border(
-                    bottom: BorderSide(width: 3, color: MyColors.black),
-                  ),
-                ),
-                labelColor: MyColors.black,
-                unselectedLabelColor: MyColors.black,
-                tabs: widget.tabs!,
-              ),
+              labelColor: MyColors.black,
+              unselectedLabelColor: MyColors.black,
+              tabs: widget.tabs!,
             ),
           ),
           Expanded(
