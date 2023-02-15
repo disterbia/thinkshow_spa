@@ -518,6 +518,13 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
             ),
           ),
           Text('dingdongDelivery'.tr),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            '* 관리자가 승인시 띵동상품으로 변경됩니다.',
+            style: TextStyle(color: Colors.grey, fontSize: 10),
+          ),
         ],
       ),
     );

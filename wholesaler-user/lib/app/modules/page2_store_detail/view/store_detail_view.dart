@@ -13,6 +13,7 @@ import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab4_ding_dong
 import 'package:wholesaler_user/app/modules/page2_store_detail/controller/store_detail_controller.dart';
 import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shopping_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags4.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/dingdong_3products_horiz/dingdong_3products_horiz_view.dart';
 import 'package:wholesaler_user/app/widgets/product/product_item_vertical_widget.dart';
@@ -81,7 +82,7 @@ class StoreDetailView extends GetView {
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Obx(
-                () => HorizontalChipList().getAllMainCat(
+                () => HorizontalChipList4().getAllMainCat(
                     categoryList:
                         ClothCategory.getAllMainCat().map((e) => e.name).toList(),
                     onTapped: () => ctr.updateProducts(isScrolling: false)),

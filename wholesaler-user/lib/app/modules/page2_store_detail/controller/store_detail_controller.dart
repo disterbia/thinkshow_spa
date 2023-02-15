@@ -10,6 +10,7 @@ import 'package:wholesaler_user/app/data/cache_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller4.dart';
 import 'package:wholesaler_user/app/widgets/dingdong_3products_horiz/dingdong_3products_horiz_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import 'package:wholesaler_user/app/constants/functions.dart';
@@ -18,7 +19,7 @@ class StoreDetailController extends GetxController {
   Dingdong3ProductsHorizController dingdong3productsHorizCtr =
       Get.put(Dingdong3ProductsHorizController());
   uApiProvider _apiProvider = uApiProvider();
-  CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  CategoryTagController4 categoryTagCtr = Get.put(CategoryTagController4());
 
   RxInt storeId = (-1).obs;
   Rx<MainStoreModel> mainStoreModel = MainStoreModel().obs;

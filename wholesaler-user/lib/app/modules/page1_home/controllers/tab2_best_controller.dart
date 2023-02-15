@@ -6,9 +6,10 @@ import 'package:wholesaler_user/app/Constants/constants.dart';
 import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller2.dart';
 
 class Tab2BestController extends GetxController {
-  CategoryTagController categoryTagCtr = Get.put(CategoryTagController());
+  CategoryTagController2 categoryTagCtr = Get.put(CategoryTagController2());
   uApiProvider _apiProvider = uApiProvider();
   RxList<Product> products = <Product>[].obs;
   Rx<ScrollController> scrollController = ScrollController().obs;

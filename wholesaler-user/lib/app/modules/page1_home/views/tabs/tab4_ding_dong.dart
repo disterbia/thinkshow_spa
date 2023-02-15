@@ -6,6 +6,7 @@ import 'package:wholesaler_user/app/modules/page1_home/controllers/page1_home_co
 import 'package:wholesaler_user/app/modules/page1_home/controllers/tab4_ding_dong_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags3.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/controller/image_slider_controller.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/view/image_slider_view.dart';
@@ -31,7 +32,7 @@ class Tab4DingDongView extends GetView<Tab4DingDongController> {
             SizedBox(height: 10),
             Obx(() => Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: HorizontalChipList().getAllMainCat(
+                  child: HorizontalChipList3().getAllMainCat(
                     categoryList: ClothCategory.getAllMainCat().map((e) => e.name).toList(),
                     onTapped: () => ctr.updateProducts(),
                   ),

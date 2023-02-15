@@ -18,6 +18,8 @@ import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/con
 import 'package:wholesaler_user/app/widgets/carousal_product_horizontal_list/view/carousal_product_horizontal_view.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tag_controller.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/category_tags.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags1.dart';
+import 'package:wholesaler_user/app/widgets/category_tags/category_tags2.dart';
 import 'package:wholesaler_user/app/widgets/category_tags/cloth_category.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/controller/image_slider_controller.dart';
 import 'package:wholesaler_user/app/widgets/image_slider/view/image_slider_view.dart';
@@ -116,15 +118,15 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                     Divider(thickness: 5, color: MyColors.grey3),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: Obx(
-                        () => HorizontalChipList().getAllMainCat(
+                      child: Obx(() {
+                        return HorizontalChipList1().getAllMainCat(
                             categoryList: ClothCategory.getAllMainCat()
                                 .map((e) => e.name)
                                 .toList(),
                             onTapped: () {
                               ctr.updateProducts();
-                            }),
-                      ),
+                            });
+                      }),
                     ),
                     ctr.isLoading.value
                         ? Container(height: 200, child: LoadingWidget())
