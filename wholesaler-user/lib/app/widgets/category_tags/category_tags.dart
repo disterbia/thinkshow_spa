@@ -60,6 +60,7 @@ class HorizontalChipList {
       {required List<ClothCategoryModel> subCatList,
       required Function(ClothCategoryModel) onTapped,
       required int parentId}) {
+
     List<ChipWidget> categoryChips = [];
     // Add ALL chip
     ClothCategoryModel allClothCatModel = ClothCategoryModel(
@@ -93,7 +94,7 @@ class HorizontalChipList {
                 (i + 1) == ctr.selectedMainCatIndex.value ? true : false),
       );
     }
-    ctr.selectedMainCatIndex.value = 0;
+    // ctr.selectedMainCatIndex.value = 0;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Wrap(

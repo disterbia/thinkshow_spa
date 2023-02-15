@@ -26,7 +26,9 @@ class User_SignUpView extends GetView {
       backgroundColor: MyColors.white,
       appBar: CustomAppbar(
           isBackEnable: true, title: ctr.isEditing.value ? '회원정보' : '회원가입'),
-      body: _signUpBody(context),
+      body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: _signUpBody(context)),
     );
   }
 
@@ -124,7 +126,6 @@ class User_SignUpView extends GetView {
         fieldController: ctr.nameController);
   }
 
-
   FocusNode _addressFocusNode = FocusNode();
   Widget _addressBuilder(BuildContext context) {
     return Column(
@@ -134,7 +135,7 @@ class User_SignUpView extends GetView {
           fieldText: 'Zip_code'.tr,
           buttonText: '주소 검색',
           fieldController: ctr.address1Controller,
-          onTap: () async{
+          onTap: () async {
             await ctr.searchAddressBtnPressed();
             FocusScope.of(context).requestFocus(_addressFocusNode);
           },

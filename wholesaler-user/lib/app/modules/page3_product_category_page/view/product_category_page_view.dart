@@ -20,6 +20,7 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
 
   int index;
   ProductCategoryPageView(this.index) {
+    HorizontalChipList().ctr.selectedMainCatIndex.value = 0;
     // ctr.selectedMainCatIndex = selectedMainCatIndex;
   }
 
@@ -91,37 +92,39 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
 
   Widget _body() {
     return Obx(
-      ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
-        controller: ctr.scrollController.value,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 5),
-           Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: HorizontalChipList().getAllSubcat(
-                  parentId: index + 1,
-                  subCatList: ClothCategory.getAllSubcatTitles(
-                      mainCatIndex: index + 1),
-                  onTapped: (selectedSubcat) =>
-                      ctr.subCatChipPressed(selectedSubcat),
-                ),
-              ),
-            SizedBox(height: 5),
-            dropdownBuilder(),
-            SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ProductGridViewBuilder(
-                crossAxisCount: 3,
-                productHeight: 280,
-                products: ctr.products,
-                isShowLoadingCircle: ctr.allowCallAPI,
+      () => ctr.isLoading.value
+          ? LoadingWidget()
+          : SingleChildScrollView(
+              controller: ctr.scrollController.value,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: HorizontalChipList().getAllSubcat(
+                      parentId: index + 1,
+                      subCatList: ClothCategory.getAllSubcatTitles(
+                          mainCatIndex: index + 1),
+                      onTapped: (selectedSubcat) =>
+                          ctr.subCatChipPressed(selectedSubcat),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  dropdownBuilder(),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ProductGridViewBuilder(
+                      crossAxisCount: 3,
+                      productHeight: 280,
+                      products: ctr.products,
+                      isShowLoadingCircle: ctr.allowCallAPI,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 

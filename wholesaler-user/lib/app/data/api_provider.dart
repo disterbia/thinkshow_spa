@@ -1435,7 +1435,8 @@ class uApiProvider extends GetConnect {
         mainCategoryId: json['category_id'],
         subCategoryId: json['sub_category_id'],
         country:json["country"],
-        keyword:json["keyword"]
+        keyword:json["keyword"],
+        isPrivilege: json['is_privilege'] ? true : false,
       );
 
       return tempProduct;
