@@ -174,7 +174,7 @@ class ProductDetailView extends GetView {
     }
     return GestureDetector(
       onTap: () {
-        Get.to(() => StoreDetailView(storeId: ctr.product.value.store.id));
+        Get.to(() => StoreDetailView(storeId: ctr.product.value.store.id),preventDuplicates: true,);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -68,7 +68,7 @@ class SearchResults extends StatelessWidget {
         itemCount: ctr.storeResults.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-            onTap: () => Get.to(StoreDetailView(storeId: ctr.storeResults[index].storeId!)),
+            onTap: () => Get.to(StoreDetailView(storeId: ctr.storeResults[index].storeId!),preventDuplicates: true),
             child: Container(
               child: index < ctr.maxTotalStoreResults
                   ? Column(

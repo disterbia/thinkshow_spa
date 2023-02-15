@@ -42,6 +42,7 @@ class StoreDetailController extends GetxController {
 
   @override
   onInit() async {
+
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
@@ -54,7 +55,20 @@ class StoreDetailController extends GetxController {
   }
 
   init() async {
-    isLoading.value=true;
+    if(scrollController.value.positions!=1&&scrollController.value.positions.isNotEmpty){
+      scrollController.value.removeListener(() { });
+      scrollController.value.dispose();
+      scrollController = ScrollController().obs;
+      scrollController.value.addListener(() {
+        if (scrollController.value.positions.first.pixels ==
+            scrollController.value.positions.first.maxScrollExtent &&
+            allowCallAPI.isTrue) {
+          offset += mConst.limit;
+          updateProducts(isScrolling: true);
+        }
+      });
+    }
+    Future.delayed(Duration.zero,()=>isLoading.value=true);
     mainStoreModel.value =
         await _apiProvider.getStoreDetailMainInfo(storeId.value);
     // Dingdong Products

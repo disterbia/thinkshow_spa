@@ -23,21 +23,23 @@ class StoreDetailView extends GetView {
   StoreDetailController ctr = Get.put(StoreDetailController());
   Page2StoreListController ctr2 = Get.put(Page2StoreListController());
   String? prevPage;
-  StoreDetailView({required int storeId, String? prevPage}) {
+  int? storeId;
+  StoreDetailView({required this.storeId, String? prevPage}) {
     print('storeId $storeId');
-    ctr.storeId.value = storeId;
-    ctr.init();
+
 
     if (prevPage != null) {
       this.prevPage = prevPage;
       print(prevPage);
     } else {
-      ctr2.dispose();
+      //ctr2.dispose();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    ctr.storeId.value = storeId!;
+    ctr.init();
     return Scaffold(
       appBar: _appbar(),
       body: _body(),

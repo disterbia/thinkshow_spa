@@ -57,7 +57,7 @@ class Tab2BookmarksView extends StatelessWidget {
         Get.to(() => StoreDetailView(
               storeId: store.id,
               prevPage: prevPage,
-            ));
+            ),preventDuplicates: true);
       },
       child: Container(
         decoration: BoxDecoration(

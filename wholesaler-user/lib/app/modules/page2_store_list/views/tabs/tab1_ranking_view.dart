@@ -72,7 +72,7 @@ class Tab1RankingView extends StatelessWidget {
         Get.to(() => StoreDetailView(
               storeId: store.id,
               prevPage: prevPage,
-            ));
+            ),preventDuplicates: true);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -289,7 +289,7 @@ class Tab1RankingView extends StatelessWidget {
                                 Get.to(() => StoreDetailView(
                                   storeId: ctr.sameId[0],
                                   prevPage: prevPage,
-                                ));
+                                ),preventDuplicates: true);
                               },
                               child: Container(
                                 child: Stack(
@@ -349,7 +349,7 @@ class Tab1RankingView extends StatelessWidget {
                                 Get.to(() => StoreDetailView(
                                   storeId: ctr.sameId[1],
                                   prevPage: prevPage,
-                                ));
+                                ),preventDuplicates: true);
                               },
                               child: Container(
                                 child: Stack(

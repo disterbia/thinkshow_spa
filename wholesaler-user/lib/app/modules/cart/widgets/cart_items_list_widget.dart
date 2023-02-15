@@ -91,7 +91,7 @@ class CartItemsList extends StatelessWidget {
   Widget _store(Store store) {
     return GestureDetector(
         onTap: () {
-          Get.to(() => StoreDetailView(storeId: store.id));
+          Get.to(() => StoreDetailView(storeId: store.id),preventDuplicates: true);
         },
         child: Row(
           children: [
