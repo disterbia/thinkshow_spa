@@ -1,42 +1,263 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
 
-    The path provided below has to start and end with a slash "/" in order_details for
-    it to work correctly.
+      The path provided below has to start and end with a slash "/" in order_details for
+      it to work correctly.
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.
+    -->
+    <base href="$FLUTTER_BASE_HREF">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="wholesaler_user">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="wholesaler_user">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+    <link rel="icon" type="image/png" href="favicon.jpg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <title>띵쇼마켓</title>
 
-  <title>wholesaler_user</title>
-  <link rel="manifest" href="manifest.json">
+    <style>
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border: 15px solid ;
+      border-top: 16px solid #FFC846;
+      border-right: 16px solid white;
+      border-bottom: 16px solid #FFC846;
+      border-left: 16px solid white;
+      width: 16px;
+      height: 16px;
+      -webkit-animation: spin 1s linear infinite;
+      animation: spin 1s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    </style>
+
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
+
+<div class="loading">
+    <div class="loader"></div>
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<div id="layer"
+     style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer"
+         style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1"
+         onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+<script>
+    window.addd = {};
+    var element_layer = document.getElementById('layer');
+     function closeDaumPostcode() {
+        element_layer.style.display = 'none';
+    }
+    function aa(){
+      new daum.Postcode({
+        oncomplete: function(data) {
+
+               var addr = '';
+                var extraAddr = '';
+
+
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibunAddress;
+                }
+
+
+                if(data.userSelectedType === 'R'){
+                                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                                      if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+               }else {
+
+                }
+            addd.data = data.address;
+            addd.extraAddr = extraAddr;
+            addd.zonecode= data.zonecode;
+            addd.addr= addr;
+            addd.postcode= data.postcode;
+            functionNameAddr();
+<!--            console.log(data);-->
+            element_layer.style.zIndex = 0;
+            element_layer.style.display="none";
+            return data;
+        },
+        width : '100%',
+        height : '100%',
+      }).open();
+<!--      .embed(element_layer);-->
+<!--      element_layer.style.display = 'block';-->
+<!--      element_layer.style.zIndex = 999;-->
+<!--      initLayerPosition();-->
+    }
+
+<!--    function initLayerPosition(){-->
+<!--      var width = 300;-->
+<!--      var height = 400;-->
+<!--      var borderWidth = 5;-->
+
+<!--      // 위에서 선언한 값들을 실제 element에 넣는다.-->
+<!--      element_layer.style.width = width + 'px';-->
+<!--      element_layer.style.height = height + 'px';-->
+<!--      element_layer.style.border = borderWidth + 'px solid';-->
+<!--      element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';-->
+<!--      element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';-->
+<!--    }-->
+
+    function aaa(){
+      new daum.Postcode({
+        oncomplete: function(data) {
+               var addr = '';
+                var extraAddr = '';
+
+
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibunAddress;
+                }
+
+
+                if(data.userSelectedType === 'R'){
+                                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                                      if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+               }else {
+
+                }
+            addd.data = data.address;
+            addd.extraAddr = extraAddr;
+            addd.zonecode= data.zonecode;
+            addd.addr= addr;
+            addd.postcode= data.postcode;
+            functionNamePayAddr();
+<!--            console.log(data);-->
+            element_layer.style.zIndex = 0;
+            element_layer.style.display="none";
+            return data;
+        },
+        width : '100%',
+        height : '100%',
+      }).open();
+
+    }
+
+
+
+
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<script>
+var IMP = window.IMP;
+window.add = {};
+    function requestPay(userCode,pg, merchant_uid, amount, buyName, buyerTel,
+       buyerEmail, buyerAddr, buyerPostcode) {
+        IMP.init(userCode);
+            IMP.request_pay({
+               pg: pg, // PG사
+            pay_method: 'card', // 결제수단
+            name: '아임포트 결제데이터 분석', // <주문명></주문명>
+            merchant_uid: merchant_uid, // 주문번호
+            // merchantUid: 'mid_${DateTime.now().millisecondsSinceEpoch}', // 주문번호
+            amount: amount, // 결제금액
+            buyer_name: buyName, // 구매자 이름
+            buyer_tel: buyerTel, // 구매자 연락처
+            buyer_email:buyerEmail, // 구매자 이메일
+            buyer_addr: buyerAddr, // 구매자 주소
+            buyer_postcode: buyerPostcode, // 구매자 우편번호
+            app_scheme: 'wholesaleruser', // 앱 URL scheme
+            display: {card_quota:[2,3]}
+            //cardQuota: [2, 3] //결제창 UI 내 할부개월수 제한
+            }, function(rsp) {
+            add.pg=pg;
+            add.merchant_uid=merchant_uid;
+            add.amount=amount;
+            add.buyName=buyName;
+            add.buyerTel=buyerTel;
+            add.buyerEmail=buyerEmail;
+            add.buyerEmail=buyerEmail;
+            add.buyerPostcode=buyerPostcode;
+            add.status = rsp.success;
+            add.result = rsp.success;
+                if ( rsp.success ) {
+             add.uid = rsp.imp_uid;
+             add.merchantUid = rsp.merchant_uid;
+            functionName();
+                } else {
+                    add.test = rsp.error_msg;
+                    functionName();
+                }
+            });
+    }
+
+
+</script>
+<script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -49,56 +270,9 @@
       scriptTag.type = 'application/javascript';
       document.body.append(scriptTag);
     }
+    loadMainDartJs();
 
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
 
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
-    }
-  </script>
+</script>
 </body>
 </html>

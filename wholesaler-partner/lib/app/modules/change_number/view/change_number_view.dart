@@ -30,7 +30,7 @@ class ChangeNumberView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CustomButton(
-              width: Get.width,
+              width: 500,
               onPressed: () => ctr.editBtnPressed(),
               text: '수정',
             ),

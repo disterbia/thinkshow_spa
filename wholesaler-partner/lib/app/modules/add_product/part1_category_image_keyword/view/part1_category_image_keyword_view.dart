@@ -165,8 +165,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
           indicatorWeight: 2,
         ),
         SizedBox(
-          width: Get.width,
-          height: (Get.width - edgePadding * 2) * 4 / 3,
+          width: 500,
+          height: (500 - edgePadding * 2) * 4 / 3,
           child: TabBarView(
             controller: ctr.selectImgController,
             children: [
@@ -180,7 +180,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                       ? ctr.isUploadLoading3.value
                           ? LoadingWidget()
                           : Container(
-                              width: Get.width,
+                              width: 500,
                               child: Center(
                                 child: ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
@@ -202,7 +202,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                               badgeContent:
                                                   Text((index + 1).toString()),
                                               child: Container(
-                                                height: Get.width / 5,
+                                                height: 500 / 5,
                                               ),
                                               badgeColor: MyColors.primary,
                                             ),
@@ -218,8 +218,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                 // },
                                               ),
                                               child: Container(
-                                                width: Get.width / 6,
-                                                height: Get.width / 6,
+                                                width: 500 / 6,
+                                                height: 500 / 6,
                                                 child: CachedNetworkImage(
                                                   imageBuilder: (context,
                                                           imageProvider) =>
@@ -269,7 +269,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                       //         onTap: () => ctr.uploadImageBtnPressed(),
                       //         child: CachedNetworkImage(
                       //           imageUrl: ctr.imageUrl1.value,
-                      //           width: Get.width,
+                      //           width: 500,
                       //           errorWidget: (context, url, error) => Icon(Icons.error),
                       //         ),
                       //       )
@@ -309,7 +309,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                           : Stack(
                               children: [
                                 Container(
-                                  width: Get.width,
+                                  width: 500,
                                   child: Center(
                                     child: GridView.builder(
                                         scrollDirection: Axis.vertical,
@@ -333,7 +333,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                           (index + 1)
                                                               .toString()),
                                                       child: Container(
-                                                        height: Get.width / 5,
+                                                        height: 500 / 5,
                                                       )),
                                                   Badge(
                                                     badgeColor:
@@ -350,8 +350,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                       // },
                                                     ),
                                                     child: Container(
-                                                      width: Get.width / 6,
-                                                      height: Get.width / 6,
+                                                      width: 500 / 6,
+                                                      height: 500 / 6,
                                                       child: CachedNetworkImage(
                                                         imageBuilder: (context,
                                                                 imageProvider) =>
@@ -429,7 +429,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                       //         onTap: () => ctr.uploadImageBtnPressed2(),
                       //         child: CachedNetworkImage(
                       //           imageUrl: ctr.imageUrl2.value,
-                      //           width: Get.width,
+                      //           width: 500,
                       //           errorWidget: (context, url, error) => Icon(Icons.error),
                       //         ),
                       //       )
@@ -466,7 +466,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
               //             onTap: () => ctr.uploadImageBtnPressed3(),
               //             child: CachedNetworkImage(
               //               imageUrl: ctr.imageUrl3.value,
-              //               width: Get.width,
+              //               width: 500,
               //               // placeholder: (context, url) => CircularProgressIndicator(),
               //               errorWidget: (context, url, error) => Icon(Icons.error),
               //             ),

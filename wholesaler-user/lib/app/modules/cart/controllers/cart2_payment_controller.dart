@@ -182,13 +182,13 @@ class Cart2PaymentController extends GetxController {
     Get.to(() => Payment());
   }
 
-  Future<void> paymentSuccessful(Map<String, dynamic> result) async {
+  Future<void> paymentSuccessful(String uid, String mUid) async {
     // print(
     //     'inside paymentSuccessful.  orderer_name ${nameController.text} zipcode ${address1ZipCodeController.text} address ${address2Controller.text} address_detail ${address3Controller.text} phone ${phoneFirstPartController.text}${phoneSecondPartController.text}${phoneThirdPartController.text} request_message ${requestController.text} checkout_id ${cart2checkoutModel.value.checkoutId!}');
     // call [주문페이지] 주문 > complete API ( 결제완료 요청 ) API
     bool isSuccess = await _apiProvider.postPaymentSucessfullyFinished(
-      imp_uid: result['imp_uid']!,
-      merchant_uid: result['merchant_uid']!,
+      imp_uid: uid,
+      merchant_uid: mUid,
       use_point: cart2checkoutModel.value.discountPrice.value,
       orderer_name: nameController.text,
       zipcode: address1ZipCodeController.text,

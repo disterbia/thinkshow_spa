@@ -471,7 +471,7 @@ class Tab2ReviewView extends GetView {
                 borderRadius: BorderRadius.circular(4),
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
-                  width: Get.width,
+                  width: 500,
                   imageUrl: img,
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),

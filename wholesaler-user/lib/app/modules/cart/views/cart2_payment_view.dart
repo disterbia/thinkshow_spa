@@ -12,6 +12,11 @@ import 'package:wholesaler_user/app/widgets/custom_button.dart';
 import 'package:wholesaler_user/app/widgets/custom_field.dart';
 import 'package:wholesaler_user/app/widgets/field_with_button.dart';
 
+import 'package:js/js.dart';
+import 'dart:js' as js;
+
+@JS('functionNamePayAddr')
+external set _functionName(void Function() f);
 class Cart2PaymentView extends GetView {
   Cart2PaymentController ctr = Get.put(Cart2PaymentController());
 
@@ -20,8 +25,24 @@ class Cart2PaymentView extends GetView {
     ctr.init(cart2checkoutModel);
   }
 
+  void _someDartFunction() {
+    js.JsObject obj = js.JsObject.fromBrowserObject(js.context['addd']);
+    ctr.address1ZipCodeController.text=obj['zonecode'].toString();
+    ctr.address2Controller.text=obj['addr'].toString();
+    print("${obj['zonecode']}");
+    print("zonecode ${obj['addr']}");
+    print("extraAddr${obj['extraAddr']}");
+    print("postcode${obj['postcode']}");
+    print("data${obj['data']}");
+    // _zonecode.text=obj['zonecode'].toString();
+    // _address.text=obj['addr'].toString();
+    // _extraAdress.text=obj['extraAddr'].toString();
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    _functionName = allowInterop(_someDartFunction);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.white,
@@ -79,7 +100,7 @@ class Cart2PaymentView extends GetView {
                       fieldController: ctr.address1ZipCodeController,
                       fieldText: '우편번호',
                       readOnly: true,
-                      onTap: () => ctr.searchAddressBtnPressed(),
+                      onTap: () => js.context.callMethod("aaa")
                     ),
                   ),
                   SizedBox(height: 10),
@@ -230,7 +251,7 @@ class Cart2PaymentView extends GetView {
 
   Widget _phoneNumberBody() {
     return SizedBox(
-      width: Get.width - 20,
+      width: 500 - 20,
       child: Column(
         children: [
           Row(
@@ -318,7 +339,7 @@ class Cart2PaymentView extends GetView {
 
   Widget _paymentButton() {
     return CustomButton(
-      width: Get.width,
+      width: 500,
       onPressed: () {
         ctr.paymentBtnPressed();
       },

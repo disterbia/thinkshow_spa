@@ -281,7 +281,7 @@ class ProductDetailView extends GetView {
   }
 
   Widget _productImages() {
-    // double height = Get.width * 4 / 3;
+    // double height = 500 * 4 / 3;
     return Container(
       child: Obx(
         () => ctr.product.value.images!.isNotEmpty
@@ -306,21 +306,6 @@ class ProductDetailView extends GetView {
                 ),
               ),
             ),
-            InkWell(
-                onTap: () async {
-                  Share.share(
-                    await DynamicLink().getShortLink(
-                      ctr.productId.toString(),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.share_outlined,
-                    color: MyColors.grey4,
-                  ),
-                ))
           ],
         ),
         Padding(

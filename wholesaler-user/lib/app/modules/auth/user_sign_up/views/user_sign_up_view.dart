@@ -10,7 +10,11 @@ import 'package:wholesaler_user/app/widgets/custom_button.dart';
 import 'package:wholesaler_user/app/widgets/custom_field.dart';
 import 'package:wholesaler_user/app/widgets/field_with_button.dart';
 import 'package:wholesaler_user/app/widgets/phone_number_textfield/phone_number_textfield_view.dart';
+import 'package:js/js.dart';
+import 'dart:js' as js;
 
+@JS('functionNameAddr')
+external set _functionName(void Function() f);
 class User_SignUpView extends GetView {
   SignupOrEditController ctr = Get.put(SignupOrEditController());
   User_SignUpView();
@@ -18,9 +22,23 @@ class User_SignUpView extends GetView {
   init() {
     ctr.init();
   }
+  void _someDartFunction() {
+    js.JsObject obj = js.JsObject.fromBrowserObject(js.context['addd']);
+    ctr.address1Controller.text=obj['zonecode'].toString();
+    ctr.address2Controller.text=obj['addr'].toString();
+    print("${obj['zonecode']}");
+    print("zonecode ${obj['addr']}");
+    print("extraAddr${obj['extraAddr']}");
+    print("postcode${obj['postcode']}");
+    print("data${obj['data']}");
+    // _zonecode.text=obj['zonecode'].toString();
+    // _address.text=obj['addr'].toString();
+    // _extraAdress.text=obj['extraAddr'].toString();
 
+  }
   @override
   Widget build(BuildContext context) {
+    _functionName = allowInterop(_someDartFunction);
     init();
     return Scaffold(
       backgroundColor: MyColors.white,
@@ -136,8 +154,8 @@ class User_SignUpView extends GetView {
           buttonText: '주소 검색',
           fieldController: ctr.address1Controller,
           onTap: () async {
-            await ctr.searchAddressBtnPressed();
-            FocusScope.of(context).requestFocus(_addressFocusNode);
+            js.context.callMethod("aa");
+            //await ctr.searchAddressBtnPressed();
           },
           fieldLabel: 'address'.tr,
         ),
@@ -349,7 +367,7 @@ class User_SignUpView extends GetView {
 
   Widget _saveButtonBuilder() {
     return CustomButton(
-      width: Get.width,
+      width: 500,
       onPressed: () {
         ctr.saveOrEditBtnPressed();
         // Get.back();

@@ -51,7 +51,7 @@ class MyBankAccountMgmtView extends GetView<MyBankAccountMgmtController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomButton(
-                          width: Get.width,
+                          width: 500,
                           onPressed: ctr.saveAccountInfo,
                           text: 'register'.tr,
                         ),

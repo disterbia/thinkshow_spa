@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,11 +71,13 @@ class AP_Part1Controller extends GetxController
     if (pickedImage1.isNotEmpty) {
       isUploadLoading1.value = true;
       List<File> temp = [];
+      List<Uint8List> temp2 =[];
       for (int i = 0; i < pickedImage1.length; i++) {
         temp.add(File(pickedImage1[i].path));
+        temp2.add(await pickedImage1[i].readAsBytes());
       }
       ProductImageModel2 productImageModel =
-          await _apiProvider.uploadProductImage(pickedImage: temp);
+      await _apiProvider.uploadProductImage(pickedImage: temp, imageBytes:temp2);
       isUploadLoading1.value = false;
       mSnackbar(message: productImageModel.message);
 
@@ -101,8 +104,9 @@ class AP_Part1Controller extends GetxController
 
   Future<void> uploadImage3(int index) async {
     isUploadLoading3.value = true;
+    final temp = await pickedImage1[0].readAsBytes();
     ProductImageModel productImageModel = await _apiProvider
-        .uploadProductImage3(pickedImage: File(pickedImage1[0].path));
+        .uploadProductImage3(pickedImage: File(pickedImage1[0].path),imageBytes:temp);
     isUploadLoading3.value = false;
     pickedImage1.clear();
     mSnackbar(message: "이미지가 등록되었습니다.");
@@ -144,14 +148,14 @@ class AP_Part1Controller extends GetxController
     if (pickedImage2.isNotEmpty) {
       isUploadLoading2.value = true;
       List<File> temp = [];
-
+      List<Uint8List> temp2 = [];
       for (int i = 0; i < pickedImage2.length; i++) {
         temp.add(File(pickedImage2[i].path));
-        print(pickedImage2[i].path);
+        temp2.add(await pickedImage2[i].readAsBytes());
       }
 
       ProductImageModel2 productImageModel =
-          await _apiProvider.uploadProductImage(pickedImage: temp);
+      await _apiProvider.uploadProductImage(pickedImage: temp,imageBytes: temp2);
 
       if (productImageModel.statusCode == 200) {
         imageUrl2.value += productImageModel.url;
@@ -167,11 +171,13 @@ class AP_Part1Controller extends GetxController
     if (pickedImage2.isNotEmpty) {
       isUploadLoading2.value = true;
       List<File> temp = [];
+      List<Uint8List> temp2 = [];
       for (int i = 0; i < pickedImage2.length; i++) {
         temp.add(File(pickedImage2[i].path));
+        temp2.add(await pickedImage2[i].readAsBytes());
       }
       ProductImageModel2 productImageModel =
-          await _apiProvider.uploadProductImage(pickedImage: temp);
+      await _apiProvider.uploadProductImage(pickedImage: temp,imageBytes: temp2);
       isUploadLoading2.value = false;
       mSnackbar(message: productImageModel.message);
 

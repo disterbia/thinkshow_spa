@@ -445,7 +445,7 @@ class ReviewDetailView extends GetView {
     //       ],
     //     ),
     //     height: 150,
-    //     width: Get.width,
+    //     width: 500,
     //     decoration: BoxDecoration(
     //         border: Border.all(color: MyColors.desc),
     //         borderRadius:
@@ -564,7 +564,7 @@ class ReviewDetailView extends GetView {
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
                 imageUrl: ctr.reviewImageUrl.value!,
-                width: Get.width,
+                width: 500,
                 fit: BoxFit.fitWidth,
                 // placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),

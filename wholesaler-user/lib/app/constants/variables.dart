@@ -15,20 +15,16 @@ class MyVars {
     final box = GetStorage();
     box.write("isUserProject", isUserProject);
   }
-
-  static bool isSmallPhone() {
-    return Get.context!.width <= mConst.SmallPhoneWidth;
-  }
+  
 
   static Future<void> initializeVariables() async {
     // 1. initialize isUserProject
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String packageName = packageInfo.packageName;
-    //print('packageName $packageName');
-    if (packageName == 'com.thinksmk.user') {
+    print('packageName $packageName');
+    if (packageName == 'wholesaler_user') {
       MyVars.setIsUserProject(true);
-    } else if (packageName == 'com.thinksmk.partner_new' ||
-        packageName == 'com.thinksmk.partner') {
+    } else if (packageName == 'wholesaler_partner') {
       MyVars.setIsUserProject(false);
     } else {
       //print(

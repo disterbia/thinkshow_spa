@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart' as mDio;
 import 'package:get/get.dart';
@@ -188,13 +189,14 @@ class pApiProvider extends GetConnect {
         mConst.API_STORE_PATH +
         mConst.BUSINESS_REGISTER_IMG_UPLOAD;
     File image = File(pickedImage.path);
+    final temp = await pickedImage.readAsBytes();
     String imageName = image.path.substring(image.path.length - 19);
     log('image: $image');
     log('imageName: $imageName');
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
-          await mDio.MultipartFile.fromFile(image.path, filename: imageName),
+      await mDio.MultipartFile.fromBytes(temp, filename: imageName),
     });
     final response = await dio.post(url, data: formData);
     print(
@@ -211,10 +213,10 @@ class pApiProvider extends GetConnect {
           path: json['file_path']);
     }
     if (response.statusCode == 400) {
-      mSnackbar(message: jsonDecode(response.data!)['description']);
+      //  mSnackbar(message: jsonDecode(response.data!)['description']);
       return Future.error(response.statusMessage!);
     } else {
-      mSnackbar(message: response.statusMessage!);
+      //  mSnackbar(message: response.statusMessage!);
       return Future.error(response.statusMessage!);
     }
   }
@@ -600,7 +602,7 @@ class pApiProvider extends GetConnect {
   }
 
   Future<ProductImageModel> uploadProductImage3(
-      {required File pickedImage}) async {
+      {required File pickedImage,required Uint8List imageBytes}) async {
     var dio = mDio.Dio();
 
     dio.options.headers["Authorization"] =
@@ -609,11 +611,11 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE;
     File image = File(pickedImage.path);
     String imageName = image.path.substring(image.path.length - 19);
-    log('image name!!!!!!!!!!!!!!!!!!: $imageName');
+    log('image name: $imageName');
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
-          await mDio.MultipartFile.fromFile(image.path, filename: imageName),
+      await mDio.MultipartFile.fromBytes(imageBytes, filename: imageName),
     });
     final response = await dio.post(
       url,
@@ -631,27 +633,25 @@ class pApiProvider extends GetConnect {
           path: json['file_path']);
     }
     if (response.statusCode == 400) {
-      mSnackbar(message: jsonDecode(response.data!)['description']);
+      // mSnackbar(message: jsonDecode(response.data!)['description']);
       return Future.error(response.statusMessage!);
     } else {
-      mSnackbar(message: response.statusMessage!);
+      //  mSnackbar(message: response.statusMessage!);
       return Future.error(response.statusMessage!);
     }
   }
 
   Future<ProductImageModel2> uploadProductImage(
-      {required List<File> pickedImage}) async {
+      {required List<File> pickedImage,required List<Uint8List> imageBytes}) async {
     var dio = mDio.Dio();
 
     dio.options.headers["Authorization"] =
         "Bearer " + CacheProvider().getToken();
-    String url = mConst.API_BASE_URL +
-        mConst.API_STORE_PATH +
-        mConst.PRODUCT_IMAGE +
-        "-multi";
+    String url =
+        mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE+"-multi";
     List<File> images = [];
     List<String> imageNames = [];
-    for (int i = 0; i < pickedImage.length; i++) {
+    for(int i = 0;i<pickedImage!.length;i++){
       File image = File(pickedImage[i].path);
       String imageName = image.path.substring(image.path.length - 19);
       images.add(image);
@@ -660,13 +660,14 @@ class pApiProvider extends GetConnect {
       log('imageName: $imageName');
     }
     List<mDio.MultipartFile> temp = [];
-    for (int i = 0; i < images.length; i++) {
+    for(int i = 0 ; i<images.length;i++){
       print("11111111");
-      temp.add(await mDio.MultipartFile.fromFile(images[i].path,
-          filename: imageNames[i]));
+      temp.add(await mDio.MultipartFile.fromBytes(imageBytes[i], filename: imageNames[i]));
       print("22222222");
     }
-    mDio.FormData formData = mDio.FormData.fromMap({"image[]": temp});
+    mDio.FormData formData = mDio.FormData.fromMap({
+      "image[]":temp
+    });
     print("33333");
     final response = await dio.post(
       url,
@@ -684,14 +685,13 @@ class pApiProvider extends GetConnect {
           path: json['file_path']);
     }
     if (response.statusCode == 400) {
-      mSnackbar(message: jsonDecode(response.data!)['description']);
+      //  mSnackbar(message: jsonDecode(response.data!)['description']);
       return Future.error(response.statusMessage!);
     } else {
-      mSnackbar(message: response.statusMessage!);
+      //  mSnackbar(message: response.statusMessage!);
       return Future.error(response.statusMessage!);
     }
   }
-
   Future<StatusModel> uploadStoreThumbnailImage(
       {required Map<String, dynamic> data}) async {
     String url = mConst.API_BASE_URL +

@@ -60,7 +60,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
       padding: const EdgeInsets.all(20),
       child: Container(
         height: 80,
-        width: Get.width,
+        width: 500,
         decoration: BoxDecoration(
             color: MyColors.grey5,
             borderRadius:
@@ -120,7 +120,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
               },
               child: CachedNetworkImage(
                 imageUrl: ctr.imageBanners[index].banner_img_url,
-                width: Get.width,
+                width: 500,
                 // placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),

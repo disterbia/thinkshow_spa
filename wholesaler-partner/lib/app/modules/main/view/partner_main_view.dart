@@ -17,7 +17,6 @@ class PartnerMainView extends GetView<BottomNavbarController> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseService.init();
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: PreferredSize(

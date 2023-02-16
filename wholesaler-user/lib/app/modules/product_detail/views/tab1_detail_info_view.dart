@@ -168,12 +168,12 @@ class Tab1DetailInfo extends GetView {
                                                 begin: Alignment.bottomCenter,
                                                 end: Alignment.topCenter)),
                                         height: 80,
-                                        width: Get.width,
+                                        width: 500,
                                       ),
                                       Container(
                                         height: 60,
                                         child: CustomButton(
-                                            width: Get.width,
+                                            width: 500,
                                             onPressed: () {
                                               isMore.value = true;
                                             },
@@ -234,7 +234,7 @@ class Tab1DetailInfo extends GetView {
                       crossAxisSpacing: 10,
                       crossAxisCount: 3,
                       childAspectRatio:
-                          context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
+                          500 / 3 / 290,
                       // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                     ),
                   ),
@@ -267,7 +267,7 @@ class Tab1DetailInfo extends GetView {
                       crossAxisSpacing: 10,
                       crossAxisCount: 3,
                       childAspectRatio:
-                          context.width / 3 / (MyVars.isSmallPhone() ? 300 : 290),
+                          500 / 3 / 290,
                       // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                     ),
                   ),

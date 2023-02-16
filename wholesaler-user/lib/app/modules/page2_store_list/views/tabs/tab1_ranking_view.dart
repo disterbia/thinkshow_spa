@@ -157,7 +157,7 @@ class Tab1RankingView extends StatelessWidget {
               //     physics: NeverScrollableScrollPhysics(),
               //       scrollDirection: Axis.horizontal,
               //       itemBuilder: (context, index) {
-              //         return SizedBox(width: Get.width*0.2,
+              //         return SizedBox(width: 500*0.2,
               //           child: CachedNetworkImage(fit: BoxFit.fitHeight,
               //               imageUrl: store.topImagePath![index]),
               //         );

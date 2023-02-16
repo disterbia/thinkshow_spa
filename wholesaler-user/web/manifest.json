@@ -1,11 +1,11 @@
 {
-    "name": "wholesaler_user",
-    "short_name": "wholesaler_user",
+    "name": "띵쇼마켓",
+    "short_name": "띵쇼마켓",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "띵쇼마켓",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

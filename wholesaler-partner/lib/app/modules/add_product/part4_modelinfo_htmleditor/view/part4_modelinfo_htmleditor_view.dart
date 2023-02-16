@@ -58,7 +58,7 @@ class AP_Part4View extends GetView<AP_Part4Controller> {
           // Obx(
           //       () => Container(
           //     height: 100,
-          //     width: Get.width,
+          //     width: 500,
           //     child: ListView.builder(
           //       scrollDirection: Axis.horizontal,
           //       itemCount: pickedFile.length,

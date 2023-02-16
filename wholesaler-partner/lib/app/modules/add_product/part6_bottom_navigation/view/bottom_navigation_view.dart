@@ -23,7 +23,7 @@ class AP_Part6View extends GetView<AP_Part6Controller> {
       child: Container(
         color: MyColors.white,
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-        width: Get.width,
+        width: 500,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

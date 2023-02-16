@@ -26,7 +26,7 @@ class AdvertisementItemVertical extends StatelessWidget {
             width: 116,
             child: CachedNetworkImage(
               imageUrl: advertisement.imgURL,
-              width: Get.width,
+              width: 500,
               // placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),

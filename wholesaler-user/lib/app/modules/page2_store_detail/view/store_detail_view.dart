@@ -116,7 +116,7 @@ class StoreDetailView extends GetView {
       () => ctr.mainStoreModel.value.mainTopImageUrl != null
           ? CachedNetworkImage(
               imageUrl: ctr.mainStoreModel.value.mainTopImageUrl!.value,
-              width: Get.width,
+              width: 500,
               height: 400,
               fit: BoxFit.fitHeight,
               // placeholder: (context, url) => CircularProgressIndicator(),

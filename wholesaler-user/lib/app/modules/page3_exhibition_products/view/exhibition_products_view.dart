@@ -38,7 +38,7 @@ class ExhibitionProductsView extends GetView {
               //           fadeInDuration: Duration(milliseconds: 0),
               //           fadeOutDuration: Duration(milliseconds: 0),
               //           placeholderFadeInDuration: Duration(milliseconds: 0),
-              //           width: Get.width,
+              //           width: 500,
               //           fit: BoxFit.fitWidth,
               //           errorWidget: (context, url, error) => Icon(Icons.error),
               //         )

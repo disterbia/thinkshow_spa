@@ -82,7 +82,7 @@ class Cart1ShoppingBasketView extends GetView {
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: expandableHeight.value,
-                width: Get.width,
+                width: 500,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),

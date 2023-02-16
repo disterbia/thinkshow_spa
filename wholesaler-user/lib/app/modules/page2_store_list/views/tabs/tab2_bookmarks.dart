@@ -35,7 +35,7 @@ class Tab2BookmarksView extends StatelessWidget {
                 InkWell(
                     onTap: () => Get.find<UserMainController>().changeTabIndex(1),
                     child: Container(
-                        width: Get.width * 0.6,
+                        width: 500 * 0.6,
                         color: MyColors.grey3,
                         height: 50,
                         child: Center(child: Text("스토어 구경하러 가기",style: TextStyle(color: Colors.grey)))))
@@ -88,7 +88,7 @@ class Tab2BookmarksView extends StatelessWidget {
               //         if(store.topImagePath!.length<4){
               //           return Container();
               //         }
-              //       return CachedNetworkImage(imageUrl: store.topImagePath![index],width: (Get.width/4)-10,);
+              //       return CachedNetworkImage(imageUrl: store.topImagePath![index],width: (500/4)-10,);
               //
               //     },),
               // )

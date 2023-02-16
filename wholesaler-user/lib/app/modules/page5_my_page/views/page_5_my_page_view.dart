@@ -372,26 +372,19 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
   }
 
   Widget _versionOption(String title, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(15),
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: MyTextStyles.f16.copyWith(
-                  color: MyColors.black3, fontWeight: FontWeight.w500),
-            ),
-            Text(
-              "업데이트 하기",
-              style: MyTextStyles.f14.copyWith(
-                  color: MyColors.primary, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.all(15),
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: MyTextStyles.f16.copyWith(
+                color: MyColors.black3, fontWeight: FontWeight.w500),
+          ),
+
+        ],
       ),
     );
   }

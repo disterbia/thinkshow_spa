@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webviewx/webviewx.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 
 class WebViewWidget extends StatefulWidget {
@@ -16,29 +18,27 @@ class WebViewWidget extends StatefulWidget {
 class _WebViewWidgetState extends State<WebViewWidget> {
   @override
   Widget build(BuildContext context) {
-    final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {Factory(() => EagerGestureRecognizer())};
+    //final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {Factory(() => EagerGestureRecognizer())};
     UniqueKey _key = UniqueKey();
 
     return widget.isLoading == true
         ? LoadingWidget()
-        : WebView(
-            javascriptMode: JavascriptMode.unrestricted,
-            key: _key,
-            gestureRecognizers: gestureRecognizers,
+        : WebViewX(width: 500,initialSourceType: SourceType.url,initialContent:widget.url ,height: Get.height,
+      // javascriptMode: JavascriptMode.unrestricted,
+      key: _key,
 
-            // onPageStarted: (String url) {
-            //   print('start');
-            //   setState() {
-            //     widget.isLoading = true;
-            //   }
-            // },
-            // onPageFinished: (String url) {
-            //   print('end');
-            //   setState() {
-            //     widget.isLoading = false;
-            //   }
-            // },
-            initialUrl: widget.url,
-          );
+      // onPageStarted: (String url) {
+      //   print('start');
+      //   setState() {
+      //     widget.isLoading = true;
+      //   }
+      // },
+      // onPageFinished: (String url) {
+      //   print('end');
+      //   setState() {
+      //     widget.isLoading = false;
+      //   }
+      // },
+    );
   }
 }

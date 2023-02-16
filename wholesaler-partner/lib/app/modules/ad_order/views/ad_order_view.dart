@@ -34,7 +34,7 @@ class AdOrderView extends GetView {
                       () => ctr.adOrderModel.value.imageUrl != null
                           ? CachedNetworkImage(
                               imageUrl: ctr.adOrderModel.value.imageUrl!,
-                              width: Get.width,
+                              width: 500,
                               // placeholder: (context, url) => CircularProgressIndicator(),
                               errorWidget: (context, url, error) => Icon(Icons.error),
                             )

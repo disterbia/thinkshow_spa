@@ -38,7 +38,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
   @override
   Widget build(BuildContext context) {
     init();
-    columnWidth = context.width / 3;
+    columnWidth = 500 / 3;
     return Obx(
       () =>ctr.isLoading.value ? LoadingWidget() :
       // ctr.isShowSplashScreen.isTrue
@@ -144,7 +144,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
   _topBannerImage() {
     return Obx(
       () => Container(
-        width: Get.width,
+        width: 500,
         height: 400,
         decoration: BoxDecoration(color: MyColors.grey1),
         child: ((ctr.mainStoreInfo.value.mainTopImageUrl?.value.isNotEmpty ??
@@ -161,7 +161,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
         () => CachedNetworkImage(
           imageUrl: ctr.mainStoreInfo.value.mainTopImageUrl!.value,
           height: 400,
-          width: Get.width,
+          width: 500,
           fit: BoxFit.fitHeight,
           // placeholder: (context, url) => CircularProgressIndicator(),
           errorWidget: (context, url, error) => Icon(Icons.error),
@@ -442,9 +442,7 @@ class Page1HomeView extends GetView<PartnerHomeController> {
                       crossAxisSpacing: 10,
                       crossAxisCount: 3,
                       childAspectRatio: columnWidth /
-                          (MyVars.isSmallPhone()
-                              ? 270
-                              : 260), // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
+                        260, // explanation: add productheight +10 for small screen sizes, if we don't, on small screen the product height is too short
                     ),
                   ),
               //     ListView.separated(

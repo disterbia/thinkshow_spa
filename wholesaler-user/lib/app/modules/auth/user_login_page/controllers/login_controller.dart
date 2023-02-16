@@ -77,15 +77,11 @@ class User_LoginPageController extends GetxController {
 
     isLoading(true);
 
-    bool isSuccess = MyVars.isUserProject()
+     MyVars.isUserProject()
         ? await userLoginProcess()
         : await partnerLoginProcess();
 
     // initialize firebase
-    if (isSuccess) {
-      print('before initialize firebase');
-      await FirebaseService.init();
-    }
   }
 
   void signUpBtnPressed() {

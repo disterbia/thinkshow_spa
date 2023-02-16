@@ -113,7 +113,7 @@ class HorizontalChipList {
     return Container(
       alignment: Alignment.center,
       width: screenWidth,
-      height: Get.height/5,
+      height: Get.height/4,
       // child: ListView.builder(
       //     scrollDirection: Axis.horizontal,
       //     physics: NeverScrollableScrollPhysics(),

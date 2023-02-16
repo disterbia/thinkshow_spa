@@ -49,7 +49,7 @@ class QuestionAndAnswerView extends GetView<QuestionAndAnswerController> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: CustomButton(
-        width: Get.width,
+        width: 500,
         onPressed: () {},
         text: '등록',
       ),

@@ -33,7 +33,7 @@ class CustomInput extends GetView<AddProductController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: context.width / 4,
+              width: 500 / 4,
               child: Text(
                 label,
                 style: MyTextStyles.f14.copyWith(color: MyColors.black2),

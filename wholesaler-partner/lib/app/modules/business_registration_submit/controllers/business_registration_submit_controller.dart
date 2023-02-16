@@ -22,8 +22,10 @@ class BusinessRegistrationSubmitController extends GetxController {
 
   Future<void> uploadImageBtnPressed() async {
     _pickedImage = await pickImage();
-    uploadImage();
+    await uploadImage();
+
   }
+
 
   Future<XFile?> pickImage() async {
     return await ImagePicker().pickImage(source: ImageSource.gallery);

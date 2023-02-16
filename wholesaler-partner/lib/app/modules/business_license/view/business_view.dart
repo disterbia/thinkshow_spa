@@ -37,7 +37,7 @@ class BusinessView extends GetView {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomButton(
-                      width: Get.width,
+                      width: 500,
                       onPressed: ()=>Get.to(()=>BusinessEditView()),
                       text: 'edit'.tr,
                     ),
@@ -57,7 +57,7 @@ class BusinessView extends GetView {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: CustomButton(
-        width: Get.width,
+        width: 500,
         onPressed: () {},
         text: 'edit',
       ),
@@ -76,7 +76,7 @@ class BusinessView extends GetView {
   //                 textColor: MyColors.black1,
   //                 borderColor: MyColors.primary,
   //                 backgroundColor: MyColors.white,
-  //                 width: Get.width / 3,
+  //                 width: 500 / 3,
   //                 onPressed: () async {
   //                   controller.pickedImage = await controller.pickImage();
   //                   await controller.uploadImage();
@@ -100,7 +100,7 @@ class BusinessView extends GetView {
             padding: const EdgeInsets.all(18.0),
             child: CachedNetworkImage(
               imageUrl: ctr.uploadedImageURL.value,
-              width: Get.width,
+              width: 500,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Container(
                       margin: EdgeInsets.only(

@@ -1,12 +1,13 @@
 name: wholesaler_user
 description: A new Flutter project.
 publish_to: "none"
-version: 0.2.4
-#version: 0.1.11
+#version: 0.2.4
+version: 0.2.5+205
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
 dependencies:
+  flutter_web_frame: ^0.0.3
   firebase_dynamic_links: ^5.0.11
 #  uni_links: ^0.5.1
   share_plus: ^6.3.0
@@ -36,7 +37,7 @@ dependencies:
   path_provider: ^2.0.11
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_datepicker: ^19.4.56
-#  webview_flutter: ^3.0.4
+  webviewx: ^0.2.1
   firebase_analytics: ^10.0.7
   pull_to_refresh: ^2.0.0
   launch_review: ^3.0.1
