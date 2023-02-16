@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/models/main_store_model.dart';
 import 'package:wholesaler_partner/app/models/privilate_products_model.dart';
+import 'package:wholesaler_user/app/constants/variables.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
 
@@ -22,6 +23,8 @@ class Dingdong3ProductsHorizController extends GetxController {
           title: privProduct.productName!,
           store: tempStore,
           price: privProduct.price,
+          normalPrice: MyVars.isUserProject() ?  privProduct.normalPrice : 0,
+          priceDiscountPercent: MyVars.isUserProject() ? privProduct.priceDiscountPercent : 0,
           hasBellIconAndBorder: true.obs,
           imgUrl: privProduct.thumbnailImageUrl!,
           isLiked: privProduct.isFavorite!.obs,

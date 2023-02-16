@@ -6,6 +6,8 @@ class PrivilegeProducts {
     this.isFavorite,
     this.productName,
     this.price,
+    this.normalPrice,
+    this.priceDiscountPercent,
     this.thumbnailImageUrl,
     this.mainCategoryId,
     this.subCategoryId,
@@ -22,6 +24,8 @@ class PrivilegeProducts {
     isFavorite = json['is_favorite'];
     productName = json['product_name'];
     price = json['price'];
+    normalPrice = json['normal_price'];
+    priceDiscountPercent = json['price_discount_percent'];
     thumbnailImageUrl = json['thumbnail_image_url'];
     mainCategoryId = json['main_category_id'];
     subCategoryId = json['sub_category_id'];
@@ -36,6 +40,8 @@ class PrivilegeProducts {
   bool? isFavorite;
   String? productName;
   int? price;
+  int? normalPrice;
+  int? priceDiscountPercent;
   String? thumbnailImageUrl;
   int? mainCategoryId;
   int? subCategoryId;
@@ -50,6 +56,8 @@ class PrivilegeProducts {
     bool? isFavorite,
     String? productName,
     int? price,
+    int? normalPrice,
+    int? priceDiscountPercent,
     String? thumbnailImageUrl,
     int? mainCategoryId,
     int? subCategoryId,
@@ -65,6 +73,8 @@ class PrivilegeProducts {
         isFavorite: isFavorite ?? this.isFavorite,
         productName: productName ?? this.productName,
         price: price ?? this.price,
+        normalPrice: normalPrice ?? this.normalPrice,
+        priceDiscountPercent: priceDiscountPercent ?? this.priceDiscountPercent,
         thumbnailImageUrl: thumbnailImageUrl ?? this.thumbnailImageUrl,
         mainCategoryId: mainCategoryId ?? this.mainCategoryId,
         subCategoryId: subCategoryId ?? this.subCategoryId,
@@ -81,6 +91,8 @@ class PrivilegeProducts {
     map['is_favorite'] = isFavorite;
     map['product_name'] = productName;
     map['price'] = price;
+    map['normal_price'] = normalPrice;
+    map['price_discount_percent'] = priceDiscountPercent;
     map['thumbnail_image_url'] = thumbnailImageUrl;
     map['main_category_id'] = mainCategoryId;
     map['sub_category_id'] = subCategoryId;
