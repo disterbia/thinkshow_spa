@@ -20,10 +20,6 @@ class DefaultFirebaseOptions {
       return web;
     }
     switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
-      case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -47,30 +43,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCaRnvK3vm3M1fLvUl2RewIHok3H9t5yMk',
-    appId: '1:463888941632:web:febe8daca32fd6da5dd5a5',
-    messagingSenderId: '463888941632',
-    projectId: 'thinkshow-71d1d',
-    authDomain: 'thinkshow-71d1d.firebaseapp.com',
-    storageBucket: 'thinkshow-71d1d.appspot.com',
-    measurementId: 'G-GVBV6P8BCF',
+      apiKey: "AIzaSyAgpmRZCnplxUiXYEbeuZWQWyl_pJQF1bg",
+      authDomain: "thinkshowweb.firebaseapp.com",
+      projectId: "thinkshowweb",
+      storageBucket: "thinkshowweb.appspot.com",
+      messagingSenderId: "559457225462",
+      appId: "1:559457225462:web:d7b60237772b26722c3ad7",
+      measurementId: "G-R0716731V9"
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBfH1ij1hmNNxXpDhiM5J-xVLcrQB2c1gI',
-    appId: '1:463888941632:android:d591a1374a49f6fa5dd5a5',
-    messagingSenderId: '463888941632',
-    projectId: 'thinkshow-71d1d',
-    storageBucket: 'thinkshow-71d1d.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDW_db3mDXDsoDnum6IincQLMdlwdNaY5I',
-    appId: '1:463888941632:ios:4b3422658937e6385dd5a5',
-    messagingSenderId: '463888941632',
-    projectId: 'thinkshow-71d1d',
-    storageBucket: 'thinkshow-71d1d.appspot.com',
-    iosClientId: '463888941632-110009nq7p6cectbick4and23dtdo4ah.apps.googleusercontent.com',
-    iosBundleId: 'com.thinksmk.user',
-  );
 }

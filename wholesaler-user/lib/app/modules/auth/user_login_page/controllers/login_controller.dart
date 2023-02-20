@@ -98,8 +98,6 @@ class User_LoginPageController extends GetxController {
       "password": passwordController.text,
     });
     isLoading(false);
-    print(usernameController.text);
-    print(passwordController.text);
     if (response.statusCode == 200) {
       Get.to(() => UserMainView());
       return true;
@@ -116,7 +114,6 @@ class User_LoginPageController extends GetxController {
       "account_id": usernameController.text,
       "password": passwordController.text,
     });
-    print("asdfasdf : ${response}");
     isLoading(false);
     if (response == false) {
       return false;
@@ -126,7 +123,6 @@ class User_LoginPageController extends GetxController {
     if (status.toString() == "normal") {
       String token = response["access_token"];
       CacheProvider().setToken(token);
-      print("===============setToken${CacheProvider().getToken()}====================");
       // isPrivilage = response['is_privilege'];
       bool isOwner = response["is_owner"];
       // bool isPrivilege = response["is_privilege"];

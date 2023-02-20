@@ -78,7 +78,6 @@ class ProductDetailController extends GetxController with GetSingleTickerProvide
 
     isLoading.value = true;
     productId = Get.arguments;
-    print('productId $productId');
 
     if (productId == -1) {
       print('ERROR: ProductDetailController > productID is -1');

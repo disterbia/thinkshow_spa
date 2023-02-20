@@ -335,6 +335,8 @@ class AP_Part6Controller extends GetxController {
     bool isSuccess = false;
     isSuccess = await _apiProvider.addProduct(data: data);
 
+    isLoading.value = false;
+
     if (isSuccess) {
       mSnackbar(message: '제품이 정상적으로 추가되었습니다.');
       Get.delete<PartnerHomeController>();
@@ -352,7 +354,6 @@ class AP_Part6Controller extends GetxController {
 
       Get.to(ProductMgmtView());
     }
-    isLoading.value = false;
   }
 
   void fuckingTest() {
@@ -575,14 +576,19 @@ class AP_Part6Controller extends GetxController {
         for (int j = 0;
         j < productBodySizeModel.sizeCategory.children.length;
         j++) {
-          try {
-            int.parse(part2controller
-                .textEditingControllers[i.toString() + j.toString()]!.text);
-          } catch (e) {
-            isLoading.value = false;
-            Get.back();
-            mSnackbar(message: '사이즈를 숫자로 입력해주세요.');
-            return;
+          if (part2controller
+              .textEditingControllers[i.toString() + j.toString()]!
+              .text
+              .isNotEmpty) {
+            try {
+              int.parse(part2controller
+                  .textEditingControllers[i.toString() + j.toString()]!.text);
+            } catch (e) {
+              isLoading.value = false;
+              Get.back();
+              mSnackbar(message: '사이즈를 숫자로 입력해주세요.');
+              return;
+            }
           }
 
           SizeChild sizeChild = productBodySizeModel.sizeCategory.children[j];
@@ -662,6 +668,7 @@ class AP_Part6Controller extends GetxController {
     bool isSuccess = false;
     isSuccess = await _apiProvider.editProduct(
         productId: addProductController.productIdforEdit, data: data);
+    isLoading.value = false;
 
     if (isSuccess) {
       mSnackbar(message: '제품이 정상적으로 수정되었습니다.');
@@ -679,6 +686,5 @@ class AP_Part6Controller extends GetxController {
       c.getProducts(isScrolling: false);
       Get.to(ProductMgmtView());
     }
-    isLoading.value = false;
   }
 }

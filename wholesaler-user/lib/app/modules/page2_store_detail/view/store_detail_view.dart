@@ -27,7 +27,6 @@ class StoreDetailView extends GetView {
   StoreDetailView({required this.storeId, String? prevPage}) {
     print('storeId $storeId');
 
-
     if (prevPage != null) {
       this.prevPage = prevPage;
       print(prevPage);
@@ -47,8 +46,11 @@ class StoreDetailView extends GetView {
   }
 
   Widget _body() {
+    HorizontalChipList4().ctr.selectedMainCatIndex.value = 0;
     return Obx(
-      ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
+          () => ctr.isLoading.value
+          ? LoadingWidget()
+          : SingleChildScrollView(
         controller: ctr.scrollController.value,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,15 +65,15 @@ class StoreDetailView extends GetView {
             // 띵동배송
             Obx(() => ctr.privilateProductsNotEmpty()
                 ? Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      titleBuilder('띵동 배송', 'view_more'.tr, () {
-                        Get.to(() => Tab4DingDongView());
-                      }),
-                      Dingdong3ProductsHorizView(),
-                      SizedBox(height: 10),
-                    ],
-                  )
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                titleBuilder('띵동 배송', 'view_more'.tr, () {
+                  Get.to(() => Tab4DingDongView());
+                }),
+                Dingdong3ProductsHorizView(),
+                SizedBox(height: 10),
+              ],
+            )
                 : SizedBox()),
 
             // 우리매장 베스트
@@ -84,10 +86,12 @@ class StoreDetailView extends GetView {
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Obx(
-                () => HorizontalChipList4().getAllMainCat(
-                    categoryList:
-                        ClothCategory.getAllMainCat().map((e) => e.name).toList(),
-                    onTapped: () => ctr.updateProducts(isScrolling: false)),
+                    () => HorizontalChipList4().getAllMainCat(
+                    categoryList: ClothCategory.getAllMainCat()
+                        .map((e) => e.name)
+                        .toList(),
+                    onTapped: () =>
+                        ctr.updateProducts(isScrolling: false)),
               ),
             ),
             SizedBox(height: 5),
@@ -113,15 +117,15 @@ class StoreDetailView extends GetView {
 
   Widget _image() {
     return Obx(
-      () => ctr.mainStoreModel.value.mainTopImageUrl != null
+          () => ctr.mainStoreModel.value.mainTopImageUrl != null
           ? CachedNetworkImage(
-              imageUrl: ctr.mainStoreModel.value.mainTopImageUrl!.value,
-              width: 500,
-              height: 400,
-              fit: BoxFit.fitHeight,
-              // placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            )
+        imageUrl: ctr.mainStoreModel.value.mainTopImageUrl!.value,
+        width: 500,
+        height: 400,
+        fit: BoxFit.fitHeight,
+        // placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+      )
           : SizedBox.shrink(),
     );
   }
@@ -132,34 +136,33 @@ class StoreDetailView extends GetView {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Obx(
-          () => ctr.mainStoreModel.value.isFavorite != null
+              () => ctr.mainStoreModel.value.isFavorite != null
               ? IconButton(
-                  onPressed: () {
-                    bool value = ctr.mainStoreModel.value.isFavorite!.value;
-                    ctr.mainStoreModel.value.isFavorite!.value = !value;
-                    print('new value ${!value}');
-                    ctr.starIconPressed().then((_) {
-                      if (prevPage != null) {
-                        print(prevPage);
-                        if (prevPage == 'rank') {
-                          ctr2.getRankedStoreData();
-                        } else if (prevPage == 'bookmark')
-                          ctr2.getBookmarkedStoreData();
-                      }
-                      
-                    });
-                  },
-                  icon: ctr.mainStoreModel.value.isFavorite!.value
-                      ? Icon(
-                          Icons.star,
-                          size: 30,
-                        )
-                      : Icon(
-                          Icons.star_border,
-                          size: 30,
-                        ),
-                  color: MyColors.accentColor,
-                )
+            onPressed: () {
+              bool value = ctr.mainStoreModel.value.isFavorite!.value;
+              ctr.mainStoreModel.value.isFavorite!.value = !value;
+              print('new value ${!value}');
+              ctr.starIconPressed().then((_) {
+                if (prevPage != null) {
+                  print(prevPage);
+                  if (prevPage == 'rank') {
+                    ctr2.getRankedStoreData();
+                  } else if (prevPage == 'bookmark')
+                    ctr2.getBookmarkedStoreData();
+                }
+              });
+            },
+            icon: ctr.mainStoreModel.value.isFavorite!.value
+                ? Icon(
+              Icons.star,
+              size: 30,
+            )
+                : Icon(
+              Icons.star_border,
+              size: 30,
+            ),
+            color: MyColors.accentColor,
+          )
               : SizedBox.shrink(),
         ),
       ),
@@ -169,38 +172,38 @@ class StoreDetailView extends GetView {
   Widget titleBuilder(
       String title, String buttonText, VoidCallback buttonOnPressed) {
     return Obx(
-      () => ctr.top10Products.isNotEmpty
+          () => ctr.top10Products.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
+        padding: const EdgeInsets.only(left: 20, right: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: MyTextStyles.f16,
+            ),
+            // 관리하기 button
+            MyVars.isUserProject() == false
+                ? TextButton(
+              onPressed: buttonOnPressed,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title,
+                    buttonText,
                     style: MyTextStyles.f16,
                   ),
-                  // 관리하기 button
-                  MyVars.isUserProject() == false
-                      ? TextButton(
-                          onPressed: buttonOnPressed,
-                          child: Row(
-                            children: [
-                              Text(
-                                buttonText,
-                                style: MyTextStyles.f16,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: MyColors.black2,
-                                size: 15,
-                              )
-                            ],
-                          ),
-                        )
-                      : SizedBox.shrink(),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: MyColors.black2,
+                    size: 15,
+                  )
                 ],
               ),
             )
+                : SizedBox.shrink(),
+          ],
+        ),
+      )
           : SizedBox(),
     );
   }
@@ -215,30 +218,32 @@ class StoreDetailView extends GetView {
           child: SizedBox(
             height: 240,
             child: Obx(
-              () => ctr.top10Products.isNotEmpty
+                  () => ctr.top10Products.isNotEmpty
                   ? ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: ctr.top10Products.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          SizedBox(width: 14),
-                      itemBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          width: 105,
-                          child: ProductItemVertical(
-                            product: ctr.top10Products.elementAt(index),
-                            productNumber: ProductNumber(
-                              number: index + 1,
-                              backgroundColor:
-                                  MyColors.numberColors.length > index
-                                      ? MyColors.numberColors[index]
-                                      : MyColors.numberColors[0],
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                  : MyVars.isUserProject()?Center(child: Text('등록 된 상품이 없습니다.')):Center(child: Text('제품을 등록해 주세요.')),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: ctr.top10Products.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    SizedBox(width: 14),
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    width: 105,
+                    child: ProductItemVertical(
+                      product: ctr.top10Products.elementAt(index),
+                      productNumber: ProductNumber(
+                        number: index + 1,
+                        backgroundColor:
+                        MyColors.numberColors.length > index
+                            ? MyColors.numberColors[index]
+                            : MyColors.numberColors[0],
+                      ),
+                    ),
+                  );
+                },
+              )
+                  : MyVars.isUserProject()
+                  ? Center(child: Text('등록 된 상품이 없습니다.'))
+                  : Center(child: Text('제품을 등록해 주세요.')),
             ),
           ),
         ),
@@ -253,7 +258,7 @@ class StoreDetailView extends GetView {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Obx(
-            () => DropdownButton(
+                () => DropdownButton(
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {
@@ -284,7 +289,7 @@ class StoreDetailView extends GetView {
       leadingWidth: 100,
       backgroundColor: MyColors.white,
       title: Obx(
-        () => Text(
+            () => Text(
           ctr.mainStoreModel.value.storeName ?? '',
           textAlign: TextAlign.start,
           style: const TextStyle(color: MyColors.black),
@@ -319,16 +324,16 @@ class StoreDetailView extends GetView {
         mainAxisAlignment: MainAxisAlignment.end,
         children: products.asMap().entries.map((entry) {
           return GestureDetector(
-              // onTap: () => ctr.indicatorSliderController.animateToPage(entry.key),
+            // onTap: () => ctr.indicatorSliderController.animateToPage(entry.key),
               child: Container(
-            width: 10.0,
-            height: 10.0,
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: MyColors.primary.withOpacity(
-                    ctr.sliderIndex.value == entry.key ? 0.9 : 0.4)),
-          ));
+                width: 10.0,
+                height: 10.0,
+                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: MyColors.primary.withOpacity(
+                        ctr.sliderIndex.value == entry.key ? 0.9 : 0.4)),
+              ));
         }).toList(),
       ),
     );
@@ -348,7 +353,7 @@ class StoreDetailView extends GetView {
             productNumber: ProductNumber(
                 number: index + 1,
                 backgroundColor:
-                    MyColors.numberColors[index > 10 ? 10 : index]),
+                MyColors.numberColors[index > 10 ? 10 : index]),
           ),
         ),
       );

@@ -61,7 +61,7 @@ class uApiProvider extends GetConnect {
     final response = await put(url, data);
 
     var json = jsonDecode(response.bodyString!);
-    log(json.toString());
+
 
     String message = '';
     int statusCode = response.statusCode ?? 0;
@@ -142,17 +142,11 @@ class uApiProvider extends GetConnect {
 
   /// User sign up page
   Future<bool> postUserSignUp() async {
-    log('inside postUserSignUp');
+
     SignupOrEditController signUpCtr = Get.put(SignupOrEditController());
     PhoneNumberPhoneVerifyController phoneCtr =
         Get.put(PhoneNumberPhoneVerifyController());
 
-    log('signUpCtr.passwordController.text:' +
-        signUpCtr.passwordController.text);
-    log('signUpCtr.nameController.text ' + signUpCtr.nameController.text);
-    log('signUpCtr.address1Controller.text ' +
-        signUpCtr.address1Controller.text);
-    log('signUpCtr.idController.text ' + signUpCtr.idController.text);
     Map<String, dynamic> body = {
       'password': signUpCtr.passwordController.text,
       'name': signUpCtr.nameController.text,
@@ -167,15 +161,14 @@ class uApiProvider extends GetConnect {
       // 'birth_month': int.parse(signUpCtr.birthdayMonth.text),
       // 'birth_day': int.parse(signUpCtr.birthdayDay.text),
     };
-    log('before response');
+
     final response =
         await post(mConst.API_BASE_URL + mConst.API_USER_PATH + '/user', body);
-    log('postUserSignUp response ${response.body}');
+
 
     if (response.statusCode == 200) {
       final raw = jsonDecode(response.bodyString!);
-      log('postUserSignUp raw ' + raw.toString());
-      log(response.bodyString!);
+
       return true;
     } else {
       var error = jsonDecode(response.bodyString!);
@@ -197,18 +190,17 @@ class uApiProvider extends GetConnect {
       'email': signUpCtr.emailController.text,
     };
 
-    print('putUserInfoEdit body ' + body.toString());
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/me';
     final response = await put(url, body, headers: headers);
-    log('putAddStoreFavorite $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('error:' + jsonList.toString());
+
       mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
       return false;
     }
@@ -219,14 +211,14 @@ class uApiProvider extends GetConnect {
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/login-check';
     final response = await post(url, body, headers: headers);
-    log('putAddStoreFavorite $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('error:' + jsonList.toString());
+
       //mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
       return false;
     }
@@ -236,8 +228,6 @@ class uApiProvider extends GetConnect {
   Future<StatusModel> postLogin_User(Map<String, dynamic> data) async {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + mConst.LOGIN;
     final response = await post(url, data);
-    log(response.statusCode.toString());
-    log(jsonDecode(response.bodyString!).toString());
 
     var json = jsonDecode(response.bodyString!);
 
@@ -250,8 +240,7 @@ class uApiProvider extends GetConnect {
       case 200:
         String token = json['access_token'];
         CacheProvider().setToken(token);
-        log('setToken finished;');
-        log('nrew token: ' + CacheProvider().getToken());
+
         // update value of headers with new token
         headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
         message = '완료!';
@@ -380,7 +369,7 @@ class uApiProvider extends GetConnect {
   }) async {
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
-    print(' etAllProducts sort $sort sortStr $sortStr');
+
 
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
@@ -388,10 +377,7 @@ class uApiProvider extends GetConnect {
         storeIdStr +
         sortStr;
 
-    print('getAllProducts url $url');
-
-    final response = await get(url, headers: headers);
-    // log('getAllProducts response ${response.body}');
+       final response = await get(url, headers: headers);
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -419,7 +405,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getProducts : ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -430,10 +416,6 @@ class uApiProvider extends GetConnect {
       required int limit,
       int? storeId,
       String? sort}) async {
-    print('getProductsWithCat> cat id: $categoryId');
-    print('getProductsWithCat> offset: $offset');
-    print('getProductsWithCat> limit: $limit');
-    print('getProductsWithCat> sort: $sort');
 
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
@@ -443,7 +425,7 @@ class uApiProvider extends GetConnect {
         '/category/$categoryId/products?offset=$offset&limit=$limit' +
         storeIdStr +
         sortStr;
-    print('getProductsWithCat> url: $url');
+
 
     final response = await get(url, headers: headers);
 
@@ -473,7 +455,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getProducts : ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -485,10 +467,6 @@ class uApiProvider extends GetConnect {
         required int limit,
         int? storeId,
         String? sort}) async {
-    print('getProductsWithCat> cat id: $categoryId');
-    print('getProductsWithCat> offset: $offset');
-    print('getProductsWithCat> limit: $limit');
-    print('getProductsWithCat> sort: $sort');
 
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
@@ -498,7 +476,6 @@ class uApiProvider extends GetConnect {
         '/category/$categoryId/products?offset=$offset&limit=$limit' +
         storeIdStr +
         sortStr;
-    print('getProductsWithCat> url: $url');
 
     final response = await get(url, headers: headers);
 
@@ -528,7 +505,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getProducts : ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -539,10 +516,6 @@ class uApiProvider extends GetConnect {
       required int limit,
       int? storeId,
       String? sort}) async {
-    print('getProductsWithCat> cat id: $productId');
-    print('getProductsWithCat> offset: $offset');
-    print('getProductsWithCat> limit: $limit');
-    print('getProductsWithCat> sort: $sort');
 
     String storeIdStr = storeId != null ? '&store_id=$storeId' : '';
     String sortStr = sort != null ? '&sort=$sort' : '';
@@ -552,7 +525,6 @@ class uApiProvider extends GetConnect {
         '/products/$productId/similar?offset=$offset&limit=$limit' +
         storeIdStr +
         sortStr;
-    print('getProductsWithCat> url: $url');
 
     final response = await get(url, headers: headers);
 
@@ -581,7 +553,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getProducts : ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -619,7 +591,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getNewProducts ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -659,7 +631,7 @@ class uApiProvider extends GetConnect {
       return products;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getBestProducts ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -700,7 +672,7 @@ class uApiProvider extends GetConnect {
       return products;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getBestProducts ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -741,8 +713,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('error getDingdongProductPopular ${response.bodyString}');
-      return Future.error(response.statusText!);
+          return Future.error(response.statusText!);
     }
   }
 
@@ -750,7 +721,7 @@ class uApiProvider extends GetConnect {
       {required int categoryId,
       required int offset,
       required int limit}) async {
-    log('cat id: $categoryId');
+
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/category/$categoryId/products/privilege?offset=$offset&limit=$limit';
@@ -784,8 +755,7 @@ class uApiProvider extends GetConnect {
     } else {
       var jsonList = jsonDecode(response.bodyString!);
 
-      log('error:' + jsonList.toString());
-      return Future.error(response.statusText!);
+          return Future.error(response.statusText!);
     }
   }
 
@@ -840,8 +810,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('error getDingsPick ${response.bodyString}');
-      return Future.error(response.statusText!);
+          return Future.error(response.statusText!);
     }
   }
 
@@ -852,7 +821,6 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/store/ranking-list?type=total&offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
-    print(url);
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -889,7 +857,6 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/store/recommend-list?type=total&offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
-    print(url);
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -943,13 +910,12 @@ class uApiProvider extends GetConnect {
             categories: jsonList[i]["categories"]);
         stores.add(tempStore);
       }
-      log('getStorebookmarked ${stores.length}');
+
       return stores;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
 
-      log('error:' + jsonList.toString());
-      return Future.error(response.statusText!);
+        return Future.error(response.statusText!);
     }
   }
 
@@ -958,14 +924,13 @@ class uApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/store/$storeId/favorite';
     final response = await put(url, 'empty_body', headers: headers);
-    log('putAddStoreFavorite $response');
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return response.bodyString!;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('error:' + jsonList.toString());
+
       return Future.error(response.statusText!);
     }
   }
@@ -1004,8 +969,7 @@ class uApiProvider extends GetConnect {
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
 
-      log('error getFavoriteProducts: ${response.bodyString}');
-      return Future.error(response.statusText!);
+         return Future.error(response.statusText!);
     }
   }
 
@@ -1036,7 +1000,7 @@ class uApiProvider extends GetConnect {
       return user;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1047,15 +1011,14 @@ class uApiProvider extends GetConnect {
         mConst.API_USER_PATH +
         '/product/$productId/favorite';
     final response = await put(url, 'empty_body', headers: headers);
-    log('putAddStoreFavorite $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('error:' + jsonList.toString());
-      return Future.error(response.statusText!);
+  return Future.error(response.statusText!);
     }
   }
 
@@ -1064,7 +1027,7 @@ class uApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/waiting-reviews';
     final response = await get(url, headers: headers);
-    // log('getUserReviews response: ${response.bodyString}');
+
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1105,8 +1068,6 @@ class uApiProvider extends GetConnect {
           products.add(tempProduct);
         }
 
-        print('json["order_id"] ${json['order_id']}');
-
         OrderOrReview order = OrderOrReview(
           id: json['order_id'],
           user: User.dummy1(),
@@ -1120,11 +1081,11 @@ class uApiProvider extends GetConnect {
         );
         orders.add(order);
       }
-      print('getUserReviews orders ${orders.length}');
+
       return orders;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1136,7 +1097,6 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
-      print(jsonList);
 
       // List<ReviewModel2> temp = jsonList
       //     .map<ReviewModel2>((model) => ReviewModel2.fromJson(model))
@@ -1170,23 +1130,20 @@ class uApiProvider extends GetConnect {
       return tempList;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getUserAlreadyReviews: ${response.bodyString}');
-      return Future.error(response.statusText!);
+         return Future.error(response.statusText!);
     }
   }
 
   /// 마이페이지 > 주문 조회
   Future<List<OrderOrReview>> getOrderInquiry(
       {required int offset, required int limit, required String period}) async {
-    print(' getOrderInquiry offset: $offset, limit: $limit, period: $period');
-    String url = mConst.API_BASE_URL +
+      String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/orders?offset=$offset&limit=$limit&periodType=$period';
     final response = await get(url, headers: headers);
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
-      print('getOrderInquiry jsonList: ${jsonList.toString()}');
 
       List<OrderOrReview> orders = [];
 
@@ -1242,7 +1199,7 @@ class uApiProvider extends GetConnect {
       return orders;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1251,10 +1208,6 @@ class uApiProvider extends GetConnect {
   Future<OrderOrReview> getOrderDetail({required int orderId}) async {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/order/$orderId';
     final response = await get(url, headers: headers);
-
-    print(url);
-
-    log('getOrderDetail response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
@@ -1330,7 +1283,7 @@ class uApiProvider extends GetConnect {
       return order;
     } else {
       // var jsonList = jsonDecode(response.bodyString!);
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1344,8 +1297,6 @@ class uApiProvider extends GetConnect {
       url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/product/$productId';
     }
 
-    print(url);
-    print(headers);
 
     final response = await get(url, headers: headers);
     if (response.statusCode == 200) {
@@ -1439,7 +1390,7 @@ class uApiProvider extends GetConnect {
 
       return tempProduct;
     } else {
-      log('error getProductDetail: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1452,21 +1403,15 @@ class uApiProvider extends GetConnect {
         '/product/$productId/reviews?offset=$offset&limit=$limit';
     final response = await get(url, headers: headers);
 
-    log('getProductReviews response: ${response.bodyString}');
-    if (response.statusCode == 200) {
+       if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
       WritableReviewInfoModel writableReviewInfoModel =
           WritableReviewInfoModel.fromJson(json['writable_review_info']);
-      print(
-          'writableReviewInfoModel ${writableReviewInfoModel.order_detail_id}');
 
       // Review list
       List<Review> tempReviews = [];
       for (var reviewJSON in json['review_list']) {
-        print(reviewJSON['product_info']['thumbnail_image_url']);
-        print(reviewJSON['product_info']['thumbnail_image_url']);
-        print(reviewJSON['product_info']['thumbnail_image_url']);
 
         // product
         Product tempProduct = Product(
@@ -1511,7 +1456,7 @@ class uApiProvider extends GetConnect {
       }
       return tempReviews;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1523,21 +1468,16 @@ class uApiProvider extends GetConnect {
         '/product/$productId/reviews?offset=$offset&limit=$limit&is_photo_review=Y';
     final response = await get(url, headers: headers);
 
-    log('getProductReviews response: ${response.bodyString}');
+
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
 
       WritableReviewInfoModel writableReviewInfoModel =
           WritableReviewInfoModel.fromJson(json['writable_review_info']);
-      print(
-          'writableReviewInfoModel ${writableReviewInfoModel.order_detail_id}');
 
       // Review list
       List<Review> tempReviews = [];
       for (var reviewJSON in json['review_list']) {
-        print(reviewJSON['product_info']['thumbnail_image_url']);
-        print(reviewJSON['product_info']['thumbnail_image_url']);
-        print(reviewJSON['product_info']['thumbnail_image_url']);
 
         // product
         Product tempProduct = Product(
@@ -1582,7 +1522,7 @@ class uApiProvider extends GetConnect {
       }
       return tempReviews;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1594,10 +1534,10 @@ class uApiProvider extends GetConnect {
     final response = await get(url, headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print(json);
+
       return json;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1641,15 +1581,14 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await post(url, data, headers: headers);
-    log(response.statusCode.toString());
-    log(jsonDecode(response.bodyString!).toString());
+
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       mSnackbar(message: '문의 등록이 완료되였습니다.');
       return true;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       mSnackbar(message: '오류: ' + response.statusText!);
       return false;
     }
@@ -1672,7 +1611,7 @@ class uApiProvider extends GetConnect {
       }
       return tempInquiries;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -1692,7 +1631,7 @@ class uApiProvider extends GetConnect {
       }
       return tempInquiries;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
     // return Future.error(response.statusText!);
@@ -1707,7 +1646,7 @@ class uApiProvider extends GetConnect {
 
       return json;
     } else {
-      log('error getUserInfo: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
     // return Future.error(response.statusText!);
@@ -1759,16 +1698,14 @@ class uApiProvider extends GetConnect {
       }
       return cartItems;
     } else {
-      log('error getCart1ShoppintBasket: ${response.bodyString}');
-      return Future.error(response.statusText!);
+          return Future.error(response.statusText!);
     }
   }
 
   /// review detail page -> upload review image
   Future<ProductImageModel> postUploadReviewImage(
       {required XFile pickedImage}) async {
-    print('postUploadReviewImage');
-    String url =
+      String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/product/review-image';
     File image = File(pickedImage.path);
     String imageName = image.path.split('/').last;
@@ -1778,7 +1715,6 @@ class uApiProvider extends GetConnect {
 
     final response = await post(url, formData, headers: headers);
 
-    print('uploadProductImage response ${response.bodyString}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return ProductImageModel(
@@ -1814,8 +1750,7 @@ class uApiProvider extends GetConnect {
       String imageName = image.path.substring(image.path.length - 19);
       images.add(image);
       imageNames.add(imageName);
-      log('image: $image');
-      log('imageName: $imageName');
+
     }
     List<mDio.MultipartFile> temp = [];
     for (int i = 0; i < images.length; i++) {
@@ -1831,7 +1766,7 @@ class uApiProvider extends GetConnect {
 
     if (response.statusCode == 200) {
       var json = response.data;
-      print('업로드 성공오우어어어엉');
+
       return json;
     } else if (response.statusCode == 400) {
       mSnackbar(message: jsonDecode(response.data!)['description']);
@@ -1882,7 +1817,6 @@ class uApiProvider extends GetConnect {
     };
     final response = await post(url, data, headers: headers);
 
-    print('uploadProductImage response ${response.bodyString}');
     mSnackbar(message: response.bodyString!);
   }
 
@@ -1896,8 +1830,7 @@ class uApiProvider extends GetConnect {
     required int category_color_id,
     required int category_quality_id,
   }) async {
-    print(
-        'postReviewAdd: orderDetailId $orderDetailId content $content image_path $image_path star $star');
+
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/order/detail/$orderDetailId/review';
@@ -1913,8 +1846,7 @@ class uApiProvider extends GetConnect {
 
     final response = await post(url, data, headers: headers);
 
-    print('postReviewAdd response ${response.bodyString}');
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
       mSnackbar(message: '정상적으로 등록 되었습니다.');
       return true;
     } else {
@@ -1931,8 +1863,8 @@ class uApiProvider extends GetConnect {
         '/search/stores?searchContent=$searchContent';
 
     final response = await get(url, headers: headers);
-    print('getSearchStoreAutoComplete response: ${response.bodyString}');
-    if (response.statusCode == 200) {
+
+   if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       List<SearchStoreAutoModel> stores = [];
       for (var storeSearch in json) {
@@ -1946,7 +1878,6 @@ class uApiProvider extends GetConnect {
       }
       return stores;
     } else {
-      log('error getCart1ShoppintBasket: ${response.bodyString}');
       return Future.error(response.statusText!);
     }
   }
@@ -1959,8 +1890,7 @@ class uApiProvider extends GetConnect {
         '/search/product/keywords?searchContent=$searchContent';
 
     final response = await get(url, headers: headers);
-    print('getSearchProductAutoComplete response: ${response.bodyString}');
-    if (response.statusCode == 200) {
+       if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       List<SearchProductAutoModel> keywords = [];
       for (var keywordJson in json) {
@@ -1972,8 +1902,7 @@ class uApiProvider extends GetConnect {
       }
       return keywords;
     } else {
-      log('error getCart1ShoppintBasket: ${response.bodyString}');
-      return Future.error(response.statusText!);
+           return Future.error(response.statusText!);
     }
   }
 
@@ -1987,8 +1916,7 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await put(url, data, headers: headers);
-    print(
-        'deleteProductsFromCart response.bodyString! ${response.bodyString!}');
+
 
     if (response.statusCode == 200) {
       return true;
@@ -2011,10 +1939,9 @@ class uApiProvider extends GetConnect {
 
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/cart';
 
-    print('dataHolder $dataHolder');
 
     final response = await post(url, dataHolder, headers: headers);
-    print('postAddToShoppingBasket ${response.bodyString}');
+
 
     if (response.statusCode == 200) {
       return true;
@@ -2034,7 +1961,6 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await put(url, data, headers: headers);
-    print('getRecentlySeenProducts ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -2061,7 +1987,7 @@ class uApiProvider extends GetConnect {
       }
       return products;
     } else {
-      log('error getRecentlySeenProducts: ${response.bodyString}');
+
       return Future.error(response.statusText!);
     }
   }
@@ -2086,15 +2012,14 @@ class uApiProvider extends GetConnect {
     };
 
     final response = await put(url, data, headers: headers);
-    log('putReviewEdit $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('putReviewEdit error:' + jsonList.toString());
-      mSnackbar(message: '오류: ${response.bodyString!}');
+           mSnackbar(message: '오류: ${response.bodyString!}');
       return Future.error(response.statusText!);
     }
   }
@@ -2105,14 +2030,12 @@ class uApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/store/$storeId/main';
 
     final response = await get(url, headers: headers);
-    print('getStoreDetailMainInfo ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       return MainStoreModel.fromJson(json);
     } else {
-      log('error getStoreDetailMainInfo: ${response.bodyString}');
-      return Future.error(response.statusText!);
+         return Future.error(response.statusText!);
     }
   }
 
@@ -2123,7 +2046,6 @@ class uApiProvider extends GetConnect {
         '/store/$storeId/best-products';
 
     final response = await get(url, headers: headers);
-    print('getBestProducts ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -2162,9 +2084,8 @@ class uApiProvider extends GetConnect {
         '/product/inquiries/mine?limit=$limit';
 
     final response = await get(url, headers: headers);
-    print('getInquiryList ${response.bodyString}');
 
-    if (response.statusCode == 200) {
+        if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
       List<InquiriesPageModel> inquries = [];
       for (var json in jsonList) {
@@ -2182,7 +2103,6 @@ class uApiProvider extends GetConnect {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/faq';
 
     final response = await get(url, headers: headers);
-    log('getFaq ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -2203,7 +2123,6 @@ class uApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/point-histories';
 
     final response = await get(url, headers: headers);
-    print('getPointMgmtList ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -2221,7 +2140,7 @@ class uApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/notice-boards',
         headers: headers);
-    print('getUserBulletins ${response.bodyString}');
+
     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
       List<BulletinModel> bulletins =
@@ -2240,15 +2159,12 @@ class uApiProvider extends GetConnect {
 
     final response =
         await post(url, cart1ordersModel.toJson(), headers: headers);
-    print('postOrderCheckout ${response.bodyString}');
-
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print("$json");
+
       return Cart2CheckoutModel.fromJson(json);
     } else {
-      log('error postOrderCheckout: ${response.bodyString}');
-      mSnackbar(message: '옵션의 재고수량이 부족합니다.');
+         mSnackbar(message: '옵션의 재고수량이 부족합니다.');
       return Future.error(response.statusText!);
     }
   }
@@ -2279,16 +2195,11 @@ class uApiProvider extends GetConnect {
     data['phone'] = phone;
     data['request_message'] = request_message;
 
-    print('postPaymentSucessfullyFinished: $data');
-
     final response = await post(url, data, headers: headers);
-    print('postPaymentSucessfullyFinished data: ${response.bodyString}');
-
-    if (response.statusCode == 200) {
+       if (response.statusCode == 200) {
       return true;
     } else {
-      log('error postPaymentSucessfullyFinished.');
-      mSnackbar(message: '오류: ${response.bodyString!}');
+         mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
     }
   }
@@ -2302,7 +2213,6 @@ class uApiProvider extends GetConnect {
         '/search/products?searchContent=$searchContent&offset=$offset&limit=$limit';
 
     final response = await get(url, headers: headers);
-    print('getSearchProducts response: ${response.bodyString}');
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
       List<Product> products = [];
@@ -2347,14 +2257,14 @@ class uApiProvider extends GetConnect {
     data['address'] = address;
 
     final response = await put(url, data, headers: headers);
-    log('getDeliveryFee $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       var json = jsonDecode(response.bodyString!);
       return json['delivery_cost'];
     } else {
-      log('error:' + response.bodyString!);
+
       mSnackbar(message: '오류: ${response.bodyString!}');
       return Future.error(response.statusText!);
     }
@@ -2374,10 +2284,10 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, data, headers: headers);
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
-      log('error:' + response.bodyString!);
+
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
@@ -2389,14 +2299,12 @@ class uApiProvider extends GetConnect {
     String url = mConst.API_BASE_URL + mConst.API_USER_PATH + '/me';
 
     var response = await delete(url, headers: headers);
-    log('deleteUserAccount $response');
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
-      log('error:' + response.bodyString!);
-      mSnackbar(message: '오류: ${response.bodyString!}');
+           mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
     }
@@ -2415,7 +2323,7 @@ class uApiProvider extends GetConnect {
   }
 
   orderSettled(int orderDetailId) async {
-    print('orderSettled: orderDetailId $orderDetailId');
+
     String url = mConst.API_BASE_URL +
         mConst.API_USER_PATH +
         '/order/detail/$orderDetailId/purchase-confirm';
@@ -2423,10 +2331,10 @@ class uApiProvider extends GetConnect {
     final response = await put(url, 'empty_body', headers: headers);
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
-      log('error:' + response.bodyString!);
+
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
@@ -2442,7 +2350,7 @@ class uApiProvider extends GetConnect {
       mSnackbar(message: '휴대폰 번호가 변경되었습니다.');
       return jsonDecode(response.bodyString!);
     } else {
-      print('${response.body} ');
+
       if (response.statusCode == 400) {
         mSnackbar(message: '인증번호를 다시 확인해주세요.');
       } else {
@@ -2466,9 +2374,9 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, {'token': fcmToken}, headers: headers);
 
     if (response.statusCode == 200) {
-      log('sendTCMToken response ${response.bodyString}');
+
     } else {
-      log('sendTCMToken error:' + response.bodyString!);
+
       //mSnackbar(message: '오류: ${response.bodyString!}');
     }
   }
@@ -2479,17 +2387,17 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, 'empty_body', headers: headers);
 
     if (response.statusCode == 200) {
-      log('updateNotification response ${response.bodyString}');
+
       return true;
     } else {
-      log('updateNotification error:' + response.bodyString!);
+
       mSnackbar(message: '${response.bodyString!['description']}');
       return false;
     }
   }
 
   changeQuantityInBasket({required int cartId, required int qty}) async {
-    print('changeQuantityInBasket: cartId $cartId, qty $qty');
+
     String url =
         mConst.API_BASE_URL + mConst.API_USER_PATH + '/cart/$cartId/qty';
 
@@ -2500,10 +2408,10 @@ class uApiProvider extends GetConnect {
     dynamic response = await put(url, body, headers: headers);
 
     if (response.statusCode == 200) {
-      log('changeQuantityInBasket response ${response.bodyString}');
+
       return true;
     } else {
-      log('changeQuantityInBasket error:' + response.bodyString!);
+
       mSnackbar(message: response.bodyString!['description']);
       return false;
     }

@@ -14,7 +14,7 @@ class SplashScreenController extends GetxController {
     // TODO: implement onInit
     bool result = await uApiProvider().chekToken();
     bool result2 = await pApiProvider().chekToken();
-    print("'access_token': ${CacheProvider().getToken()}");
+    // print("'access_token': ${CacheProvider().getToken()}");
     bool isLogin = await CacheProvider().getToken().isNotEmpty && (result || result2);
     isLogin
         ? MyVars.isUserProject()

@@ -17,7 +17,7 @@ class Tab1UserHomeController extends GetxController {
   RxList<Product> products3 = <Product>[].obs;
   RxList<Product> products4 = <Product>[].obs;
   RxList<Product> products5 = <Product>[].obs;
-  
+
   Rx<ScrollController> scrollController = ScrollController().obs;
   int offset = 30;
   RxBool allowCallAPI = true.obs;
@@ -26,9 +26,8 @@ class Tab1UserHomeController extends GetxController {
   @override
   Future<void> onInit() async {
     scrollController.value.addListener(() {
-      // print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
-              scrollController.value.position.maxScrollExtent ) {
+          scrollController.value.position.maxScrollExtent ) {
         offset += mConst.limit;
         addDataToList();
       }
@@ -40,7 +39,7 @@ class Tab1UserHomeController extends GetxController {
     isLoading.value = true;
     offset = 30;
     products1.value =
-        await _apiProvider.getAllProducts(offset: 0, limit: 6);
+    await _apiProvider.getAllProducts(offset: 0, limit: 6);
     products2.value =
     await _apiProvider.getAllProducts(offset: 6, limit: 8);
     products3.value =

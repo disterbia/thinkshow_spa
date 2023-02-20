@@ -55,15 +55,14 @@ class pApiProvider extends GetConnect {
 
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/login-check';
     final response = await post(url, body, headers: headers);
-    log('putAddStoreFavorite $response');
+
 
     if (response.statusCode == 200) {
-      log('response ${response.bodyString}');
+
       return true;
     } else {
       var jsonList = jsonDecode(response.bodyString!);
-      log('error:' + jsonList.toString());
-      //mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
+          //mSnackbar(message: '에러가 발생했습니다. ${response.bodyString!}');
       return false;
     }
   }
@@ -71,7 +70,7 @@ class pApiProvider extends GetConnect {
   // ###### COMMON APIs ######
   /// Common 휴대폰 인증 요청 API
   Future<int> postRequestVerifyPhoneNum({required String phoneNumber}) async {
-    log(' getVerifyPhone -> phoneNumber $phoneNumber');
+
 
     String url = mConst.API_BASE_URL +
         mConst.API_COMMON_PATH +
@@ -127,8 +126,6 @@ class pApiProvider extends GetConnect {
   /// 회원가입 (대표/직원) -> 스토어 위치 정보 조회
   Future<List<Address>> getStoreLocations(
       {required BuildingType buildingType, int? parent_id}) async {
-    print(
-        'getStoreLocations -> buildingType $buildingType, parent_id $parent_id');
     Map<String, dynamic> query = {
       'type': buildingType.name,
       'parent_id': parent_id?.toString()
@@ -139,16 +136,13 @@ class pApiProvider extends GetConnect {
             mConst.API_STORE_PATH +
             mConst.Partner_STORE_LOCATION,
         query: query);
-    print('getStoreLocations -> response.bodyString ${response.bodyString}');
 
     if (response.statusCode == 200) {
-      print(
-          '200 getStoreLocations -> response.bodyString ${response.bodyString}');
+
       List<Address> addresses = [];
       final rawList = jsonDecode(response.bodyString!);
       for (var item in rawList) {
-        print('getStoreLocations -> item $item');
-        final address = Address.fromJson(item);
+         final address = Address.fromJson(item);
         addresses.add(address);
       }
       return addresses;
@@ -169,7 +163,7 @@ class pApiProvider extends GetConnect {
         userId;
     final response = await get(url);
     var json = jsonDecode(response.bodyString!);
-    log(json.toString());
+
     if (response.statusCode == 200) {
       return json['is_reduplication'];
     }
@@ -191,20 +185,15 @@ class pApiProvider extends GetConnect {
     File image = File(pickedImage.path);
     final temp = await pickedImage.readAsBytes();
     String imageName = image.path.substring(image.path.length - 19);
-    log('image: $image');
-    log('imageName: $imageName');
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
       await mDio.MultipartFile.fromBytes(temp, filename: imageName),
     });
     final response = await dio.post(url, data: formData);
-    print(
-        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
-      log(json['url']);
 
       return ProductImageModel(
           message: '업로드 완료되었습니다.',
@@ -242,9 +231,7 @@ class pApiProvider extends GetConnect {
       'store_id': p2Ctr.selectedUnit.value.store_id,
     };
     final response = await post(url, body);
-    log(' postStaffRegister res');
-    var json = jsonDecode(response.bodyString!);
-    log("response : " + json.toString());
+     var json = jsonDecode(response.bodyString!);
     if (response.statusCode == 200) {
       return true;
     }
@@ -267,9 +254,6 @@ class pApiProvider extends GetConnect {
     BusinessRegistrationSubmitController businessRegistrationSubmitCtr =
         Get.put(BusinessRegistrationSubmitController());
 
-    print(
-        ' businessRegistrationSubmitCtr.uploadedImageURL.value ${businessRegistrationSubmitCtr.uploadedImageURL.value}');
-
     // String imagePath = businessRegistrationSubmitCtr.uploadedImageURL.value.split("/").last;
     // print('imagePath $imagePath');
 
@@ -290,9 +274,9 @@ class pApiProvider extends GetConnect {
       'certifi_id': p4Ctr.certifi_id,
     };
     final response = await post(url, body);
-    log(' postCeoRegister res');
+
     var json = jsonDecode(response.bodyString!);
-    log("response : " + json.toString());
+
     if (response.statusCode == 200) {
       return true;
     }
@@ -382,8 +366,6 @@ class pApiProvider extends GetConnect {
         mConst.CHECK;
 
     final response = await post(url, data);
-    print(' findPassword response ${response.bodyString}');
-
     String message = '';
     int statusCode = response.statusCode ?? 0;
     switch (statusCode) {
@@ -407,7 +389,6 @@ class pApiProvider extends GetConnect {
     final response = await put(url, data);
 
     var json = jsonDecode(response.bodyString!);
-    log(json.toString());
 
     String message = '';
     int statusCode = response.statusCode ?? 0;
@@ -428,8 +409,7 @@ class pApiProvider extends GetConnect {
   Future<dynamic> Partner_login(Map<String, dynamic> data) async {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.LOGIN;
     final response = await post(url, data);
-    print(' Partner_login response ${response.bodyString}');
-    if (response.statusCode == 200) {
+     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
       headers = {"Authorization": "Bearer " + json["access_token"]};
       return json;
@@ -552,7 +532,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.STORE_IMAGE;
     File image = File(pickedImage.path);
     String imageName = image.path.substring(image.path.length - 19);
-    log('image name: $imageName');
+
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
@@ -562,8 +542,6 @@ class pApiProvider extends GetConnect {
       url,
       data: formData,
     );
-    print(
-        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -587,11 +565,9 @@ class pApiProvider extends GetConnect {
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.MAIN_TOP_IMAGE;
     final response = await post(url, data, headers: headers);
-    log('top image' + response.body.toString());
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print(' json : ' + json.toString());
-      return "https://image.thinksmk.com/images/advertisement/2022/07/22/PqTv8rNpBwHHTHd42V6qRIJl4BIJN4cXqjZZPhMt.png";
+          return "https://image.thinksmk.com/images/advertisement/2022/07/22/PqTv8rNpBwHHTHd42V6qRIJl4BIJN4cXqjZZPhMt.png";
     }
     if (response.statusCode == 400) {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
@@ -611,7 +587,6 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT_IMAGE;
     File image = File(pickedImage.path);
     String imageName = image.path.substring(image.path.length - 19);
-    log('image name: $imageName');
 
     mDio.FormData formData = mDio.FormData.fromMap({
       "image":
@@ -621,8 +596,6 @@ class pApiProvider extends GetConnect {
       url,
       data: formData,
     );
-    print(
-        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -656,25 +629,22 @@ class pApiProvider extends GetConnect {
       String imageName = image.path.substring(image.path.length - 19);
       images.add(image);
       imageNames.add(imageName);
-      log('image: $image');
-      log('imageName: $imageName');
-    }
+        }
     List<mDio.MultipartFile> temp = [];
     for(int i = 0 ; i<images.length;i++){
-      print("11111111");
+
       temp.add(await mDio.MultipartFile.fromBytes(imageBytes[i], filename: imageNames[i]));
-      print("22222222");
+
     }
     mDio.FormData formData = mDio.FormData.fromMap({
       "image[]":temp
     });
-    print("33333");
+
     final response = await dio.post(
       url,
       data: formData,
     );
-    print(
-        ' postUploadBusinessRegisterImage -> response ${response.statusCode}');
+
 
     if (response.statusCode == 200) {
       var json = response.data;
@@ -755,7 +725,7 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/reviews',
         headers: headers);
     if (response.statusCode == 200) {
-      print(' getStoreReviews response.bodyString : ' + response.bodyString!);
+
       return jsonDecode(response.bodyString!);
     }
     if (response.statusCode == 400) {
@@ -844,7 +814,6 @@ class pApiProvider extends GetConnect {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/products';
 
     final response = await get(url, headers: headers, query: data);
-    log(CacheProvider().getToken());
     if (response.statusCode == 200) {
       return jsonDecode(response.bodyString!);
     }
@@ -865,7 +834,6 @@ class pApiProvider extends GetConnect {
         selectedProductIds.add(product.id);
       }
     }
-    log(' productIdList $selectedProductIds');
 
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/products';
     Map<String, dynamic> query = {"productIdList": selectedProductIds};
@@ -876,13 +844,10 @@ class pApiProvider extends GetConnect {
 
     try {
       final response = await dio.delete(url, data: query);
-      log(' delete resp ${response.data}');
-      log(' no error.statusCode ${response.statusCode!} ');
       return StatusModel(
           statusCode: response.statusCode!, message: 'successfully deleted');
     } catch (e) {
-      log(' delete error. e $e');
-      return StatusModel(statusCode: 0, message: 'Error $e');
+       return StatusModel(statusCode: 0, message: 'Error $e');
     }
   }
 
@@ -890,7 +855,7 @@ class pApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/inquiries',
         headers: headers);
-    print(' response ${response.bodyString}');
+
 
     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
@@ -973,9 +938,7 @@ class pApiProvider extends GetConnect {
       var json = jsonDecode(response.bodyString.toString());
       message = json['description'] ?? '';
     }
-    // log(response.statusCode.toString());
-    // log(json.toString());
-    int statusCode = response.statusCode ?? 0;
+     int statusCode = response.statusCode ?? 0;
     switch (statusCode) {
       case 0:
         message = 'Has Error';
@@ -1017,7 +980,7 @@ class pApiProvider extends GetConnect {
   /// Partner Main page > getMainStore
   Future<MainStoreModel> getMainStore() async {
     headers = {"Authorization": "Bearer " + CacheProvider().getToken()};
-    print("======getMainStore${headers}============");
+
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/main',
         headers: headers);
@@ -1040,7 +1003,6 @@ class pApiProvider extends GetConnect {
   }
 
   Future<bool> addProduct({required Map<String, dynamic> data}) async {
-    print(data.toString());
 
     bool checkTokenResult = await chekToken();
 
@@ -1054,13 +1016,11 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + mConst.PRODUCT, data,
         headers: headers);
 
-    log(response.body.toString());
 
     if (response.statusCode == 200) {
       return true;
     }
 
-    print('오류 message : ${response.bodyString}');
 
     if (response.statusCode == 400) {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
@@ -1079,7 +1039,6 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/product/$productId',
         data,
         headers: headers);
-    print(' editProduct response ${response.body}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1088,8 +1047,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('오류 message : ${response.bodyString}');
-      mSnackbar(message: '오류: ${response.bodyString}');
+         mSnackbar(message: '오류: ${response.bodyString}');
       return false;
     }
   }
@@ -1150,8 +1108,7 @@ class pApiProvider extends GetConnect {
   Future<StatusModel> addToTop10({
     required Map<String, dynamic> data,
   }) async {
-    print(' addToTop10 data ${data}');
-    String url =
+      String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/product/bests';
 
     final response = await post(url, data, headers: headers);
@@ -1176,8 +1133,7 @@ class pApiProvider extends GetConnect {
 
   Future<StatusModel> removeTop10(
       {required Map<String, List<int>> data}) async {
-    print(' removeTop10 data ${data}');
-    String url =
+      String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/mine/product/bests';
 
     final response = await put(url, data, headers: headers);
@@ -1203,12 +1159,10 @@ class pApiProvider extends GetConnect {
   Future<bool> addToAd(
       {required Map<String, dynamic> data,
       required int adApplicationId}) async {
-    print(' addToAd data ${data} adApplicationId ${adApplicationId}');
     String url = mConst.API_BASE_URL +
         mConst.API_STORE_PATH +
         '/advertisement/application/$adApplicationId/products';
     final response = await post(url, data, headers: headers);
-    print(' addToAd response ${response.body}');
 
     var json = jsonDecode(response.bodyString!);
 
@@ -1244,16 +1198,13 @@ class pApiProvider extends GetConnect {
     required Map<String, dynamic> data,
   }) async {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/staff/me';
-    print(' editUserInformation data ${data}');
 
     final response = await put(url, data, headers: headers);
-    print(' editUserInformation response ${response.body}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.bodyString!);
     } else {
-      print('${response.body} ');
-      if (response.statusCode == 400) {
+           if (response.statusCode == 400) {
         mSnackbar(message: '인증번호를 다시 확인해 주세요.');
       } else {
         mSnackbar(message: jsonDecode(response.bodyString!)['description']);
@@ -1335,7 +1286,7 @@ class pApiProvider extends GetConnect {
         headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print(json);
+
       AdEffectiveReportModel adEffectiveReportModel = AdEffectiveReportModel(
         store_visit_count:
             Utils.numberFormat(number: json['store_visit_count']),
@@ -1398,16 +1349,14 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('getAdExposureProducts  error: response.statusText!');
-      mSnackbar(message: response.statusText!);
+       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
   }
 
   Future<dynamic> getImpressionsInformation(
       String startDate, String endDate, String tag) async {
-    print('getImpressionsInformation startDate: $startDate endDate: $endDate');
-    // '광고R', '광고S', '광고1ST', '광고2ST', '광고3ST'
+        // '광고R', '광고S', '광고1ST', '광고2ST', '광고3ST'
     int addNumber = -1;
     if (tag == '광고R') {
       addNumber = 100;
@@ -1445,7 +1394,6 @@ class pApiProvider extends GetConnect {
             mConst.API_STORE_PATH +
             '/advertisement/application-history',
         headers: headers);
-    print('getApplicationHistory response: ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return HistoryAdModel.fromJson(response.bodyString!);
@@ -1469,7 +1417,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('getProductDetails error');
+
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1486,8 +1434,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('why not working ${jsonDecode(response.bodyString!)}');
-      return Future.error(response.statusText!);
+          return Future.error(response.statusText!);
     }
   }
 
@@ -1521,8 +1468,7 @@ class pApiProvider extends GetConnect {
         '/search/store-location?store_name=$searchValue');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print(
-          'getSearchStoreName :' + jsonDecode(response.bodyString!).toString());
+
       List<StoreLocation> storeLocations = [];
       for (var storeLocation in json) {
         StoreLocation tempStoreLocation = StoreLocation.fromJson(storeLocation);
@@ -1534,7 +1480,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('getProductDetails error');
+
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1549,8 +1495,7 @@ class pApiProvider extends GetConnect {
         headers: headers);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
-      print('getPaymentTab2_OrderHistory :' +
-          jsonDecode(response.bodyString!).toString());
+
       List<OrderHistoryExpandedModel> orderHistories = [];
       for (var historyJson in json) {
         OrderHistoryExpandedModel tempOrderHistory =
@@ -1563,7 +1508,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('getProductDetails error');
+
       mSnackbar(message: response.statusText!);
       return Future.error(response.statusText!);
     }
@@ -1574,9 +1519,6 @@ class pApiProvider extends GetConnect {
     final response = await get(
         '${mConst.API_BASE_URL}${mConst.API_STORE_PATH}/advertisement/application-info?ads_application_id=$adsId',
         headers: headers);
-
-    print('getAdTab2AdApplyInquiry :' + response.bodyString!);
-
     if (response.statusCode == 200) {
       return AdTab2ApplyModel.fromJson(response.bodyString!);
     }
@@ -1584,7 +1526,7 @@ class pApiProvider extends GetConnect {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
     } else {
-      print('getAdTab2AdApplyInquiry error: ${response.statusText}');
+
       // mSnackbar(message: response.statusText!);
       return null;
     }
@@ -1594,9 +1536,7 @@ class pApiProvider extends GetConnect {
   Future<bool> postAdTab2AdApplication(
       {required int adApplicationId,
       required List<DateTime> applicationDates}) async {
-    log('postAdTab2AdApplication -> applicationDates $applicationDates');
-
-    List<String> datesStr = [];
+       List<String> datesStr = [];
     for (var date in applicationDates) {
       String tempDate = Utils.dateToString(date: date);
       datesStr.add(tempDate);
@@ -1613,8 +1553,7 @@ class pApiProvider extends GetConnect {
     final response = await post(url, body, headers: headers);
 
     if (response.statusCode == 200) {
-      print('postAdTab2AdApplication : ${response.bodyString!}');
-      mSnackbar(message: '신청이 완료 되었습니다.');
+           mSnackbar(message: '신청이 완료 되었습니다.');
       return true;
     }
     if (response.statusCode == 400) {
@@ -1632,7 +1571,6 @@ class pApiProvider extends GetConnect {
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/store/point-history';
 
     final response = await get(url, headers: headers);
-    print('getPointMgmtListForPartner ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.bodyString!);
@@ -1660,7 +1598,6 @@ class pApiProvider extends GetConnect {
       'depositor_name': name,
     };
     dynamic response = await post(url, body, headers: headers);
-    print('chargePoint ${response.bodyString}');
 
     if (response.statusCode == 200) {
       return true;
@@ -1697,8 +1634,7 @@ class pApiProvider extends GetConnect {
     final response = await get(
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/notice-boards',
         headers: headers);
-    print('getPartnerBulletins ${response.bodyString}');
-    if (response.statusCode == 200) {
+     if (response.statusCode == 200) {
       Iterable raw = jsonDecode(response.bodyString!);
       List<BulletinModel> bulletins =
           raw.map((model) => BulletinModel.fromJson(model)).toList();
@@ -1718,11 +1654,7 @@ class pApiProvider extends GetConnect {
         mConst.API_STORE_PATH +
         '/product/$productId/for-modify';
 
-    print(url);
-    print(headers);
-
     var response = await get(url, headers: headers);
-    print('getProductEditInfo ${response.bodyString}');
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.bodyString!);
@@ -1742,9 +1674,7 @@ class pApiProvider extends GetConnect {
         mConst.API_STORE_PATH +
         '/advertisement/$adId/product/$productId';
     dynamic response = await delete(url, headers: headers);
-    print('deleteAdProduct ${response.bodyString}');
-
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
       return true;
     }
     if (response.statusCode == 400) {
@@ -1765,13 +1695,10 @@ class pApiProvider extends GetConnect {
 
     final response = await put(url, body, headers: headers);
 
-    print('adPayment ${response.bodyString}');
-
-    if (response.statusCode == 200) {
+     if (response.statusCode == 200) {
       mSnackbar(message: '결제가 완료 되었습니다.');
       return true;
     }
-    print(response.bodyString);
     if (response.statusCode == 400) {
       mSnackbar(message: jsonDecode(response.bodyString!)['description']);
       return Future.error(response.statusText!);
@@ -1783,8 +1710,7 @@ class pApiProvider extends GetConnect {
 
   Future<bool> putAdBudget(
       int advertisement_application_id, int amountInt) async {
-    print(
-        'putAdBudget advertisement_application_id $advertisement_application_id amountInt $amountInt');
+
     String url =
         mConst.API_BASE_URL + mConst.API_STORE_PATH + '/advertisement/budget';
 
@@ -1795,9 +1721,7 @@ class pApiProvider extends GetConnect {
 
     final response = await put(url, body, headers: headers);
 
-    print('putAdBudget ${response.bodyString}');
-
-    if (response.statusCode == 200) {
+       if (response.statusCode == 200) {
       mSnackbar(message: '예산설정 완료되었습니다.');
       return true;
     }
@@ -1813,8 +1737,7 @@ class pApiProvider extends GetConnect {
   void withdrawAccount() {
     String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/me';
     delete(url, headers: headers).then((response) {
-      print('withdrawAccount ${response.bodyString}');
-      if (response.statusCode == 200) {
+          if (response.statusCode == 200) {
         mSnackbar(message: '탈퇴 요청 완료되었습니다.');
         mFuctions.userLogout();
         return;

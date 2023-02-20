@@ -20,44 +20,81 @@ class Tab2BookmarksView extends StatelessWidget {
   Widget build(BuildContext context) {
     ctr.getBookmarkedStoreData();
     return Obx(
-            () => ctr.isLoading.value
-                ? LoadingWidget():
-            ctr.stores.length == 0
-                ? Container(
-              child: Column(children: [
-                SizedBox(height: 20,),
-                Image.asset("assets/images/mark.png",height: 70),
-                SizedBox(height: 10,),
-                Text("아직 즐겨찾기를 한 스토어가 없어요",style: TextStyle(color: Colors.grey),),
-                SizedBox(height: 5,),
-                Text("랭킹에서 즐겨찾기를 해보세요",style: TextStyle(color: Colors.grey)),
-                SizedBox(height: 20,),
-                InkWell(
-                    onTap: () => Get.find<UserMainController>().changeTabIndex(1),
-                    child: Container(
-                        width: 500 * 0.6,
-                        color: MyColors.grey3,
-                        height: 50,
-                        child: Center(child: Text("스토어 구경하러 가기",style: TextStyle(color: Colors.grey)))))
-              ]),
-            )
-                : ListView.builder(
-                    itemCount: ctr.stores.length,controller: ctr.scrollController,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      print(ctr.stores[index].topImagePath);
-                      return _storeList(ctr.stores[index]);
-                    }),
-          );
+          () => ctr.isLoading.value
+          ? LoadingWidget()
+          : ctr.stores.length == 0
+          ? Container(
+        child: Column(children: [
+          SizedBox(
+            height: 20,
+          ),
+          Image.asset("assets/images/mark.png", height: 70),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "아직 즐겨찾기를 한 스토어가 없어요",
+            style: TextStyle(color: Colors.grey),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text("랭킹에서 즐겨찾기를 해보세요",
+              style: TextStyle(color: Colors.grey)),
+          SizedBox(
+            height: 20,
+          ),
+          InkWell(
+              onTap: () =>
+                  Get.find<UserMainController>().changeTabIndex(1),
+              child: Container(
+                  width: 500 * 0.6,
+                  color: MyColors.grey3,
+                  height: 50,
+                  child: Center(
+                      child: Text("스토어 구경하러 가기",
+                          style: TextStyle(color: Colors.grey)))))
+        ]),
+      )
+          : Stack(
+        children: [
+          ListView.builder(
+              itemCount: ctr.stores.length,
+              controller: ctr.scrollController,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                print(ctr.stores[index].topImagePath);
+                return _storeList(ctr.stores[index]);
+              }),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: SizedBox(
+              width: 45,
+              height: 45,
+              child: FloatingActionButton(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.arrow_upward_rounded),
+                onPressed: () {
+                  ctr.scrollController.jumpTo(0);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _storeList(Store store) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => StoreDetailView(
+        Get.to(
+                () => StoreDetailView(
               storeId: store.id,
               prevPage: prevPage,
-            ),preventDuplicates: true);
+            ),
+            preventDuplicates: true);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -111,37 +148,43 @@ class Tab2BookmarksView extends StatelessWidget {
       borderRadius: BorderRadius.circular(50),
       child: store.imgUrl != null
           ? CachedNetworkImage(
-              imageUrl: store.imgUrl!.value,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-              // placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            )
+        imageUrl: store.imgUrl!.value,
+        width: 50,
+        height: 50,
+        fit: BoxFit.cover,
+        // placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+      )
           : Image.asset(
-              'assets/icons/ic_store.png',
-              width: 50,
-            ),
+        'assets/icons/ic_store.png',
+        width: 50,
+      ),
     );
   }
 
   Widget _storeName(Store store) {
-    List<String> categoris =(store.categories!).map((item) => item as String).toList();
-    String category="";
-    for(var i =0; i<categoris.length;i++){
-      if(i==categoris.length-1) category=category+categoris[i];
-      else category=category+categoris[i]+"·";
+    List<String> categoris =
+    (store.categories!).map((item) => item as String).toList();
+    String category = "";
+    for (var i = 0; i < categoris.length; i++) {
+      if (i == categoris.length - 1)
+        category = category + categoris[i];
+      else
+        category = category + categoris[i] + "·";
     }
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           store.name!,
           style: MyTextStyles.f16.copyWith(color: MyColors.black3),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
-          categoris.isEmpty?"스토어 정보 없음":category,
+          categoris.isEmpty ? "스토어 정보 없음" : category,
           style: MyTextStyles.f12.copyWith(color: Colors.grey),
         ),
       ],
@@ -162,7 +205,7 @@ class Tab2BookmarksView extends StatelessWidget {
         await ctr.getBookmarkedStoreData();
       },
       child: Obx(
-        () => Column(
+            () => Column(
           children: [
             Icon(
               size: 30,
@@ -177,7 +220,6 @@ class Tab2BookmarksView extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             )
-
           ],
         ),
       ),

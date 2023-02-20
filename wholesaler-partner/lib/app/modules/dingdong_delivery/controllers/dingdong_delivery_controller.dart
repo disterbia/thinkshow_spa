@@ -39,7 +39,6 @@ class DingdongDeliveryController extends GetxController {
     dynamic raw = await _apiProvider.getProducts(
         isDingDong: true, sort: sort, offset: offset, limit: 12);
 
-    log('getProducts raw $raw length ${raw.length}');
 
     if (!isScrolling) {
       offset = 0;
@@ -59,8 +58,6 @@ class DingdongDeliveryController extends GetxController {
       products.add(tempProduct);
     }
 
-    print('raw length ${raw.length}');
-
     if (raw.length < mConst.limit) {
       allowCallAPI.value = false;
     } else {
@@ -69,7 +66,6 @@ class DingdongDeliveryController extends GetxController {
   }
 
   sortDropDownChanged(String selectedItem) {
-    print('selected $selectedItem');
     selectedSortProductDropDownItem.value = selectedItem;
     callGetProductsAPI(sort: selectedItem, isScrolling: false);
   }

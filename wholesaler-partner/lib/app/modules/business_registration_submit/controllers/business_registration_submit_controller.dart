@@ -44,7 +44,6 @@ class BusinessRegistrationSubmitController extends GetxController {
       }
       isLoading.value = false;
 
-      log('uploadedImageURL $uploadedImageURL');
     }
   }
 }

@@ -107,7 +107,6 @@ class CacheProvider {
   }
 
   List<int> getAllRecentlyViewedProducts() {
-    print('data.read(_recentProductKey) ${data.read(_recentProductKey)}');
     List<int> productIds = [];
     if (data.read(_recentProductKey) != null) {
       for (var productid in data.read(_recentProductKey)) {

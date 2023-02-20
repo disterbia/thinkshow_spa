@@ -31,7 +31,7 @@ class ProductDetailView extends GetView {
   ProductDetailController ctr = Get.put(ProductDetailController());
   Cart1ShoppingBasketController ctr2 = Get.put(Cart1ShoppingBasketController());
   Tab2ReviewProductDetailController ctr3 =
-      Get.put(Tab2ReviewProductDetailController());
+  Get.put(Tab2ReviewProductDetailController());
 
   RxInt tabIndex = 0.obs;
 
@@ -53,7 +53,7 @@ class ProductDetailView extends GetView {
     init();
 
     return Obx(
-      () => Scaffold(
+          () => Scaffold(
         bottomNavigationBar: User_BottomNavbar(),
         backgroundColor: MyColors.white,
         appBar: _appbar(),
@@ -61,84 +61,92 @@ class ProductDetailView extends GetView {
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.arrow_upward_rounded,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  ctr.arrowsController
-                      .jumpTo(ctr.arrowsController.position.minScrollExtent);
-                }),
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.arrow_upward_rounded,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    ctr.arrowsController
+                        .jumpTo(ctr.arrowsController.position.minScrollExtent);
+                  }),
+            ),
             SizedBox(
               height: 10,
             ),
-            FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_downward_rounded, color: Colors.grey),
-                onPressed: () {
-                  ctr.arrowsController
-                      .jumpTo(ctr.arrowsController.position.maxScrollExtent);
-                }),
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.arrow_downward_rounded, color: Colors.grey),
+                  onPressed: () {
+                    ctr.arrowsController
+                        .jumpTo(ctr.arrowsController.position.maxScrollExtent);
+                  }),
+            ),
           ],
         ),
         body: ctr.isLoading.value
             ? LoadingWidget()
             : Obx(
-                () {
-                  print(tabIndex);
-                  return SingleChildScrollView(
-                    controller: ctr.arrowsController,
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        //MyVars.isUserProject() ? storeInfo() : Container(),
-                        _productImages(),
-                        storeInfo(),
-                        Divider(),
-                        _titleRatingPrice(context),
-                        SizedBox(height: 15),
-                        TabBar(
-                          controller: ctr.tabController,
-                          onTap: (index) {
-                            print(tabIndex);
-                            tabIndex.value = index;
-                          },
-                          indicatorColor: MyColors.primary,
-                          labelColor: Colors.black,
-                          isScrollable: false,
-                          tabs: [
-                            ...tabTitles.map((title) => Tab(text: title)),
-                          ],
-                        ),
-                        Builder(builder: (_) {
-                          if (tabIndex.value == 0) {
-                            return Tab1DetailInfo(); //1st custom tabBarView
-                          } else if (tabIndex.value == 1) {
-                            return Tab2ReviewView(); //2nd tabView
-                          } else if (tabIndex.value == 2) {
-                            return Tab4SizeInfo(); //3rd tabView
-                          } else {
-                            return Tab3InquiryView();
-                          }
-                        }),
-                      ],
-                    ),
-
-                    // SliverAppBar(
-                    //   automaticallyImplyLeading: false,
-                    //    pinned: true,
-                    //   elevation: 0,
-                    //   backgroundColor: Colors.white,
-                    //   title: _tabs(),
-                    // ),
-                  );
-                },
+              () {
+            print(tabIndex);
+            return SingleChildScrollView(
+              controller: ctr.arrowsController,
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  //MyVars.isUserProject() ? storeInfo() : Container(),
+                  _productImages(),
+                  storeInfo(),
+                  Divider(),
+                  _titleRatingPrice(context),
+                  SizedBox(height: 15),
+                  TabBar(
+                    controller: ctr.tabController,
+                    onTap: (index) {
+                      print(tabIndex);
+                      tabIndex.value = index;
+                    },
+                    indicatorColor: MyColors.primary,
+                    labelColor: Colors.black,
+                    isScrollable: false,
+                    tabs: [
+                      ...tabTitles.map((title) => Tab(text: title)),
+                    ],
+                  ),
+                  Builder(builder: (_) {
+                    if (tabIndex.value == 0) {
+                      return Tab1DetailInfo(); //1st custom tabBarView
+                    } else if (tabIndex.value == 1) {
+                      return Tab2ReviewView(); //2nd tabView
+                    } else if (tabIndex.value == 2) {
+                      return Tab4SizeInfo(); //3rd tabView
+                    } else {
+                      return Tab3InquiryView();
+                    }
+                  }),
+                ],
               ),
+
+              // SliverAppBar(
+              //   automaticallyImplyLeading: false,
+              //    pinned: true,
+              //   elevation: 0,
+              //   backgroundColor: Colors.white,
+              //   title: _tabs(),
+              // ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -173,106 +181,112 @@ class ProductDetailView extends GetView {
       result = (temp / 1000).toStringAsFixed(1) + "k";
     }
     return GestureDetector(
-      onTap: () {
-        Get.to(() => StoreDetailView(storeId: ctr.product.value.store.id),preventDuplicates: true,);
-      },
+      onTap: MyVars.isUserProject()
+          ? () {
+        Get.to(
+              () => StoreDetailView(storeId: ctr.product.value.store.id),
+          preventDuplicates: true,
+        );
+      }
+          : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(
-            () => Padding(
+                () => Padding(
                 padding: const EdgeInsets.all(15),
                 child: ctr.product.value.store.imgUrl != null
                     ? Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                ctr.product.value.store.imgUrl!.value),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                ctr.product.value.store.name!,
-                                style: MyTextStyles.f14_bold,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                  categoris.isNotEmpty ? category : "스토어 정보 없음",
-                                  style: MyTextStyles.f12
-                                      .copyWith(color: Colors.grey))
-                            ],
-                          )
-                        ],
-                      )
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          ctr.product.value.store.imgUrl!.value),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ctr.product.value.store.name!,
+                          style: MyTextStyles.f14_bold,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                            categoris.isNotEmpty ? category : "스토어 정보 없음",
+                            style: MyTextStyles.f12
+                                .copyWith(color: Colors.grey))
+                      ],
+                    )
+                  ],
+                )
                     : Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_store.png',
-                            width: 40,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Obx(() => ctr.product.value.store.name != null
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      ctr.product.value.store.name!,
-                                      style: MyTextStyles.f14_bold,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                        categoris.isNotEmpty
-                                            ? category
-                                            : "스토어 정보 없음",
-                                        style: MyTextStyles.f12
-                                            .copyWith(color: Colors.grey))
-                                  ],
-                                )
-                              : SizedBox.shrink()),
-                        ],
-                      )),
+                  children: [
+                    Image.asset(
+                      'assets/icons/ic_store.png',
+                      width: 40,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Obx(() => ctr.product.value.store.name != null
+                        ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ctr.product.value.store.name!,
+                          style: MyTextStyles.f14_bold,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                            categoris.isNotEmpty
+                                ? category
+                                : "스토어 정보 없음",
+                            style: MyTextStyles.f12
+                                .copyWith(color: Colors.grey))
+                      ],
+                    )
+                        : SizedBox.shrink()),
+                  ],
+                )),
           ),
           Obx(
-            () => ctr.product.value.store.isBookmarked != null
+                () => ctr.product.value.store.isBookmarked != null &&
+                MyVars.isUserProject()
                 ? Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Column(
-                      children: [
-                        ctr.product.value.store.isBookmarked!.isTrue
-                            ? InkWell(
-                                onTap: () => ctr.storeBookmarkPressed(),
-                                child: Icon(
-                                  Icons.star,
-                                  color: MyColors.primary,
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () => ctr.storeBookmarkPressed(),
-                                child: Icon(Icons.star_border,
-                                    color: MyColors.grey4)),
-                        Text(
-                          result,
-                          style: TextStyle(
-                            color: MyColors.grey4,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Column(
+                children: [
+                  ctr.product.value.store.isBookmarked!.isTrue
+                      ? InkWell(
+                    onTap: () => ctr.storeBookmarkPressed(),
+                    child: Icon(
+                      Icons.star,
+                      color: MyColors.primary,
                     ),
                   )
+                      : InkWell(
+                      onTap: () => ctr.storeBookmarkPressed(),
+                      child: Icon(Icons.star_border,
+                          color: MyColors.grey4)),
+                  Text(
+                    result,
+                    style: TextStyle(
+                      color: MyColors.grey4,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )
+                ],
+              ),
+            )
                 : SizedBox.shrink(),
           ),
         ],
@@ -284,7 +298,7 @@ class ProductDetailView extends GetView {
     // double height = 500 * 4 / 3;
     return Container(
       child: Obx(
-        () => ctr.product.value.images!.isNotEmpty
+            () => ctr.product.value.images!.isNotEmpty
             ? ImagesCarouselSlider()
             : SizedBox.shrink(),
       ),
@@ -306,6 +320,23 @@ class ProductDetailView extends GetView {
                 ),
               ),
             ),
+            // MyVars.isUserProject()
+            //     ? InkWell(
+            //     onTap: () async {
+            //       Share.share(
+            //         await DynamicLink().getShortLink(
+            //           ctr.productId.toString(),
+            //         ),
+            //       );
+            //     },
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(10.0),
+            //       child: Icon(
+            //         Icons.share_outlined,
+            //         color: MyColors.grey4,
+            //       ),
+            //     ))
+            //     : SizedBox.shrink()
           ],
         ),
         Padding(
@@ -316,21 +347,21 @@ class ProductDetailView extends GetView {
                 child: ctr.product.value.totalRating == null
                     ? Container()
                     : RatingBar.builder(
-                        itemSize: 17,
-                        ignoreGestures: true,
-                        initialRating: ctr.product.value.totalRating!.value,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        itemCount: 5,
-                        // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
+                  itemSize: 17,
+                  ignoreGestures: true,
+                  initialRating: ctr.product.value.totalRating!.value,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
               ),
               SizedBox(
                 width: 5,
@@ -338,11 +369,16 @@ class ProductDetailView extends GetView {
               ctr.product.value.totalRating == null
                   ? Container()
                   : InkWell(
-                      onTap: () {
-                        ctr.tabController.animateTo(1);
-                        tabIndex.value = 1;
-                      },
-                      child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
+                  onTap: () {
+                    ctr.tabController.animateTo(1);
+                    tabIndex.value = 1;
+                    ctr.arrowsController.animateTo(
+                      450.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300),
+                    );
+                  },
+                  child: Text("리뷰 ${ctr3.reviews.length}개 보기")),
             ],
           ),
           // Row(
@@ -410,36 +446,36 @@ class ProductDetailView extends GetView {
               ),
               ctr.product.value.hasBellIconAndBorder!.value
                   ? Row(
-                      children: [
-                        Icon(Icons.notifications, color: MyColors.primary),
-                        Text("띵동배송",
-                            style: MyTextStyles.f16
-                                .copyWith(color: MyColors.primary)),
-                      ],
-                    )
+                children: [
+                  Icon(Icons.notifications, color: MyColors.primary),
+                  Text("띵동배송",
+                      style: MyTextStyles.f16
+                          .copyWith(color: MyColors.primary)),
+                ],
+              )
                   : Container(),
               ctr.product.value.hasBellIconAndBorder!.value
                   ? SizedBox(
-                      width: 10,
-                    )
+                width: 10,
+              )
                   : Container(),
               Text("무료배송",
                   style:
-                      MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
+                  MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500)),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, top: 5),
-          child: Row(
-            children: [
-              Text("혜택정보   ",
-                  style: MyTextStyles.f16.copyWith(color: MyColors.grey4)),
-              Text("최대 300p 적립",
-                  style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500))
-            ],
-          ),
-        )
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 10, top: 5),
+        //   child: Row(
+        //     children: [
+        //       Text("혜택정보   ",
+        //           style: MyTextStyles.f16.copyWith(color: MyColors.grey4)),
+        //       Text("최대 300p 적립",
+        //           style: MyTextStyles.f16.copyWith(fontWeight: FontWeight.w500))
+        //     ],
+        //   ),
+        // )
       ],
     );
   }
@@ -453,27 +489,27 @@ class ProductDetailView extends GetView {
             children: [
               MyVars.isUserProject()
                   ? Obx(
-                      () => ctr.product.value.isLiked != null
-                          ? IconButton(
-                              onPressed: () => ctr.likeBtnPressed(
-                                  newValue: !ctr.product.value.isLiked!.value),
-                              icon: ctr.product.value.isLiked!.isTrue
-                                  ? Icon(
-                                      Icons.favorite,
-                                      color: MyColors.primary,
-                                    )
-                                  : Icon(
-                                      Icons.favorite_border,
-                                      color: MyColors.primary,
-                                    ),
-                            )
-                          : IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite_border,
-                                color: MyColors.primary,
-                              )),
-                    )
+                    () => ctr.product.value.isLiked != null
+                    ? IconButton(
+                  onPressed: () => ctr.likeBtnPressed(
+                      newValue: !ctr.product.value.isLiked!.value),
+                  icon: ctr.product.value.isLiked!.isTrue
+                      ? Icon(
+                    Icons.favorite,
+                    color: MyColors.primary,
+                  )
+                      : Icon(
+                    Icons.favorite_border,
+                    color: MyColors.primary,
+                  ),
+                )
+                    : IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: MyColors.primary,
+                    )),
+              )
                   : SizedBox.shrink(),
               Expanded(
                 child: Padding(
@@ -507,54 +543,54 @@ class ProductDetailView extends GetView {
         actions: [
           MyVars.isUserProject()
               ? Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.search,
-                        color: MyColors.black,
-                      ),
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: MyColors.black,
+                ),
+                onPressed: () {
+                  Get.to(SearchPageView());
+                },
+              ),
+              Obx(
+                    () => ctr2.getNumberProducts() != 0
+                    ? Badge(
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    ctr2.getNumberProducts().toString(),
+                    style: TextStyle(
+                        color: MyColors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
                       onPressed: () {
-                        Get.to(SearchPageView());
+                        Get.to(() => Cart1ShoppingBasketView());
                       },
-                    ),
-                    Obx(
-                      () => ctr2.getNumberProducts() != 0
-                          ? Badge(
-                              badgeColor: MyColors.primary,
-                              badgeContent: Text(
-                                ctr2.getNumberProducts().toString(),
-                                style: TextStyle(
-                                    color: MyColors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              toAnimate: false,
-                              position: BadgePosition.topEnd(top: 5, end: 5),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Get.to(() => Cart1ShoppingBasketView());
-                                  },
-                                  icon: ImageIcon(
-                                    AssetImage('assets/icons/top_cart.png'),
-                                    size: 21,
-                                    // Icons.shopping_cart_outlined,
-                                    color: MyColors.black,
-                                  )),
-                            )
-                          : IconButton(
-                              onPressed: () {
-                                Get.to(() => Cart1ShoppingBasketView());
-                              },
-                              icon: ImageIcon(
-                                AssetImage('assets/icons/top_cart.png'),
-                                size: 21,
-                                // Icons.shopping_cart_outlined,
-                                color: MyColors.black,
-                              ),
-                            ),
-                    ),
-                  ],
+                      icon: ImageIcon(
+                        AssetImage('assets/icons/top_cart.png'),
+                        size: 21,
+                        // Icons.shopping_cart_outlined,
+                        color: MyColors.black,
+                      )),
                 )
+                    : IconButton(
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
+              ),
+            ],
+          )
               : SizedBox.shrink(),
         ]);
   }
