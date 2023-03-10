@@ -92,7 +92,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           //     onPressed: () => mFuctions.userLogout(),
           //     backgroundColor: MyColors.grey1,
           //     borderColor: Colors.transparent,
-          //     width: double.infinity,
+          //     width: GetPlatform.isMobile?Get.width:500,
           //   ),
           // ),
           // SizedBox(height: 10),
@@ -118,7 +118,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
           //     },
           //     backgroundColor: MyColors.grey1,
           //     borderColor: Colors.transparent,
-          //     width: double.infinity,
+          //     width: GetPlatform.isMobile?Get.width:500,
           //   ),
           // ),
           // SizedBox(height: 20),
@@ -142,7 +142,7 @@ class MyPageSettingsView extends GetView<Page5MyPageController> {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(15),
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: Text(
           title,
           style: MyTextStyles.f16

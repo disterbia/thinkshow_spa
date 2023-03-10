@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class ReviewView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-      CustomAppbar(title: '리뷰', isBackEnable: true, hasHomeButton: false),
+          CustomAppbar(title: '리뷰', isBackEnable: true, hasHomeButton: false),
       body: DefaultTabController(
         length: 2,
         initialIndex: 0,
@@ -52,7 +53,7 @@ class ReviewView extends GetView {
 
   Widget _alreadyWriteReview() {
     return Obx(
-          () => SingleChildScrollView(
+      () => SingleChildScrollView(
         child: Column(
           children: [
             ListView.builder(
@@ -67,7 +68,8 @@ class ReviewView extends GetView {
                   itemBuilder: (context, index2) {
                     return Column(
                       children: [
-                        pruductWidget(ctr.items[index].products[index2], false),
+                        pruductWidget(ctr.items[index].products[index2], false,
+                            option: ctr.items[index].products[index2].OLD_option!),
                         Divider(
                           color: MyColors.grey1,
                           endIndent: 15,
@@ -93,7 +95,7 @@ class ReviewView extends GetView {
                                 ),
                                 onPressed: () {
                                   Get.to(
-                                        () => ReviewDetailView(
+                                    () => ReviewDetailView(
                                       isComingFromReviewPage: true,
                                       isEditing: false,
                                       selectedReviw: Review(
@@ -105,7 +107,7 @@ class ReviewView extends GetView {
                                         createdAt: Utils.dateToString(
                                             date: DateTime.now()),
                                         product:
-                                        ctr.items[index].products[index2],
+                                            ctr.items[index].products[index2],
                                         reviewImageUrl: '',
                                       ),
                                     ),
@@ -136,7 +138,7 @@ class ReviewView extends GetView {
 
   Widget _writeReview() {
     return Obx(
-          () => SingleChildScrollView(
+      () => SingleChildScrollView(
         child: Column(
           children: [
             ListView.builder(
@@ -152,7 +154,8 @@ class ReviewView extends GetView {
                               ReviewDetailView2(review: ctr.myItems[index]));
                         },
                         child: pruductWidget(
-                            ctr.myItems[index].product_info!, true,option:ctr.myItems[index].select_option_name!)),
+                            ctr.myItems[index].product_info!, true,
+                            option: ctr.myItems[index].select_option_name!)),
                     Divider(
                       color: MyColors.grey1,
                       endIndent: 15,
@@ -176,12 +179,11 @@ class ReviewView extends GetView {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: CachedNetworkImage(
-              imageUrl: product.imgUrl,
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+             product.imgUrl,
               width: 80,
               height: 80,
               fit: BoxFit.fill,
-              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
           SizedBox(
@@ -203,16 +205,21 @@ class ReviewView extends GetView {
                           color: MyColors.black3, fontWeight: FontWeight.w400),
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  option==null?Container():Flexible(
-                    child: Text(
-                      option,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: MyTextStyles.f12.copyWith(
-                          color: MyColors.grey4, fontWeight: FontWeight.w400),
-                    ),
+                  SizedBox(
+                    height: 10,
                   ),
+                  option == null
+                      ? Container()
+                      : Flexible(
+                          child: Text(
+                            option,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: MyTextStyles.f12.copyWith(
+                                color: MyColors.grey4,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
                   SizedBox(
                     height: 5,
                   ),
@@ -232,9 +239,9 @@ class ReviewView extends GetView {
           ),
           showArrowIcon
               ? Image.asset(
-            'assets/icons/ico_arrow03.png',
-            height: 18,
-          )
+                  'assets/icons/ico_arrow03.png',
+                  height: 18,
+                )
               : SizedBox.shrink()
         ],
       ),

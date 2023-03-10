@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
@@ -60,7 +61,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
       padding: const EdgeInsets.all(20),
       child: Container(
         height: 80,
-        width: 500,
+        width: GetPlatform.isMobile?Get.width:500,
         decoration: BoxDecoration(
             color: MyColors.grey5,
             borderRadius:
@@ -118,11 +119,10 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                 Get.to(() => ExhibitionProductsView(),
                     arguments: {'imageId': ctr.imageBanners[index].id});
               },
-              child: CachedNetworkImage(
-                imageUrl: ctr.imageBanners[index].banner_img_url,
-                width: 500,
+              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                ctr.imageBanners[index].banner_img_url,
+                width: GetPlatform.isMobile?Get.width:500,
                 // placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             );
           },

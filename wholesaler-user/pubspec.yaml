@@ -1,12 +1,15 @@
 name: wholesaler_user
-description: A new Flutter project.
+description: ThinksMk.
 publish_to: "none"
 #version: 0.2.4
-version: 0.2.5+205
+version: 0.2.10
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
 dependencies:
+  permission_handler: ^10.2.0
+  extended_image: ^6.4.1
+  device_info_plus: ^8.1.0
   flutter_web_frame: ^0.0.3
   firebase_dynamic_links: ^5.0.11
 #  uni_links: ^0.5.1
@@ -78,4 +81,4 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/shared_images_icons/logo.jpeg"
+  image_path: "assets/shared_images_icons/logo.png"

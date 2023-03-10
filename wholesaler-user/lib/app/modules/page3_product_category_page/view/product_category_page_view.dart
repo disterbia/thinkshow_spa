@@ -117,7 +117,7 @@ class ProductCategoryPageView extends GetView<ProductCategoryPageController> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ProductGridViewBuilder(
                       crossAxisCount: 3,
-                      productHeight: 280,
+                      productHeight: (500*0.7).floor(),
                       products: ctr.products,
                       isShowLoadingCircle: ctr.allowCallAPI,
                     ),

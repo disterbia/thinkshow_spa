@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/change_number/controller/change_number_controller.dart';
@@ -30,7 +31,7 @@ class ChangeNumberView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CustomButton(
-              width: 500,
+              width: !GetPlatform.isMobile?500:Get.width,
               onPressed: () => ctr.editBtnPressed(),
               text: '수정',
             ),

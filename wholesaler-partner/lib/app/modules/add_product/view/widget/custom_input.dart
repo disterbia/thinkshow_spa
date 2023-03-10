@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class CustomInput extends GetView<AddProductController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 500 / 4,
+              width: !GetPlatform.isMobile?500/4:Get.width/4,
               child: Text(
                 label,
                 style: MyTextStyles.f14.copyWith(color: MyColors.black2),

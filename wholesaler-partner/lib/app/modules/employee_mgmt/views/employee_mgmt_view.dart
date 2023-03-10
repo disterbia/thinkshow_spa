@@ -53,7 +53,7 @@ class EmployeeMgmtView extends GetView<EmployeeMgmtController> {
                   SizedBox(width: spaceBetweenNumberText),
                   Expanded(
                     child: Text(
-                      '직원이 띵쇼마켓 앱을 설치합니다.',
+                      '직원이 띵쇼 앱을 설치합니다.',
                       style: TextStyle(fontSize: 15),
                     ),
                   ),

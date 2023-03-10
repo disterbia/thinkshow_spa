@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/Constants/functions.dart';
 import 'package:wholesaler_user/app/modules/auth/find_id_find_password/views/find_id_find_password_view.dart';
 import 'package:wholesaler_user/app/modules/auth/password_reset/controller/password_reset_controller.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
@@ -31,7 +32,7 @@ class PasswordResetView extends StatelessWidget {
                   leftBtnText: '취소',
                   rBtnOnPressed: ctr.resetPassword,
                   lBtnOnPressed: () {
-                    Get.to(() => User_LoginPageView());
+                     mFuctions.userLogout();
                   })
             ],
           ),

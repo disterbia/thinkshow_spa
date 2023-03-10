@@ -17,17 +17,18 @@ class Tab1UserHomeController extends GetxController {
   RxList<Product> products3 = <Product>[].obs;
   RxList<Product> products4 = <Product>[].obs;
   RxList<Product> products5 = <Product>[].obs;
-
+  
   Rx<ScrollController> scrollController = ScrollController().obs;
-  int offset = 30;
+  int offset = 24;
   RxBool allowCallAPI = true.obs;
   RxBool isLoading = false.obs;
+
 
   @override
   Future<void> onInit() async {
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels ==
-          scrollController.value.position.maxScrollExtent ) {
+      if (scrollController.value.position.pixels >=
+              scrollController.value.position.maxScrollExtent-10) {
         offset += mConst.limit;
         addDataToList();
       }
@@ -36,21 +37,30 @@ class Tab1UserHomeController extends GetxController {
   }
 
   Future<void> init() async {
+    int firstLimit=6;
+    int firstOffset = 6;
     isLoading.value = true;
-    offset = 30;
+    offset = 24;
+    List<Product> isDealProduct = await _apiProvider.getDealProducts();
+    if(isDealProduct.isNotEmpty){
+      firstLimit-=1;
+      firstOffset-=1;
+      offset-=1;
+    }
     products1.value =
-    await _apiProvider.getAllProducts(offset: 0, limit: 6);
+        await _apiProvider.getAllProducts(offset: 0, limit: firstLimit);
     products2.value =
-    await _apiProvider.getAllProducts(offset: 6, limit: 8);
+    await _apiProvider.getAllProducts(offset: firstOffset, limit: 8);
     products3.value =
-    await _apiProvider.getAllProducts(offset: 14, limit: 4);
+    await _apiProvider.getAllProducts(offset: firstOffset+8, limit: 4);
     products4.value =
-    await _apiProvider.getAllProducts(offset: 18, limit: 12);
+    await _apiProvider.getAllProducts(offset: firstOffset+8+4, limit: 6);
     products5.value =
-    await _apiProvider.getAllProducts(offset: 30, limit: mConst.limit);
+    await _apiProvider.getAllProducts(offset: offset, limit: mConst.limit);
 
-
-
+    if(isDealProduct.isNotEmpty){
+     products1.insert(0, isDealProduct[0]);
+    }
 
     isLoading.value = false;
     super.onInit();
@@ -67,6 +77,12 @@ class Tab1UserHomeController extends GetxController {
   // }
 
   Future<void> updateProducts() async {
+    int firstLimit=6;
+    int firstOffset = 6;
+    offset = 24;
+
+
+
     // reset variables
     products1.clear();
     products2.clear();
@@ -74,58 +90,78 @@ class Tab1UserHomeController extends GetxController {
     products4.clear();
     products5.clear();
 
-    offset = 30;
+
+
     allowCallAPI.value = true;
     isLoading.value=true;
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
+      List<Product> isDealProduct = await _apiProvider.getDealProducts();
+      if(isDealProduct.isNotEmpty){
+        firstLimit-=1;
+        firstOffset-=1;
+        offset-=1;
+      }
       print('products1, show ALL');
       products1.value = await _apiProvider.getAllProducts(
-          offset: 0, limit: 6);
+          offset: 0, limit: firstLimit);
+      if(isDealProduct.isNotEmpty){
+        products1.insert(0, isDealProduct[0]);
+      }
     } else {
+      List<Product> isDealProductwithCat = await _apiProvider.getDealProductsWithCat(categoryTagCtr.selectedMainCatIndex.value);
+      if(isDealProductwithCat.isNotEmpty){
+        firstLimit-=1;
+        firstOffset-=1;
+        offset-=1;
+      }
       print('products1 , show categories');
       products1.value = await _apiProvider.getProductsWithCat(
           categoryId: categoryTagCtr.selectedMainCatIndex.value,
           offset: 0,
-          limit: 6);
+          limit: firstLimit);
+      if(isDealProductwithCat.isNotEmpty){
+        products1.insert(0, isDealProductwithCat[0]);
+      }
     }
+
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('products2 show ALL');
       products2.value = await _apiProvider.getAllProducts(
-          offset: 6, limit: 8);
+          offset: firstOffset, limit: 8);
     } else {
       print('products2 , show categories');
       products2.value = await _apiProvider.getProductsWithCat(
           categoryId: categoryTagCtr.selectedMainCatIndex.value,
-          offset: 6,
+          offset: firstOffset,
           limit: 8);
     }
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('products3, show ALL');
       products3.value = await _apiProvider.getAllProducts(
-          offset: 14, limit: 4);
+          offset: firstOffset+8, limit: 4);
     } else {
       print('products3 , show categories');
       products3.value = await _apiProvider.getProductsWithCat(
           categoryId: categoryTagCtr.selectedMainCatIndex.value,
-          offset: 14,
+          offset: firstOffset+8,
           limit: 4);
     }
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('products4, show ALL');
       products4.value = await _apiProvider.getAllProducts(
-          offset: 18, limit: 12);
+          offset: firstOffset+8+4, limit: 6);
     } else {
       print('products4 , show categories');
       products4.value = await _apiProvider.getProductsWithCat(
           categoryId: categoryTagCtr.selectedMainCatIndex.value,
-          offset: 18,
-          limit: 12);
+          offset: firstOffset+8+4,
+          limit: 6);
     }
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('products5, show ALL');
       products5.value = await _apiProvider.getAllProducts(
-          offset: 18, limit: 12);
+          offset: offset, limit:  mConst.limit);
     } else {
       print('products5 , show categories');
       products5.value = await _apiProvider.getProductsWithCat(
@@ -141,6 +177,7 @@ class Tab1UserHomeController extends GetxController {
   }
 
   addDataToList() async {
+    allowCallAPI.value = true;
     List<Product> tempProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       print('index 0, show ALL');

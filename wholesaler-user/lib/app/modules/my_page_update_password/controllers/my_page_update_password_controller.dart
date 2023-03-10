@@ -30,7 +30,7 @@ class MyPageUpdatePasswordController extends GetxController {
       newPasswordVerify: newPasswordVerifyCtr.text,
     );
     if (isSuccess) {
-      mSnackbar(message: '비밀번호 변경 완료 되었습니다.');
+      mSnackbar(message: '비밀번호 변경 완료 되었습니다. 다시 로그인 해주세요.');
       mFuctions.userLogout();
     } else {
       mSnackbar(message: '비밀번호 변경 실패 되었습니다.');

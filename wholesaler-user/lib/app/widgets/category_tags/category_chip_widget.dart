@@ -23,7 +23,7 @@ class ChipWidget extends StatelessWidget {
         backgroundColor: isSelected ? MyColors.primary : MyColors.white,
         label: Text(
           title,
-          style: TextStyle(color: isSelected ? Colors.white : MyColors.black),
+          style: TextStyle(color: Colors.black),
         ),
       ),
     );

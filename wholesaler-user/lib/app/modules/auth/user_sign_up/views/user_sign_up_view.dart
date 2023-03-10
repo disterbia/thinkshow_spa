@@ -83,26 +83,26 @@ class User_SignUpView extends GetView {
 
   Widget _idBuilder() {
     return // ID
-        !ctr.isEditing.value
-            ? Column(
-                children: [
-                  CustomField(
-                    buttonText: 'check_available'.tr,
-                    fieldController: ctr.idController,
-                    fieldText: 'EX)id1234',
-                    onTap: () {
-                      ctr.checkIdAvailableBtnPressed();
-                    },
-                    fieldLabel: '아이디',
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(20),
-                      FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]"))
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                ],
-              )
-            : SizedBox.shrink();
+      !ctr.isEditing.value
+          ? Column(
+        children: [
+          CustomField(
+            buttonText: 'check_available'.tr,
+            fieldController: ctr.idController,
+            fieldText: 'EX)id1234',
+            onTap: () {
+              ctr.checkIdAvailableBtnPressed();
+            },
+            fieldLabel: '아이디',
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(20),
+              FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]"))
+            ],
+          ),
+          SizedBox(height: 15),
+        ],
+      )
+          : SizedBox.shrink();
   }
 
   _emailBuilder() {
@@ -115,26 +115,26 @@ class User_SignUpView extends GetView {
 
   Widget _passwordBuilder() {
     return // Password
-        !ctr.isEditing.value
-            ? Column(
-                children: [
-                  CustomField(
-                    fieldLabel: '비밀번호',
-                    fieldText: '숫자, 영문, 특수문자 최소 8자',
-                    fieldController: ctr.passwordController,
-                    isObscureText: true,
-                  ),
-                  SizedBox(height: 15),
-                  CustomField(
-                    fieldLabel: 'verify_password'.tr,
-                    fieldText: '비밀번호를 한번 더 입력해주세요',
-                    fieldController: ctr.passwordVerifyController,
-                    isObscureText: true,
-                  ),
-                  SizedBox(height: 15),
-                ],
-              )
-            : SizedBox.shrink();
+      !ctr.isEditing.value
+          ? Column(
+        children: [
+          CustomField(
+            fieldLabel: '비밀번호',
+            fieldText: '숫자, 영문, 특수문자 최소 8자',
+            fieldController: ctr.passwordController,
+            isObscureText: true,
+          ),
+          SizedBox(height: 15),
+          CustomField(
+            fieldLabel: 'verify_password'.tr,
+            fieldText: '비밀번호를 한번 더 입력해주세요',
+            fieldController: ctr.passwordVerifyController,
+            isObscureText: true,
+          ),
+          SizedBox(height: 15),
+        ],
+      )
+          : SizedBox.shrink();
   }
 
   Widget _nameBuilder() {
@@ -179,13 +179,13 @@ class User_SignUpView extends GetView {
   Widget _phoneNumberPhoneVerifyBuilder() {
     return !ctr.isEditing.value
         ? Column(
-            children: [
-              PhoneNumberPhoneVerify(
-                spaceBetween: 15,
-              ),
-              SizedBox(height: 15),
-            ],
-          )
+      children: [
+        PhoneNumberPhoneVerify(
+          spaceBetween: 15,
+        ),
+        SizedBox(height: 15),
+      ],
+    )
         : SizedBox.shrink();
   }
 
@@ -237,19 +237,19 @@ class User_SignUpView extends GetView {
   Widget _termsAndPrivacyBuilder() {
     return !ctr.isEditing.value
         ? Column(
-            children: [
-              Divider(thickness: 5, color: MyColors.grey3),
-              _agreeToAll(),
-              _termsAndConditions(),
-              _privacyPolicy(),
-            ],
-          )
+      children: [
+        Divider(thickness: 5, color: MyColors.grey3),
+        _agreeToAll(),
+        _termsAndConditions(),
+        _privacyPolicy(),
+      ],
+    )
         : SizedBox.shrink();
   }
 
   Widget _agreeToAll() {
     return Obx(
-      () => Row(
+          () => Row(
         children: [
           SizedBox(
             height: 24,
@@ -297,7 +297,7 @@ class User_SignUpView extends GetView {
         Row(
           children: [
             Obx(
-              () => Checkbox(
+                  () => Checkbox(
                   activeColor: MyColors.secondaryColor,
                   value: ctr.firstConditions.value,
                   onChanged: (value) {
@@ -344,7 +344,7 @@ class User_SignUpView extends GetView {
         Row(
           children: [
             Obx(
-              () => Checkbox(
+                  () => Checkbox(
                   activeColor: MyColors.secondaryColor,
                   value: ctr.secondConditions.value,
                   onChanged: (value) {
@@ -367,7 +367,7 @@ class User_SignUpView extends GetView {
 
   Widget _saveButtonBuilder() {
     return CustomButton(
-      width: 500,
+      width: GetPlatform.isMobile?Get.width:500,
       onPressed: () {
         ctr.saveOrEditBtnPressed();
         // Get.back();

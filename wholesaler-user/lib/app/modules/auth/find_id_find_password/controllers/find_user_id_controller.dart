@@ -77,10 +77,10 @@ class User_FindID_FindPasswordController extends GetxController {
     }
   }
 
-  Future<void> findPassword() async {
+  Future<bool> findPassword() async {
     if (idController.text.isEmpty) {
       mSnackbar(message: '아이디를 입력해주세요.');
-      return;
+      return false;
     }
 
     isLoading.value = true;
@@ -107,8 +107,10 @@ class User_FindID_FindPasswordController extends GetxController {
         phoneNumberPhoneVerifyCtr.certifyId,
         idController.text.toString()
       ]);
+      return true;
     } else {
       mSnackbar(message: statusModel.message);
+      return false;
     }
   }
 }

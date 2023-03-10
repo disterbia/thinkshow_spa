@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -22,12 +23,11 @@ class ProductInquiryView extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: CachedNetworkImage(
-              imageUrl: product.images![0],
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+           product.images![0],
               width: 80,
               height: 80,
               fit: BoxFit.fill,
-              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
           SizedBox(

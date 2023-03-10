@@ -58,6 +58,7 @@ class Product {
   String? delivery_company_name;
   String? country;
   List<dynamic>? keyword;
+  bool? isDeal;
 
   Product({
     required this.id,
@@ -107,7 +108,8 @@ class Product {
     this.materials,
     this.orderDetailId,
     this.delivery_company_name,
-    this.delivery_invoice_number
+    this.delivery_invoice_number,
+    this.isDeal
   });
 
   Map<String, dynamic> toJson() => {

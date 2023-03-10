@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_partner/app/models/add_product/option.dart';
+import 'package:wholesaler_partner/app/modules/add_product/controller/add_product_controller.dart';
+import 'package:wholesaler_partner/app/modules/add_product/part1_category_image_keyword/controller/part1_category_image_keyword_controller.dart';
 import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class AddTagField extends StatelessWidget {
@@ -19,9 +22,10 @@ class AddTagField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Obx(
-        () => Column(
+            () => Column(
           children: [
             Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -49,12 +53,13 @@ class AddTagField extends StatelessWidget {
                       ? null
                       : percentList!.add(TextEditingController());
                   fieldController.clear();
-
-                  materialPercentCheck!.value = 0;
-                  for (int k = 0; k < percentList!.length; k++) {
-                    if (percentList![k].text.isNotEmpty) {
-                      materialPercentCheck!.value +=
-                          int.parse(percentList![k].text);
+                  if(materialPercentCheck!=null) {
+                    materialPercentCheck!.value = 0;
+                    for (int k = 0; k < percentList!.length; k++) {
+                      if (percentList![k].text.isNotEmpty) {
+                        materialPercentCheck!.value +=
+                            int.parse(percentList![k].text);
+                      }
                     }
                   }
                 },
@@ -72,17 +77,27 @@ class AddTagField extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(4.0))),
                       label: Text(tagList[i]),
                       onDeleted: () {
+                        int temp =0;
+                        for(int j=0;j<Get.find<AddProductController>().options.length;j++){
+                          if(tagList[i]==Get.find<AddProductController>().options[j].color){
+                            temp++;
+                            //Get.find<AddProductController>().colorsList.removeAt(j);
+                          }
+                        }
+                        for(int k =0; k<temp ; k++)  Get.find<AddProductController>().optionsControllers.removeLast();
+                        Get.find<AddProductController>().options.removeWhere((element) => element.color==tagList[i]);
                         tagList.removeAt(i);
                         percentList == null ? null : percentList!.removeAt(i);
+                        if(materialPercentCheck!=null) {
+                          materialPercentCheck!.value = 0;
+                          for (int k = 0; k < percentList!.length; k++) {
+                            if (percentList![k].text.isNotEmpty) {
+                              materialPercentCheck!.value +=
+                                  int.parse(percentList![k].text);
+                            }
 
-                        materialPercentCheck!.value = 0;
-                        for (int k = 0; k < percentList!.length; k++) {
-                          if (percentList![k].text.isNotEmpty) {
-                            materialPercentCheck!.value +=
-                                int.parse(percentList![k].text);
+                            // print(ctr.materialTypePercentControllers[k].text);
                           }
-
-                          // print(ctr.materialTypePercentControllers[k].text);
                         }
                       },
                       deleteIconColor: Colors.grey,

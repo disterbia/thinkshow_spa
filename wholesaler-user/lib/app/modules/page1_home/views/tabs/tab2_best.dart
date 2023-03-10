@@ -25,7 +25,7 @@ class Tab2BestView extends GetView<Tab2BestController> {
   Widget build(BuildContext context) {
     init();
     return Obx(
-          () => Stack(
+      () => Stack(
         children: [
           SingleChildScrollView(
             controller: ctr.scrollController.value,
@@ -48,18 +48,18 @@ class Tab2BestView extends GetView<Tab2BestController> {
                 ctr.isLoading.value
                     ? LoadingWidget()
                     : Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: ProductGridViewBuilder(
-                        crossAxisCount: 2,
-                        productHeight: 360,
-                        products: ctr.products,
-                        isShowLoadingCircle: ctr.allowCallAPI,
-                      ),
-                    ),
-                  ],
-                )
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: ProductGridViewBuilder(
+                              crossAxisCount: 2,
+                              productHeight:(500*0.8).floor(),
+                              products: ctr.products,
+                              isShowLoadingCircle: ctr.allowCallAPI,
+                            ),
+                          ),
+                        ],
+                      )
               ],
             ),
           ),
@@ -90,7 +90,7 @@ class Tab2BestView extends GetView<Tab2BestController> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Obx(
-                () => DropdownButton(
+            () => DropdownButton(
               hint: Text(ctr.dropdownItems[ctr.selectedDropdownIndex.value]),
               items: itemsBuilder(ctr.dropdownItems),
               onChanged: (String? newValue) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/Constants/functions.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/constants/variables.dart';
@@ -44,10 +45,11 @@ class Tab3InquiryView extends GetView {
             separatorBuilder: (BuildContext context, int index) =>
                 SizedBox(width: 14),
             itemBuilder: (BuildContext context, int index) {
-              return _expandedQuestionBox(ctr.inquires[index]);
+              return _expandedQuestionBox(ctr.inquires[index], context);
             },
           ),
         ),
+
       ],
     );
   }
@@ -58,7 +60,7 @@ class Tab3InquiryView extends GetView {
     //   child: OutlinedButton(
     //     onPressed: (() {
     //       if (CacheProvider().getToken().isEmpty) {
-    //         Get.to(() => User_LoginPageView());
+    //          mFuctions.userLogout();
     //         return;
     //       }
     //       Get.to(() => InquityRegisterView());
@@ -74,7 +76,7 @@ class Tab3InquiryView extends GetView {
       height: Get.height / 17,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(MyColors.grey1),
@@ -86,7 +88,7 @@ class Tab3InquiryView extends GetView {
             ),
             onPressed: () {
               if (CacheProvider().getToken().isEmpty) {
-                Get.to(() => User_LoginPageView());
+                 mFuctions.userLogout();
                 return;
               }
               Get.to(() => InquityRegisterView());
@@ -97,15 +99,16 @@ class Tab3InquiryView extends GetView {
     );
   }
 
-  Widget _expandedQuestionBox(InquiryModel inquiryModel) {
+  Widget _expandedQuestionBox(InquiryModel inquiryModel, BuildContext context) {
     print(
         '_expandedQuestionBox inquiryModel isSecret: ${inquiryModel.isSecret} isMine: ${inquiryModel.isMine} content: ${inquiryModel.content}');
     return inquiryModel.isSecret! && !inquiryModel.isMine! ||
             !inquiryModel.isAnswer!
         // secret design
-        ? _secretItemorAnsweredBuilder(inquiryModel)
+        ? _secretItemorAnsweredBuilder(inquiryModel, context)
+
         // Not Secret design
-        : _notSecretItemBuilder(inquiryModel);
+        : _notSecretItemBuilder(inquiryModel, context);
   }
 
   SizedBox _verticalDivider() {
@@ -136,11 +139,11 @@ class Tab3InquiryView extends GetView {
               style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
             ),
             SizedBox(width: 10),
-            if (item.isSecret! && !item.isMine!)
-              Image.asset(
-                'assets/shared_images_icons/ic_lock.png',
-                width: 16,
-              )
+            // if (item.isSecret! && !item.isMine!)
+            //   Image.asset(
+            //     'assets/shared_images_icons/ic_lock.png',
+            //     width: 16,
+            //   )
           ],
         ),
         SizedBox(
@@ -200,33 +203,39 @@ class Tab3InquiryView extends GetView {
   }
 
   Widget _answer(InquiryModel item) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: MyColors.grey1,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            item.answerContent.toString(),
-            style: MyTextStyles.f14.copyWith(color: MyColors.grey10),
-          ),
-          Row(
-            children: [
-              Text(
-                ctr.product.store.name!,
-                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
-              ),
-              // _verticalDivider(),
-              // Text(
-              //   '슬로우 엔드',
-              //   style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
-              // ),
-            ],
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: MyColors.grey1,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item.answerContent.toString(),
+              style: MyTextStyles.f14.copyWith(color: MyColors.grey10),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                Text(
+                  ctr.product.store.name!,
+                  style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+                ),
+                // _verticalDivider(),
+                // Text(
+                //   '슬로우 엔드',
+                //   style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+                // ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -257,92 +266,109 @@ class Tab3InquiryView extends GetView {
     );
   }
 
-  _secretItemorAnsweredBuilder(InquiryModel inquiryModel) {
+  _secretItemorAnsweredBuilder(
+      InquiryModel inquiryModel, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Column(
         children: [
-          // SizedBox(height: 20),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  inquiryModel.content!,
-                  style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
-                ),
-              ),
-              SizedBox(width: 10),
-              if (inquiryModel.isSecret! && !inquiryModel.isMine!)
-                Image.asset(
-                  'assets/shared_images_icons/ic_lock.png',
-                  width: 14,
-                )
-            ],
-          ),
           SizedBox(height: 10),
-          Row(
-            children: [
-              _AnswerTextBuilder(inquiryModel.isAnswer!),
-              _verticalDivider(),
-              Text(
-                inquiryModel.writer!,
-                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
-              ),
-              _verticalDivider(),
-              Text(
-                inquiryModel.createdAt.toString(),
-                style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
-              )
-            ],
-          ),
-          SizedBox(height: 20),
-          inquiryModel.isAnswer! ? _answer(inquiryModel) : SizedBox.shrink(),
-
+          inquiryModel.isAnswer!
+              ? Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    childrenPadding: EdgeInsets.only(top: 10),
+                    title: _questionTitle(inquiryModel),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _answer(inquiryModel),
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: _questionTitle(inquiryModel),
+                ),
+          SizedBox(height: 10),
           Divider(
             color: MyColors.grey3,
-          ),
-          // Container(width: double.infinity, height: 2, color: MyColors.grey1),
+          )
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Expanded(
+          //       child: Text(
+          //         inquiryModel.content!,
+          //         style: MyTextStyles.f14.copyWith(color: MyColors.grey2),
+          //       ),
+          //     ),
+          //     // SizedBox(width: 10),
+          //     // if (inquiryModel.isSecret! && !inquiryModel.isMine!)
+          //     //   Image.asset(
+          //     //     'assets/shared_images_icons/ic_lock.png',
+          //     //     width: 14,
+          //     //   )
+          //   ],
+          // ),
+          // SizedBox(height: 10),
+          // Row(
+          //   children: [
+          //     _AnswerTextBuilder(inquiryModel.isAnswer!),
+          //     _verticalDivider(),
+          //     Text(
+          //       inquiryModel.writer!,
+          //       style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+          //     ),
+          //     _verticalDivider(),
+          //     Text(
+          //       inquiryModel.createdAt.toString(),
+          //       style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
+          //     )
+          //   ],
+          // ),
+          // SizedBox(height: 20),
+          // inquiryModel.isAnswer! ? _answer(inquiryModel) : SizedBox.shrink(),
+
+          // Divider(
+          //   color: MyColors.grey3,
+          // ),
+          // Container(width: GetPlatform.isMobile?Get.width:500, height: 2, color: MyColors.grey1),
         ],
       ),
     );
   }
 
-  _notSecretItemBuilder(InquiryModel inquiryModel) {
+  _notSecretItemBuilder(InquiryModel inquiryModel, BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Container(
-          //   child: Theme(
-          //     data: ThemeData().copyWith(dividerColor: Colors.transparent),
-          //     child: ExpansionTile(
-          //       childrenPadding: EdgeInsets.only(top: 10),
-          //       tilePadding: EdgeInsets.all(15),
-          //       title: _questionTitle(inquiryModel),
-          //       children: [
-          //         Container(
-          //           color: MyColors.grey3,
-          //           child: Padding(
-          //             padding: const EdgeInsets.all(8.0),
-          //             child: Column(
-          //               children: [
-          //                 _question(inquiryModel),
-          //                 SizedBox(height: 20),
-          //                 _answer(inquiryModel),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          _questionTitle(inquiryModel),
+          SizedBox(height: 10),
+
+          inquiryModel.isAnswer!
+              ? Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    childrenPadding: EdgeInsets.only(top: 10),
+                    title: _questionTitle(inquiryModel),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _answer(inquiryModel),
+                      ),
+                    ],
+                  ),
+                )
+              : _questionTitle(inquiryModel),
+          // _questionTitle(inquiryModel),
           // _question(inquiryModel),
-          SizedBox(height: 20),
-          _answer(inquiryModel),
+          SizedBox(height: 10),
+          // _answer(inquiryModel),
           Divider(
             color: MyColors.grey3,
           )

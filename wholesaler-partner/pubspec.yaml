@@ -1,13 +1,14 @@
 name: wholesaler_partner
 #version: 0.2.5
-version: 0.2.1+205
+version: 0.2.10
 publish_to: none
-description: A new Flutter project.
+description: ThinksMk.
 environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter_web_frame: ^0.0.3
+  extended_image: ^6.4.1
   launch_review: ^3.0.1
   firebase_dynamic_links: ^5.0.11
   uni_links: ^0.5.1

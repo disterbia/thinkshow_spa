@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/Constants/colors.dart';
 import 'package:wholesaler_user/app/data/firebase_service.dart';
@@ -25,31 +26,40 @@ class UserMainView extends GetView<UserMainController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-        () => Center(
-          child: widgetOptions.elementAt(ctr.tabIndex.value),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return WillPopScope(
+      onWillPop: () => ctr.onWillPop(),
+      child: Scaffold(
+        body: Obx(
+          () => Center(
+            child: widgetOptions.elementAt(ctr.tabIndex.value),
+          ),
         ),
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            ItemBuilder('home'.tr, 'assets/icons/menu01_on.png',
-                'assets/icons/menu01_off.png', 0),
-            ItemBuilder('store'.tr, 'assets/icons/menu02_on.png',
-                'assets/icons/menu02_off.png', 1),
-            ItemBuilder('See_all'.tr, 'assets/icons/menu03_on.png',
-                'assets/icons/menu03_off.png', 2),
-            ItemBuilder('liked'.tr, 'assets/icons/menu04_on.png',
-                'assets/icons/menu04_off.png', 3),
-            ItemBuilder('My_page'.tr, 'assets/icons/menu05_on.png',
-                'assets/icons/menu05_off.png', 4),
-          ],
-          currentIndex: ctr.tabIndex.value,
-          onTap: ctr.changeTabIndex,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: MyColors.black,
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              ItemBuilder('home'.tr, 'assets/icons/menu01_on.png',
+                  'assets/icons/menu01_off.png', 0),
+              ItemBuilder('store'.tr, 'assets/icons/menu02_on.png',
+                  'assets/icons/menu02_off.png', 1),
+              ItemBuilder('See_all'.tr, 'assets/icons/menu03_on.png',
+                  'assets/icons/menu03_off.png', 2),
+              ItemBuilder('liked'.tr, 'assets/icons/menu04_on.png',
+                  'assets/icons/menu04_off.png', 3),
+              ItemBuilder('My_page'.tr, 'assets/icons/menu05_on.png',
+                  'assets/icons/menu05_off.png', 4),
+            ],
+            currentIndex: ctr.tabIndex.value,
+            onTap: ctr.changeTabIndex,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: MyColors.black,
+            selectedFontSize: 12.0,
+
+          ),
         ),
       ),
     );
@@ -58,13 +68,9 @@ class UserMainView extends GetView<UserMainController> {
   BottomNavigationBarItem ItemBuilder(
       String label, String imgSelected, String imgNotSelected, int itemIndex) {
     return BottomNavigationBarItem(
-      icon: ctr.tabIndex.value == itemIndex
-          ? Image.asset(
-              imgSelected,
-              width: 22,
-            )
-          : Image.asset(
-              imgNotSelected,
+      icon: Image.asset(
+        ctr.tabIndex.value == itemIndex
+            ? imgSelected:imgNotSelected,gaplessPlayback: true,
               width: 22,
             ),
       label: label,

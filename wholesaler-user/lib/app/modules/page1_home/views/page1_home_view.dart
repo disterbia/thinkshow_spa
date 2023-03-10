@@ -23,7 +23,7 @@ import 'package:wholesaler_user/app/widgets/simple_tab_bar.dart';
 class Page1HomeView extends GetView<Page1HomeController> {
   Page1HomeController ctr = Get.put(Page1HomeController());
   Cart1ShoppingBasketController cartCtr =
-  Get.put(Cart1ShoppingBasketController());
+      Get.put(Cart1ShoppingBasketController());
   // Tab1UserHomeController ctr0 = Get.put(Tab1UserHomeController());
   // Tab2BestController ctr1 = Get.put(Tab2BestController());
   // Tab3NewProductsController ctr2 = Get.put(Tab3NewProductsController());
@@ -69,7 +69,6 @@ class Page1HomeView extends GetView<Page1HomeController> {
   Widget _floatTabBar() {
     return SimpleTabBar(
       initialIndex: 0,
-      borderColor: MyColors.white,
       tabs: [
         Tab(text: 'home'.tr),
         Tab(text: 'best'.tr),
@@ -92,50 +91,47 @@ class Page1HomeView extends GetView<Page1HomeController> {
       isBackEnable: false,
       actions: [
         IconButton(
-          icon: Icon(
-            Icons.search,
-            color: MyColors.black,
-          ),
+          icon: Image.asset("assets/icons/top_search.png",color: Colors.black,height: 21,),
           onPressed: () {
             Get.to(() => SearchPageView());
           },
         ),
         Obx(
-              () => cartCtr.getNumberProducts() != 0
+          () => cartCtr.getNumberProducts() != 0
               ? Badge(
-            badgeColor: MyColors.primary,
-            badgeContent: Text(
-              cartCtr.getNumberProducts().toString(),
-              style: TextStyle(
-                  color: MyColors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold),
-            ),
-            toAnimate: false,
-            position: BadgePosition.topEnd(top: 5, end: 5),
-            child: IconButton(
-                onPressed: () {
-                  Get.to(() => Cart1ShoppingBasketView());
-                },
-                icon: ImageIcon(
-                  AssetImage('assets/icons/top_cart.png'),
-                  size: 21,
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    cartCtr.getNumberProducts().toString(),
+                    style: TextStyle(
+                        color: MyColors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
+                      onPressed: () {
+                        Get.to(() => Cart1ShoppingBasketView());
+                      },
+                      icon: ImageIcon(
+                        AssetImage('assets/icons/top_cart.png'),
+                        size: 21,
 
-                  // Icons.shopping_cart_outlined,
-                  color: MyColors.black,
-                )),
-          )
+                        // Icons.shopping_cart_outlined,
+                        color: MyColors.black,
+                      )),
+                )
               : IconButton(
-            onPressed: () {
-              Get.to(() => Cart1ShoppingBasketView());
-            },
-            icon: ImageIcon(
-              AssetImage('assets/icons/top_cart.png'),
-              size: 21,
-              // Icons.shopping_cart_outlined,
-              color: MyColors.black,
-            ),
-          ),
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
         )
       ],
     );

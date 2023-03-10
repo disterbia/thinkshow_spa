@@ -27,26 +27,6 @@ class CarousalProductHorizontalController extends GetxController {
   RxString beltImage="".obs;
 
 
-  // @override
-  // Future<void> onInit() async {
-  //   isLoading.value=true;
-  //   //print('CarousalProductHorizontalController init currentTab $UserHomeTabs.home');
-  //   products.value = await _apiProvider.getAdProducts(UserHomeTabs.home);
-  //   Map<String,dynamic> result1 =  await _apiProvider.getExhibitProducts(1);
-  //   Map<String,dynamic> result2 =  await _apiProvider.getExhibitProducts(2);
-  //   Map<String,dynamic> result3 =  await _apiProvider.getExhibitProducts(3);
-  //   Map<String,dynamic> result4 =  await _apiProvider.getExhibitProducts(4);
-  //   exhibitProducts1.value = result1["products"] as List<Product>;;
-  //   exhibitProducts2.value = result2["products"] as List<Product>;;
-  //   exhibitProducts3.value = result3["products"] as List<Product>;;
-  //   exhibitProducts4.value =result4["products"] as List<Product>;;
-  //   exhibitTitle1.value= result1["title"] as String;
-  //   exhibitTitle2.value=result2["title"] as String;
-  //   exhibitTitle3.value=result3["title"] as String;
-  //   exhibitTitle4.value=result4["title"] as String;
-  //   isLoading.value=false;
-  //   super.onInit();
-  // }
 Future<void> init() async {
   isLoading.value=true;
   sliderIndex1.value=0;

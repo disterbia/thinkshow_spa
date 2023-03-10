@@ -3,16 +3,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wholesaler_user/app/constants/constants.dart';
+import 'package:wholesaler_user/app/modules/auth/find_id_find_password/controllers/find_user_id_controller.dart';
 import 'package:wholesaler_user/app/widgets/field_with_button.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/widgets/phone_number_textfield/phone_number_textfield_controller.dart';
 
 class PhoneNumberPhoneVerify extends GetView {
   PhoneNumberPhoneVerifyController ctr =
-      Get.put(PhoneNumberPhoneVerifyController());
+  Get.put(PhoneNumberPhoneVerifyController());
+  User_FindID_FindPasswordController ctr2 =
+  Get.put(User_FindID_FindPasswordController());
 
   double spaceBetween;
-  PhoneNumberPhoneVerify({required this.spaceBetween});
+  bool? isPassword;
+  PhoneNumberPhoneVerify({required this.spaceBetween, this.isPassword});
 
   formatedTime({required int timeInSecond}) {
     int sec = timeInSecond % 60;
@@ -27,7 +31,7 @@ class PhoneNumberPhoneVerify extends GetView {
     return Column(
       children: [
         Obx(
-          () => CustomField(
+              () => CustomField(
             readOnly: !ctr.verifyIsEnable.value,
             isTextKeyboard: true,
             fieldLabel: '휴대폰 번호',
@@ -36,8 +40,9 @@ class PhoneNumberPhoneVerify extends GetView {
             buttonText: 'verify'.tr,
             onTap: ctr.verifyIsEnable.value
                 ? () {
-                    ctr.verifyPhoneBtnPressed();
-                  }
+              ctr.verifyPhoneBtnPressed();
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
                 : null,
             inputFormatters: [
               LengthLimitingTextInputFormatter(11),
@@ -47,32 +52,36 @@ class PhoneNumberPhoneVerify extends GetView {
         ),
         Obx(() => !ctr.verifyIsEnable.value
             ? Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child:
-                        Text(formatedTime(timeInSecond: ctr.verifyCount.value)),
-                  ),
-                  SizedBox(height: spaceBetween),
-                  CustomField(
-                    readOnly: ctr.verifyIsEnable.value,
-                    isTextKeyboard: true,
-                    fieldLabel: '인증번호 입력',
-                    fieldText: '인증번호 입력',
-                    fieldController: ctr.numberVerifyController,
-                    buttonText: 'ok'.tr,
-                    onTap: !ctr.verifyIsEnable.value
-                        ? () {
-                            ctr.verifyCodeBtnPressed();
-                          }
-                        : null,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(6),
-                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-                    ],
-                  ),
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child:
+              Text(formatedTime(timeInSecond: ctr.verifyCount.value)),
+            ),
+            SizedBox(height: spaceBetween),
+            Obx(
+                  ()=> CustomField(
+                readOnly: !ctr.codeIsEnable.value,
+                isTextKeyboard: true,
+                fieldLabel: '인증번호 입력',
+                fieldText: '인증번호 입력',
+                fieldController: ctr.numberVerifyController,
+                buttonText: 'ok'.tr,
+                onTap: ctr.codeIsEnable.value
+                    ? () async{
+                  bool result=await ctr.verifyCodeBtnPressed();
+                  if(result) isPassword! ? ctr2.findPassword(): ctr2.getAccountId();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }
+                    : null,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(6),
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                 ],
-              )
+              ),
+            ),
+          ],
+        )
             : SizedBox.shrink()),
       ],
     );

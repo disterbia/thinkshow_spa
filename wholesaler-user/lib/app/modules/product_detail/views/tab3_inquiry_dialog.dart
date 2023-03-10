@@ -86,160 +86,165 @@ class InquityRegisterView extends GetView {
   @override
   Widget build(BuildContext context) {
     // myTest = 0;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppbar(isBackEnable: true, title: '상품 문의'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //상품 자리
-          ProductInquiryView(
-            product: ctr.product,
-          ),
-          Divider(thickness: 5, color: MyColors.grey3),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: Text(
-              '문의 유형',
-              style: MyTextStyles.f16.copyWith(
-                  color: MyColors.black3, fontWeight: FontWeight.w500),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppbar(isBackEnable: true, title: '상품 문의'),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //상품 자리
+            ProductInquiryView(
+              product: ctr.product,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: InkWell(
-              onTap: () {
-                showBottomCategory(context);
-              },
-              child: Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    width: 1,
-                    color: MyColors.grey1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Obx(
-                      () => ctr.inquiresCategoiesIndex.value == -1
-                          ? Text(
-                              '문의 유형을 선택해주세요.',
-                              style: MyTextStyles.f14
-                                  .copyWith(color: MyColors.grey10),
-                            )
-                          : Text(
-                              ctr
-                                  .inquiresCategoiesList[
-                                      ctr.inquiresCategoiesIndex.value]
-                                  .name!,
-                              style: MyTextStyles.f14
-                                  .copyWith(color: MyColors.black2),
-                            ),
-                    ),
-                    Image.asset(
-                      'assets/icons/ico_arrow_down.png',
-                      height: 20,
-                    ),
-                  ],
-                ),
+            Divider(thickness: 5, color: MyColors.grey3),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                '문의 유형',
+                style: MyTextStyles.f16.copyWith(
+                    color: MyColors.black3, fontWeight: FontWeight.w500),
               ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '내용',
-                  style: MyTextStyles.f16.copyWith(
-                      color: MyColors.black3, fontWeight: FontWeight.w500),
-                ),
-                Obx(
-                  () => Row(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: InkWell(
+                onTap: () {
+                  showBottomCategory(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1,
+                      color: MyColors.grey1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: Checkbox(
-                            value: ctr.isSecret.value,
-                            activeColor: MyColors.primary,
-                            onChanged: (value) {
-                              ctr.isSecret.toggle();
-                            }),
+                      Obx(
+                        () => ctr.inquiresCategoiesIndex.value == -1
+                            ? Text(
+                                '문의 유형을 선택해주세요.',
+                                style: MyTextStyles.f14
+                                    .copyWith(color: MyColors.grey10),
+                              )
+                            : Text(
+                                ctr
+                                    .inquiresCategoiesList[
+                                        ctr.inquiresCategoiesIndex.value]
+                                    .name!,
+                                style: MyTextStyles.f14
+                                    .copyWith(color: MyColors.black2),
+                              ),
                       ),
-                      SizedBox(width: 5),
-                      GestureDetector(
-                        onTap: () => ctr.isSecret.toggle(),
-                        child: Text(
-                          '비밀글',
-                          style: MyTextStyles.f16.copyWith(
-                              color: MyColors.black2,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      )
+                      Image.asset(
+                        'assets/icons/ico_arrow_down.png',
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: TextField(
-              controller: ctr.contentController,
-              decoration: InputDecoration(
-                hintText: '문의 내용을 작성해주세요.',
-                hintStyle: MyTextStyles.f14.copyWith(color: MyColors.grey10),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(MyDimensions.radius),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(MyDimensions.radius),
-                  borderSide: BorderSide(width: 1, color: MyColors.grey1),
-                ),
               ),
-              maxLines: 6,
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '내용',
+                    style: MyTextStyles.f16.copyWith(
+                        color: MyColors.black3, fontWeight: FontWeight.w500),
+                  ),
+                  Obx(
+                    () => Row(
+                      children: [
+                        SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: Checkbox(
+                              value: ctr.isSecret.value,
+                              activeColor: MyColors.primary,
+                              onChanged: (value) {
+                                ctr.isSecret.toggle();
+                              }),
+                        ),
+                        SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {
+                            ctr.isSecret.toggle();
+                          },
+                          child: Text(
+                            '비밀글',
+                            style: MyTextStyles.f16.copyWith(
+                                color: MyColors.black2,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: ctr.contentController,
+                decoration: InputDecoration(
+                  hintText: '문의 내용을 작성해주세요.',
+                  hintStyle: MyTextStyles.f14.copyWith(color: MyColors.grey10),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(MyDimensions.radius),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(MyDimensions.radius),
+                    borderSide: BorderSide(width: 1, color: MyColors.grey1),
+                  ),
+                ),
+                maxLines: 6,
+              ),
+            ),
 
-          Spacer(),
-          Divider(
-            color: MyColors.grey1,
-          ),
-          Container(
-            height: Get.height / 17,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ))),
-                  onPressed: () {
-                    ctr.submitInquiryPressed();
-                  },
-                  child: Text("문의하기",
-                      style: MyTextStyles.f16_bold
-                          .copyWith(color: MyColors.white))),
+            Spacer(),
+            Divider(
+              color: MyColors.grey1,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          )
-        ],
+            Container(
+              height: Get.height / 17,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: GetPlatform.isMobile?Get.width:500,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ))),
+                    onPressed: () {
+                      ctr.submitInquiryPressed();
+                    },
+                    child: Text("문의하기",
+                        style: MyTextStyles.f16_bold
+                            .copyWith(color: MyColors.white))),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ],
+        ),
       ),
     );
   }

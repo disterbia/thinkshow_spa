@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,7 @@ class BusinessEditView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomButton(
-              width: 500,
+              width: !GetPlatform.isMobile?500:Get.width,
               onPressed: ()=>
                 ctr.validateLicense(),
 

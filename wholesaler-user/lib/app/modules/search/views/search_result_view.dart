@@ -139,7 +139,7 @@ class SearchResults extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             // SizedBox is added just to remove unbounded error
             return SizedBox(
-              width: 100, // this is fake number. real width is calculated based on ProductItemVertical size
+              width:  GetPlatform.isMobile?100:140, // this is fake number. real width is calculated based on ProductItemVertical size
               child: ProductItemVertical(
                 product: ctr.recentlyVisitedProducts[index],
               ),

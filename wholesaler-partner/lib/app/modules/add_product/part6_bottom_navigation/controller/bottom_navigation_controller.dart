@@ -246,7 +246,7 @@ class AP_Part6Controller extends GetxController {
               .text
               .isNotEmpty) {
             try {
-              int.parse(part2controller
+              double.parse(part2controller
                   .textEditingControllers[i.toString() + j.toString()]!.text);
             } catch (e) {
               isLoading.value = false;
@@ -581,7 +581,7 @@ class AP_Part6Controller extends GetxController {
               .text
               .isNotEmpty) {
             try {
-              int.parse(part2controller
+              double.parse(part2controller
                   .textEditingControllers[i.toString() + j.toString()]!.text);
             } catch (e) {
               isLoading.value = false;
@@ -601,6 +601,7 @@ class AP_Part6Controller extends GetxController {
     }
 
     if (sizeInfoList.isEmpty) {
+      isLoading.value = false;
       Get.back();
       mSnackbar(message: '사이즈 선택해 주세요.');
       return;
@@ -626,7 +627,6 @@ class AP_Part6Controller extends GetxController {
         return;
       }
     }
-
     print('subCategoryId ${subCategoryId}');
     Map<String, dynamic> data = {
       "product_name": productName,

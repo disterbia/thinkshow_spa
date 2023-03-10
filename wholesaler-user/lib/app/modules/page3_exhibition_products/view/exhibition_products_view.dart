@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
@@ -31,30 +32,35 @@ class ExhibitionProductsView extends GetView {
       ()=>ctr.isLoading.value?LoadingWidget(): SingleChildScrollView(
           child: Column(
             children: [
-              // Obx(
-              //   () => ctr.bannerPicture != ''
-              //       ? CachedNetworkImage(
-              //           imageUrl: ctr.bannerPicture.value,
-              //           fadeInDuration: Duration(milliseconds: 0),
-              //           fadeOutDuration: Duration(milliseconds: 0),
-              //           placeholderFadeInDuration: Duration(milliseconds: 0),
-              //           width: 500,
-              //           fit: BoxFit.fitWidth,
-              //           errorWidget: (context, url, error) => Icon(Icons.error),
-              //         )
-              //       : LoadingWidget(),
-              // ),
-               Container(color: MyColors.primary,height: 50,
-                 child: Center(
+               ListView.separated(padding: EdgeInsets.zero,
+                  separatorBuilder: (context, index) => SizedBox(height: 5,),
+                    itemCount:ctr.bannerPicture.length ,physics: NeverScrollableScrollPhysics(),shrinkWrap: true,
+                    itemBuilder: (context,index) {
+                        return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                           ctr.bannerPicture[index],
+                            width: GetPlatform.isMobile?Get.width:500,
+                            fit: BoxFit.fitWidth,
+
+                          );
+                      }
+                    )
+                    ,
+              SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Container(height: 50,decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: MyColors.black,),
+                  child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        ctr.title.value,
-                        style: MyTextStyles.f16_bold.copyWith(color: Colors.white)
+                          ctr.title.value,
+                          style: MyTextStyles.f16_bold.copyWith(color: Colors.white)
                       ),
                     ),
                   ),
-               ),
+                ),
+              ),
+
               ctr.products.isEmpty?Text(
                   "상품 없음",
                   style: MyTextStyles.f16_bold,
@@ -62,7 +68,7 @@ class ExhibitionProductsView extends GetView {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: ProductGridViewBuilder(
                   crossAxisCount: 3,
-                  productHeight: 280,
+                  productHeight: (500*0.7).floor(),
                   products: ctr.products,
                   isShowLoadingCircle: false.obs,
                 ),

@@ -73,7 +73,6 @@ class SignupOrEditController extends GetxController {
             isIdAvailable ? '사용가능한 ID입니다.' : '사용 불가능한 ID입니다. 다른 ID를 입력하세요.');
   }
 
-
   Future<void> searchAddressBtnPressed() async {
     log('inside searchAddressBtnPressed');
     Kpostal? result = await Navigator.push(
@@ -144,6 +143,7 @@ class SignupOrEditController extends GetxController {
 
       bool isSuccess = await _apiProvider.putUserInfoEdit();
       if (isSuccess) {
+        await init();
         mSnackbar(message: '수정 완료되었습니다.');
         Get.back();
         return;

@@ -55,9 +55,9 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
           Container(
             decoration: BoxDecoration(
               color: MyColors.white,
-              border: Border(
-                bottom: BorderSide(color: MyColors.grey1),
-              ),
+              // border: Border(
+              //   bottom: BorderSide(color: MyColors.grey1),
+              // ),
             ),
             height: 45,
             child: TabBar(onTap: (index) {
@@ -75,7 +75,7 @@ class _SimpleTabBarState extends State<SimpleTabBar> with SingleTickerProviderSt
                 ),
               ),
               labelColor: MyColors.black,
-              unselectedLabelColor: MyColors.black,
+              unselectedLabelColor: Colors.grey,
               tabs: widget.tabs!,
               labelPadding: EdgeInsets.zero,
             ),

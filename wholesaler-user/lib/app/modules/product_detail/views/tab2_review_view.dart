@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -105,17 +106,14 @@ class Tab2ReviewView extends GetView {
               height: 20,
             ),
             ctr.reviewInfoModel.value.reviewCategoryModel!['fit_info'] != null
-                ? _progressWidget(
-                    '착용감',
-                    ctr.reviewInfoModel.value
-                        .reviewCategoryModel!['fit_info']!)
+                ? _progressWidget('착용감',
+                    ctr.reviewInfoModel.value.reviewCategoryModel!['fit_info']!)
                 : SizedBox.shrink(),
 
             SizedBox(
               height: 10,
             ),
-            ctr.reviewInfoModel.value.reviewCategoryModel!['color_info'] !=
-                    null
+            ctr.reviewInfoModel.value.reviewCategoryModel!['color_info'] != null
                 ? _progressWidget(
                     '색감',
                     ctr.reviewInfoModel.value
@@ -164,14 +162,12 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 0
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          ctr.photoReviews[0].images![0],
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                     ctr.photoReviews[0].images![0],
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.fill,
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+
                                     ),
                                   )
                                 : ClipRRect(
@@ -185,14 +181,12 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 1
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          ctr.photoReviews[1].images![0],
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                      ctr.photoReviews[1].images![0],
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.fill,
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+
                                     ),
                                   )
                                 : ClipRRect(
@@ -206,14 +200,12 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 2
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          ctr.photoReviews[2].images![0],
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                   ctr.photoReviews[2].images![0],
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.fill,
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+
                                     ),
                                   )
                                 : ClipRRect(
@@ -241,8 +233,7 @@ class Tab2ReviewView extends GetView {
                                   width: 80,
                                   height: 80,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.add_rounded,
@@ -360,7 +351,7 @@ class Tab2ReviewView extends GetView {
   //     child: OutlinedButton(
   //       onPressed: (() {
   //         if (CacheProvider().getToken().isEmpty) {
-  //           Get.to(() => User_LoginPageView());
+  //            mFuctions.userLogout();
   //           return;
   //         }
   //         Get.to(() => ReviewDetailView(
@@ -408,7 +399,7 @@ class Tab2ReviewView extends GetView {
           // if (review.images != null)
           //   for (String imageUrl in review.images!) _imageBuilder(imageUrl),
           // review.reviewImageUrl != null
-          //     ? CachedNetworkImage(
+          //     ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
           //         imageUrl: review.reviewImageUrl!,
           //         fit: BoxFit.contain,
           //         // placeholder: (context, url) => Center(child: CircularProgressIndicator()),
@@ -424,7 +415,13 @@ class Tab2ReviewView extends GetView {
                   children: [
                     imagesSlider(review, index),
                     SizedBox(
-                      height: 15,
+                      height: 5,
+                    ),
+                    Obx(
+                      () => _indicator(review.images!, index),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                   ],
                 )
@@ -453,60 +450,49 @@ class Tab2ReviewView extends GetView {
   }
 
   Widget imagesSlider(Review review, int index) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        CarouselSlider(
-          carouselController: ctr.indicatorSliderController[index],
-          options: CarouselOptions(
-              height: Get.height * 0.5,
-              autoPlay: false,
-              viewportFraction: 1,
-              onPageChanged: (index, reason) {
-                ctr.sliderIndex[index] = index;
-              }),
-          items: [
-            for (String img in review.images!)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: CachedNetworkImage(
-                  fit: BoxFit.fill,
-                  width: 500,
-                  imageUrl: img,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              )
-          ],
-        ),
-        Positioned(
-          bottom: 20,
-          child: Obx(
-            () => _indicator(review.images!),
-          ),
-        ),
+    return CarouselSlider(
+      carouselController: ctr.indicatorSliderController[index],
+      options: CarouselOptions(
+          height: GetPlatform.isMobile?Get.width:500,
+          autoPlay: false,
+          viewportFraction: 1,
+          onPageChanged: (i, reason) {
+            ctr.sliderIndex[index] = i;
+          }),
+      items: [
+        for (String img in review.images!)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+              fit: BoxFit.fill,
+              width: GetPlatform.isMobile?Get.width:500,
+              height: GetPlatform.isMobile?Get.width:500,
+             img,
+
+            ),
+          )
       ],
     );
   }
 
-  Widget _indicator(List<String> imgList) {
+  Widget _indicator(List<String> imgList, int index) {
     print('inisde _indicator imgList ${imgList.length}');
+    print('ctr.sliderIndex[index]${ctr.sliderIndex[index]}');
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: imgList.asMap().entries.map((entry) {
           return GestureDetector(
               // onTap: () => ctr.indicatorSliderController.animateToPage(entry.key),
               child: Container(
-            width: 10.0,
-            height: 10.0,
+            width: 7.0,
+            height: 7.0,
             margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: MyColors.primary.withOpacity(
-                    ctr.sliderIndex.value == entry.key ? 0.9 : 0.4)),
+                color: MyColors.black.withOpacity(
+                    ctr.sliderIndex[index] == entry.key ? 0.9 : 0.3)),
           ));
         }).toList(),
       ),
@@ -633,7 +619,7 @@ class Tab2ReviewView extends GetView {
 
       itemBuilder: (context, _) => Icon(
         Icons.star_rounded,
-        color: Colors.amber,
+        color: MyColors.primary,
       ),
       onRatingUpdate: (rating) {},
     );
@@ -649,7 +635,7 @@ class Tab2ReviewView extends GetView {
 
       itemBuilder: (context, _) => Icon(
         Icons.star_rounded,
-        color: Colors.amber,
+        color: MyColors.primary,
       ),
       onRatingUpdate: (rating) {},
     );
@@ -705,13 +691,11 @@ class Tab2ReviewView extends GetView {
       alignment: Alignment.bottomLeft,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CachedNetworkImage(
-          imageUrl: imageUrl,
+        child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+        imageUrl,
           width: 100,
           height: 150,
           fit: BoxFit.cover,
-          // placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
     );

@@ -135,14 +135,14 @@ class Cart2PaymentController extends GetxController {
     try {
       result = await Navigator.push(Get.context!, MaterialPageRoute(builder: (_) => KpostalView()));
     } catch (e) {
-     // print('The user did not select an address. searchAddressBtnPressed error: $e');
+      // print('The user did not select an address. searchAddressBtnPressed error: $e');
       return;
     }
     address1ZipCodeController.text = result.postCode;
     address2Controller.text = result.address;
     // Update delivery fee. For 제주도 4,000원, for the rest of the country: free
     cart2checkoutModel.value.deliveryCost.value = await _apiProvider.getDeliveryFee(checkout_id: cart2checkoutModel.value.checkoutId!, postCode: result.postCode, address: result.address);
-   // print('cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
+    // print('cart2checkoutModel.value.deliveryCost.value = ${cart2checkoutModel.value.deliveryCost.value}');
 
     // update totalPrice with new delivery fee
     cart2checkoutModel.value.totalProductAmount.value = cart2checkoutModel.value.onlyProductPrice.value + cart2checkoutModel.value.deliveryCost.value - cart2checkoutModel.value.discountPrice.value;

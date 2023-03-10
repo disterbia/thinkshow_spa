@@ -28,7 +28,7 @@ class Tab2FindUserPasswordView
   @override
   Widget build(BuildContext context) {
     init();
-    return Obx(() {
+    return Obx(() {ctr.isLoading.value;
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -44,16 +44,17 @@ class Tab2FindUserPasswordView
               _space(),
               PhoneNumberPhoneVerify(
                 spaceBetween: 10,
+                isPassword: true,
               ),
-              _space(),
-              TwoButtons(
-                  isLoadingRight: ctr.isLoading.value,
-                  leftBtnText: '취소',
-                  lBtnOnPressed: () {
-                    Get.to(() => User_LoginPageView());
-                  },
-                  rightBtnText: '비밀번호 찾기',
-                  rBtnOnPressed: ctr.findPassword),
+              // _space(),
+              // TwoButtons(
+              //     isLoadingRight: ctr.isLoading.value,
+              //     leftBtnText: '취소',
+              //     lBtnOnPressed: () {
+              //        mFuctions.userLogout();
+              //     },
+              //     rightBtnText: '비밀번호 찾기',
+              //     rBtnOnPressed: ctr.findPassword),
             ],
           ),
         ),

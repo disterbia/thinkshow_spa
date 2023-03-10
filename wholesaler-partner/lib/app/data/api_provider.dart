@@ -13,6 +13,7 @@ import 'package:wholesaler_partner/app/models/ad_product_model.dart';
 import 'package:wholesaler_partner/app/models/best_products_model.dart';
 import 'package:wholesaler_partner/app/models/product_modify_model/product_modify_model.dart';
 import 'package:wholesaler_partner/app/models/register_ceo_employee/address.dart';
+import 'package:wholesaler_partner/app/models/service_center_model.dart';
 import 'package:wholesaler_partner/app/models/store_location_model.dart';
 import 'package:wholesaler_partner/app/modules/ad/tab1_ad_status/models/ad_effectiveness_report_model.dart';
 import 'package:wholesaler_partner/app/modules/ad/tab2_ad_application/model/ad_tab2_apply_model.dart';
@@ -1438,6 +1439,22 @@ class pApiProvider extends GetConnect {
     }
   }
 
+  Future<ServiceCenterModel> getServiceCenter() async {
+    final response = await get(
+        "https://api.thinksmk.com:3000//v1/store-api/setting/service-center",
+        headers: headers);
+    if (response.statusCode == 200) {
+
+      return ServiceCenterModel.fromJson(jsonDecode(response.bodyString!));
+    }
+    if (response.statusCode == 400) {
+      return Future.error(response.statusText!);
+    } else {
+      print('getServiceCenter error');
+      mSnackbar(message: response.statusText!);
+      return Future.error(response.statusText!);
+    }
+  }
   // Future<StatusModel> submitInquiry({required String id, required Map<String, dynamic> data}) async {
   //   String url = mConst.API_BASE_URL + mConst.API_STORE_PATH + '/products/$id/inquiry';
 

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
@@ -19,80 +21,80 @@ class Tab1RankingView extends StatelessWidget {
   Widget build(BuildContext context) {
     ctr.getRankedStoreData();
     return Obx(
-          () => ctr.isLoading.value
+      () => ctr.isLoading.value
           ? LoadingWidget()
           : Stack(
-        children: [
-          SingleChildScrollView(
-            controller: ctr.scrollController,
-            child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10.0, top: 10),
-                    child: ToggleButtons(
-                      //direction: vertical ? Axis.vertical : Axis.horizontal,
-                      onPressed: (int index) {
-                        if (index == 0) ctr.getMostStoreData();
-                        if (index == 1) ctr.getRankedStoreData();
-                        // The button that is tapped is set to true, and the others to false.
-                        for (int i = 0; i < _selected.length; i++) {
-                          _selected[i] = i == index;
-                        }
-                      },
-                      borderRadius:
-                      const BorderRadius.all(Radius.circular(8)),
-                      selectedColor: Colors.white,
-                      fillColor: MyColors.primary,
-                      color: Colors.grey,
-                      constraints: const BoxConstraints(
-                        minHeight: 25.0,
-                        minWidth: 25.0,
+                SingleChildScrollView(
+                  controller: ctr.scrollController,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0, top: 10),
+                          child: ToggleButtons(
+                            //direction: vertical ? Axis.vertical : Axis.horizontal,
+                            onPressed: (int index) {
+                              if (index == 0) ctr.getMostStoreData();
+                              if (index == 1) ctr.getRankedStoreData();
+                              // The button that is tapped is set to true, and the others to false.
+                              for (int i = 0; i < _selected.length; i++) {
+                                _selected[i] = i == index;
+                              }
+                            },
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            selectedColor: Colors.black,
+                            fillColor: MyColors.primary,
+                            color: Colors.grey,
+                            constraints: const BoxConstraints(
+                              minHeight: 30.0,
+                              minWidth: 30.0,
+                            ),
+                            isSelected: _selected,
+                            children: [Text(" 추천순 "), Text(" 인기순 ")],
+                          ),
+                        ),
                       ),
-                      isSelected: _selected,
-                      children: [Text(" 추천순 "), Text(" 인기순 ")],
+                      ListView.builder(
+                          itemCount: ctr.stores.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return _storeList(ctr.stores[index], context);
+                          }),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: SizedBox(
+                    width: 45,
+                    height: 45,
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.arrow_upward_rounded),
+                      onPressed: () {
+                        ctr.scrollController.jumpTo(0);
+                      },
                     ),
                   ),
                 ),
-                ListView.builder(
-                    itemCount: ctr.stores.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return _storeList(ctr.stores[index], context);
-                    }),
               ],
             ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: SizedBox(
-              width: 45,
-              height: 45,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_upward_rounded),
-                onPressed: () {
-                  ctr.scrollController.jumpTo(0);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
   Widget _storeList(Store store, BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Get.to(
-                () => StoreDetailView(
-              storeId: store.id,
-              prevPage: prevPage,
-            ),
+            () => StoreDetailView(
+                  storeId: store.id,
+                  prevPage: prevPage,
+                ),
             preventDuplicates: true);
       },
       child: Container(
@@ -126,41 +128,48 @@ class Tab1RankingView extends StatelessWidget {
                 if (store.topImagePath!.length < 4) return Container();
                 return Container(
                   decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
                       Expanded(
                           child: ClipRRect(
-                            child: CachedNetworkImage(
-                              fit: BoxFit.fitHeight,
-                              imageUrl: store.topImagePath![0],
-                              height: 100,
-                            ),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4),
-                                bottomLeft: Radius.circular(4)),
-                          )),
+                        child: ExtendedImage.network( store.topImagePath![0],
+                          clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,
+                          //cacheHeight:100 ,//cacheWidth: (500/4).ceil(),
+                          fit: BoxFit.fitHeight,
+
+                          height: GetPlatform.isMobile?100:150,
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4)),
+                      )),
                       SizedBox(width: 2),
                       Expanded(
-                          child: CachedNetworkImage(
+                          child: ExtendedImage.network( store.topImagePath![1],
+                            clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,
+                            //cacheHeight:100 ,//cacheWidth: (500/4).ceil(),
                             fit: BoxFit.fitHeight,
-                            imageUrl: store.topImagePath![1],
-                            height: 100,
-                          )),
+                            height: GetPlatform.isMobile?100:150,
+                      )),
                       SizedBox(width: 2),
                       Expanded(
-                          child: CachedNetworkImage(
+                          child: ExtendedImage.network(store.topImagePath![2],
+                            clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,
+                            //cacheHeight:100 ,//cacheWidth: (500/4).ceil(),
                             fit: BoxFit.fitHeight,
-                            imageUrl: store.topImagePath![2],
-                            height: 100,
-                          )),
+
+                            height: GetPlatform.isMobile?100:150,
+                      )),
                       SizedBox(width: 2),
                       Expanded(
                           child: ClipRRect(
-                              child: CachedNetworkImage(
+                              child: ExtendedImage.network(
+                                store.topImagePath![3],
+                                clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,
+                                //cacheHeight:100 ,//cacheWidth: (500/4).ceil(),
                                 fit: BoxFit.fitHeight,
-                                imageUrl: store.topImagePath![3],
-                                height: 100,
+                                height: GetPlatform.isMobile?100:150,
                               ),
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(4),
@@ -178,8 +187,8 @@ class Tab1RankingView extends StatelessWidget {
               //     physics: NeverScrollableScrollPhysics(),
               //       scrollDirection: Axis.horizontal,
               //       itemBuilder: (context, index) {
-              //         return SizedBox(width: 500*0.2,
-              //           child: CachedNetworkImage(fit: BoxFit.fitHeight,
+              //         return SizedBox(width: GetPlatform.isMobile?Get.width:500*0.2,
+              //           child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,fit: BoxFit.fitHeight,
               //               imageUrl: store.topImagePath![index]),
               //         );
               //       },
@@ -206,24 +215,24 @@ class Tab1RankingView extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: store.imgUrl != null
-          ? CachedNetworkImage(
-        imageUrl: store.imgUrl!.value,
-        width: 50,
-        height: 50,
-        fit: BoxFit.cover,
-        // placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-      )
+          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          store.imgUrl!.value,
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+              // placeholder: (context, url) => CircularProgressIndicator(),
+
+            )
           : Image.asset(
-        'assets/icons/ic_store.png',
-        width: 50,
-      ),
+              'assets/icons/ic_store.png',
+              width: 50,
+            ),
     );
   }
 
   Widget _storeName(Store store) {
     List<String> categoris =
-    (store.categories!).map((item) => item as String).toList();
+        (store.categories!).map((item) => item as String).toList();
     String category = "";
     for (var i = 0; i < categoris.length; i++) {
       if (i == categoris.length - 1)
@@ -237,7 +246,7 @@ class Tab1RankingView extends StatelessWidget {
       children: [
         Text(
           store.name!,
-          style: MyTextStyles.f16.copyWith(color: MyColors.black3),
+          style: MyTextStyles.f16_bold.copyWith(color: Colors.black),
         ),
         SizedBox(
           height: 5,
@@ -267,7 +276,7 @@ class Tab1RankingView extends StatelessWidget {
         context: context,
         builder: (context) {
           return Container(
-            height: Get.height / 3,
+            height: 300,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -292,13 +301,13 @@ class Tab1RankingView extends StatelessWidget {
                     Text(
                       "${store.name}와 비슷한 스토어",
                       style:
-                      MyTextStyles.f16_bold.copyWith(color: Colors.black),
+                          MyTextStyles.f16_bold.copyWith(color: Colors.black),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Container(
-                      height: 140,
+                      height: 180,
                       child: Row(
                         children: [
                           SizedBox(
@@ -308,10 +317,10 @@ class Tab1RankingView extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Get.to(
-                                        () => StoreDetailView(
-                                      storeId: ctr.sameId[0],
-                                      prevPage: prevPage,
-                                    ),
+                                    () => StoreDetailView(
+                                          storeId: ctr.sameId[0],
+                                          prevPage: prevPage,
+                                        ),
                                     preventDuplicates: true);
                               },
                               child: Container(
@@ -322,42 +331,48 @@ class Tab1RankingView extends StatelessWidget {
                                           child: ClipRRect(
                                             child: ctr.mainImage[0] == ""
                                                 ? Image.asset(
-                                              "assets/icons/ic_store.png",
-                                            )
-                                                : CachedNetworkImage(
-                                              imageUrl: ctr.mainImage[0],
-                                              fit: BoxFit.fill,
-                                            ),
+                                                    "assets/icons/ic_store.png",
+                                                  )
+                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                   ctr.mainImage[0],
+                                              width: GetPlatform.isMobile?(Get.width/2)-20:(500/2)-20,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(10.0),
                                                 topRight:
-                                                Radius.circular(10.0)),
+                                                    Radius.circular(10.0)),
                                           ),
                                         ),
-                                        height: 120),
+                                        height: 130),
                                     Align(
                                         alignment: Alignment.bottomCenter,
-                                        child: Container(
-                                          child: Center(
-                                              child: CircleAvatar(
+                                        child: Column(mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              child: Center(
+                                                  child: CircleAvatar(
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(2),
                                                   child: ClipOval(
                                                     child: ctr.subImage[0] == ""
                                                         ? Image.asset(
-                                                      "assets/icons/ic_store.png",
-                                                    )
-                                                        : CachedNetworkImage(
-                                                      imageUrl:
-                                                      ctr.subImage[0],
-                                                    ),
+                                                            "assets/icons/ic_store.png",
+                                                          )
+                                                        : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+
+                                                                ctr.subImage[0],
+                                                          ),
                                                   ),
                                                 ),
                                                 radius: 50,
                                                 backgroundColor: Colors.white,
                                               )),
-                                          width: 50,
-                                          height: 50,
+                                              width: 50,
+                                              height: 50,
+                                            ),
+                                            Text(ctr.storeName[0]!,style: MyTextStyles.f18_bold,)
+                                          ],
                                         ))
                                   ],
                                 ),
@@ -371,10 +386,10 @@ class Tab1RankingView extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Get.to(
-                                        () => StoreDetailView(
-                                      storeId: ctr.sameId[1],
-                                      prevPage: prevPage,
-                                    ),
+                                    () => StoreDetailView(
+                                          storeId: ctr.sameId[1],
+                                          prevPage: prevPage,
+                                        ),
                                     preventDuplicates: true);
                               },
                               child: Container(
@@ -385,42 +400,48 @@ class Tab1RankingView extends StatelessWidget {
                                           child: ClipRRect(
                                             child: ctr.mainImage[1] == ""
                                                 ? Image.asset(
-                                              "assets/icons/ic_store.png",
-                                            )
-                                                : CachedNetworkImage(
-                                              imageUrl: ctr.mainImage[1],
-                                              fit: BoxFit.fill,
-                                            ),
+                                                    "assets/icons/ic_store.png",
+                                                  )
+                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                     ctr.mainImage[1],
+                                              width: GetPlatform.isMobile?(Get.width/2)-20:(500/2)-20,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(10.0),
                                                 topRight:
-                                                Radius.circular(10.0)),
+                                                    Radius.circular(10.0)),
                                           ),
                                         ),
-                                        height: 120),
+                                        height: 130),
                                     Align(
                                         alignment: Alignment.bottomCenter,
-                                        child: Container(
-                                          child: Center(
-                                              child: CircleAvatar(
+                                        child: Column(mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              child: Center(
+                                                  child: CircleAvatar(
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(2),
                                                   child: ctr.subImage[1] == ""
                                                       ? Image.asset(
-                                                    "assets/icons/ic_store.png",
-                                                  )
+                                                          "assets/icons/ic_store.png",
+                                                        )
                                                       : ClipOval(
-                                                    child: CachedNetworkImage(
-                                                      imageUrl:
-                                                      ctr.subImage[1],
-                                                    ),
-                                                  ),
+                                                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+
+                                                                ctr.subImage[1],
+                                                          ),
+                                                        ),
                                                 ),
                                                 radius: 50,
                                                 backgroundColor: Colors.white,
                                               )),
-                                          width: 50,
-                                          height: 50,
+                                              width: 50,
+                                              height: 50,
+                                            ),
+                                            Text(ctr.storeName[1]!,style: MyTextStyles.f18_bold,)
+                                          ],
                                         ))
                                   ],
                                 ),
@@ -483,13 +504,13 @@ class Tab1RankingView extends StatelessWidget {
         }
       },
       child: Obx(
-            () => Column(
+        () => Column(
           children: [
-            Icon(
-              size: 25,
-              store.isBookmarked!.isTrue ? Icons.star : Icons.star_border,
-              color: MyColors.primary,
-            ),
+            Image.asset(
+                height: 25,
+                store.isBookmarked!.isTrue ? "assets/icons/ico_star_on.png" : "assets/icons/ico_star_off.png",
+              ),
+
             Text(
               result.value,
               style: TextStyle(

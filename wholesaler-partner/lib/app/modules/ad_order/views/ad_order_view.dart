@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -34,7 +35,7 @@ class AdOrderView extends GetView {
                       () => ctr.adOrderModel.value.imageUrl != null
                           ? CachedNetworkImage(
                               imageUrl: ctr.adOrderModel.value.imageUrl!,
-                              width: 500,
+            width: !GetPlatform.isMobile?500:Get.width,
                               // placeholder: (context, url) => CircularProgressIndicator(),
                               errorWidget: (context, url, error) => Icon(Icons.error),
                             )
@@ -80,7 +81,7 @@ class AdOrderView extends GetView {
                 ),
               ),
               // Divider
-              Container(height: 6, width: double.infinity, color: MyColors.grey3),
+              Container(height: 6, width: !GetPlatform.isMobile?500:Get.width, color: MyColors.grey3),
               SizedBox(height: 10),
               // Bulletin : 공지사항
               Container(

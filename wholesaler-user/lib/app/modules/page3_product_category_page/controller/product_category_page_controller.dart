@@ -93,6 +93,6 @@ class ProductCategoryPageController extends GetxController {
     if (tempProducts.length == 0) {
       allowCallAPI.value = false;
     }
-    isLoading.value=true;
+    isLoading.value=false;
   }
 }

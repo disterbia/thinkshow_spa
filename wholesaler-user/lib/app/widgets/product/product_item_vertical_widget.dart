@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -30,12 +31,14 @@ class ProductItemVertical extends StatelessWidget {
   Function(bool?)? onCheckboxChanged;
   bool? isFavorite;
   bool? onlyPhoto;
+  int? crossAxisCount;
   ProductItemVertical({
     required this.product,
     this.productNumber,
     this.onCheckboxChanged,
     this.isFavorite,
     this.onlyPhoto = false,
+    this.crossAxisCount,
   });
 
   @override
@@ -50,8 +53,7 @@ class ProductItemVertical extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Align(
-            alignment: Alignment.center,
+          Align(alignment: Alignment.center,
             child: Stack(
               children: [
                 // Image
@@ -117,39 +119,41 @@ class ProductItemVertical extends StatelessWidget {
         product.hasBellIconAndBorder != null
             ? Obx(
                 () => Container(
-                  height: product.imgHeight ?? mConst.fixedImgHeight,
-                  width: double.infinity,
+                  height: product.imgHeight ?? (GetPlatform.isMobile?Get.width/3:500/3),
+                  width:GetPlatform.isMobile? double.infinity:500,
                   // width: product.imgWidth ?? mConst.fixedImgWidth,
                   decoration: product.hasBellIconAndBorder!.isTrue
                       ? GoldenBorderDecorationBuilder()
                       : null,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(15),
                     child: FittedBox(
-                      child: CachedNetworkImage(
-                        imageUrl: product.imgUrl,
+                      child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false, enableLoadState: false,
+                        product.imgUrl,
+                        //cacheWidth:(500).ceil() ,
+                        //cacheHeight: (product.imgHeight??500/3).ceil(),
                         // placeholder: (context, url) => null,
-                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
               )
             : Container(
-                height: product.imgHeight ?? mConst.fixedImgHeight,
-                width: double.infinity,
+                height: product.imgHeight ?? (GetPlatform.isMobile?Get.width/3:500/3),
+                width: GetPlatform.isMobile? double.infinity:500,
                 // width: product.imgWidth ?? mConst.fixedImgWidth,
                 decoration: null,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(15),
                   child: FittedBox(
-                    child: CachedNetworkImage(
-                      imageUrl: product.imgUrl,
+                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false, enableLoadState: false,
+                       product.imgUrl,
+                      //cacheWidth:500.ceil() ,
+                      //cacheHeight: (product.imgHeight??500/3).ceil(),
                       // placeholder: (context, url) => null,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -184,6 +188,7 @@ class ProductItemVertical extends StatelessWidget {
               onTap: () async {
                 //
                 if (CacheProvider().getToken().isEmpty) {
+                  mSnackbar(message: '로그인 후 이용 가능합니다.');
                   mFuctions.userLogout();
                   return;
                 }
@@ -191,8 +196,8 @@ class ProductItemVertical extends StatelessWidget {
                 bool result = await uApiProvider().chekToken();
                 if (!result) {
                   print('logout');
-                  mSnackbar(message: '로그인 세션이 만료되었습니다.');
-                  mFuctions.userLogout();
+                  mSnackbar(message: '로그인 후 이용 가능합니다.');
+                   mFuctions.userLogout();
                   return;
                 }
                 product.isLiked!.toggle();
@@ -215,8 +220,8 @@ class ProductItemVertical extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: Image.asset(
                           product.isLiked != null && product.isLiked!.value
-                              ? 'assets/icons/ic_heart_filled.png'
-                              : 'assets/icons/ic_heart_rounded.png',
+                              ? 'assets/icons/ico_heart_on.png'
+                              : 'assets/icons/ico_heart_off.png',
                           width: 24,
                           height: 24,
                         ),
@@ -252,7 +257,7 @@ class ProductItemVertical extends StatelessWidget {
       return Text(
         product.store.name!,
         maxLines: 1,
-        style: MyTextStyles.f14.copyWith(color:Colors.black),
+        style: MyTextStyles.f14.copyWith(color:Colors.black,fontSize: crossAxisCount==2?16:14),
         overflow: TextOverflow.ellipsis,
       );
     }
@@ -265,7 +270,7 @@ class ProductItemVertical extends StatelessWidget {
         product.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: MyTextStyles.f12.copyWith(color: MyColors.black1),
+        style: MyTextStyles.f12.copyWith(color: MyColors.black1,fontSize: crossAxisCount==2?14:12),
       ),
     );
   }
@@ -279,19 +284,20 @@ class ProductItemVertical extends StatelessWidget {
           Row(
             children: [
               Flexible(
-                  child: Text(
+                  child: Text(maxLines: 1,
                 "띵 할인가 ",
-                style: TextStyle(fontSize: 10, color: Colors.redAccent),
+                style: TextStyle(fontSize: crossAxisCount==2?14:12, color: Colors.redAccent,overflow: TextOverflow.ellipsis,),
               )),
               Flexible(
-                child: Text(
+                child: Text(maxLines: 1,
                   Utils.numberFormat(number: product.normalPrice ?? 0),
                   style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
                       color: MyColors.grey4,
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontFamily: 'SpoqaHanSansNeo-Medium',
-                      fontSize: 10.0,
+                      fontSize: crossAxisCount==2?14:12,
                       decoration: TextDecoration.lineThrough),
                 ),
               ),
@@ -301,12 +307,12 @@ class ProductItemVertical extends StatelessWidget {
             children: [
               Flexible(
                 flex: 2,
-                child: Text(
-                  Utils.numberFormat(
-                      number: product.priceDiscountPercent ?? 0, suffix: '% '),
+                child: Text("${product.priceDiscountPercent ?? 0}% ",
+                  // Utils.numberFormat(
+                  //     number: product.priceDiscountPercent ?? 0, suffix: '% ').toString(),
                   style: MyTextStyles.f18_bold.copyWith(
-                      color: MyColors.primary,
-                      fontSize: 14,
+                      color: MyColors.primary2,
+                      fontSize: crossAxisCount==2?16:14,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -319,7 +325,7 @@ class ProductItemVertical extends StatelessWidget {
                     number: product.price ?? 0,
                   ),
                   style: MyTextStyles.f18_bold
-                      .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                      .copyWith(fontSize: crossAxisCount==2?16:14, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

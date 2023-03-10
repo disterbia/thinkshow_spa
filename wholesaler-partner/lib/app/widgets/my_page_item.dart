@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyPageItem extends StatelessWidget {
   String title;
@@ -10,7 +11,7 @@ class MyPageItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        width: double.infinity,
+        width: !GetPlatform.isMobile?500:Get.width,
         child: TextButton(
           onPressed: onPressed,
           child: Align(

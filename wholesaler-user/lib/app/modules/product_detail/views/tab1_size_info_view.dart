@@ -118,7 +118,7 @@ class Tab4SizeInfo extends GetView {
                       ),
                       // Size Table
                       // SizedBox(
-                      //   width: double.infinity,
+                      //   width: GetPlatform.isMobile?Get.width:500,
                       //   child: Obx(() =>
                       //       productDetailCtr.product.value.sizes != null
                       //           ? SizeTableWidget()
@@ -587,14 +587,14 @@ class Tab4SizeInfo extends GetView {
                                   productDetailCtr
                                       .product.value.materials![k].ratio!
                                       .toString() +
-                                  ' / ';
+                                  '% / ';
                             } else {
                               content += productDetailCtr
                                       .product.value.materials![k].name! +
                                   ' ' +
                                   productDetailCtr
                                       .product.value.materials![k].ratio!
-                                      .toString();
+                                      .toString()+'%';
                             }
                           }
 
@@ -764,7 +764,7 @@ class Tab4SizeInfo extends GetView {
               Expanded(
                 flex: 4,
                 child: Text(
-                  content,
+                 content,
                   style: TextStyle(
                       color: MyColors.black2,
                       fontWeight: FontWeight.w400,

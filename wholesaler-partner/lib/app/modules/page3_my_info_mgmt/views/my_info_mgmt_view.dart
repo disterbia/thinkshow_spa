@@ -36,7 +36,7 @@ class MyInfoMgmtView extends GetView<MyInfoMgmtController> {
                 SizedBox(height: 30),
                 // Divider
                 SizedBox(
-                  width: double.infinity,
+                  width: !GetPlatform.isMobile?500:Get.width,
                   height: 3,
                   child: const DecoratedBox(
                     decoration: BoxDecoration(color: MyColors.grey3),

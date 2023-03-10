@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/add_product/controller/add_product_controller.dart';
@@ -88,7 +89,7 @@ Widget bottomSheet() {
   return Container(
     color: MyColors.white,
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-    width: 500,
+    width: !GetPlatform.isMobile?500:Get.width,
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

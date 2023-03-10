@@ -30,7 +30,7 @@ class CacheProvider {
   void logOut() {}
 
   void removeToken() {
-   // print("제거됨");
+    print("제거됨");
     data.write(_tokenKey, '');
   }
 
@@ -107,6 +107,7 @@ class CacheProvider {
   }
 
   List<int> getAllRecentlyViewedProducts() {
+    print('data.read(_recentProductKey) ${data.read(_recentProductKey)}');
     List<int> productIds = [];
     if (data.read(_recentProductKey) != null) {
       for (var productid in data.read(_recentProductKey)) {

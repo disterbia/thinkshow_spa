@@ -165,7 +165,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
       backgroundColor: MyColors.grey1,
       borderColor: MyColors.grey1,
       textColor: MyColors.black,
-      width: 500,
+      width: GetPlatform.isMobile?Get.width:500,
     );
   }
 }

@@ -51,7 +51,7 @@ class Page4FavoriteProductsView extends GetView {
                 _title(),
                 ProductGridViewBuilder(
                   crossAxisCount: 3,
-                  productHeight: 280,
+                  productHeight: (500*0.7).floor(),
                   products: ctr.products,
                   isShowLoadingCircle: false.obs,
                 ),

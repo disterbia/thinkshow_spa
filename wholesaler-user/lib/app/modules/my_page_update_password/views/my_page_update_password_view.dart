@@ -42,7 +42,7 @@ class MyPageUpdatePasswordView extends GetView<MyPageUpdatePasswordController> {
               CustomButton(
                 onPressed: () => ctr.changePasswordPressed(),
                 text: 'change'.tr,
-                width: double.infinity,
+                width: GetPlatform.isMobile?Get.width:500,
               ),
               SizedBox(height: 10),
             ],

@@ -106,7 +106,7 @@ class HorizontalChipList4 {
   }
 
   Widget getIconTextList({required Function(int) onPressed}) {
-    double screenWidth = MediaQuery.of(Get.context!).size.width;
+    double screenWidth = GetPlatform.isMobile?Get.width:500;
 
     List<ClothCategory> clothCategories = ClothCategory.getAll();
     return Container(

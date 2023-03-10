@@ -140,7 +140,7 @@ class RegisterCeoEmployeePage4View
               ),
               SizedBox(height: 50),
               Container(
-                  width: double.infinity,
+                  width: !GetPlatform.isMobile?500:Get.width,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomButton(

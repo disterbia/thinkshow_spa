@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/src/calendar/common/event_args.dart';
@@ -81,7 +82,7 @@ class Tab2AdApplicationController extends GetxController {
       builder: (BuildContext context) => Dialog(
         insetPadding: EdgeInsets.all(0),
         child: Container(
-          width: 500 * 0.9,
+          width: !GetPlatform.isMobile?500*0.9:Get.width*0.9,
           height: Get.height * 0.8,
           padding: EdgeInsets.all(20),
           child: Column(

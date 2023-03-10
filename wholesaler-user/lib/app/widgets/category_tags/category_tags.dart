@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
 import 'package:wholesaler_user/app/models/cloth_category_model.dart';
@@ -107,13 +108,13 @@ class HorizontalChipList {
   }
 
   Widget getIconTextList({required Function(int) onPressed}) {
-    double screenWidth = MediaQuery.of(Get.context!).size.width;
+    double screenWidth = GetPlatform.isMobile?Get.width:500;
 
     List<ClothCategory> clothCategories = ClothCategory.getAll();
     return Container(
       alignment: Alignment.center,
       width: screenWidth,
-      height: Get.height/4,
+      height: GetPlatform.isMobile?Get.height/5:200,
       // child: ListView.builder(
       //     scrollDirection: Axis.horizontal,
       //     physics: NeverScrollableScrollPhysics(),

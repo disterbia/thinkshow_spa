@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:wholesaler_partner/app/modules/customer_center/controller/customer_center_controller.dart';
+import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/modules/faq/views/faq_view.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
@@ -17,64 +18,66 @@ class CustomerCenterView extends GetView<CustomerCenterController> {
           isBackEnable: true, title: isWithdrawPage ? '탈퇴 안내' : '고객센터'),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 탈퇴
-            isWithdrawPage ? _withdrawAccountBuilder() : Container(),
-            Text(
-              '고객센터',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18),
-            ),
-            SizedBox(height: 15),
-            Text('010-4453-3289'),
-            SizedBox(height: 30),
-            Text(
-              '상담시간 안내',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('전화 상담'),
-                Expanded(
+        child: Obx(
+              ()=>ctr.isLoading.value?LoadingWidget(): Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 탈퇴
+              isWithdrawPage ? _withdrawAccountBuilder() : Container(),
+              Text(
+                '고객센터',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18),
+              ),
+              SizedBox(height: 15),
+              Text(ctr.s.value.number!),
+              SizedBox(height: 30),
+              Text(
+                "상담시간 안내",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('전화 상담'),
+                  Expanded(
+                      child: Center(
+                        child: Text(ctr.s.value.telephoneConsultationTime!),
+                      )),
+                  GetPlatform.isMobile?IconButton(
+                      onPressed: () {
+                        UrlLauncher.launch("tel://${ctr.s.value.number}");
+                      },
+                      icon: Icon(Icons.call)):Container()
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('채팅 상담'),
+                  Expanded(
                     child: Center(
-                  child: Text('09:00 ~ 18:00 ( 평일 )'),
-                )),
-                IconButton(
-                    onPressed: () {
-                      UrlLauncher.launch("tel://01088395051");
-                    },
-                    icon: Icon(Icons.call))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('채팅 상담'),
-                Expanded(
-                  child: Center(
-                    child: Text('09:00 ~ 18:00'),
+                      child: Text(ctr.s.value.chatConsultationTime!),
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    UrlLauncher.launch("http://pf.kakao.com/_SIjhxj");
-                  },
-                  icon: Image.asset('assets/icons/ic_kakao_channel.png'),
-                ),
-              ],
-            ),
-          ],
+                  IconButton(
+                    onPressed: () {
+                      UrlLauncher.launch(ctr.s.value.kakaoLink!);
+                    },
+                    icon: Image.asset('assets/icons/ic_kakao_channel.png'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

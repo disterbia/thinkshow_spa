@@ -39,6 +39,7 @@ class Tab2ReviewProductDetailController extends GetxController {
         productId: productId, offset: 0, limit: 20);
 
     sliderIndex = List.filled(reviews.length, 0).obs;
+    
     indicatorSliderController =
         List.filled(reviews.length, CarouselController()).obs;
   }

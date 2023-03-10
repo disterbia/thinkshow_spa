@@ -95,7 +95,7 @@ class Tab2AdApplicationView extends GetView {
                     ),
                     Container(
                       height: 10,
-                      width: double.infinity,
+                      width: !GetPlatform.isMobile?500:Get.width,
                       color: MyColors.grey3,
                     ),
                     Padding(

@@ -14,6 +14,7 @@ import 'package:wholesaler_user/app/modules/auth/user_sign_up/views/user_sign_up
 import 'package:wholesaler_user/app/modules/main/view/user_main_view.dart';
 import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 import 'package:wholesaler_user/app/widgets/custom_field.dart';
+import 'package:wholesaler_user/app/widgets/main_appbar.dart';
 
 class User_LoginPageView extends GetView<User_LoginPageController> {
   User_LoginPageController ctr = Get.put(User_LoginPageController());
@@ -24,7 +25,7 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        // appBar: CustomAppbar(isBackEnable: true, title: ''),
+         appBar: MyVars.isUserProject()?MainAppbar(isBackEnable: true, title: '',):null,
         backgroundColor: MyColors.white,
         body: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -45,7 +46,7 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
                       () => Column(
                         children: [
                           Text('버전: ${ctr.appVersion}', style: MyTextStyles.f11),
-                          Text('빌드: ${ctr.appBuild}', style: MyTextStyles.f11),
+                          // Text('빌드: ${ctr.appBuild}', style: MyTextStyles.f11),
                         ],
                       ),
                     ),
@@ -96,14 +97,14 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: ElevatedButton(
             onPressed: () {
               ctr.loginBtnPressed();
             },
             child: Text(
               '로그인',
-              style: MyTextStyles.f18.copyWith(color: Colors.white),
+              style: MyTextStyles.f18.copyWith(color: Colors.black),
             )),
       ),
     );
@@ -146,7 +147,7 @@ class User_LoginPageView extends GetView<User_LoginPageController> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: OutlinedButton(
           onPressed: () {
             ctr.signUpBtnPressed();

@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wholesaler_partner/app/constant/enums.dart';
 import 'package:wholesaler_partner/app/models/best_products_model.dart';
 import 'package:wholesaler_partner/app/models/bulletin_model.dart';
@@ -12,6 +14,7 @@ import 'package:wholesaler_user/app/models/product_image_model.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
 import 'package:wholesaler_user/app/models/store_model.dart';
 import 'package:wholesaler_user/app/widgets/dingdong_3products_horiz/dingdong_3products_horiz_controller.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
 import '../../../data/api_provider.dart';
 import '../../../models/main_store_model.dart';
 
@@ -60,7 +63,7 @@ class PartnerHomeController extends GetxController {
     if (isScrollCtrAlreadySet == false) {
       scrollController.value.addListener(() {
         if (scrollController.value.position.pixels ==
-                scrollController.value.position.maxScrollExtent &&
+            scrollController.value.position.maxScrollExtent &&
             allowCallAPI.isTrue) {
           offset += mConst.limit;
           callGetProductsAPI(
@@ -76,30 +79,36 @@ class PartnerHomeController extends GetxController {
 
   Future<void> uploadImageBtnPressed() async {
     print('inside uploadMainTopImage1234');
-    _pickedImage = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 50);
-    print('_pickedImage $_pickedImage');
-    if (_pickedImage != null) {
-      isLoadingImage.value = true;
-      ProductImageModel? imageModel =
-          await _apiProvider.uploadStoreImage(pickedImage: _pickedImage!);
-      print('imageModel $imageModel');
-      if (imageModel != null) {
-        mainStoreInfo.value.mainTopImageUrl = imageModel.url.obs;
-        print('uploadMainTopImage imageModel.path  ${imageModel.path}');
-        await _apiProvider
-            .uploadMainTopImage(data: {'image_path': imageModel.path});
-        isLoadingImage.value = false;
+    try{
+      _pickedImage = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+      print('_pickedImage $_pickedImage');
+      if (_pickedImage != null) {
+        isLoadingImage.value = true;
+        ProductImageModel? imageModel =
+        await _apiProvider.uploadStoreImage(pickedImage: _pickedImage!);
+        print('imageModel $imageModel');
+        if (imageModel != null) {
+          mainStoreInfo.value.mainTopImageUrl = imageModel.url.obs;
+          print('uploadMainTopImage imageModel.path  ${imageModel.path}');
+          await _apiProvider
+              .uploadMainTopImage(data: {'image_path': imageModel.path});
+          isLoadingImage.value = false;
+        }
       }
-    }
-    // if (imagePath.value.isNotEmpty) {
-    //   mSnackbar(message: 'image_uploaded'.tr);
-    // }
-    isImagePicked.value = true;
-    if (_pickedImage != null) {
+      // if (imagePath.value.isNotEmpty) {
+      //   mSnackbar(message: 'image_uploaded'.tr);
+      // }
       isImagePicked.value = true;
-      // imagePath = pickedFile.path;
+      if (_pickedImage != null) {
+        isImagePicked.value = true;
+        // imagePath = pickedFile.path;
+      }
+    }on PlatformException catch(e){
+      mSnackbar(message: "설정에서 사진 접근을 허용 해주세요.");
+      openAppSettings();
     }
+
   }
 
   // Future<bool> uploadMainTopImage() async {
@@ -116,7 +125,7 @@ class PartnerHomeController extends GetxController {
     bestProducts.clear();
     offset = 0;
     List<BestProductsModel> bestProductsModels =
-        await _apiProvider.getBestProducts();
+    await _apiProvider.getBestProducts();
 
     Store tempStore = Store(
       id: bestProductsModels.isNotEmpty
@@ -129,15 +138,16 @@ class PartnerHomeController extends GetxController {
 
     for (BestProductsModel bestProduct in bestProductsModels) {
       Product tempProduct = Product(
-        id: bestProduct.id!,
-        title: bestProduct.productName!,
-        store: tempStore,
-        price: bestProduct.price,
-        normalPrice: MyVars.isUserProject() ? bestProduct.normalPrice : 0,
-        priceDiscountPercent:
-            MyVars.isUserProject() ? bestProduct.disCountPercent : 0,
-        isLiked: true.obs,
-        imgUrl: bestProduct.thumbnailImageUrl!,
+          id: bestProduct.id!,
+          title: bestProduct.productName!,
+          store: tempStore,
+          price: bestProduct.price,
+          normalPrice: MyVars.isUserProject() ? bestProduct.normalPrice : 0,
+          priceDiscountPercent:
+          MyVars.isUserProject() ? bestProduct.disCountPercent : 0,
+          isLiked: true.obs,
+          imgUrl: bestProduct.thumbnailImageUrl!,
+          isSoldout: bestProduct.isSoldOut!.obs
       );
       bestProducts.add(tempProduct);
     }
@@ -163,15 +173,16 @@ class PartnerHomeController extends GetxController {
         name: raw[i]['store_name'],
       );
       Product tempProduct = Product(
-        id: raw[i]['id'],
-        title: raw[i]['product_name'],
-        store: tempStore,
-        price: raw[i]['price'],
-        normalPrice: MyVars.isUserProject() ? raw[i]['normal_price'] : 0,
-        priceDiscountPercent:
-            MyVars.isUserProject() ? raw[i]['price_discount_percent'] : 0,
-        isLiked: raw[i]['is_favorite'] ? true.obs : false.obs,
-        imgUrl: raw[i]['thumbnail_image_url'],
+          id: raw[i]['id'],
+          title: raw[i]['product_name'],
+          store: tempStore,
+          price: raw[i]['price'],
+          normalPrice: MyVars.isUserProject() ? raw[i]['normal_price'] : 0,
+          priceDiscountPercent:
+          MyVars.isUserProject() ? raw[i]['price_discount_percent'] : 0,
+          isLiked: raw[i]['is_favorite'] ? true.obs : false.obs,
+          imgUrl: raw[i]['thumbnail_image_url'],
+          isSoldout: raw[i]['is_sold_out'] ? true.obs :false.obs
       );
 
       products.add(tempProduct);

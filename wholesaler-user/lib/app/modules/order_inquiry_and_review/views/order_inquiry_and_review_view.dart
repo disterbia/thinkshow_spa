@@ -12,7 +12,7 @@ import 'package:wholesaler_user/app/widgets/custom_appbar.dart';
 /// 주문조회 or 리뷰
 class OrderInquiryAndReviewView extends GetView {
   OrderInquiryAndReviewController ctr =
-  Get.put(OrderInquiryAndReviewController());
+      Get.put(OrderInquiryAndReviewController());
   bool isBackEnable;
   bool hasHomeButton;
   OrderInquiryAndReviewView(
@@ -35,57 +35,57 @@ class OrderInquiryAndReviewView extends GetView {
             Get.arguments
                 ? SizedBox.shrink()
                 : Obx(
-                  () => Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: HorizontalChipList6().getAllMainCat(
-                  categoryList: ["3개월"],
-                  onTapped: () => ctr.periodChipPressed(),
-                ),
-              ),
-            ),
+                    () => Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: HorizontalChipList6().getAllMainCat(
+                        categoryList: ctr.category,
+                        onTapped: () => ctr.periodChipPressed(),
+                      ),
+                    ),
+                  ),
 
             // Item list view
             Obx(
-                  () => ctr.items.length != 0
+              () => ctr.items.length != 0
                   ? ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: ctr.items.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    SizedBox.shrink(),
-                itemBuilder: (BuildContext context, int itemIndex) {
-                  // OrderItem ListView
-                  return Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: MyColors.grey4),
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(MyDimensions.radius))),
-                    child: Column(
-                      children: [
-                        OrderTopDetailWidget(order: ctr.items[itemIndex]),
-                        OrderItemListView(
-                          isReviewPage: Get.arguments,
-                          order: ctr.items[itemIndex],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              )
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: ctr.items.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          SizedBox.shrink(),
+                      itemBuilder: (BuildContext context, int itemIndex) {
+                        // OrderItem ListView
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.grey4),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(MyDimensions.radius))),
+                          child: Column(
+                            children: [
+                              OrderTopDetailWidget(order: ctr.items[itemIndex]),
+                              OrderItemListView(
+                                isReviewPage: Get.arguments,
+                                order: ctr.items[itemIndex],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    )
                   : Center(
-                child: Text('내용 없습니다.'),
-              ),
+                      child: Text('내용 없습니다.'),
+                    ),
             ),
             SizedBox(height: 10),
 
             // obx allowCallAPI
             Obx(
-                  () => ctr.allowCallAPI.isTrue
+              () => ctr.allowCallAPI.isTrue
                   ? Center(
-                child: CircularProgressIndicator(),
-              )
+                      child: CircularProgressIndicator(),
+                    )
                   : SizedBox.shrink(),
             ),
 

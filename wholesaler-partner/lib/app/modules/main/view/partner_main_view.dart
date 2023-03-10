@@ -20,7 +20,7 @@ class PartnerMainView extends GetView<BottomNavbarController> {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 50),
+        preferredSize: Size(!GetPlatform.isMobile?500:Get.width, 50),
         child: Obx(
           () => appBarBuilder(navbarCtr.tabIndex.value),
         ),

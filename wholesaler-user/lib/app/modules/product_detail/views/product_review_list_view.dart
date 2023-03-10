@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -112,13 +113,10 @@ class ProductReviewListView extends GetView {
             for (String img in review.images!)
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: CachedNetworkImage(
+                child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
                   fit: BoxFit.fill,
-                  width: 500,
-                  imageUrl: img,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  width: GetPlatform.isMobile?Get.width:500,
+                   img,
                 ),
               )
           ],

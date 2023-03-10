@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
 import 'package:wholesaler_user/app/models/product_model.dart';
@@ -20,7 +21,7 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
   RxList<Product>? products;
   RxInt? sliderIndex = 0.obs;
   int repeatCount=0;
-
+  RxBool isfullSize = true.obs;
   @override
   Widget build(BuildContext context) {
 
@@ -109,26 +110,27 @@ class CarousalProductHorizontalView extends GetView<CarousalProductHorizontalCon
     for(var rowProduct in rowList){
       result.add(Row(mainAxisAlignment:MainAxisAlignment.spaceAround,children:rowProduct));
     }
-
+    isfullSize.value=result.length>1?false:true;
     return Column(children: [
        Obx(
         ()=>CarouselSlider(
             carouselController: carouselController,
             options: CarouselOptions(
                 enableInfiniteScroll: false,padEnds: false,
-                height: 250,
+                height:250,
                 autoPlay: false,
-                viewportFraction: 1,
+                viewportFraction: isfullSize.value?1:0.95,
                 onPageChanged: (index, reason) {
+                  isfullSize.value= result.length>index+1 ?false :true;
                   sliderIndex!.value = index;
                 }),
             items:result
           ),
        ),
 
-      Obx(
-        () => _indicator(result),
-      ),
+      // Obx(
+      //   () => _indicator(result),
+      // ),
     ]);
   }
 

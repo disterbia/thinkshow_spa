@@ -18,43 +18,43 @@ class Tab5DingPickView extends GetView<Tab5DingPickController> {
   Widget build(BuildContext context) {
     init();
     return Obx(
-          () => ctr.isLoading.value
+      () => ctr.isLoading.value
           ? LoadingWidget()
           : Stack(
-        children: [
-          SingleChildScrollView(
-            controller: ctr.scrollController.value,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  ProductGridViewBuilder(
-                    crossAxisCount: 3,
-                    productHeight: 280,
-                    products: ctr.products,
-                    isShowLoadingCircle: ctr.allowCallAPI,
+              children: [
+                SingleChildScrollView(
+                  controller: ctr.scrollController.value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      children: [
+                        ProductGridViewBuilder(
+                          crossAxisCount: 3,
+                          productHeight: (500*0.7).floor(),
+                          products: ctr.products,
+                          isShowLoadingCircle: ctr.allowCallAPI,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: SizedBox(
+                    width: 45,
+                    height: 45,
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.arrow_upward_rounded),
+                      onPressed: () {
+                        ctr.scrollController.value.jumpTo(0);
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: SizedBox(
-              width: 45,
-              height: 45,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_upward_rounded),
-                onPressed: () {
-                  ctr.scrollController.value.jumpTo(0);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

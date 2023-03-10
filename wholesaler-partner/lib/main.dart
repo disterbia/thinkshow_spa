@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
@@ -19,10 +20,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await MyVars.initializeVariables();
-
   setUrlStrategy(null);
+
   runApp(
-    FlutterWebFrame(maximumSize: Size(500,double.infinity),
+    FlutterWebFrame(maximumSize: Size(!GetPlatform.isMobile?500:Get.width,double.infinity),
       builder: (context) =>
        GetMaterialApp(
           localizationsDelegates: [
@@ -38,7 +39,7 @@ Future<void> main() async {
           fallbackLocale: const Locale('ko', 'KR'),
           theme: appThemeDataLight,
           debugShowCheckedModeBanner: false,
-          title: "띵쇼마켓 (도매)",
+          title: "띵쇼 (도매)",
           home: SplashScreenPageView(),
          scrollBehavior: MyCustomScrollBehavior(),
           // getPages: [

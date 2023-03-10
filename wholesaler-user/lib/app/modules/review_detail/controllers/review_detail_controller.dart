@@ -114,20 +114,24 @@ class ReviewDetailController extends GetxController {
   uploadReviewImageMultiPressed() async {
     pickedImageList.value = await ImagePicker().pickMultiImage();
     if (pickedImageList.isNotEmpty) {
-      isUploadLoading.value = true;
+      if (pickedImageList.length > 5) {
+        mSnackbar(message: '최대 5장까지 업로드 가능합니다.');
+      } else {
+        isUploadLoading.value = true;
 
-      List<File> temp = [];
-      for (int i = 0; i < pickedImageList.length; i++) {
-        temp.add(File(pickedImageList[i].path));
+        List<File> temp = [];
+        for (int i = 0; i < pickedImageList.length; i++) {
+          temp.add(File(pickedImageList[i].path));
+        }
+
+        var json =
+            await _apiProvider.postUploadReviewImageMutli(pickedImage: temp);
+        urlList.value = json['url'];
+        pathList.value = json['file_path'];
+        //업로드 하고
+        photoOK.value = true;
+        isUploadLoading.value = false;
       }
-
-      var json =
-          await _apiProvider.postUploadReviewImageMutli(pickedImage: temp);
-      urlList.value = json['url'];
-      pathList.value = json['file_path'];
-      //업로드 하고
-      photoOK.value = true;
-      isUploadLoading.value = false;
     }
   }
 

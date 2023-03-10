@@ -43,50 +43,47 @@ class Page2StoreListView extends GetView {
       isBackEnable: false,
       actions: [
         IconButton(
-          icon: Icon(
-            Icons.search,
-            color: MyColors.black,
-          ),
+    icon: Image.asset("assets/icons/top_search.png",color: Colors.black,height: 21),
           onPressed: () {
             Get.to(() => SearchPageView());
           },
         ),
         Obx(
-              () => ctr2.getNumberProducts() != 0
+          () => ctr2.getNumberProducts() != 0
               ? Badge(
-            badgeColor: MyColors.primary,
-            badgeContent: Text(
-              ctr2.getNumberProducts().toString(),
-              style: TextStyle(
-                  color: MyColors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold),
-            ),
-            toAnimate: false,
-            position: BadgePosition.topEnd(top: 5, end: 5),
-            child: IconButton(
-              onPressed: () {
-                Get.to(() => Cart1ShoppingBasketView());
-              },
-              icon: ImageIcon(
-                AssetImage('assets/icons/top_cart.png'),
-                size: 21,
-                // Icons.shopping_cart_outlined,
-                color: MyColors.black,
-              ),
-            ),
-          )
+                  badgeColor: MyColors.primary,
+                  badgeContent: Text(
+                    ctr2.getNumberProducts().toString(),
+                    style: TextStyle(
+                        color: MyColors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  toAnimate: false,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  child: IconButton(
+                    onPressed: () {
+                      Get.to(() => Cart1ShoppingBasketView());
+                    },
+                    icon: ImageIcon(
+                      AssetImage('assets/icons/top_cart.png'),
+                      size: 21,
+                      // Icons.shopping_cart_outlined,
+                      color: MyColors.black,
+                    ),
+                  ),
+                )
               : IconButton(
-            onPressed: () {
-              Get.to(() => Cart1ShoppingBasketView());
-            },
-            icon: ImageIcon(
-              AssetImage('assets/icons/top_cart.png'),
-              size: 21,
-              // Icons.shopping_cart_outlined,
-              color: MyColors.black,
-            ),
-          ),
+                  onPressed: () {
+                    Get.to(() => Cart1ShoppingBasketView());
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/icons/top_cart.png'),
+                    size: 21,
+                    // Icons.shopping_cart_outlined,
+                    color: MyColors.black,
+                  ),
+                ),
         )
       ],
     );

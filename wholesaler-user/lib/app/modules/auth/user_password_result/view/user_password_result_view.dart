@@ -24,7 +24,7 @@ class User_PasswordResultView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomButton(
-              width: 500,
+              width: GetPlatform.isMobile?Get.width:500,
               onPressed: () {
                 Get.offAll(User_LoginPageView());
               },

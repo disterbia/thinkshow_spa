@@ -12,15 +12,19 @@ class SplashScreenController extends GetxController {
   @override
   void onInit() async {
     // TODO: implement onInit
-    bool result = await uApiProvider().chekToken();
+    //bool result = await uApiProvider().chekToken();
     bool result2 = await pApiProvider().chekToken();
-    // print("'access_token': ${CacheProvider().getToken()}");
-    bool isLogin = await CacheProvider().getToken().isNotEmpty && (result || result2);
-    isLogin
-        ? MyVars.isUserProject()
-            ?  Future.delayed(Duration(seconds: 1),() => Get.offAll(() => UserMainView()))
-            : Future.delayed(Duration(seconds: 1),() => Get.offAll(() =>  PartnerMainView()))
-        : Future.delayed(Duration(seconds: 1),() => Get.offAll(() => User_LoginPageView()));
+    print("'access_token': ${CacheProvider().getToken()}");
+    bool isLogin = await CacheProvider().getToken().isNotEmpty && result2;
+
+    MyVars.isUserProject()
+        ? Future.delayed(
+            Duration(seconds: 1), () => Get.offAll(() => UserMainView()))
+        : isLogin
+            ? Future.delayed(
+                Duration(seconds: 1), () => Get.offAll(() => PartnerMainView()))
+            : Future.delayed(Duration(seconds: 1),
+                () => Get.offAll(() => User_LoginPageView()));
 
     super.onInit();
   }

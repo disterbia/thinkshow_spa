@@ -21,22 +21,23 @@ class Tab1FindUserIdView extends GetView<User_FindID_FindPasswordController> {
         child: Column(
           children: [
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             PhoneNumberPhoneVerify(
               spaceBetween: 10,
+              isPassword: false,
             ),
-            SizedBox(
-              height: 30,
-            ),
-            TwoButtons(
-              leftBtnText: '취소',
-              lBtnOnPressed: () {
-                Get.offAll(() => User_LoginPageView());
-              },
-              rightBtnText: '아이디 찾기',
-              rBtnOnPressed: ctr.getAccountId,
-            )
+            // SizedBox(
+            //   height: 30,
+            // ),
+            // TwoButtons(
+            //   leftBtnText: '취소',
+            //   lBtnOnPressed: () {
+            //     Get.offAll(() => User_LoginPageView());
+            //   },
+            //   rightBtnText: '아이디 찾기',
+            //   rBtnOnPressed: ctr.getAccountId,
+            // )
           ],
         ),
       ),

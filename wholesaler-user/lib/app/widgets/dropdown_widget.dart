@@ -20,19 +20,28 @@ class mOptionDropDownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => DropdownButton(
+    return DropdownButton(
         hint: Text(label),
-        value: ctr.selectedOptionIndex.value == -1 ? null : ctr.product.value.options![ctr.selectedOptionIndex.value],
+        //value: ctr.selectedOptionIndex.value == -1 ? null : ctr.product.value.options![ctr.selectedOptionIndex.value],
         items: itemsBuilder(),
         onChanged: (ProductOptionModel? newOption) {
           if (!newOption!.is_sold_out!) {
-            ctr.selectedOptionIndex.value = ctr.product.value.options!.indexOf(newOption);
+            print(ctr.optionList.contains(newOption));
+            if(!ctr.optionList.contains(newOption)){
+              ctr.optionList.add(newOption);
+              ctr.quantityList.add(1);
+              ctr.UpdateTotalPrice();
+            }else {
+              if(ctr.product.value.isDeal!) return;
+            ctr.quantityList[ctr.optionList.indexOf(newOption)]++;
             ctr.UpdateTotalPrice();
           }
+          // ctr.selectedOptionIndex.value = ctr.product.value.options!.indexOf(newOption);
+            // ctr.UpdateTotalPrice();
+          }
         },
-      ),
-    );
+      );
+
   }
 
   List<DropdownMenuItem<ProductOptionModel>> itemsBuilder() {

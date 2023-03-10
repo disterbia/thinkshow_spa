@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:launch_review/launch_review.dart';
@@ -7,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
 import 'package:wholesaler_user/app/Constants/enum.dart';
 import 'package:wholesaler_user/app/Constants/functions.dart';
+import 'package:wholesaler_user/app/Constants/variables.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
 import 'package:wholesaler_user/app/constants/dimens.dart';
 import 'package:wholesaler_user/app/constants/styles.dart';
@@ -44,6 +47,8 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
+
+    ctr.getAppVersion();
   }
 
   @override
@@ -114,8 +119,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
               style: MyTextStyles.f12.copyWith(color: MyColors.grey10),
             ),
           ),
-          // _settingOption('알림 설정', () {}),
-          _alarmSwitchOption('알림 설정'),
+          //_settingOption('알림 설정', () {}),
           _settingOption('이용약관', () {
             Get.to(() => User_RegisterPrivacyTermsView(),
                 arguments: PrivacyOrTerms.terms);
@@ -125,9 +129,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
                 arguments: PrivacyOrTerms.privacy);
           }),
           // _settingOption('버전 정보 $version', () {}),
-          _versionOption('버전 정보 $version', () {
-            LaunchReview.launch();
-          }),
+          _versionOption('버전 정보 $version'),
           Divider(
             color: MyColors.grey1,
             indent: 15,
@@ -142,30 +144,6 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
     );
   }
 
-  Widget _alarmSwitchOption(String title) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: MyTextStyles.f16.copyWith(
-                color: MyColors.black3, fontWeight: FontWeight.w500),
-          ),
-          Container(
-            height: 10,
-            width: 50,
-            child: Switch(
-                activeColor: MyColors.primary,
-                value: ctr.user.value.isAgreeNotificaiton!.value,
-                onChanged: (value) => ctr.notificationToggled(value)),
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _userIdUsername() {
     return Padding(
@@ -361,7 +339,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(15),
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: Text(
           title,
           style: MyTextStyles.f16
@@ -371,27 +349,40 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
     );
   }
 
-  Widget _versionOption(String title, VoidCallback onTap) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: MyTextStyles.f16.copyWith(
-                color: MyColors.black3, fontWeight: FontWeight.w500),
+  Widget _versionOption(String title) {
+    return Obx(
+      () => InkWell(
+        onTap: ctr.serviceVersion.value != '' && ctr.serviceVersion != version ? (() {
+          LaunchReview.launch(writeReview: false, iOSAppId: "1635095161");
+        }) : null,
+        child: Container(
+          padding: EdgeInsets.all(15),
+          width: GetPlatform.isMobile?Get.width:500,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: MyTextStyles.f16.copyWith(
+                    color: MyColors.black3, fontWeight: FontWeight.w500),
+              ),
+              ctr.serviceVersion.value != '' && ctr.serviceVersion != version
+                  ? Text(
+                      "업데이트 하기",
+                      style: MyTextStyles.f14.copyWith(
+                          color: MyColors.primary, fontWeight: FontWeight.w500),
+                    )
+                  : SizedBox.shrink(),
+            ],
           ),
-
-        ],
+        ),
       ),
     );
   }
 
   Widget _recentlyProduct() {
     return Container(
-      height: 170,
+      height:170,
       padding: EdgeInsets.symmetric(horizontal: 15),
       // alignment : Alignment.center,
       child: ListView.separated(
@@ -402,7 +393,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
             SizedBox(width: 14),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            width: 110,
+            width: GetPlatform.isMobile?110:140,
             child: Center(
               child: ProductItemVertical(
                 product: ctr2.products[index],
@@ -420,7 +411,7 @@ class Page5MyPageView extends GetView<Page5MyPageController> {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.only(top: 15, left: 15, right: 15),
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

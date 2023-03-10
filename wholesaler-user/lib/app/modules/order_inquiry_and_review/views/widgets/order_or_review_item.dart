@@ -64,7 +64,7 @@ class OrderOrReviewItem extends StatelessWidget {
     if (item.products[productId].orderStatus == OrderStatus.payFinished ||
         item.products[productId].orderStatus == OrderStatus.preparingProduct) {
       return SizedBox(
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: OutlinedButton(
           onPressed: () {
             mSnackbar(message: '주문 취소는 각 상품페이지 문의하기를 통해 접수 바랍니다.', duration: 3);
@@ -79,7 +79,7 @@ class OrderOrReviewItem extends StatelessWidget {
     // 배달완료
     if (item.products[productId].orderStatus == OrderStatus.deliveryFinished) {
       return SizedBox(
-        width: double.infinity,
+        width: GetPlatform.isMobile?Get.width:500,
         child: ElevatedButton(
           onPressed: () => ctr
               .orderSettledBtnPressed(item.products[productId].orderDetailId!),
@@ -107,7 +107,7 @@ class OrderOrReviewItem extends StatelessWidget {
     print(item.products[productId].orderDetailId);
 
     return SizedBox(
-      width: double.infinity,
+      width: GetPlatform.isMobile?Get.width:500,
       child: ElevatedButton(
         onPressed: () {
           Get.to(

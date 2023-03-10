@@ -24,8 +24,8 @@ class Page2StoreListController2 extends GetxController {
 
     if (!result) {
       print('logout');
-      mSnackbar(message: '로그인 세션이 만료되었습니다.');
-      mFuctions.userLogout();
+      mSnackbar(message: '로그인 후 이용 가능합니다.');
+       mFuctions.userLogout();
     } else {
       stores.value = await _apiProvider.getStoreRanking(offset: 0, limit: 80);
     }
@@ -38,14 +38,14 @@ class Page2StoreListController2 extends GetxController {
 
     if (!result) {
       print('logout');
-      mSnackbar(message: '로그인 세션이 만료되었습니다.');
-      mFuctions.userLogout();
+      mSnackbar(message: '로그인 후 이용 가능합니다.');
+       mFuctions.userLogout();
     } else {
       stores.value = await _apiProvider.getStorebookmarked();
     }
     // if (CacheProvider().getToken().isEmpty) {
     //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     Get.to(() => User_LoginPageView());
+    //      mFuctions.userLogout();
     //   });
     // } else {
     //   Future.delayed(Duration.zero,() => isLoading.value=true);
@@ -59,15 +59,16 @@ class Page2StoreListController2 extends GetxController {
   Future<void> starIconPressed(Store store) async {
     isLoading.value=true;
     if (CacheProvider().getToken().isEmpty) {
-      mFuctions.userLogout();
+      mSnackbar(message: '로그인 후 이용 가능합니다.');
+       mFuctions.userLogout();
       return;
     }
 
     bool result = await uApiProvider().chekToken();
     if (!result) {
       print('logout');
-      mSnackbar(message: '로그인 세션이 만료되었습니다.');
-      mFuctions.userLogout();
+      mSnackbar(message: '로그인 후 이용 가능합니다.');
+       mFuctions.userLogout();
       return;
     }
     log('store id ${store.id}');
@@ -76,9 +77,9 @@ class Page2StoreListController2 extends GetxController {
 
 
       if (store.isBookmarked!.value) {
-        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
+        mSnackbar(message: '즐겨찾기에 추가 되었습니다.');
       } else {
-        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
+        mSnackbar(message: '즐겨찾기가 취소 되었습니다.');
       }
 
     isLoading.value=false;

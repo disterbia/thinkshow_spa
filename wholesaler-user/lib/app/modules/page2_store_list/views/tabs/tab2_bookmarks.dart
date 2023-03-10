@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/widgets/loading_widget.dart';
@@ -20,69 +21,69 @@ class Tab2BookmarksView extends StatelessWidget {
   Widget build(BuildContext context) {
     ctr.getBookmarkedStoreData();
     return Obx(
-          () => ctr.isLoading.value
+      () => ctr.isLoading.value
           ? LoadingWidget()
           : ctr.stores.length == 0
-          ? Container(
-        child: Column(children: [
-          SizedBox(
-            height: 20,
-          ),
-          Image.asset("assets/images/mark.png", height: 70),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "아직 즐겨찾기를 한 스토어가 없어요",
-            style: TextStyle(color: Colors.grey),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text("랭킹에서 즐겨찾기를 해보세요",
-              style: TextStyle(color: Colors.grey)),
-          SizedBox(
-            height: 20,
-          ),
-          InkWell(
-              onTap: () =>
-                  Get.find<UserMainController>().changeTabIndex(1),
-              child: Container(
-                  width: 500 * 0.6,
-                  color: MyColors.grey3,
-                  height: 50,
-                  child: Center(
-                      child: Text("스토어 구경하러 가기",
-                          style: TextStyle(color: Colors.grey)))))
-        ]),
-      )
-          : Stack(
-        children: [
-          ListView.builder(
-              itemCount: ctr.stores.length,
-              controller: ctr.scrollController,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                print(ctr.stores[index].topImagePath);
-                return _storeList(ctr.stores[index]);
-              }),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: SizedBox(
-              width: 45,
-              height: 45,
-              child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_upward_rounded),
-                onPressed: () {
-                  ctr.scrollController.jumpTo(0);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+              ? Container(
+                  child: Column(children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Image.asset("assets/images/mark.png", height: 70),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "아직 즐겨찾기를 한 스토어가 없어요",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text("랭킹에서 즐겨찾기를 해보세요",
+                        style: TextStyle(color: Colors.grey)),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                        onTap: () =>
+                            Get.find<UserMainController>().changeTabIndex(1),
+                        child: Container(
+                            width: GetPlatform.isMobile?(Get.width*0.6):500 * 0.6,
+                            color: MyColors.grey3,
+                            height: 50,
+                            child: Center(
+                                child: Text("스토어 구경하러 가기",
+                                    style: TextStyle(color: Colors.grey)))))
+                  ]),
+                )
+              : Stack(
+                  children: [
+                    ListView.builder(
+                        itemCount: ctr.stores.length,
+                        controller: ctr.scrollController,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          print(ctr.stores[index].topImagePath);
+                          return _storeList(ctr.stores[index]);
+                        }),
+                    Positioned(
+                      bottom: 20,
+                      right: 20,
+                      child: SizedBox(
+                        width: 45,
+                        height: 45,
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.arrow_upward_rounded),
+                          onPressed: () {
+                            ctr.scrollController.jumpTo(0);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
     );
   }
 
@@ -90,10 +91,10 @@ class Tab2BookmarksView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.to(
-                () => StoreDetailView(
-              storeId: store.id,
-              prevPage: prevPage,
-            ),
+            () => StoreDetailView(
+                  storeId: store.id,
+                  prevPage: prevPage,
+                ),
             preventDuplicates: true);
       },
       child: Container(
@@ -107,6 +108,8 @@ class Tab2BookmarksView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10),
+
               Row(children: [
                 _storeRankNum(store),
                 SizedBox(width: 10),
@@ -116,6 +119,8 @@ class Tab2BookmarksView extends StatelessWidget {
                 Spacer(),
                 _starBuilder(store),
               ]),
+              SizedBox(height: 10),
+
               // Container(height: Get.height/6,
               //   child: ListView.separated(physics: NeverScrollableScrollPhysics(),
               //       itemCount: 4,
@@ -125,7 +130,7 @@ class Tab2BookmarksView extends StatelessWidget {
               //         if(store.topImagePath!.length<4){
               //           return Container();
               //         }
-              //       return CachedNetworkImage(imageUrl: store.topImagePath![index],width: (500/4)-10,);
+              //       return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,imageUrl: store.topImagePath![index],width: (500/4)-10,);
               //
               //     },),
               // )
@@ -147,24 +152,24 @@ class Tab2BookmarksView extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: store.imgUrl != null
-          ? CachedNetworkImage(
-        imageUrl: store.imgUrl!.value,
-        width: 50,
-        height: 50,
-        fit: BoxFit.cover,
-        // placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-      )
+          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          store.imgUrl!.value,
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+              // placeholder: (context, url) => CircularProgressIndicator(),
+
+            )
           : Image.asset(
-        'assets/icons/ic_store.png',
-        width: 50,
-      ),
+              'assets/icons/ic_store.png',
+              width: 50,
+            ),
     );
   }
 
   Widget _storeName(Store store) {
     List<String> categoris =
-    (store.categories!).map((item) => item as String).toList();
+        (store.categories!).map((item) => item as String).toList();
     String category = "";
     for (var i = 0; i < categoris.length; i++) {
       if (i == categoris.length - 1)
@@ -205,13 +210,13 @@ class Tab2BookmarksView extends StatelessWidget {
         await ctr.getBookmarkedStoreData();
       },
       child: Obx(
-            () => Column(
+        () => Column(
           children: [
-            Icon(
-              size: 30,
-              store.isBookmarked!.isTrue ? Icons.star : Icons.star_border,
-              color: MyColors.primary,
+            Image.asset(
+              height: 25,
+              store.isBookmarked!.isTrue ? "assets/icons/ico_star_on.png" : "assets/icons/ico_star_off.png",
             ),
+
             Text(
               result,
               style: TextStyle(

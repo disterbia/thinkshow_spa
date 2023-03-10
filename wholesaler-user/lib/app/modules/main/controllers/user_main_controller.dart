@@ -1,12 +1,17 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wholesaler_user/app/Constants/functions.dart';
 import 'package:wholesaler_user/app/constants/enum.dart';
+import 'package:wholesaler_user/app/data/api_provider.dart';
 import 'package:wholesaler_user/app/data/cache_provider.dart';
+import 'package:wholesaler_user/app/models/user_model.dart';
 import 'package:wholesaler_user/app/modules/auth/user_login_page/views/user_login_view.dart';
 import 'package:wholesaler_user/app/modules/main/view/user_main_view.dart';
 import 'package:wholesaler_user/app/modules/page1_home/views/tabs/tab1_home.dart';
@@ -31,20 +36,16 @@ class UserMainController extends GetxController {
   RxInt changed = 0.obs;
   // Rx<ListQueue> navigationQueue = ListQueue().obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // navigationQueue.value.addLast(UseBottomNavTabs.home.index);
-  }
 
   void changeTabIndex(int index) {
     changed.value++;
     if (index == UseBottomNavTabs.favorites.index ||
-        index == UseBottomNavTabs.my_page.index) {
+        index == UseBottomNavTabs.my_page.index ||
+        index == UseBottomNavTabs.store.index) {
       // check if user is logged in
       if (CacheProvider().getToken().isEmpty) {
-        Get.to(() => User_LoginPageView());
-        return;
+         mFuctions.userLogout();
+        return mSnackbar(message: "로그인 후 이용 가능합니다.");
       }
       // Get.delete<Page4Favorite_RecentlyViewedController>(); // If we don't delete, the title would be 최근본사품 instead of 찜
     }

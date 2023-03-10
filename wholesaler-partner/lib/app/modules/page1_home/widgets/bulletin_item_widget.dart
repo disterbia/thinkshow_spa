@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/constant/enums.dart';
@@ -22,11 +23,11 @@ class AdvertisementItemVertical extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 145,
-            width: 116,
+            height:GetPlatform.isMobile?145:200,
+            width: GetPlatform.isMobile?116:140,
             child: CachedNetworkImage(
               imageUrl: advertisement.imgURL,
-              width: 500,
+              width: !GetPlatform.isMobile?500:Get.width,
               // placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),

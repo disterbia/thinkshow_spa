@@ -75,6 +75,8 @@ class OrderStatus {
 class OrderInquiryPeriod {
   static const String total = 'total';
   static const String threeMonth = '3month';
+  static const String oneMonth = '1month';
+  static const String during = 'during';
 }
 
 /// Cart Select All, item

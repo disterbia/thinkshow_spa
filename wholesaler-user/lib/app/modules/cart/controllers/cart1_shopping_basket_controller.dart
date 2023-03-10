@@ -18,34 +18,33 @@ import 'package:wholesaler_user/app/constants/functions.dart';
 class Cart1ShoppingBasketController extends GetxController {
   uApiProvider _apiProvider = uApiProvider();
 
-  RxBool isSelectAllChecked = false.obs;
+  RxBool isSelectAllChecked = true.obs;
   RxList<Cart> cartItems = <Cart>[].obs;
   RxInt totalPaymentPrice = 0.obs;
   RxBool isLoading = false.obs;
+  int checkCount = 0;
 
   init() async {
-    Future.delayed(Duration.zero,()=> isLoading.value = true);
+    checkCount = 0;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      isSelectAllChecked.value=true;
+    });
+    Future.delayed(Duration.zero, () => isLoading.value = true);
 
-    if (CacheProvider().getToken().isNotEmpty) {
+    // if (CacheProvider()
+    //     .getToken()
+    //     .isNotEmpty) {
       // WidgetsBinding.instance.addPostFrameCallback((_) {
-      //   Get.to(() => User_LoginPageView());
+      //    mFuctions.userLogout();
       // });
       if (MyVars.isUserProject()) {
         bool result = await uApiProvider().chekToken();
-
-        if (!result) {
-          print('logout');
-          mSnackbar(message: '로그인 세션이 만료되었습니다.');
-          mFuctions.userLogout();
-        } else {
-          cartItems.value = await _apiProvider.getCart1ShoppintBasket();
+        if (result) {
+          cartItems.value = await _apiProvider.getCart1ShoppintBasket(header: {"Authorization": "Bearer " + CacheProvider().getToken()});
           updateTotalPaymentPrice();
-        }
+        }else cartItems.clear();
       }
-    } else {
-      mFuctions.userLogout();
-    }
-    Future.delayed(Duration.zero,()=> isLoading.value = false);
+    Future.delayed(Duration.zero, () => isLoading.value = false);
   }
 
   /// returns total number of products in the cart
@@ -58,7 +57,15 @@ class Cart1ShoppingBasketController extends GetxController {
   }
 
   SelectAllCheckboxOnChanged(bool value) {
+    int temp = 0;
+    for (Cart cart in cartItems) {
+      for (Product product in cart.products) {
+        temp++;
+      }
+    }
     isSelectAllChecked.value = value;
+    value ? checkCount = 0 : checkCount = 0 - temp;
+    print(checkCount);
     for (Cart cart in cartItems) {
       for (Product product in cart.products) {
         product.isCheckboxSelected!.value = value;
@@ -100,7 +107,21 @@ class Cart1ShoppingBasketController extends GetxController {
     );
   }
 
-  callDeleteSelectedProductsAPI({bool isDeleteAll = false,bool isIcon = false, int? cartId}) async {
+  oneDelete(int cartId) async {
+    bool isSuccess = await _apiProvider.deleteProductsFromCart([cartId]);
+    if (isSuccess) {
+      //전체선택 해제 필요
+      mSnackbar(message: '정상적으로 삭제되었습니다.');
+      // update the cart items
+      cartItems.value = await _apiProvider.getCart1ShoppintBasket();
+      SelectAllCheckboxOnChanged(true);
+      updateTotalPaymentPrice();
+      Get.back();
+    }
+  }
+
+  callDeleteSelectedProductsAPI(
+      {bool isDeleteAll = false, bool isIcon = false, int? cartId}) async {
     List<int> cart_id_list = [];
 
     for (Cart cart in cartItems) {
@@ -110,7 +131,7 @@ class Cart1ShoppingBasketController extends GetxController {
         }
         if (isIcon) {
           cart_id_list.add(cartId!);
-          isIcon=false;
+          isIcon = false;
         }
       }
     }
@@ -173,7 +194,7 @@ class Cart1ShoppingBasketController extends GetxController {
     cart1OrdersModel.orders = orders;
 
     Cart2CheckoutModel cart2checkoutModel =
-        await _apiProvider.postOrderCheckout(cart1OrdersModel);
+    await _apiProvider.postOrderCheckout(cart1OrdersModel);
 
     Get.to(() => Cart2PaymentView(cart2checkoutModel));
   }
@@ -182,7 +203,7 @@ class Cart1ShoppingBasketController extends GetxController {
       {required bool value, required int cartId, required int qty}) async {
     int newQty = value ? qty + 1 : qty - 1;
     bool isSuccess =
-        await _apiProvider.changeQuantityInBasket(qty: newQty, cartId: cartId);
+    await _apiProvider.changeQuantityInBasket(qty: newQty, cartId: cartId);
 
     if (isSuccess) {
       init();
@@ -195,5 +216,24 @@ class Cart1ShoppingBasketController extends GetxController {
       //   }
       // }
     }
+  }
+
+  getDealCheck() async {
+    List<dynamic> temp = [];
+    for (Cart cart in cartItems) {
+      for (Product product in cart.products) {
+        if (product.isCheckboxSelected!.value) {
+          // productIdList.add(product.id);
+          // productPrice.add(product.price!);
+
+          Map<String, dynamic> data = {
+            'id': product.id,
+            'price': product.price! + product.selectedOptionAddPrice!,
+          };
+          temp.add(data);
+        }
+      }
+    }
+    return await _apiProvider.dealCheck(productList: temp);
   }
 }

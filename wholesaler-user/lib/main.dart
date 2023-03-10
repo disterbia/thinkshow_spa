@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -12,8 +14,8 @@ import 'package:wholesaler_user/app/modules/splash_screen/view/splash_screen_vie
 import 'app/constants/theme.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-
 Future<void> main() async {
+  print("-=-=-=-=${GetPlatform.isMobile}");
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await MyVars.initializeVariables();
@@ -27,7 +29,7 @@ Future<void> main() async {
         fallbackLocale: const Locale('ko', 'KR'),
         theme: appThemeDataLight,
         debugShowCheckedModeBanner: false,
-        title: "띵쇼마켓",
+        title: "띵쇼",
         // home: UserMainView(),
         home: SplashScreenPageView(),
         scrollBehavior: MyCustomScrollBehavior(),

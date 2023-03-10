@@ -103,8 +103,8 @@ PointChargeDialog(context) {
             // 입금계좌  333-658-9565-544
             Text('입금계좌  333-658-9565-544'),
             SizedBox(height: 14),
-            // 국민은행     (주)띵쇼마켓
-            Text('국민은행     (주)띵쇼마켓'),
+            // 국민은행     (주)띵쇼
+            Text('국민은행     (주)띵쇼'),
             SizedBox(height: 14),
             TwoButtons(
               leftBtnText: '취소',

@@ -1,11 +1,11 @@
 {
-    "name": "띵쇼마켓",
-    "short_name": "띵쇼마켓",
+    "name": "띵쇼",
+    "short_name": "띵쇼",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "띵쇼마켓",
+    "description": "띵쇼",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -17,7 +17,7 @@ import 'package:wholesaler_user/app/constants/functions.dart';
 
 class StoreDetailController extends GetxController {
   Dingdong3ProductsHorizController dingdong3productsHorizCtr =
-      Get.put(Dingdong3ProductsHorizController());
+  Get.put(Dingdong3ProductsHorizController());
   uApiProvider _apiProvider = uApiProvider();
   CategoryTagController4 categoryTagCtr = Get.put(CategoryTagController4());
 
@@ -45,7 +45,7 @@ class StoreDetailController extends GetxController {
 
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
-              scrollController.value.position.maxScrollExtent &&
+          scrollController.value.position.maxScrollExtent &&
           allowCallAPI.isTrue) {
         offset += mConst.limit;
         updateProducts(isScrolling: true);
@@ -70,12 +70,12 @@ class StoreDetailController extends GetxController {
     }
     Future.delayed(Duration.zero,()=>isLoading.value=true);
     mainStoreModel.value =
-        await _apiProvider.getStoreDetailMainInfo(storeId.value);
+    await _apiProvider.getStoreDetailMainInfo(storeId.value);
     // Dingdong Products
     dingdong3productsHorizCtr.storeDingDongProducts(mainStoreModel.value);
     // top 10 products
     top10Products.value =
-        await _apiProvider.getTop10Products(storeId: storeId.value);
+    await _apiProvider.getTop10Products(storeId: storeId.value);
 
     // products
     updateProducts(isScrolling: false);
@@ -84,6 +84,7 @@ class StoreDetailController extends GetxController {
 
   Future<void> starIconPressed() async {
     if (CacheProvider().getToken().isEmpty) {
+      mSnackbar(message: '로그인 후 이용 가능합니다.');
       mFuctions.userLogout();
       return;
     }
@@ -91,8 +92,8 @@ class StoreDetailController extends GetxController {
     bool result = await uApiProvider().chekToken();
     if (!result) {
       print('logout');
-      mSnackbar(message: '로그인 세션이 만료되었습니다.');
       mFuctions.userLogout();
+      // mFuctions.userLogout();
       return;
     }
 
@@ -100,11 +101,11 @@ class StoreDetailController extends GetxController {
         storeId: mainStoreModel.value.storeId!) ;
     Map<String,dynamic> json =jsonDecode(response);
 
-      if (mainStoreModel.value.isFavorite!.value) {
-        mSnackbar(message: '스토어 찜 설정이 완료되었습니다.');
-      } else {
-        mSnackbar(message: '스토어 찜 설정이 취소되었습니다.');
-      }
+    if (mainStoreModel.value.isFavorite!.value) {
+      mSnackbar(message: '즐겨찾기에 추가 되었습니다.');
+    } else {
+      mSnackbar(message: '즐겨찾기가 취소 되었습니다.');
+    }
 
   }
 
@@ -122,6 +123,7 @@ class StoreDetailController extends GetxController {
     //print('inside updateProducts: selectedIndex ${categoryTagCtr.selectedMainCatIndex.value}');
     // Note: we have two APIs. API 1: When "ALL" chip is called (index == 0), API 2: when categories are called.
     List<Product> tempProducts = [];
+    List<Product> tempDealProducts = [];
     if (categoryTagCtr.selectedMainCatIndex.value == 0) {
       // print('index 0, show ALL');
       tempProducts = await _apiProvider.getAllProducts(
@@ -129,6 +131,7 @@ class StoreDetailController extends GetxController {
           limit: mConst.limit,
           storeId: storeId.value,
           sort: apiSoftItems[selectedDropdownIndex.value]);
+      tempDealProducts = await _apiProvider.getDealProductsForStore(storeId.value);
     } else {
       // print('index > 0 , show categories');
       tempProducts = await _apiProvider.getProductsWithCat(
@@ -137,8 +140,10 @@ class StoreDetailController extends GetxController {
           limit: mConst.limit,
           storeId: storeId.value,
           sort: apiSoftItems[selectedDropdownIndex.value]);
+      tempDealProducts = await _apiProvider.getDealProductsWithCatForStore(categoryTagCtr.selectedMainCatIndex.value, storeId.value);
     }
 
+    products.addAll(tempDealProducts);
     products.addAll(tempProducts);
 
     if (tempProducts.length < mConst.limit) {

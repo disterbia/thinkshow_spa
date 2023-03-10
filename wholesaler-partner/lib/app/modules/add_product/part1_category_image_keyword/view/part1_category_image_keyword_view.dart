@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -165,8 +166,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
           indicatorWeight: 2,
         ),
         SizedBox(
-          width: 500,
-          height: (500 - edgePadding * 2) * 4 / 3,
+          width: !GetPlatform.isMobile?500:Get.width,
+          height: (!GetPlatform.isMobile?500:Get.width - edgePadding * 2) * 4 / 3,
           child: TabBarView(
             controller: ctr.selectImgController,
             children: [
@@ -180,7 +181,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                       ? ctr.isUploadLoading3.value
                           ? LoadingWidget()
                           : Container(
-                              width: 500,
+                    width: !GetPlatform.isMobile?500:Get.width,
                               child: Center(
                                 child: ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
@@ -202,7 +203,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                               badgeContent:
                                                   Text((index + 1).toString()),
                                               child: Container(
-                                                height: 500 / 5,
+                                                height: !GetPlatform.isMobile?500/5:Get.width/5,
                                               ),
                                               badgeColor: MyColors.primary,
                                             ),
@@ -218,8 +219,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                 // },
                                               ),
                                               child: Container(
-                                                width: 500 / 6,
-                                                height: 500 / 6,
+                                                width: !GetPlatform.isMobile?500/6:Get.width/6,
+                                                height: !GetPlatform.isMobile?500/6:Get.width/6,
                                                 child: CachedNetworkImage(
                                                   imageBuilder: (context,
                                                           imageProvider) =>
@@ -291,7 +292,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                   Text(
                                     '상품 사진 등록',
                                   ),
-                                  Text('(3장)')
+                                  Text('(1024 x 1024, 3장)')
                                 ],
                               ),
                             ),
@@ -309,7 +310,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                           : Stack(
                               children: [
                                 Container(
-                                  width: 500,
+                  width: !GetPlatform.isMobile?500:Get.width,
                                   child: Center(
                                     child: GridView.builder(
                                         scrollDirection: Axis.vertical,
@@ -333,7 +334,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                           (index + 1)
                                                               .toString()),
                                                       child: Container(
-                                                        height: 500 / 5,
+                                                        height: !GetPlatform.isMobile?500/5:Get.width/5,
                                                       )),
                                                   Badge(
                                                     badgeColor:
@@ -350,8 +351,8 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                                       // },
                                                     ),
                                                     child: Container(
-                                                      width: 500 / 6,
-                                                      height: 500 / 6,
+                                                        width: !GetPlatform.isMobile?500/6:Get.width/6,
+                                                      height: !GetPlatform.isMobile?500/6:Get.width/6,
                                                       child: CachedNetworkImage(
                                                         imageBuilder: (context,
                                                                 imageProvider) =>
@@ -449,7 +450,7 @@ class AP_Part1View extends GetView<AP_Part1Controller> {
                                   Text(
                                     '상품 사진 등록',
                                   ),
-                                  Text("(30장 이하)")
+                                  Text("(1024 x 1024, 30장 이하)")
                                 ],
                               ),
                             ),

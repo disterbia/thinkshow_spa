@@ -18,7 +18,7 @@ class Dingdong3ProductsHorizView extends GetView<Dingdong3ProductsHorizControlle
     return Padding(
       padding: EdgeInsets.only(left: leftPadding),
       child: Container(
-        height: 240,
+        height: GetPlatform.isMobile?240:300,
         child: Obx(
           () => ctr.dingDongProducts.isNotEmpty
               ? ListView.builder(
@@ -28,9 +28,9 @@ class Dingdong3ProductsHorizView extends GetView<Dingdong3ProductsHorizControlle
                   itemCount: ctr.dingDongProducts.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      width: (500 / 3) - leftPadding,
+                      width: (GetPlatform.isMobile?Get.width/3:500/ 3) - leftPadding,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 3),
+                        padding: EdgeInsets.symmetric(horizontal:  3),
                         child: ProductItemVertical(
                           product: ctr.dingDongProducts.elementAt(index),
                         ),

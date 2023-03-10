@@ -56,7 +56,8 @@ class DynamicLink {
       ),
       iosParameters: const IOSParameters(
         bundleId: "com.thinksmk.user",
-        minimumVersion: '0',
+        minimumVersion: '1.0',
+        appStoreId: "1635095161"
       ),
     );
     final dynamicLink =

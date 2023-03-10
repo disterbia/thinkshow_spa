@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_user/app/constants/colors.dart';
@@ -12,11 +13,6 @@ import 'package:wholesaler_user/app/widgets/custom_button.dart';
 import 'package:wholesaler_user/app/widgets/custom_field.dart';
 import 'package:wholesaler_user/app/widgets/field_with_button.dart';
 
-import 'package:js/js.dart';
-import 'dart:js' as js;
-
-@JS('functionNamePayAddr')
-external set _functionName(void Function() f);
 class Cart2PaymentView extends GetView {
   Cart2PaymentController ctr = Get.put(Cart2PaymentController());
 
@@ -25,24 +21,8 @@ class Cart2PaymentView extends GetView {
     ctr.init(cart2checkoutModel);
   }
 
-  void _someDartFunction() {
-    js.JsObject obj = js.JsObject.fromBrowserObject(js.context['addd']);
-    ctr.address1ZipCodeController.text=obj['zonecode'].toString();
-    ctr.address2Controller.text=obj['addr'].toString();
-    print("${obj['zonecode']}");
-    print("zonecode ${obj['addr']}");
-    print("extraAddr${obj['extraAddr']}");
-    print("postcode${obj['postcode']}");
-    print("data${obj['data']}");
-    // _zonecode.text=obj['zonecode'].toString();
-    // _address.text=obj['addr'].toString();
-    // _extraAdress.text=obj['extraAddr'].toString();
-
-  }
-
   @override
   Widget build(BuildContext context) {
-    _functionName = allowInterop(_someDartFunction);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.white,
@@ -100,7 +80,7 @@ class Cart2PaymentView extends GetView {
                       fieldController: ctr.address1ZipCodeController,
                       fieldText: '우편번호',
                       readOnly: true,
-                      onTap: () => js.context.callMethod("aaa")
+                      onTap: () => ctr.searchAddressBtnPressed(),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -237,13 +217,12 @@ class Cart2PaymentView extends GetView {
 
   Widget _productImage(String imageUrl) {
     return ClipRRect(
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
+      child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+       imageUrl,
         width: 35,
         height: 35,
         fit: BoxFit.fill,
         // placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
       ),
       borderRadius: BorderRadius.circular(50),
     );
@@ -251,7 +230,7 @@ class Cart2PaymentView extends GetView {
 
   Widget _phoneNumberBody() {
     return SizedBox(
-      width: 500 - 20,
+      width: GetPlatform.isMobile?Get.width-20:500 - 20,
       child: Column(
         children: [
           Row(
@@ -339,8 +318,8 @@ class Cart2PaymentView extends GetView {
 
   Widget _paymentButton() {
     return CustomButton(
-      width: 500,
-      onPressed: () {
+      width: GetPlatform.isMobile?Get.width:500,
+      onPressed: () async {
         ctr.paymentBtnPressed();
       },
       text: '결제하기',

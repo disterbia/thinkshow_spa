@@ -4,7 +4,7 @@
    <application
        android:usesCleartextTraffic="true"
 
-        android:label="띵쇼마켓 (도매)"
+        android:label="띵쇼 (도매)"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <meta-data

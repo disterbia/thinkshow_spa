@@ -71,7 +71,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
                     ),
                   ),
                   SizedBox(
-                    width: double.infinity,
+                    width: !GetPlatform.isMobile?500:Get.width,
                     height: 6,
                     child: const DecoratedBox(
                       decoration: BoxDecoration(color: MyColors.grey3),
@@ -79,7 +79,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
                   ),
                   _itemList1(),
                   SizedBox(
-                    width: double.infinity,
+                    width: !GetPlatform.isMobile?500:Get.width,
                     height: 6,
                     child: const DecoratedBox(
                       decoration: BoxDecoration(color: MyColors.grey3),
@@ -87,7 +87,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
                   ),
                   _itemList2(),
                   SizedBox(
-                    width: double.infinity,
+                    width: !GetPlatform.isMobile?500:Get.width,
                     height: 6,
                     child: const DecoratedBox(
                       decoration: BoxDecoration(color: MyColors.grey3),
@@ -346,7 +346,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        width: double.infinity,
+        width: !GetPlatform.isMobile?500:Get.width,
         child: ElevatedButton(
           onPressed: () async {
             print("로그아웃");
@@ -380,7 +380,7 @@ class Page3MyPageView extends GetView<Page3MyPageController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        width: double.infinity,
+        width: !GetPlatform.isMobile?500:Get.width,
         child: ElevatedButton(
           onPressed: () {
             Get.to(() => CustomerCenterView(isWithdrawPage: true));

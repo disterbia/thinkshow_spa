@@ -66,7 +66,7 @@ class ProductInquiryDetailView extends GetView<ProductInquiryDetailController> {
 
   _textContainerBuilder(String text) {
     return Container(
-      width: double.infinity,
+      width: !GetPlatform.isMobile?500:Get.width,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),

@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/main.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -334,12 +335,12 @@ class ReviewDetailView extends GetView {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: CachedNetworkImage(
-              imageUrl: ctr.selectedReviw!.value.product.imgUrl,
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          ctr.selectedReviw!.value.product.imgUrl,
               width: 80,
               height: 80,
               fit: BoxFit.fill,
-              errorWidget: (context, url, error) => Icon(Icons.error),
+
             ),
           ),
           SizedBox(
@@ -445,7 +446,7 @@ class ReviewDetailView extends GetView {
     //       ],
     //     ),
     //     height: 150,
-    //     width: 500,
+    //     width: GetPlatform.isMobile?Get.width:500,
     //     decoration: BoxDecoration(
     //         border: Border.all(color: MyColors.desc),
     //         borderRadius:
@@ -521,22 +522,11 @@ class ReviewDetailView extends GetView {
                         width: 80,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: CachedNetworkImage(
-                            imageUrl: ctr.urlList[index],
+                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                      ctr.urlList[index],
                             width: 80,
                             height: 80,
                             fit: BoxFit.fill,
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) => Container(
-                                    margin:
-                                        EdgeInsets.only(top: 10, bottom: 10),
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: downloadProgress.progress,
-                                      ),
-                                    )),
                           ),
                         ),
                       ),
@@ -562,12 +552,11 @@ class ReviewDetailView extends GetView {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                imageUrl: ctr.reviewImageUrl.value!,
-                width: 500,
+              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+              ctr.reviewImageUrl.value!,
+                width: GetPlatform.isMobile?Get.width:500,
                 fit: BoxFit.fitWidth,
-                // placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+
               ),
             )
           ],
@@ -642,7 +631,7 @@ class ReviewDetailView extends GetView {
                 height: Get.height / 17,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  width: double.infinity,
+                  width: GetPlatform.isMobile?Get.width:500,
                   child: ElevatedButton(
                       style: ButtonStyle(
                           shape:

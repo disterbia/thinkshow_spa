@@ -16,7 +16,7 @@ class OrderTopDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
+      width: GetPlatform.isMobile?Get.width:500,
       height: 75,
       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(MyDimensions.radius)), color: MyColors.grey7),
       child: Row(

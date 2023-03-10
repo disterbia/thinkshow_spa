@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wholesaler_partner/app/modules/business_license/controller/business_license_controller.dart';
@@ -37,7 +38,7 @@ class BusinessView extends GetView {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomButton(
-                      width: 500,
+                        width: !GetPlatform.isMobile?500:Get.width,
                       onPressed: ()=>Get.to(()=>BusinessEditView()),
                       text: 'edit'.tr,
                     ),
@@ -57,7 +58,7 @@ class BusinessView extends GetView {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: CustomButton(
-        width: 500,
+        width: !GetPlatform.isMobile?500:Get.width,
         onPressed: () {},
         text: 'edit',
       ),
@@ -100,7 +101,7 @@ class BusinessView extends GetView {
             padding: const EdgeInsets.all(18.0),
             child: CachedNetworkImage(
               imageUrl: ctr.uploadedImageURL.value,
-              width: 500,
+              width: !GetPlatform.isMobile?500:Get.width,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Container(
                       margin: EdgeInsets.only(

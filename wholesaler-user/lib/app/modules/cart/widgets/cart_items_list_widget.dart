@@ -13,6 +13,7 @@ import 'package:wholesaler_user/app/modules/cart/widgets/circular_checkbox.dart'
 import 'package:wholesaler_user/app/modules/page2_store_detail/view/store_detail_view.dart';
 import 'package:wholesaler_user/app/utils/utils.dart';
 import 'package:wholesaler_user/app/widgets/product/product_item_horiz_widget.dart';
+import 'package:wholesaler_user/app/widgets/snackbar.dart';
 
 class CartItemsList extends StatelessWidget {
   Cart1ShoppingBasketController ctr = Get.put(Cart1ShoppingBasketController());
@@ -23,11 +24,9 @@ class CartItemsList extends StatelessWidget {
       {required this.isCart1Page,
       required this.cartItems,
       required this.showClose});
-
   @override
   Widget build(BuildContext context) {
     List<Product> products = [];
-
     return Obx(
       () => ListView.builder(
         //padding: EdgeInsets.all(15),
@@ -45,34 +44,49 @@ class CartItemsList extends StatelessWidget {
                 .where((tempProduct) => tempProduct.isCheckboxSelected == true)
                 .toList();
           }
-
+          
           return Padding(
             padding: const EdgeInsets.only(bottom: 10, left: 15, right: 15),
-            child: Card(
-              elevation: 0,
-              color: Colors.white,
-              //margin: EdgeInsets.all(10),
-              shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-              ),
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // show store only if it contains products
-                  products.length > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, bottom: 0, left: 10),
-                          child: _store(cartItems[cartIndex].store),
-                        )
-                      : SizedBox.shrink(),
-                  Divider(),
-                  // if cart 2 page, only show selected products
-                  ...products.map(
-                    (product) => _orderedProductBuilder(cartIndex,
-                        products.indexOf(product), product, products.length),
-                  ),
+            child: Container(
+              decoration: new BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(.5),
+                    blurRadius: 10, // soften the shadow
+                    spreadRadius: 0.0, //extend the shadow
+                    // offset: Offset(
+                    //   5.0, // Move to right 10  horizontally
+                    //   0.0, // Move to bottom 10 Vertically
+                    // ),
+                  )
                 ],
+              ),
+              child: Card(
+                color: Colors.white,
+                //margin: EdgeInsets.all(10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                ),
+                child: Column(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // show store only if it contains products
+                    products.length > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10.0, bottom: 0, left: 10),
+                            child: _store(cartItems[cartIndex].store),
+                          )
+                        : SizedBox.shrink(),
+                    Divider(),
+                    // if cart 2 page, only show selected products
+                    ...products.map(
+                      (product) => _orderedProductBuilder(cartIndex,
+                          products.indexOf(product), product, products.length),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -97,7 +111,7 @@ class CartItemsList extends StatelessWidget {
           children: [
             Text(
               store.name ?? '',
-              style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3),
+              style: MyTextStyles.f18_bold.copyWith(color: MyColors.black3,fontWeight: FontWeight.bold),
             ),
           ],
         )
@@ -106,7 +120,7 @@ class CartItemsList extends StatelessWidget {
         //     ClipRRect(
         //       borderRadius: BorderRadius.circular(50),
         //       child: store.imgUrl != null
-        //           ? CachedNetworkImage(
+        //           ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
         //               imageUrl: store.imgUrl!.value,
         //               width: 35,
         //               height: 35,
@@ -134,7 +148,6 @@ class CartItemsList extends StatelessWidget {
   Widget _orderedProductBuilder(
       int cartIndex, int productIndex, Product product, int length) {
     int productPrice = product.price!;
-
     // Customize our ProductItemHorizontal view to match the design.
     Product tempProduct = Product(
       id: product.id,
@@ -150,6 +163,8 @@ class CartItemsList extends StatelessWidget {
       imgWidth: product.imgWidth,
       showQuantityPlusMinus: product.showQuantityPlusMinus,
       cartId: product.cartId,
+      isDeal: product.isDeal,
+      isCheckboxSelected: true.obs
     );
     return Column(
       children: [
@@ -169,6 +184,9 @@ class CartItemsList extends StatelessWidget {
                       onChanged: (bool value) {
                         product.isCheckboxSelected!.toggle();
                         ctr.updateTotalPaymentPrice();
+                        value? ctr.checkCount++ :ctr.checkCount--;
+                        ctr.checkCount==0 ?ctr.isSelectAllChecked.value=true:ctr.isSelectAllChecked.value=false;
+
                       },
                     ),
                   )
@@ -184,7 +202,7 @@ class CartItemsList extends StatelessWidget {
                 price: productPrice,
                 // totalPrice: productTotalPrice,
                 // normalTotalPrice:normalTotalPrice,
-                quantityPlusMinusOnPressed: (value) =>
+                quantityPlusMinusOnPressed: (value) =>tempProduct.isDeal!?value?mSnackbar(message: "해당 상품은 1개만 구매 가능합니다."):null:
                     ctr.quantityPlusMinusOnPressed(
                   value: value,
                   cartId: tempProduct.cartId!,
