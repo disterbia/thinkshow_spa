@@ -130,7 +130,7 @@ class Tab2BookmarksView extends StatelessWidget {
               //         if(store.topImagePath!.length<4){
               //           return Container();
               //         }
-              //       return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,imageUrl: store.topImagePath![index],width: (500/4)-10,);
+              //       return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,imageUrl: store.topImagePath![index],width: (500/4)-10,);
               //
               //     },),
               // )
@@ -152,7 +152,7 @@ class Tab2BookmarksView extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: store.imgUrl != null
-          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
           store.imgUrl!.value,
               width: 50,
               height: 50,

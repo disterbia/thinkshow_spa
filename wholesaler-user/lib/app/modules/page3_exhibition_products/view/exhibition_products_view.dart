@@ -36,7 +36,7 @@ class ExhibitionProductsView extends GetView {
                   separatorBuilder: (context, index) => SizedBox(height: 5,),
                     itemCount:ctr.bannerPicture.length ,physics: NeverScrollableScrollPhysics(),shrinkWrap: true,
                     itemBuilder: (context,index) {
-                        return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                        return ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                            ctr.bannerPicture[index],
                             width: GetPlatform.isMobile?Get.width:500,
                             fit: BoxFit.fitWidth,
@@ -61,9 +61,14 @@ class ExhibitionProductsView extends GetView {
                 ),
               ),
 
-              ctr.products.isEmpty?Text(
-                  "상품 없음",
-                  style: MyTextStyles.f16_bold,
+              ctr.products.isEmpty?Column(
+                children: [
+                  ctr.bannerPicture.isEmpty?Container(height: Get.height/2-120,):Container(),
+                  Text(
+                    "상품 없음",
+                    style: MyTextStyles.f16_bold,
+                  ),
+                ],
               ):Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: ProductGridViewBuilder(
@@ -100,7 +105,7 @@ class ExhibitionProductsView extends GetView {
                     badgeContent: Text(
                       ctr2.getNumberProducts().toString(),
                       style: TextStyle(
-                          color: MyColors.white,
+                          color: MyColors.black,
                           fontSize: 11,
                           fontWeight: FontWeight.bold),
                     ),

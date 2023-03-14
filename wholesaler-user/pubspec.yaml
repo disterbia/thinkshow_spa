@@ -2,7 +2,7 @@ name: wholesaler_user
 description: ThinksMk.
 publish_to: "none"
 #version: 0.2.4
-version: 0.2.10
+version: 0.2.11
 
 environment:
   sdk: ">=2.17.0 <3.0.0"

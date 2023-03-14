@@ -265,7 +265,7 @@ class Tab1HomeView extends GetView<Tab1UserHomeController> {
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
-                                                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                                           recommendedProductCtr
                                                               .beltImage.value,
                                                       fit: BoxFit.fill),

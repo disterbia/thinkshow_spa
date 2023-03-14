@@ -95,7 +95,7 @@ class Page4FavoriteProductsView extends GetView {
                     badgeContent: Text(
                       ctr2.getNumberProducts().toString(),
                       style: TextStyle(
-                          color: MyColors.white,
+                          color: MyColors.black,
                           fontSize: 11,
                           fontWeight: FontWeight.bold),
                     ),

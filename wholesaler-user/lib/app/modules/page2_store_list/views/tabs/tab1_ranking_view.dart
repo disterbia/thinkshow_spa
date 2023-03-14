@@ -15,11 +15,19 @@ import 'package:wholesaler_user/app/modules/page2_store_list/controllers/shoppin
 class Tab1RankingView extends StatelessWidget {
   Page2StoreListController ctr = Get.put(Page2StoreListController());
   String? prevPage = "rank";
-  final RxList<bool> _selected = <bool>[true, false].obs;
 
+  List<DropdownMenuItem<String>> itemsBuilder(List<String> itemStrings) {
+    return itemStrings.map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+  }
   @override
   Widget build(BuildContext context) {
-    ctr.getRankedStoreData();
+    if (ctr.selected == 0) ctr.getMostStoreData();
+    if (ctr.selected == 1) ctr.getRankedStoreData();
     return Obx(
       () => ctr.isLoading.value
           ? LoadingWidget()
@@ -33,27 +41,16 @@ class Tab1RankingView extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10.0, top: 10),
-                          child: ToggleButtons(
-                            //direction: vertical ? Axis.vertical : Axis.horizontal,
-                            onPressed: (int index) {
-                              if (index == 0) ctr.getMostStoreData();
-                              if (index == 1) ctr.getRankedStoreData();
-                              // The button that is tapped is set to true, and the others to false.
-                              for (int i = 0; i < _selected.length; i++) {
-                                _selected[i] = i == index;
-                              }
+                          child:   DropdownButton(
+                            hint: Text(ctr.dropDownItem[ctr.selected.value]),
+                            items: itemsBuilder(ctr.dropDownItem),
+                            onChanged: (String? newValue) {
+                              ctr.selected.value =
+                                  ctr.dropDownItem.indexOf(newValue!);
+                              if (ctr.selected == 0) ctr.getMostStoreData();
+                              if (ctr.selected == 1) ctr.getRankedStoreData();
+
                             },
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            selectedColor: Colors.black,
-                            fillColor: MyColors.primary,
-                            color: Colors.grey,
-                            constraints: const BoxConstraints(
-                              minHeight: 30.0,
-                              minWidth: 30.0,
-                            ),
-                            isSelected: _selected,
-                            children: [Text(" 추천순 "), Text(" 인기순 ")],
                           ),
                         ),
                       ),
@@ -188,7 +185,7 @@ class Tab1RankingView extends StatelessWidget {
               //       scrollDirection: Axis.horizontal,
               //       itemBuilder: (context, index) {
               //         return SizedBox(width: GetPlatform.isMobile?Get.width:500*0.2,
-              //           child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,fit: BoxFit.fitHeight,
+              //           child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,fit: BoxFit.fitHeight,
               //               imageUrl: store.topImagePath![index]),
               //         );
               //       },
@@ -215,7 +212,7 @@ class Tab1RankingView extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: store.imgUrl != null
-          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
           store.imgUrl!.value,
               width: 50,
               height: 50,
@@ -333,7 +330,7 @@ class Tab1RankingView extends StatelessWidget {
                                                 ? Image.asset(
                                                     "assets/icons/ic_store.png",
                                                   )
-                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                                    ctr.mainImage[0],
                                               width: GetPlatform.isMobile?(Get.width/2)-20:(500/2)-20,
                                                     fit: BoxFit.fill,
@@ -359,7 +356,7 @@ class Tab1RankingView extends StatelessWidget {
                                                         ? Image.asset(
                                                             "assets/icons/ic_store.png",
                                                           )
-                                                        : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                        : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
 
                                                                 ctr.subImage[0],
                                                           ),
@@ -402,7 +399,7 @@ class Tab1RankingView extends StatelessWidget {
                                                 ? Image.asset(
                                                     "assets/icons/ic_store.png",
                                                   )
-                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                : ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                                      ctr.mainImage[1],
                                               width: GetPlatform.isMobile?(Get.width/2)-20:(500/2)-20,
                                                     fit: BoxFit.fill,
@@ -428,7 +425,7 @@ class Tab1RankingView extends StatelessWidget {
                                                           "assets/icons/ic_store.png",
                                                         )
                                                       : ClipOval(
-                                                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
 
                                                                 ctr.subImage[1],
                                                           ),

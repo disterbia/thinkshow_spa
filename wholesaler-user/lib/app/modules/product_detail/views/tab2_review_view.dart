@@ -162,7 +162,7 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 0
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                      ctr.photoReviews[0].images![0],
                                       width: 80,
                                       height: 80,
@@ -181,7 +181,7 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 1
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                       ctr.photoReviews[1].images![0],
                                       width: 80,
                                       height: 80,
@@ -200,7 +200,7 @@ class Tab2ReviewView extends GetView {
                             ctr.photoReviews.length > 2
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
-                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                                    child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                                    ctr.photoReviews[2].images![0],
                                       width: 80,
                                       height: 80,
@@ -399,7 +399,7 @@ class Tab2ReviewView extends GetView {
           // if (review.images != null)
           //   for (String imageUrl in review.images!) _imageBuilder(imageUrl),
           // review.reviewImageUrl != null
-          //     ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          //     ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
           //         imageUrl: review.reviewImageUrl!,
           //         fit: BoxFit.contain,
           //         // placeholder: (context, url) => Center(child: CircularProgressIndicator()),
@@ -463,7 +463,7 @@ class Tab2ReviewView extends GetView {
         for (String img in review.images!)
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
               fit: BoxFit.fill,
               width: GetPlatform.isMobile?Get.width:500,
               height: GetPlatform.isMobile?Get.width:500,
@@ -691,7 +691,7 @@ class Tab2ReviewView extends GetView {
       alignment: Alignment.bottomLeft,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+        child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
         imageUrl,
           width: 100,
           height: 150,

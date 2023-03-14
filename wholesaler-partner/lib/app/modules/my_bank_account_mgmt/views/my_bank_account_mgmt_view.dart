@@ -28,7 +28,7 @@ class MyBankAccountMgmtView extends GetView<MyBankAccountMgmtController> {
                       SizedBox(height: 22),
                       // Bank Name: 은행선택
                       CustomField(
-                        fieldLabel: 'select_bank'.tr,
+                        fieldLabel: "은행명 입력",
                         fieldText: ctr.accountName.value,
                         fieldController: ctr.bankController,
                       ),

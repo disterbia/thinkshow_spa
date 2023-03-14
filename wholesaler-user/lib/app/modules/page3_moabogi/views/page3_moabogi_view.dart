@@ -119,7 +119,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                 Get.to(() => ExhibitionProductsView(),
                     arguments: {'imageId': ctr.imageBanners[index].id});
               },
-              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                 ctr.imageBanners[index].banner_img_url,
                 width: GetPlatform.isMobile?Get.width:500,
                 // placeholder: (context, url) => CircularProgressIndicator(),
@@ -149,7 +149,7 @@ class Page3MoabogiView extends GetView<Page3MoabogiController> {
                 badgeContent: Text(
                   ctr2.getNumberProducts().toString(),
                   style: TextStyle(
-                      color: MyColors.white,
+                      color: MyColors.black,
                       fontSize: 11,
                       fontWeight: FontWeight.bold),
                 ),

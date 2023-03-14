@@ -126,7 +126,7 @@ class InquiryListItem extends StatelessWidget {
       height: 24,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(2),
-        color: MyColors.orange1,
+        color: MyColors.primary,
       ),
       child: Center(
           child: Text(

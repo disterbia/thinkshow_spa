@@ -83,8 +83,8 @@ class Tab1DetailInfo extends GetView {
                             children: [
                               Container(
                                 height: GetPlatform.isMobile
-                                    ? (Get.width * 1.1)
-                                    : 500 * 1.1,
+                                    ? Get.width/3*4
+                                    : 667,
                                 child: ClipRRect(
                                   borderRadius: !isMore.value && index == 1
                                       ? BorderRadius.only(
@@ -96,13 +96,8 @@ class Tab1DetailInfo extends GetView {
                                     enableMemoryCache: false,
                                     enableLoadState: false,
                                     cache: true,
-                                    cacheHeight: (GetPlatform.isMobile
-                                            ? (Get.width * 1.1)
-                                            : 500 * 1.1)
-                                        .ceil(),
-                                    cacheWidth:
-                                        (GetPlatform.isMobile ? Get.width : 500)
-                                            .ceil(),
+                                    cacheHeight: 1365,
+                                    cacheWidth:1024,
                                     productDetailCtr
                                         .product.value.imagesColor![index],
                                     fit: BoxFit.fitWidth,width: GetPlatform.isMobile ? Get.width : 500,
@@ -130,8 +125,8 @@ class Tab1DetailInfo extends GetView {
                           );
                         return Container(
                           height: GetPlatform.isMobile
-                              ? (Get.width * 1.1)
-                              : 500 * 1.1,
+                              ?Get.width/3*4
+                              : 667 ,
                           child: ClipRRect(
                             borderRadius: !isMore.value && index == 1
                                 ? BorderRadius.only(
@@ -145,14 +140,10 @@ class Tab1DetailInfo extends GetView {
                               cache: true,
                               productDetailCtr
                                   .product.value.imagesColor![index],
-                              cacheHeight: (GetPlatform.isMobile
-                                      ? (Get.width * 1.1)
-                                      : 500 * 1.1)
-                                  .ceil(),
+                              cacheHeight: 1365,
                               cacheWidth:
-                                  (GetPlatform.isMobile ? Get.width : 500)
-                                      .ceil(),
-                              fit: BoxFit.fitWidth,width: GetPlatform.isMobile ? Get.width : 500,
+                               1064,
+                              fit: BoxFit.fitWidth
                             ),
                           ),
                         );

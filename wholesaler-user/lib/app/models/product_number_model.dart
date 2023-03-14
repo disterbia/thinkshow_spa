@@ -14,7 +14,7 @@ class ProductNumber {
       for (int i = 0; i < 10; i++)
         ProductNumber(
           number: i + 1,
-          backgroundColor: MyColors.orange4,
+          backgroundColor: MyColors.primary,
         ),
     ];
   }

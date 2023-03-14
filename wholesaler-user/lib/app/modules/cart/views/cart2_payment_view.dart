@@ -217,7 +217,7 @@ class Cart2PaymentView extends GetView {
 
   Widget _productImage(String imageUrl) {
     return ClipRRect(
-      child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+      child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
        imageUrl,
         width: 35,
         height: 35,

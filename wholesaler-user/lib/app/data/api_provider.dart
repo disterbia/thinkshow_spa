@@ -13,6 +13,7 @@ import 'package:wholesaler_user/app/models/bulletin_model.dart';
 import 'package:wholesaler_user/app/models/cart1_orders_model/cart1_orders_model.dart';
 import 'package:wholesaler_user/app/models/cart_model.dart';
 import 'package:wholesaler_user/app/models/checkout_model/checkout_model.dart';
+import 'package:wholesaler_user/app/models/company_info_model.dart';
 import 'package:wholesaler_user/app/models/faq_page_model/faq_page_model.dart';
 import 'package:wholesaler_user/app/models/inquiries_cateroies_model.dart';
 import 'package:wholesaler_user/app/models/inquiries_model.dart';
@@ -2599,6 +2600,24 @@ class uApiProvider extends GetConnect {
       mSnackbar(message: '오류: ${response.bodyString!}');
       return false;
       // return Future.error(response.statusText!);
+    }
+  }
+
+  Future<CompanyInfoModel> getCompanyInfo() async {
+    final response = await get(
+        "https://api.thinksmk.com:3000/v1/user-api/setting/company-introduction",
+        headers: headers);
+    print("-=-=${response.bodyString!}");
+    if (response.statusCode == 200) {
+      return CompanyInfoModel.fromJson(jsonDecode(response.bodyString!));
+
+    }
+    if (response.statusCode == 400) {
+      return Future.error(response.statusText!);
+    } else {
+      print('getServiceCenter error');
+      mSnackbar(message: response.statusText!);
+      return Future.error(response.statusText!);
     }
   }
 

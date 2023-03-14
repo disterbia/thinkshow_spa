@@ -155,7 +155,7 @@ class AP_Part1Controller extends GetxController
       }
 
       ProductImageModel2 productImageModel =
-      await _apiProvider.uploadProductImage(pickedImage: temp,imageBytes: temp2);
+      await _apiProvider.uploadProductImageCrop(pickedImage: temp,imageBytes: temp2);
 
       if (productImageModel.statusCode == 200) {
         imageUrl2.value += productImageModel.url;
@@ -177,7 +177,7 @@ class AP_Part1Controller extends GetxController
         temp2.add(await pickedImage2[i].readAsBytes());
       }
       ProductImageModel2 productImageModel =
-      await _apiProvider.uploadProductImage(pickedImage: temp,imageBytes: temp2);
+      await _apiProvider.uploadProductImageCrop(pickedImage: temp,imageBytes: temp2);
       isUploadLoading2.value = false;
       mSnackbar(message: productImageModel.message);
 

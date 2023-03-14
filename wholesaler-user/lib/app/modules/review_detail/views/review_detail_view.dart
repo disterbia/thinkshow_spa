@@ -335,7 +335,7 @@ class ReviewDetailView extends GetView {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+            child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
           ctr.selectedReviw!.value.product.imgUrl,
               width: 80,
               height: 80,
@@ -522,7 +522,7 @@ class ReviewDetailView extends GetView {
                         width: 80,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                          child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                       ctr.urlList[index],
                             width: 80,
                             height: 80,
@@ -552,7 +552,7 @@ class ReviewDetailView extends GetView {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
               ctr.reviewImageUrl.value!,
                 width: GetPlatform.isMobile?Get.width:500,
                 fit: BoxFit.fitWidth,

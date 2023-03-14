@@ -113,7 +113,7 @@ class ProductReviewListView extends GetView {
             for (String img in review.images!)
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                   fit: BoxFit.fill,
                   width: GetPlatform.isMobile?Get.width:500,
                    img,

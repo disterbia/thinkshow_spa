@@ -103,7 +103,7 @@ class Page1HomeView extends GetView<Page1HomeController> {
                   badgeContent: Text(
                     cartCtr.getNumberProducts().toString(),
                     style: TextStyle(
-                        color: MyColors.white,
+                        color: MyColors.black,
                         fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),

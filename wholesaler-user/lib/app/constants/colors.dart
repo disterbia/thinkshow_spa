@@ -72,7 +72,7 @@ class MyColors {
 
   // Number Widget Colors
   static const List numberColors = [
-    Color(0xFFFFC846),
+    Color(0xFFFDE900),
     Color(0xFF9695B2),
     Color(0xFFA26008),
     Color(0xFFFFB300),

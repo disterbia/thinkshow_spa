@@ -20,6 +20,8 @@ class Page2StoreListController extends GetxController {
   RxList<String> subImage=<String>[].obs;
   RxList<String> storeName=<String>[].obs;
   RxList<int> sameId=<int>[].obs;
+  RxInt selected = 0.obs;
+  final RxList<String> dropDownItem= <String>["인기순","추천순"].obs;
   Future<void> getRankedStoreData() async {
     Future.delayed(Duration.zero, () => isLoading.value = true);
 

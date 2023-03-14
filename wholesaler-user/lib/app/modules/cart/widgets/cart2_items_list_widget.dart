@@ -53,7 +53,7 @@
 //           ClipRRect(
 //             borderRadius: BorderRadius.circular(50),
 //             child: store.imgUrl != null
-//                 ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+//                 ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
 //                     imageUrl: store.imgUrl!,
 //                     width: 35,
 //                     height: 35,

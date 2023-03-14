@@ -209,7 +209,7 @@ class ReviewDetailView2 extends GetView {
                 padding: EdgeInsets.only(top : 15.0, left: 15.0, right: 15.0, bottom: 5),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                     fit: BoxFit.fill,
                     width: GetPlatform.isMobile?Get.width:500,
                     height: GetPlatform.isMobile?Get.width:500,
@@ -267,7 +267,7 @@ class ReviewDetailView2 extends GetView {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+              child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                 product.imgUrl,
                 width: 80,
                 height: 80,

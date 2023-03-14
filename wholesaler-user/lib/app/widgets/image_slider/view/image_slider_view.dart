@@ -34,7 +34,7 @@ class ImageSliderView extends GetView<ImageSliderController> {
                 },
                 child: Container(
                   width: GetPlatform.isMobile?Get.width:500,
-                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+                  child: ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
                  image.banner_img_url,
                     fit: BoxFit.fill,
                     // //cacheHeight:500.ceil(),

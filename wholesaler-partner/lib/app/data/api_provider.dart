@@ -663,6 +663,55 @@ class pApiProvider extends GetConnect {
       return Future.error(response.statusMessage!);
     }
   }
+
+  Future<ProductImageModel2> uploadProductImageCrop(
+      {required List<File> pickedImage,required List<Uint8List> imageBytes}) async {
+    var dio = mDio.Dio();
+
+    dio.options.headers["Authorization"] =
+        "Bearer " + CacheProvider().getToken();
+    String url = mConst.API_BASE_URL +
+        "/v1/store-api/product/detail/image-multi";
+    List<File> images = [];
+    List<String> imageNames = [];
+    for(int i = 0;i<pickedImage!.length;i++){
+      File image = File(pickedImage[i].path);
+      String imageName = image.path.substring(image.path.length - 19);
+      images.add(image);
+      imageNames.add(imageName);
+    }
+    List<mDio.MultipartFile> temp = [];
+    for(int i = 0 ; i<images.length;i++){
+
+      temp.add(await mDio.MultipartFile.fromBytes(imageBytes[i], filename: imageNames[i]));
+
+    }
+    mDio.FormData formData = mDio.FormData.fromMap({
+      "image[]":temp
+    });
+
+    final response = await dio.post(
+      url,
+      data: formData,
+    );
+
+
+    if (response.statusCode == 200) {
+      var json = response.data;
+      return ProductImageModel2(
+          message: '업로드 완료',
+          statusCode: response.statusCode!,
+          url: json['url'],
+          path: json['file_path']);
+    }
+    if (response.statusCode == 400) {
+      //  mSnackbar(message: jsonDecode(response.data!)['description']);
+      return Future.error(response.statusMessage!);
+    } else {
+      //  mSnackbar(message: response.statusMessage!);
+      return Future.error(response.statusMessage!);
+    }
+  }
   Future<StatusModel> uploadStoreThumbnailImage(
       {required Map<String, dynamic> data}) async {
     String url = mConst.API_BASE_URL +

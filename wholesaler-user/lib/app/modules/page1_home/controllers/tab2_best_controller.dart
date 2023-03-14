@@ -19,7 +19,7 @@ class Tab2BestController extends GetxController {
 
   /// WARNING: [apiSoftItems] and [dropdownItems]: if one is changed, the other one should also be changed.
   List<String> apiSoftItems = ['total', 'daily', 'weekly', 'lowPrice', 'highPrice'];
-  List<String> dropdownItems = ['전체', '일간베스트', '주간베스트', '낮은가격순', '높은가격순'];
+  List<String> dropdownItems = ['전체', '일일베스트', '주간베스트', '낮은가격순', '높은가격순'];
   RxInt selectedDropdownIndex = 0.obs;
 
   @override

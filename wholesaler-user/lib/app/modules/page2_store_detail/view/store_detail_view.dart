@@ -125,7 +125,7 @@ class StoreDetailView extends GetView {
   Widget _image() {
     return Obx(
       () => ctr.mainStoreModel.value.mainTopImageUrl != null
-          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1000,cacheHeight: 1000,
+          ? ExtendedImage.network(clearMemoryCacheWhenDispose:true,enableMemoryCache:false,enableLoadState: false,cacheWidth: 1024,cacheHeight: 1365,
              ctr.mainStoreModel.value.mainTopImageUrl!.value,
               width: GetPlatform.isMobile?Get.width:500,
               height: GetPlatform.isMobile?Get.width:500,
@@ -133,7 +133,7 @@ class StoreDetailView extends GetView {
             )
           : Container(
               height: GetPlatform.isMobile?Get.width:500,
-              child: Center(child: Text('등록 된 사진 이 없습니다.')),
+              child: Center(child: Text('등록된 사진이 없습니다.')),
             ),
     );
   }
