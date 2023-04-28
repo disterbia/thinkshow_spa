@@ -1091,6 +1091,80 @@ class uApiProvider extends GetConnect {
     }
   }
 
+  Future<List<Store>> getReviewStoreData(
+      {required int offset, required int limit}) async {
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/store/review-count-list?type=total&offset=$offset&limit=$limit';
+    final response = await get(url, headers: headers);
+    print(url);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      List<Store> stores = [];
+
+      for (int i = 0; i < jsonList.length; i++) {
+        Store tempStore = Store(
+            id: jsonList[i]['store_id'],
+            name: jsonList[i]['store_name'],
+            imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+                ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+                : null,
+            isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+            rank: i + 1,
+            topImagePath: jsonList[i]['top_image_path'] != null
+                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+                : null,
+            favoriteCount: ((jsonList[i]['favorite_count']?? 0) as int).obs,
+            categories: jsonList[i]["categories"]);
+        stores.add(tempStore);
+      }
+
+      return stores;
+    } else {
+      // var jsonList = jsonDecode(response.bodyString!);
+
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<List<Store>> getNewestStoreData(
+      {required int offset, required int limit}) async {
+    String url = mConst.API_BASE_URL +
+        mConst.API_USER_PATH +
+        '/store/recent-list?type=total&offset=$offset&limit=$limit';
+    final response = await get(url, headers: headers);
+    print(url);
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.bodyString!);
+      List<Store> stores = [];
+
+      for (int i = 0; i < jsonList.length; i++) {
+        Store tempStore = Store(
+            id: jsonList[i]['store_id'],
+            name: jsonList[i]['store_name'],
+            imgUrl: jsonList[i]['store_thumbnail_image_url'] != null
+                ? (jsonList[i]['store_thumbnail_image_url'] as String).obs
+                : null,
+            isBookmarked: jsonList[i]['is_favorite'] ? true.obs : false.obs,
+            rank: i + 1,
+            topImagePath: jsonList[i]['top_image_path'] != null
+                ? (jsonList[i]['top_image_path'] as List<dynamic>).obs
+                : null,
+            favoriteCount: ((jsonList[i]['favorite_count']??0) as int).obs,
+            categories: jsonList[i]["categories"]);
+        stores.add(tempStore);
+      }
+
+      return stores;
+    } else {
+      // var jsonList = jsonDecode(response.bodyString!);
+
+      return Future.error(response.statusText!);
+    }
+  }
+
   /// Store Page
   Future<List<Store>> getStorebookmarked() async {
     String url =

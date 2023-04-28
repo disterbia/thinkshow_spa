@@ -26,8 +26,9 @@ class Tab1RankingView extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    if (ctr.selected == 0) ctr.getMostStoreData();
-    if (ctr.selected == 1) ctr.getRankedStoreData();
+    if (ctr.selected == 0) ctr.getNewestStoreData();
+    if (ctr.selected == 1) ctr.getMostStoreData();
+    if (ctr.selected == 2) ctr.getReviewStoreData();
     return Obx(
       () => ctr.isLoading.value
           ? LoadingWidget()
@@ -47,8 +48,9 @@ class Tab1RankingView extends StatelessWidget {
                             onChanged: (String? newValue) {
                               ctr.selected.value =
                                   ctr.dropDownItem.indexOf(newValue!);
-                              if (ctr.selected == 0) ctr.getMostStoreData();
-                              if (ctr.selected == 1) ctr.getRankedStoreData();
+                              if (ctr.selected == 0) ctr.getNewestStoreData();
+                              if (ctr.selected == 1) ctr.getMostStoreData();
+                              if (ctr.selected == 2) ctr.getReviewStoreData();
 
                             },
                           ),
@@ -90,7 +92,7 @@ class Tab1RankingView extends StatelessWidget {
         Get.to(
             () => StoreDetailView(
                   storeId: store.id,
-                  prevPage: prevPage,
+              prevPage: ctr.dropDownItem[ctr.selected.value],
                 ),
             preventDuplicates: true);
       },

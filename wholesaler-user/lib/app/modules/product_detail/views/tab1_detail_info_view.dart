@@ -100,7 +100,7 @@ class Tab1DetailInfo extends GetView {
                                     cacheWidth:1024,
                                     productDetailCtr
                                         .product.value.imagesColor![index],
-                                    fit: BoxFit.fitWidth,width: GetPlatform.isMobile ? Get.width : 500,
+                                    fit: BoxFit.fill
                                   ),
                                 ),
                               ),
@@ -143,7 +143,7 @@ class Tab1DetailInfo extends GetView {
                               cacheHeight: 1365,
                               cacheWidth:
                                1064,
-                              fit: BoxFit.fitWidth
+                              fit: BoxFit.fill
                             ),
                           ),
                         );
